@@ -12,7 +12,6 @@ Planowanie angażujących i interesujących wycieczek jest czasochłonne, wymaga
 - CRUD notatek w ramach projektu: treść swobodnego tekstu z tagami miejsca (autouzupełnianie API) i czasu (predefiniowana lista), priorytet atrakcji
 - Generowanie planu AI w jednym synchronicznym żądaniu, zwrócenie dziennego harmonogramu
 - Wyświetlanie spinnera "Trwa generowanie planu..." oraz obsługa błędów z czytelnym komunikatem i opcją "Spróbuj ponownie"
-- Raporty miesięczne podsumowujące wygenerowane plany w zakładce "Moje raporty"
 - Logowanie interakcji z AI w osobnej tabeli (prompt, odpowiedź, status, czas wykonania)
 
 ## 4. Granice produktu
@@ -22,6 +21,7 @@ Planowanie angażujących i interesujących wycieczek jest czasochłonne, wymaga
 - Brak panelu administratora w MVP
 - Retencja logów AI nie jest wymagana
 - Brak monitorowania i alertowania awarii usługi AI
+- Brak raportu miesięcznego podsumowującego wygenerowane plany w zakładce "Moje raporty"
 
 ## 5. Historyjki użytkowników
 - ID: US-001
@@ -118,13 +118,6 @@ Planowanie angażujących i interesujących wycieczek jest czasochłonne, wymaga
   - API AI zwraca harmonogram w czasie ≤60 s
   - UI pokazuje spinner "Trwa generowanie planu..."
   - W przypadku błędu wyświetlany jest komunikat z opcją "Spróbuj ponownie"
-
-- ID: US-014
-  Tytuł: Przegląd raportów miesięcznych
-  Opis: Jako użytkownik chcę zobaczyć miesięczne podsumowania wygenerowanych planów w zakładce "Moje raporty", aby monitorować aktywność
-  Kryteria akceptacji:
-  - Raporty generują liczbę wygenerowanych planów i statystyki
-  - Dostęp do raportów jest możliwy z poziomu menu
 
 ## 6. Metryki sukcesu
 - 75% użytkowników generuje co najmniej 3 plany rocznie

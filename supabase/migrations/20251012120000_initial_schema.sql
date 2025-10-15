@@ -163,148 +163,152 @@ comment on function update_updated_on_column() is 'Automatically updates updated
 
 -- Enable RLS on all user-scoped tables
 -- This ensures users can only access their own data
-alter table travel_projects enable row level security;
-alter table notes enable row level security;
-alter table ai_logs enable row level security;
+-- DISABLED FOR NOW
+-- alter table travel_projects enable row level security;
+-- alter table notes enable row level security;
+-- alter table ai_logs enable row level security;
 
 -- -----------------------------------------------------
 -- RLS Policies: travel_projects
 -- Purpose: Users can only access their own travel projects
+-- DISABLED FOR NOW
 -- -----------------------------------------------------
 
 -- Policy: Allow authenticated users to SELECT their own projects
-create policy travel_projects_select_authenticated
-  on travel_projects
-  for select
-  to authenticated
-  using (user_id = auth.uid());
+-- create policy travel_projects_select_authenticated
+--   on travel_projects
+--   for select
+--   to authenticated
+--   using (user_id = auth.uid());
 
 -- Policy: Allow authenticated users to INSERT their own projects
-create policy travel_projects_insert_authenticated
-  on travel_projects
-  for insert
-  to authenticated
-  with check (user_id = auth.uid());
+-- create policy travel_projects_insert_authenticated
+--   on travel_projects
+--   for insert
+--   to authenticated
+--   with check (user_id = auth.uid());
 
 -- Policy: Allow authenticated users to UPDATE their own projects
-create policy travel_projects_update_authenticated
-  on travel_projects
-  for update
-  to authenticated
-  using (user_id = auth.uid())
-  with check (user_id = auth.uid());
+-- create policy travel_projects_update_authenticated
+--   on travel_projects
+--   for update
+--   to authenticated
+--   using (user_id = auth.uid())
+--   with check (user_id = auth.uid());
 
 -- Policy: Allow authenticated users to DELETE their own projects
-create policy travel_projects_delete_authenticated
-  on travel_projects
-  for delete
-  to authenticated
-  using (user_id = auth.uid());
+-- create policy travel_projects_delete_authenticated
+--   on travel_projects
+--   for delete
+--   to authenticated
+--   using (user_id = auth.uid());
 
 -- -----------------------------------------------------
 -- RLS Policies: notes
 -- Purpose: Users can only access notes belonging to their projects
 -- Strategy: Check project ownership through travel_projects join
+-- DISABLED FOR NOW
 -- -----------------------------------------------------
 
 -- Policy: Allow authenticated users to SELECT notes from their projects
-create policy notes_select_authenticated
-  on notes
-  for select
-  to authenticated
-  using (
-    exists (
-      select 1
-      from travel_projects tp
-      where tp.id = notes.project_id
-        and tp.user_id = auth.uid()
-    )
-  );
+-- create policy notes_select_authenticated
+--   on notes
+--   for select
+--   to authenticated
+--   using (
+--     exists (
+--       select 1
+--       from travel_projects tp
+--       where tp.id = notes.project_id
+--         and tp.user_id = auth.uid()
+--     )
+--   );
 
 -- Policy: Allow authenticated users to INSERT notes into their projects
-create policy notes_insert_authenticated
-  on notes
-  for insert
-  to authenticated
-  with check (
-    exists (
-      select 1
-      from travel_projects tp
-      where tp.id = notes.project_id
-        and tp.user_id = auth.uid()
-    )
-  );
+-- create policy notes_insert_authenticated
+--   on notes
+--   for insert
+--   to authenticated
+--   with check (
+--     exists (
+--       select 1
+--       from travel_projects tp
+--       where tp.id = notes.project_id
+--         and tp.user_id = auth.uid()
+--     )
+--   );
 
 -- Policy: Allow authenticated users to UPDATE notes in their projects
-create policy notes_update_authenticated
-  on notes
-  for update
-  to authenticated
-  using (
-    exists (
-      select 1
-      from travel_projects tp
-      where tp.id = notes.project_id
-        and tp.user_id = auth.uid()
-    )
-  )
-  with check (
-    exists (
-      select 1
-      from travel_projects tp
-      where tp.id = notes.project_id
-        and tp.user_id = auth.uid()
-    )
-  );
+-- create policy notes_update_authenticated
+--   on notes
+--   for update
+--   to authenticated
+--   using (
+--     exists (
+--       select 1
+--       from travel_projects tp
+--       where tp.id = notes.project_id
+--         and tp.user_id = auth.uid()
+--     )
+--   )
+--   with check (
+--     exists (
+--       select 1
+--       from travel_projects tp
+--       where tp.id = notes.project_id
+--         and tp.user_id = auth.uid()
+--     )
+--   );
 
 -- Policy: Allow authenticated users to DELETE notes from their projects
-create policy notes_delete_authenticated
-  on notes
-  for delete
-  to authenticated
-  using (
-    exists (
-      select 1
-      from travel_projects tp
-      where tp.id = notes.project_id
-        and tp.user_id = auth.uid()
-    )
-  );
+-- create policy notes_delete_authenticated
+--   on notes
+--   for delete
+--   to authenticated
+--   using (
+--     exists (
+--       select 1
+--       from travel_projects tp
+--       where tp.id = notes.project_id
+--         and tp.user_id = auth.uid()
+--     )
+--   );
 
 -- -----------------------------------------------------
 -- RLS Policies: ai_logs
 -- Purpose: Users can only access their own AI generation logs
 -- Note: Direct user_id check for performance (no join needed)
+-- DISABLED FOR NOW
 -- -----------------------------------------------------
 
 -- Policy: Allow authenticated users to SELECT their own AI logs
-create policy ai_logs_select_authenticated
-  on ai_logs
-  for select
-  to authenticated
-  using (user_id = auth.uid());
+-- create policy ai_logs_select_authenticated
+--   on ai_logs
+--   for select
+--   to authenticated
+--   using (user_id = auth.uid());
 
 -- Policy: Allow authenticated users to INSERT their own AI logs
-create policy ai_logs_insert_authenticated
-  on ai_logs
-  for insert
-  to authenticated
-  with check (user_id = auth.uid());
+-- create policy ai_logs_insert_authenticated
+--   on ai_logs
+--   for insert
+--   to authenticated
+--   with check (user_id = auth.uid());
 
 -- Policy: Allow authenticated users to UPDATE their own AI logs
-create policy ai_logs_update_authenticated
-  on ai_logs
-  for update
-  to authenticated
-  using (user_id = auth.uid())
-  with check (user_id = auth.uid());
+-- create policy ai_logs_update_authenticated
+--   on ai_logs
+--   for update
+--   to authenticated
+--   using (user_id = auth.uid())
+--   with check (user_id = auth.uid());
 
 -- Policy: Allow authenticated users to DELETE their own AI logs
-create policy ai_logs_delete_authenticated
-  on ai_logs
-  for delete
-  to authenticated
-  using (user_id = auth.uid());
+-- create policy ai_logs_delete_authenticated
+--   on ai_logs
+--   for delete
+--   to authenticated
+--   using (user_id = auth.uid());
 
 -- =====================================================
 -- END OF MIGRATION

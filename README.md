@@ -79,6 +79,49 @@ In the project root, you can run:
 - `npm run format`  
   Run Prettier to format code.
 
+## API Endpoints
+
+### POST /api/projects/{projectId}/plan
+
+Synchroniczne generowanie planu podróży dla projektu.
+
+**Request:**
+```json
+{
+  "model": "claude-3.5-sonnet",
+  "notes": [
+    {
+      "id": "uuid",
+      "content": "string",
+      "priority": 1-3,
+      "place_tags": ["string"] | null
+    }
+  ],
+  "preferences": {
+    "categories": ["string"]
+  }
+}
+```
+
+**Response (200 OK):**
+```json
+{
+  "schedule": [
+    {
+      "day": 1,
+      "activities": ["activity 1", "activity 2", ...]
+    }
+  ]
+}
+```
+
+**Dozwolone modele AI:**
+- `gpt-4`, `gpt-5`
+- `claude-3-opus`, `claude-3.5-sonnet`
+
+**Testowanie:**  
+Zobacz [.ai/postman-testing-guide.md](.ai/postman-testing-guide.md) dla szczegółowych instrukcji testowania w Postmanie.
+
 ## Project Scope
 
 ### Core Features

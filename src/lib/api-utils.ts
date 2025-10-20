@@ -11,7 +11,7 @@ export type ApiErrorResponse = {
 };
 
 /**
- * Klasa reprezentująca błąd API z odpowiednim kodem statusu
+ * Class representing an API error with appropriate status code
  */
 export class ApiError extends Error {
   constructor(
@@ -49,7 +49,7 @@ export function createSuccessResponse<T>(data: T, statusCode = 200): Response {
  * Obsługuje błędy Zod i tworzy odpowiednią odpowiedź API
  */
 export function handleZodError(error: z.ZodError): Response {
-  return createErrorResponse(400, 'Validation Error', 'Nieprawidłowe dane wejściowe', error.errors);
+  return createErrorResponse(400, 'Validation Error', 'Invalid input data', error.errors);
 }
 
 /**
@@ -66,8 +66,8 @@ export function handleApiError(error: unknown): Response {
     return handleZodError(error);
   }
 
-  // Nieoczekiwany błąd serwera
-  return createErrorResponse(500, 'Internal Server Error', 'Wystąpił nieoczekiwany błąd serwera');
+  // Unexpected server error
+  return createErrorResponse(500, 'Internal Server Error', 'An unexpected server error occurred');
 }
 
 /**
@@ -77,12 +77,12 @@ export function getAuthToken(context: APIContext): string {
   const authHeader = context.request.headers.get('Authorization');
 
   if (!authHeader) {
-    throw new ApiError(401, 'Brak tokenu autoryzacyjnego');
+    throw new ApiError(401, 'Missing authorization token');
   }
 
   const parts = authHeader.split(' ');
   if (parts.length !== 2 || parts[0] !== 'Bearer') {
-    throw new ApiError(401, 'Nieprawidłowy format tokenu autoryzacyjnego');
+    throw new ApiError(401, 'Invalid authorization token format');
   }
 
   return parts[1];
@@ -101,7 +101,7 @@ export async function verifyUser(context: APIContext): Promise<string> {
   } = await supabase.auth.getUser(token);
 
   if (error || !user) {
-    throw new ApiError(401, 'Nieważny lub wygasły token autoryzacyjny');
+    throw new ApiError(401, 'Invalid or expired authorization token');
   }
 
   return user.id;

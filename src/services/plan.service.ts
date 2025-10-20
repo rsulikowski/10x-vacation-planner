@@ -31,30 +31,8 @@ export class PlanService {
     // Krok 3: Walidacja zgodności notatek
     this.validateNotes(command.notes, notes);
 
-    // Krok 4: Utworzenie wpisu w ai_logs ze statusem 'pending'
-    const logId = await this.createPendingLog(projectId, userId, command, supabase);
-
-    const startTime = Date.now();
-    let response: PlanResponseDto;
-    let status: Database['public']['Enums']['ai_status'] = 'success';
-    let errorMessage: string | null = null;
-
-    try {
-      // Krok 5: Wywołanie AI service
-      response = await aiService.generatePlan(command);
-    } catch (error) {
-      // Krok 6a: Obsługa błędu AI service
-      status = 'failure';
-      errorMessage = error instanceof Error ? error.message : 'Unknown AI service error';
-      await this.updateLogStatus(logId, status, null, Date.now() - startTime, errorMessage, supabase);
-      throw new ApiError(500, 'Błąd podczas generowania planu przez AI service', { error: errorMessage });
-    }
-
-    // Krok 6b: Aktualizacja logu ze statusem 'success'
-    const duration = Date.now() - startTime;
-    await this.updateLogStatus(logId, status, response, duration, null, supabase);
-
-    return response;
+    // Krok 4: Wywołanie AI service (logowanie przeniesione do trasy API)
+    return await aiService.generatePlan(command);
   }
 
   /**
@@ -68,11 +46,13 @@ export class PlanService {
       .single();
 
     if (error || !project) {
-      throw new ApiError(404, 'Projekt nie został znaleziony');
+      console.error('Project not found or Supabase error:', error);
+      throw new ApiError(404, 'Project not found');
     }
 
     if (project.user_id !== userId) {
-      throw new ApiError(404, 'Projekt nie został znaleziony'); // Nie ujawniamy, że projekt istnieje
+      console.error(`User ID mismatch - Project user_id: ${project.user_id}, Expected user_id: ${userId}`);
+      throw new ApiError(404, 'Project not found'); // Don't reveal that the project exists
     }
 
     return project;
@@ -89,7 +69,7 @@ export class PlanService {
       .order('priority', { ascending: false });
 
     if (error) {
-      throw new ApiError(500, 'Błąd podczas pobierania notatek projektu');
+      throw new ApiError(500, 'Error fetching project notes');
     }
 
     return notes || [];
@@ -106,7 +86,7 @@ export class PlanService {
 
     for (const note of commandNotes) {
       if (!dbNoteIds.has(note.id)) {
-        throw new ApiError(400, `Notatka o ID ${note.id} nie należy do tego projektu`);
+        throw new ApiError(400, `Note with ID ${note.id} does not belong to this project`);
       }
     }
   }
@@ -129,7 +109,7 @@ export class PlanService {
         project_id: projectId,
         user_id: userId,
         prompt,
-        response: null,
+        response: {}, // Pusty obiekt zamiast null (response jest NOT NULL w bazie)
         status: 'pending',
         duration_ms: null,
       })
@@ -137,7 +117,8 @@ export class PlanService {
       .single();
 
     if (error || !data) {
-      throw new ApiError(500, 'Błąd podczas tworzenia wpisu w logach AI');
+      console.error('Error creating AI log entry:', error);
+      throw new ApiError(500, 'Error creating AI log entry');
     }
 
     return data.id;
@@ -166,8 +147,8 @@ export class PlanService {
       .eq('id', logId);
 
     if (error) {
-      console.error('Błąd podczas aktualizacji logu AI:', error);
-      // Nie rzucamy błędu - to operacja logowania, nie powinna blokować głównego flow
+      console.error('Error updating AI log:', error);
+      // Don't throw error - this is a logging operation, shouldn't block the main flow
     }
   }
 }

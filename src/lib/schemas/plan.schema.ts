@@ -4,9 +4,9 @@ import { z } from 'zod';
  * Schemat walidacji dla notatki w komendzie generowania planu
  */
 const noteSchema = z.object({
-  id: z.string().uuid('ID notatki musi być prawidłowym UUID'),
-  content: z.string().min(1, 'Treść notatki nie może być pusta'),
-  priority: z.number().int().min(1).max(3, 'Priorytet musi być liczbą od 1 do 3'),
+  id: z.string().uuid('Note ID must be a valid UUID'),
+  content: z.string().min(1, 'Note content cannot be empty'),
+  priority: z.number().int().min(1).max(3, 'Priority must be a number between 1 and 3'),
   place_tags: z.array(z.string()).nullable(),
 });
 
@@ -29,9 +29,9 @@ const ALLOWED_AI_MODELS = ['gpt-4', 'gpt-5', 'claude-3-opus', 'claude-3.5-sonnet
  */
 export const generatePlanCommandSchema = z.object({
   model: z.enum(ALLOWED_AI_MODELS, {
-    errorMap: () => ({ message: `Model musi być jednym z: ${ALLOWED_AI_MODELS.join(', ')}` }),
+    errorMap: () => ({ message: `Model must be one of: ${ALLOWED_AI_MODELS.join(', ')}` }),
   }),
-  notes: z.array(noteSchema).min(1, 'Musi być podana co najmniej jedna notatka').max(100, 'Maksymalnie 100 notatek'),
+  notes: z.array(noteSchema).min(1, 'At least one note must be provided').max(100, 'Maximum 100 notes allowed'),
   preferences: preferencesSchema,
 });
 
@@ -43,5 +43,5 @@ export type ValidatedGeneratePlanCommand = z.infer<typeof generatePlanCommandSch
 /**
  * Schemat walidacji parametru projectId w URL
  */
-export const projectIdParamSchema = z.string().uuid('Project ID musi być prawidłowym UUID');
+export const projectIdParamSchema = z.string().uuid('Project ID must be a valid UUID');
 

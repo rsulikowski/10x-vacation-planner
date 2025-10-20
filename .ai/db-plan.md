@@ -34,15 +34,12 @@ This table is managed by Supabase Auth
 - **id**: UUID PRIMARY KEY DEFAULT gen_random_uuid()
 - **user_id**: UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
 - **project_id**: UUID NOT NULL REFERENCES travel_projects(id) ON DELETE CASCADE
+- **request_body** JSONB NOT NULL
 - **prompt**: TEXT NOT NULL (unlimited length for large prompts)
 - **response**: JSONB NOT NULL
-- **status**: ai_status NOT NULL
+- **response_code**: INTEGER NOT NULL
 - **duration_ms**: INTEGER NULL
 - **created_on**: TIMESTAMPTZ NOT NULL DEFAULT now()
-- **version**: INTEGER NOT NULL DEFAULT 1
-
-*ENUM type `ai_status` defined as ('pending', 'success', 'failure').*
-*Note: `version` is incremented on each AI generation so the latest log has the highest version number.*
 
 ## 2. Relations
 
@@ -57,7 +54,7 @@ This table is managed by Supabase Auth
 - GIN on `notes(place_tags)`
 - BTREE on `notes(project_id)`
 - BTREE on `travel_projects(user_id)`
-- BTREE on `ai_logs(project_id, version DESC)`
+- BTREE on `ai_logs(project_id, created_on DESC)`
 
 ## 4. Row-Level Security (RLS) Policies
 

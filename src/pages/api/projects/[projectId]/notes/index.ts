@@ -1,8 +1,47 @@
 import type { APIRoute } from 'astro';
 import { handleApiError, createSuccessResponse, ApiError } from '../../../../../lib/api-utils';
-import { projectIdParamSchema, createNoteCommandSchema } from '../../../../../lib/schemas/note.schema';
+import {
+  projectIdParamSchema,
+  createNoteCommandSchema,
+  listNotesQuerySchema,
+} from '../../../../../lib/schemas/note.schema';
 import { noteService } from '../../../../../services/note.service';
 import { DEFAULT_USER_ID } from '../../../../../db/supabase.client';
+
+/**
+ * GET /api/projects/{projectId}/notes
+ *
+ * Endpoint do pobierania listy notatek projektu z paginacją i filtrami.
+ *
+ * Query Parameters:
+ * - page (integer, optional, default: 1)
+ * - size (integer, optional, default: 20)
+ * - priority (integer, optional) - Filter by priority (1-3)
+ * - place_tag (string, optional) - Filter by place tag
+ *
+ * Response 200:
+ * {
+ *   "data": [{ "id": "uuid", "project_id": "uuid", "content": "string", "priority": 1, "place_tags": [...], "updated_on": "..." }],
+ *   "meta": { "page": 1, "size": 20, "total": 1 }
+ * }
+ */
+export const GET: APIRoute = async (context) => {
+  try {
+    const projectId = projectIdParamSchema.parse(context.params.projectId);
+
+    const query = listNotesQuerySchema.parse({
+      page: context.url.searchParams.get('page'),
+      size: context.url.searchParams.get('size'),
+      priority: context.url.searchParams.get('priority'),
+      place_tag: context.url.searchParams.get('place_tag'),
+    });
+
+    const result = await noteService.listNotes(projectId, DEFAULT_USER_ID, query, context.locals.supabase);
+    return createSuccessResponse(result, 200);
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
 
 /**
  * POST /api/projects/{projectId}/notes

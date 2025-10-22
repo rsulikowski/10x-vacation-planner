@@ -82,7 +82,8 @@
   ```json
   { "content":"string","priority":1,"place_tags":["string"] }
   ```
-- Validation: `priority` between 1 and 3
+- Response (201): Created note object
+- Validation: `content` nonempty, `priority` between 1 and 3
 
 #### Get Note
 - Method: GET

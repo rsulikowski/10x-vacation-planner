@@ -104,4 +104,19 @@ export type AILogDto = Pick<
 // Paginated list response for AI logs
 export type AILogsListResponseDto = PaginatedDto<AILogDto>;
 
+// --- ViewModels ---
+// ViewModel for project creation/edit form state
+export interface ProjectFormViewModel {
+  name: string;
+  duration_days: string; // Use string for input flexibility, parse on submit
+  planned_date: Date | null; // Use Date object for date picker components
+}
+
+// Discriminated union to manage modal state in Projects view
+export type ModalState =
+  | { type: 'closed' }
+  | { type: 'create_project' }
+  | { type: 'edit_project'; project: ProjectDto }
+  | { type: 'delete_project'; project: ProjectDto };
+
 // --- End of DTOs and Command Models ---

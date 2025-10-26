@@ -1,8 +1,8 @@
-import type { APIRoute } from 'astro';
-import { handleApiError, createSuccessResponse, ApiError } from '../../../../lib/api-utils';
-import { projectIdParamSchema, updateProjectCommandSchema } from '../../../../lib/schemas/project.schema';
-import { projectService } from '../../../../services/project.service';
-import { DEFAULT_USER_ID } from '../../../../db/supabase.client';
+import type { APIRoute } from "astro";
+import { handleApiError, createSuccessResponse, ApiError } from "../../../../lib/api-utils";
+import { projectIdParamSchema, updateProjectCommandSchema } from "../../../../lib/schemas/project.schema";
+import { projectService } from "../../../../services/project.service";
+import { DEFAULT_USER_ID } from "../../../../db/supabase.client";
 
 /**
  * GET /api/projects/{projectId}
@@ -59,7 +59,7 @@ export const PATCH: APIRoute = async (context) => {
     try {
       body = await context.request.json();
     } catch {
-      throw new ApiError(400, 'Invalid JSON format in request body');
+      throw new ApiError(400, "Invalid JSON format in request body");
     }
 
     const command = updateProjectCommandSchema.parse(body);
@@ -93,4 +93,3 @@ export const DELETE: APIRoute = async (context) => {
 };
 
 export const prerender = false;
-

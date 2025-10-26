@@ -1,8 +1,8 @@
-import type { Database } from '../db/database.types';
-import type { GeneratePlanCommand, PlanResponseDto } from '../types';
-import { ApiError } from '../lib/api-utils';
-import { aiService } from './ai.service.mock';
-import { DEFAULT_USER_ID, type supabaseClient } from '../db/supabase.client';
+import type { Database } from "../db/database.types";
+import type { GeneratePlanCommand, PlanResponseDto } from "../types";
+import { ApiError } from "../lib/api-utils";
+import { aiService } from "./ai.service.mock";
+import { DEFAULT_USER_ID, type supabaseClient } from "../db/supabase.client";
 
 type DbClient = typeof supabaseClient;
 
@@ -40,19 +40,19 @@ export class PlanService {
    */
   private async fetchAndVerifyProject(projectId: string, userId: string, supabase: DbClient) {
     const { data: project, error } = await supabase
-      .from('travel_projects')
-      .select('id, name, user_id, duration_days')
-      .eq('id', projectId)
+      .from("travel_projects")
+      .select("id, name, user_id, duration_days")
+      .eq("id", projectId)
       .single();
 
     if (error || !project) {
-      console.error('Project not found or Supabase error:', error);
-      throw new ApiError(404, 'Project not found');
+      console.error("Project not found or Supabase error:", error);
+      throw new ApiError(404, "Project not found");
     }
 
     if (project.user_id !== userId) {
       console.error(`User ID mismatch - Project user_id: ${project.user_id}, Expected user_id: ${userId}`);
-      throw new ApiError(404, 'Project not found'); // Don't reveal that the project exists
+      throw new ApiError(404, "Project not found"); // Don't reveal that the project exists
     }
 
     return project;
@@ -63,13 +63,13 @@ export class PlanService {
    */
   private async fetchProjectNotes(projectId: string, supabase: DbClient) {
     const { data: notes, error } = await supabase
-      .from('notes')
-      .select('id, content, priority, place_tags')
-      .eq('project_id', projectId)
-      .order('priority', { ascending: false });
+      .from("notes")
+      .select("id, content, priority, place_tags")
+      .eq("project_id", projectId)
+      .order("priority", { ascending: false });
 
     if (error) {
-      throw new ApiError(500, 'Error fetching project notes');
+      throw new ApiError(500, "Error fetching project notes");
     }
 
     return notes || [];
@@ -79,8 +79,8 @@ export class PlanService {
    * Waliduje zgodność notatek z bazy danych z notatkami w komendzie
    */
   private validateNotes(
-    commandNotes: GeneratePlanCommand['notes'],
-    dbNotes: Array<{ id: string; content: string; priority: number; place_tags: string[] | null }>,
+    commandNotes: GeneratePlanCommand["notes"],
+    dbNotes: { id: string; content: string; priority: number; place_tags: string[] | null }[]
   ) {
     const dbNoteIds = new Set(dbNotes.map((n) => n.id));
 
@@ -99,26 +99,26 @@ export class PlanService {
     projectId: string,
     userId: string,
     command: GeneratePlanCommand,
-    supabase: DbClient,
+    supabase: DbClient
   ): Promise<string> {
     const prompt = aiService.generatePrompt(command);
 
     const { data, error } = await supabase
-      .from('ai_logs')
+      .from("ai_logs")
       .insert({
         project_id: projectId,
         user_id: userId,
         prompt,
         response: {}, // Pusty obiekt zamiast null (response jest NOT NULL w bazie)
-        status: 'pending',
+        status: "pending",
         duration_ms: null,
       })
-      .select('id')
+      .select("id")
       .single();
 
     if (error || !data) {
-      console.error('Error creating AI log entry:', error);
-      throw new ApiError(500, 'Error creating AI log entry');
+      console.error("Error creating AI log entry:", error);
+      throw new ApiError(500, "Error creating AI log entry");
     }
 
     return data.id;
@@ -129,25 +129,25 @@ export class PlanService {
    */
   private async updateLogStatus(
     logId: string,
-    status: Database['public']['Enums']['ai_status'],
+    status: Database["public"]["Enums"]["ai_status"],
     response: PlanResponseDto | null,
     durationMs: number,
     errorMessage: string | null,
-    supabase: DbClient,
+    supabase: DbClient
   ) {
-    const responseData = status === 'success' && response ? response : { error: errorMessage };
+    const responseData = status === "success" && response ? response : { error: errorMessage };
 
     const { error } = await supabase
-      .from('ai_logs')
+      .from("ai_logs")
       .update({
         status,
         response: responseData,
         duration_ms: durationMs,
       })
-      .eq('id', logId);
+      .eq("id", logId);
 
     if (error) {
-      console.error('Error updating AI log:', error);
+      console.error("Error updating AI log:", error);
       // Don't throw error - this is a logging operation, shouldn't block the main flow
     }
   }
@@ -157,4 +157,3 @@ export class PlanService {
  * Singleton instance plan service
  */
 export const planService = new PlanService();
-

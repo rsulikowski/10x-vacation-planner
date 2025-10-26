@@ -1,21 +1,21 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 /**
  * Schemat walidacji parametru projectId w URL
  */
-export const projectIdParamSchema = z.string().uuid('Project ID must be a valid UUID');
+export const projectIdParamSchema = z.string().uuid("Project ID must be a valid UUID");
 
 /**
  * Schemat walidacji parametru noteId w URL
  */
-export const noteIdParamSchema = z.string().uuid('Note ID must be a valid UUID');
+export const noteIdParamSchema = z.string().uuid("Note ID must be a valid UUID");
 
 /**
  * Schemat walidacji dla tworzenia notatki
  */
 export const createNoteCommandSchema = z.object({
-  content: z.string().min(1, 'Content cannot be empty'),
-  priority: z.number().int().min(1).max(3, 'Priority must be between 1 and 3'),
+  content: z.string().min(1, "Content cannot be empty"),
+  priority: z.number().int().min(1).max(3, "Priority must be between 1 and 3"),
   place_tags: z.array(z.string()).nullable().optional(),
 });
 
@@ -28,8 +28,8 @@ export type ValidatedCreateNoteCommand = z.infer<typeof createNoteCommandSchema>
  * Schemat walidacji dla aktualizacji notatki (wszystkie pola opcjonalne)
  */
 export const updateNoteCommandSchema = z.object({
-  content: z.string().min(1, 'Content cannot be empty').optional(),
-  priority: z.number().int().min(1).max(3, 'Priority must be between 1 and 3').optional(),
+  content: z.string().min(1, "Content cannot be empty").optional(),
+  priority: z.number().int().min(1).max(3, "Priority must be between 1 and 3").optional(),
   place_tags: z.array(z.string()).nullable().optional(),
 });
 
@@ -57,11 +57,10 @@ export const listNotesQuerySchema = z
       place_tag: data.place_tag || undefined,
     };
   })
-  .refine((data) => data.page >= 1, { message: 'Page must be at least 1', path: ['page'] })
-  .refine((data) => data.size >= 1, { message: 'Size must be at least 1', path: ['size'] });
+  .refine((data) => data.page >= 1, { message: "Page must be at least 1", path: ["page"] })
+  .refine((data) => data.size >= 1, { message: "Size must be at least 1", path: ["size"] });
 
 /**
  * Typ wynikowy z walidacji parametrów zapytania listy notatek
  */
 export type ValidatedListNotesQuery = z.infer<typeof listNotesQuerySchema>;
-

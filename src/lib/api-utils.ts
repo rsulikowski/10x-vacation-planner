@@ -1,14 +1,14 @@
-import type { APIContext } from 'astro';
-import { z } from 'zod';
+import type { APIContext } from "astro";
+import { z } from "zod";
 
 /**
  * Standardowa struktura odpowiedzi błędu API
  */
-export type ApiErrorResponse = {
+export interface ApiErrorResponse {
   error: string;
   message: string;
   details?: unknown;
-};
+}
 
 /**
  * Class representing an API error with appropriate status code
@@ -17,10 +17,10 @@ export class ApiError extends Error {
   constructor(
     public statusCode: number,
     message: string,
-    public details?: unknown,
+    public details?: unknown
   ) {
     super(message);
-    this.name = 'ApiError';
+    this.name = "ApiError";
   }
 }
 
@@ -31,7 +31,7 @@ export function createErrorResponse(statusCode: number, error: string, message: 
   const body: ApiErrorResponse = { error, message, details };
   return new Response(JSON.stringify(body), {
     status: statusCode,
-    headers: { 'Content-Type': 'application/json' },
+    headers: { "Content-Type": "application/json" },
   });
 }
 
@@ -41,7 +41,7 @@ export function createErrorResponse(statusCode: number, error: string, message: 
 export function createSuccessResponse<T>(data: T, statusCode = 200): Response {
   return new Response(JSON.stringify(data), {
     status: statusCode,
-    headers: { 'Content-Type': 'application/json' },
+    headers: { "Content-Type": "application/json" },
   });
 }
 
@@ -49,17 +49,17 @@ export function createSuccessResponse<T>(data: T, statusCode = 200): Response {
  * Obsługuje błędy Zod i tworzy odpowiednią odpowiedź API
  */
 export function handleZodError(error: z.ZodError): Response {
-  return createErrorResponse(400, 'Validation Error', 'Invalid input data', error.errors);
+  return createErrorResponse(400, "Validation Error", "Invalid input data", error.errors);
 }
 
 /**
  * Główna funkcja obsługi błędów API
  */
 export function handleApiError(error: unknown): Response {
-  console.error('API Error:', error);
+  console.error("API Error:", error);
 
   if (error instanceof ApiError) {
-    return createErrorResponse(error.statusCode, 'API Error', error.message, error.details);
+    return createErrorResponse(error.statusCode, "API Error", error.message, error.details);
   }
 
   if (error instanceof z.ZodError) {
@@ -67,22 +67,22 @@ export function handleApiError(error: unknown): Response {
   }
 
   // Unexpected server error
-  return createErrorResponse(500, 'Internal Server Error', 'An unexpected server error occurred');
+  return createErrorResponse(500, "Internal Server Error", "An unexpected server error occurred");
 }
 
 /**
  * Pobiera i weryfikuje token JWT z nagłówka Authorization
  */
 export function getAuthToken(context: APIContext): string {
-  const authHeader = context.request.headers.get('Authorization');
+  const authHeader = context.request.headers.get("Authorization");
 
   if (!authHeader) {
-    throw new ApiError(401, 'Missing authorization token');
+    throw new ApiError(401, "Missing authorization token");
   }
 
-  const parts = authHeader.split(' ');
-  if (parts.length !== 2 || parts[0] !== 'Bearer') {
-    throw new ApiError(401, 'Invalid authorization token format');
+  const parts = authHeader.split(" ");
+  if (parts.length !== 2 || parts[0] !== "Bearer") {
+    throw new ApiError(401, "Invalid authorization token format");
   }
 
   return parts[1];
@@ -101,9 +101,8 @@ export async function verifyUser(context: APIContext): Promise<string> {
   } = await supabase.auth.getUser(token);
 
   if (error || !user) {
-    throw new ApiError(401, 'Invalid or expired authorization token');
+    throw new ApiError(401, "Invalid or expired authorization token");
   }
 
   return user.id;
 }
-

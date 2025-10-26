@@ -1,7 +1,7 @@
-import type { CreateProjectCommand, ProjectDto, ProjectsListResponseDto, UpdateProjectCommand } from '../types';
-import { ApiError } from '../lib/api-utils';
-import type { supabaseClient } from '../db/supabase.client';
-import type { ValidatedListProjectsQuery } from '../lib/schemas/project.schema';
+import type { CreateProjectCommand, ProjectDto, ProjectsListResponseDto, UpdateProjectCommand } from "../types";
+import { ApiError } from "../lib/api-utils";
+import type { supabaseClient } from "../db/supabase.client";
+import type { ValidatedListProjectsQuery } from "../lib/schemas/project.schema";
 
 type DbClient = typeof supabaseClient;
 
@@ -21,33 +21,33 @@ export class ProjectService {
   async listProjects(
     userId: string,
     query: ValidatedListProjectsQuery,
-    db: DbClient,
+    db: DbClient
   ): Promise<ProjectsListResponseDto> {
     const { page, size, sort, order } = query;
     const offset = (page - 1) * size;
 
     // Pobierz całkowitą liczbę projektów
     const { count, error: countError } = await db
-      .from('travel_projects')
-      .select('*', { count: 'exact', head: true })
-      .eq('user_id', userId);
+      .from("travel_projects")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", userId);
 
     if (countError) {
-      console.error('Error counting projects:', countError);
-      throw new ApiError(500, 'Failed to count projects');
+      console.error("Error counting projects:", countError);
+      throw new ApiError(500, "Failed to count projects");
     }
 
     // Pobierz projekty z paginacją i sortowaniem
     const { data, error } = await db
-      .from('travel_projects')
-      .select('id, name, duration_days, planned_date')
-      .eq('user_id', userId)
-      .order(sort, { ascending: order === 'asc' })
+      .from("travel_projects")
+      .select("id, name, duration_days, planned_date")
+      .eq("user_id", userId)
+      .order(sort, { ascending: order === "asc" })
       .range(offset, offset + size - 1);
 
     if (error) {
-      console.error('Error listing projects:', error);
-      throw new ApiError(500, 'Failed to list projects');
+      console.error("Error listing projects:", error);
+      throw new ApiError(500, "Failed to list projects");
     }
 
     return {
@@ -71,15 +71,15 @@ export class ProjectService {
    */
   async getProject(projectId: string, userId: string, db: DbClient): Promise<ProjectDto> {
     const { data, error } = await db
-      .from('travel_projects')
-      .select('id, name, duration_days, planned_date')
-      .eq('id', projectId)
-      .eq('user_id', userId)
+      .from("travel_projects")
+      .select("id, name, duration_days, planned_date")
+      .eq("id", projectId)
+      .eq("user_id", userId)
       .single();
 
     if (error || !data) {
-      console.error('Project not found or Supabase error:', error);
-      throw new ApiError(404, 'Project not found');
+      console.error("Project not found or Supabase error:", error);
+      throw new ApiError(404, "Project not found");
     }
 
     return data as ProjectDto;
@@ -99,26 +99,26 @@ export class ProjectService {
     projectId: string,
     userId: string,
     command: UpdateProjectCommand,
-    db: DbClient,
+    db: DbClient
   ): Promise<ProjectDto> {
     // Najpierw sprawdź czy projekt istnieje i należy do użytkownika
     await this.getProject(projectId, userId, db);
 
     const { data, error } = await db
-      .from('travel_projects')
+      .from("travel_projects")
       .update({
         ...(command.name !== undefined && { name: command.name }),
         ...(command.duration_days !== undefined && { duration_days: command.duration_days }),
         ...(command.planned_date !== undefined && { planned_date: command.planned_date }),
       })
-      .eq('id', projectId)
-      .eq('user_id', userId)
-      .select('id, name, duration_days, planned_date')
+      .eq("id", projectId)
+      .eq("user_id", userId)
+      .select("id, name, duration_days, planned_date")
       .single();
 
     if (error || !data) {
-      console.error('Error updating project:', error);
-      throw new ApiError(500, 'Failed to update project');
+      console.error("Error updating project:", error);
+      throw new ApiError(500, "Failed to update project");
     }
 
     return data as ProjectDto;
@@ -136,11 +136,11 @@ export class ProjectService {
     // Najpierw sprawdź czy projekt istnieje i należy do użytkownika
     await this.getProject(projectId, userId, db);
 
-    const { error } = await db.from('travel_projects').delete().eq('id', projectId).eq('user_id', userId);
+    const { error } = await db.from("travel_projects").delete().eq("id", projectId).eq("user_id", userId);
 
     if (error) {
-      console.error('Error deleting project:', error);
-      throw new ApiError(500, 'Failed to delete project');
+      console.error("Error deleting project:", error);
+      throw new ApiError(500, "Failed to delete project");
     }
   }
 
@@ -155,19 +155,19 @@ export class ProjectService {
    */
   async createProject(userId: string, command: CreateProjectCommand, db: DbClient): Promise<ProjectDto> {
     const { data, error } = await db
-      .from('travel_projects')
+      .from("travel_projects")
       .insert({
         user_id: userId,
         name: command.name,
         duration_days: command.duration_days,
         planned_date: command.planned_date ?? null,
       })
-      .select('id, name, duration_days, planned_date')
+      .select("id, name, duration_days, planned_date")
       .single();
 
     if (error || !data) {
-      console.error('Error creating project:', error);
-      throw new ApiError(500, 'Failed to create project');
+      console.error("Error creating project:", error);
+      throw new ApiError(500, "Failed to create project");
     }
 
     return data as ProjectDto;
@@ -178,4 +178,3 @@ export class ProjectService {
  * Singleton instance project service
  */
 export const projectService = new ProjectService();
-

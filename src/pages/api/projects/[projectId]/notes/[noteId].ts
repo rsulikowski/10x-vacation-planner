@@ -1,12 +1,12 @@
-import type { APIRoute } from 'astro';
-import { handleApiError, createSuccessResponse, ApiError } from '../../../../../lib/api-utils';
+import type { APIRoute } from "astro";
+import { handleApiError, createSuccessResponse, ApiError } from "../../../../../lib/api-utils";
 import {
   projectIdParamSchema,
   noteIdParamSchema,
   updateNoteCommandSchema,
-} from '../../../../../lib/schemas/note.schema';
-import { noteService } from '../../../../../services/note.service';
-import { DEFAULT_USER_ID } from '../../../../../db/supabase.client';
+} from "../../../../../lib/schemas/note.schema";
+import { noteService } from "../../../../../services/note.service";
+import { DEFAULT_USER_ID } from "../../../../../db/supabase.client";
 
 /**
  * GET /api/projects/{projectId}/notes/{noteId}
@@ -38,7 +38,7 @@ export const PATCH: APIRoute = async (context) => {
     try {
       body = await context.request.json();
     } catch {
-      throw new ApiError(400, 'Invalid JSON format in request body');
+      throw new ApiError(400, "Invalid JSON format in request body");
     }
 
     const command = updateNoteCommandSchema.parse(body);
@@ -66,4 +66,3 @@ export const DELETE: APIRoute = async (context) => {
 };
 
 export const prerender = false;
-

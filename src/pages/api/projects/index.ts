@@ -1,8 +1,8 @@
-import type { APIRoute } from 'astro';
-import { handleApiError, createSuccessResponse, ApiError } from '../../../lib/api-utils';
-import { createProjectCommandSchema, listProjectsQuerySchema } from '../../../lib/schemas/project.schema';
-import { projectService } from '../../../services/project.service';
-import { DEFAULT_USER_ID } from '../../../db/supabase.client';
+import type { APIRoute } from "astro";
+import { handleApiError, createSuccessResponse, ApiError } from "../../../lib/api-utils";
+import { createProjectCommandSchema, listProjectsQuerySchema } from "../../../lib/schemas/project.schema";
+import { projectService } from "../../../services/project.service";
+import { DEFAULT_USER_ID } from "../../../db/supabase.client";
 
 /**
  * GET /api/projects
@@ -34,10 +34,10 @@ export const GET: APIRoute = async (context) => {
 
     // Parsowanie i walidacja parametrów zapytania
     const query = listProjectsQuerySchema.parse({
-      page: context.url.searchParams.get('page'),
-      size: context.url.searchParams.get('size'),
-      sort: context.url.searchParams.get('sort'),
-      order: context.url.searchParams.get('order'),
+      page: context.url.searchParams.get("page"),
+      size: context.url.searchParams.get("size"),
+      sort: context.url.searchParams.get("sort"),
+      order: context.url.searchParams.get("order"),
     });
 
     // Wywołanie serwisu do pobrania listy projektów
@@ -86,7 +86,7 @@ export const POST: APIRoute = async (context) => {
     try {
       body = await context.request.json();
     } catch {
-      throw new ApiError(400, 'Invalid JSON format in request body');
+      throw new ApiError(400, "Invalid JSON format in request body");
     }
 
     // Krok 3: Walidacja danych wejściowych za pomocą Zod
@@ -104,4 +104,3 @@ export const POST: APIRoute = async (context) => {
 };
 
 export const prerender = false;
-

@@ -1,12 +1,12 @@
-import type { APIRoute } from 'astro';
-import { handleApiError, createSuccessResponse, ApiError } from '../../../../../lib/api-utils';
+import type { APIRoute } from "astro";
+import { handleApiError, createSuccessResponse, ApiError } from "../../../../../lib/api-utils";
 import {
   projectIdParamSchema,
   createNoteCommandSchema,
   listNotesQuerySchema,
-} from '../../../../../lib/schemas/note.schema';
-import { noteService } from '../../../../../services/note.service';
-import { DEFAULT_USER_ID } from '../../../../../db/supabase.client';
+} from "../../../../../lib/schemas/note.schema";
+import { noteService } from "../../../../../services/note.service";
+import { DEFAULT_USER_ID } from "../../../../../db/supabase.client";
 
 /**
  * GET /api/projects/{projectId}/notes
@@ -30,10 +30,10 @@ export const GET: APIRoute = async (context) => {
     const projectId = projectIdParamSchema.parse(context.params.projectId);
 
     const query = listNotesQuerySchema.parse({
-      page: context.url.searchParams.get('page'),
-      size: context.url.searchParams.get('size'),
-      priority: context.url.searchParams.get('priority'),
-      place_tag: context.url.searchParams.get('place_tag'),
+      page: context.url.searchParams.get("page"),
+      size: context.url.searchParams.get("size"),
+      priority: context.url.searchParams.get("priority"),
+      place_tag: context.url.searchParams.get("place_tag"),
     });
 
     const result = await noteService.listNotes(projectId, DEFAULT_USER_ID, query, context.locals.supabase);
@@ -89,7 +89,7 @@ export const POST: APIRoute = async (context) => {
     try {
       body = await context.request.json();
     } catch {
-      throw new ApiError(400, 'Invalid JSON format in request body');
+      throw new ApiError(400, "Invalid JSON format in request body");
     }
 
     // Krok 4: Walidacja danych wejściowych za pomocą Zod
@@ -107,4 +107,3 @@ export const POST: APIRoute = async (context) => {
 };
 
 export const prerender = false;
-

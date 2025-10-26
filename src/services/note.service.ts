@@ -1,18 +1,18 @@
-import type { NoteDto, NotesListResponseDto, UpdateNoteCommand } from '../types';
-import { ApiError } from '../lib/api-utils';
-import type { supabaseClient } from '../db/supabase.client';
-import type { ValidatedListNotesQuery } from '../lib/schemas/note.schema';
+import type { NoteDto, NotesListResponseDto, UpdateNoteCommand } from "../types";
+import { ApiError } from "../lib/api-utils";
+import type { supabaseClient } from "../db/supabase.client";
+import type { ValidatedListNotesQuery } from "../lib/schemas/note.schema";
 
 type DbClient = typeof supabaseClient;
 
 /**
  * Typ dla komendy tworzenia notatki (bez project_id, który pochodzi z URL)
  */
-type CreateNoteInput = {
+interface CreateNoteInput {
   content: string;
   priority: number;
   place_tags?: string[] | null;
-};
+}
 
 /**
  * Service odpowiedzialny za zarządzanie notatkami
@@ -28,19 +28,19 @@ export class NoteService {
    */
   async verifyProjectOwnership(projectId: string, userId: string, db: DbClient): Promise<void> {
     const { data: project, error } = await db
-      .from('travel_projects')
-      .select('id, user_id')
-      .eq('id', projectId)
+      .from("travel_projects")
+      .select("id, user_id")
+      .eq("id", projectId)
       .single();
 
     if (error || !project) {
-      console.error('Project not found or Supabase error:', error);
-      throw new ApiError(404, 'Project not found');
+      console.error("Project not found or Supabase error:", error);
+      throw new ApiError(404, "Project not found");
     }
 
     if (project.user_id !== userId) {
       console.error(`User ID mismatch - Project user_id: ${project.user_id}, Expected user_id: ${userId}`);
-      throw new ApiError(404, 'Project not found'); // Don't reveal that the project exists
+      throw new ApiError(404, "Project not found"); // Don't reveal that the project exists
     }
   }
 
@@ -58,7 +58,7 @@ export class NoteService {
     projectId: string,
     userId: string,
     query: ValidatedListNotesQuery,
-    db: DbClient,
+    db: DbClient
   ): Promise<NotesListResponseDto> {
     // Najpierw zweryfikuj własność projektu
     await this.verifyProjectOwnership(projectId, userId, db);
@@ -67,35 +67,38 @@ export class NoteService {
     const offset = (page - 1) * size;
 
     // Buduj zapytanie z filtrami
-    let countQuery = db.from('notes').select('*', { count: 'exact', head: true }).eq('project_id', projectId);
+    let countQuery = db.from("notes").select("*", { count: "exact", head: true }).eq("project_id", projectId);
 
-    let dataQuery = db.from('notes').select('id, project_id, content, priority, place_tags, updated_on').eq('project_id', projectId);
+    let dataQuery = db
+      .from("notes")
+      .select("id, project_id, content, priority, place_tags, updated_on")
+      .eq("project_id", projectId);
 
     // Dodaj filtry jeśli są podane
     if (priority !== undefined) {
-      countQuery = countQuery.eq('priority', priority);
-      dataQuery = dataQuery.eq('priority', priority);
+      countQuery = countQuery.eq("priority", priority);
+      dataQuery = dataQuery.eq("priority", priority);
     }
 
     if (place_tag) {
-      countQuery = countQuery.contains('place_tags', [place_tag]);
-      dataQuery = dataQuery.contains('place_tags', [place_tag]);
+      countQuery = countQuery.contains("place_tags", [place_tag]);
+      dataQuery = dataQuery.contains("place_tags", [place_tag]);
     }
 
     // Pobierz całkowitą liczbę notatek
     const { count, error: countError } = await countQuery;
 
     if (countError) {
-      console.error('Error counting notes:', countError);
-      throw new ApiError(500, 'Failed to count notes');
+      console.error("Error counting notes:", countError);
+      throw new ApiError(500, "Failed to count notes");
     }
 
     // Pobierz notatki z paginacją
-    const { data, error } = await dataQuery.order('priority', { ascending: false }).range(offset, offset + size - 1);
+    const { data, error } = await dataQuery.order("priority", { ascending: false }).range(offset, offset + size - 1);
 
     if (error) {
-      console.error('Error listing notes:', error);
-      throw new ApiError(500, 'Failed to list notes');
+      console.error("Error listing notes:", error);
+      throw new ApiError(500, "Failed to list notes");
     }
 
     return {
@@ -123,15 +126,15 @@ export class NoteService {
     await this.verifyProjectOwnership(projectId, userId, db);
 
     const { data, error } = await db
-      .from('notes')
-      .select('id, project_id, content, priority, place_tags, updated_on')
-      .eq('id', noteId)
-      .eq('project_id', projectId)
+      .from("notes")
+      .select("id, project_id, content, priority, place_tags, updated_on")
+      .eq("id", noteId)
+      .eq("project_id", projectId)
       .single();
 
     if (error || !data) {
-      console.error('Note not found or Supabase error:', error);
-      throw new ApiError(404, 'Note not found');
+      console.error("Note not found or Supabase error:", error);
+      throw new ApiError(404, "Note not found");
     }
 
     return data as NoteDto;
@@ -153,26 +156,26 @@ export class NoteService {
     projectId: string,
     userId: string,
     command: UpdateNoteCommand,
-    db: DbClient,
+    db: DbClient
   ): Promise<NoteDto> {
     // Najpierw sprawdź czy notatka istnieje i należy do projektu użytkownika
     await this.getNote(noteId, projectId, userId, db);
 
     const { data, error } = await db
-      .from('notes')
+      .from("notes")
       .update({
         ...(command.content !== undefined && { content: command.content }),
         ...(command.priority !== undefined && { priority: command.priority }),
         ...(command.place_tags !== undefined && { place_tags: command.place_tags }),
       })
-      .eq('id', noteId)
-      .eq('project_id', projectId)
-      .select('id, project_id, content, priority, place_tags, updated_on')
+      .eq("id", noteId)
+      .eq("project_id", projectId)
+      .select("id, project_id, content, priority, place_tags, updated_on")
       .single();
 
     if (error || !data) {
-      console.error('Error updating note:', error);
-      throw new ApiError(500, 'Failed to update note');
+      console.error("Error updating note:", error);
+      throw new ApiError(500, "Failed to update note");
     }
 
     return data as NoteDto;
@@ -191,11 +194,11 @@ export class NoteService {
     // Najpierw sprawdź czy notatka istnieje i należy do projektu użytkownika
     await this.getNote(noteId, projectId, userId, db);
 
-    const { error } = await db.from('notes').delete().eq('id', noteId).eq('project_id', projectId);
+    const { error } = await db.from("notes").delete().eq("id", noteId).eq("project_id", projectId);
 
     if (error) {
-      console.error('Error deleting note:', error);
-      throw new ApiError(500, 'Failed to delete note');
+      console.error("Error deleting note:", error);
+      throw new ApiError(500, "Failed to delete note");
     }
   }
 
@@ -210,19 +213,19 @@ export class NoteService {
    */
   async createNote(projectId: string, command: CreateNoteInput, db: DbClient): Promise<NoteDto> {
     const { data, error } = await db
-      .from('notes')
+      .from("notes")
       .insert({
         project_id: projectId,
         content: command.content,
         priority: command.priority,
         place_tags: command.place_tags ?? null,
       })
-      .select('id, project_id, content, priority, place_tags, updated_on')
+      .select("id, project_id, content, priority, place_tags, updated_on")
       .single();
 
     if (error || !data) {
-      console.error('Error creating note:', error);
-      throw new ApiError(500, 'Failed to create note');
+      console.error("Error creating note:", error);
+      throw new ApiError(500, "Failed to create note");
     }
 
     return data as NoteDto;
@@ -233,4 +236,3 @@ export class NoteService {
  * Singleton instance note service
  */
 export const noteService = new NoteService();
-

@@ -1,4 +1,4 @@
-import type { GeneratePlanCommand, PlanResponseDto, ScheduleItemDto } from '../types';
+import type { GeneratePlanCommand, PlanResponseDto, ScheduleItemDto } from "../types";
 
 /**
  * Mock AI Service dla celów developmentu
@@ -22,7 +22,7 @@ export class MockAIService {
 
     // Dodaj aktywności z notatek
     notes.slice(0, 3).forEach((note) => {
-      const places = note.place_tags?.join(', ') || 'atrakcja';
+      const places = note.place_tags?.join(", ") || "atrakcja";
       activities.push(`${note.content} (${places})`);
     });
 
@@ -37,9 +37,9 @@ export class MockAIService {
 
     // Dodaj podstawowe aktywności
     if (day === 1) {
-      activities.push('Zameldowanie w hotelu i odpoczynek');
+      activities.push("Zameldowanie w hotelu i odpoczynek");
     }
-    activities.push('Obiad w lokalnej restauracji');
+    activities.push("Obiad w lokalnej restauracji");
 
     return activities.slice(0, 5); // Max 5 aktywności dziennie
   }
@@ -55,7 +55,7 @@ export class MockAIService {
 
     // Symulacja błędu w 5% przypadków (do testowania obsługi błędów)
     if (Math.random() < 0.05) {
-      throw new Error('AI Service Error: Timeout or rate limit exceeded');
+      throw new Error("AI Service Error: Timeout or rate limit exceeded");
     }
 
     // Określ liczbę dni na podstawie ilości notatek (domyślnie 3-7 dni)
@@ -87,7 +87,7 @@ export class MockAIService {
         high_priority_notes: command.notes.filter((n) => n.priority === 3).length,
       },
       null,
-      2,
+      2
     );
   }
 }
@@ -96,4 +96,3 @@ export class MockAIService {
  * Singleton instance AI service
  */
 export const aiService = new MockAIService();
-

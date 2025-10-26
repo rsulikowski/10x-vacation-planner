@@ -84,7 +84,7 @@ export const POST: APIRoute = async (context) => {
     if (logId) {
       await context.locals.supabase
         .from("ai_logs")
-        .update({ status: "success", response: result, response_code: responseCode, duration_ms: duration })
+        .update({ status: "success", response: result as unknown as Json, response_code: responseCode, duration_ms: duration })
         .eq("id", logId);
     }
     return createSuccessResponse(result, 200);

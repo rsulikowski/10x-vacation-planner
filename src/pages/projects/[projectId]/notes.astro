@@ -1,0 +1,15 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import { NotesView } from "../../../components/NotesView";
+
+const { projectId } = Astro.params;
+
+if (!projectId) {
+  return Astro.redirect("/projects");
+}
+---
+
+<Layout title={`Notes | 10x Vacation Planner`}>
+  <NotesView client:load projectId={projectId} />
+</Layout>
+

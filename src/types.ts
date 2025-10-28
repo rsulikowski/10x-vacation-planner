@@ -119,4 +119,23 @@ export type ModalState =
   | { type: 'edit_project'; project: ProjectDto }
   | { type: 'delete_project'; project: ProjectDto };
 
+// ViewModel for note creation/edit form state
+export interface NoteFormViewModel {
+  content: string;
+  priority: string; // Stored as string from <select> value, e.g., "1"
+  place_tags: string; // Comma-separated string for the input field
+}
+
+// ViewModel for notes filter state
+export interface NotesFilterViewModel {
+  priority: number | null;
+  place_tag: string;
+}
+
+// Discriminated union to manage modal state in Notes view
+export type NoteModalState =
+  | { type: 'closed' }
+  | { type: 'create_note' }
+  | { type: 'edit_note'; note: NoteDto };
+
 // --- End of DTOs and Command Models ---

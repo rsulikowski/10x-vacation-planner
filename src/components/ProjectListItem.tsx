@@ -1,6 +1,6 @@
 import type { ProjectDto } from "../types";
 import { Button } from "./ui/button";
-import { EditIcon, TrashIcon, CalendarIcon, ClockIcon } from "lucide-react";
+import { EditIcon, TrashIcon, CalendarIcon, ClockIcon, StickyNoteIcon } from "lucide-react";
 
 interface ProjectListItemProps {
   project: ProjectDto;
@@ -40,6 +40,12 @@ export function ProjectListItem({ project, onEdit, onDelete }: ProjectListItemPr
       </div>
 
       <div className="flex gap-2">
+        <Button variant="default" size="sm" asChild>
+          <a href={`/projects/${project.id}/notes`}>
+            <StickyNoteIcon />
+            View Notes
+          </a>
+        </Button>
         <Button variant="outline" size="sm" onClick={() => onEdit(project)}>
           <EditIcon />
           Edit

@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
 import { Filter } from "lucide-react";
 import type { NotesFilterViewModel } from "../types";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
@@ -54,7 +48,7 @@ export function FilterControl({ initialFilters, onFilterChange }: FilterControlP
         <Filter className="size-4 text-muted-foreground" />
         <h3 className="text-sm font-semibold">Filter Notes</h3>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Priority Filter */}
         <div className="space-y-2">
@@ -91,4 +85,3 @@ export function FilterControl({ initialFilters, onFilterChange }: FilterControlP
     </div>
   );
 }
-

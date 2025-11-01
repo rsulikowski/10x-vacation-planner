@@ -1,7 +1,7 @@
 import type { Database } from "../db/database.types";
 import type { GeneratePlanCommand, PlanResponseDto } from "../types";
 import { ApiError } from "../lib/api-utils";
-import { aiService } from "./ai.service.mock";
+import { getAIService } from "./ai.service";
 import { DEFAULT_USER_ID, type supabaseClient } from "../db/supabase.client";
 
 type DbClient = typeof supabaseClient;
@@ -32,6 +32,7 @@ export class PlanService {
     this.validateNotes(command.notes, notes);
 
     // Krok 4: Wywołanie AI service (logowanie przeniesione do trasy API)
+    const aiService = getAIService();
     return await aiService.generatePlan(command);
   }
 
@@ -101,6 +102,7 @@ export class PlanService {
     command: GeneratePlanCommand,
     supabase: DbClient
   ): Promise<string> {
+    const aiService = getAIService();
     const prompt = aiService.generatePrompt(command);
 
     const { data, error } = await supabase
@@ -135,7 +137,10 @@ export class PlanService {
     errorMessage: string | null,
     supabase: DbClient
   ) {
-    const responseData = status === "success" && response ? response : { error: errorMessage };
+    const responseData =
+      status === "success" && response
+        ? (response as unknown as Database["public"]["Tables"]["ai_logs"]["Update"]["response"])
+        : ({ error: errorMessage } as unknown as Database["public"]["Tables"]["ai_logs"]["Update"]["response"]);
 
     const { error } = await supabase
       .from("ai_logs")

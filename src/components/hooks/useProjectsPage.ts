@@ -95,7 +95,7 @@ export function useProjectsPage() {
     // Data
     projects: projectsData?.data || [],
     meta: projectsData?.meta || { page: 1, size: 20, total: 0 },
-    
+
     // Loading states
     isLoading,
     isError,
@@ -103,10 +103,10 @@ export function useProjectsPage() {
     isCreating: createProjectMutation.isPending,
     isUpdating: updateProjectMutation.isPending,
     isDeleting: deleteProjectMutation.isPending,
-    
+
     // Modal state
     modalState,
-    
+
     // Event handlers
     handlePageChange,
     handleCreateProject,
@@ -114,10 +114,9 @@ export function useProjectsPage() {
     handleDeleteProject,
     handleCloseModal,
     handleConfirmDelete,
-    
+
     // Mutation functions
     createProject: createProjectMutation.mutate,
     updateProject: updateProjectMutation.mutate,
   };
 }
-

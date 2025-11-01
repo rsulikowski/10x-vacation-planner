@@ -1,6 +1,6 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
-import { NotesView } from "../../../components/NotesView";
+import { ProjectView } from "../../../components/ProjectView";
 
 const { projectId } = Astro.params;
 
@@ -9,7 +9,6 @@ if (!projectId) {
 }
 ---
 
-<Layout title={`Notes | 10x Vacation Planner`}>
-  <NotesView client:load projectId={projectId} />
+<Layout title={`Project | 10x Vacation Planner`}>
+  <ProjectView client:load projectId={projectId} />
 </Layout>
-

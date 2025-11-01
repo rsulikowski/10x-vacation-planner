@@ -1,12 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useQueryClient, useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import type {
-  NoteDto,
-  CreateNoteCommand,
-  UpdateNoteCommand,
-  NotesFilterViewModel,
-} from "../../types";
+import type { NoteDto, CreateNoteCommand, UpdateNoteCommand, NotesFilterViewModel } from "../../types";
 import { fetchNotes, createNote, updateNote, deleteNote } from "../../lib/api/notes.api";
 
 /**
@@ -20,18 +15,9 @@ export function useProjectNotes(projectId: string) {
   });
 
   // Infinite query for fetching notes with pagination
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery({
+  const { data, isLoading, isError, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ["notes", projectId, filters],
-    queryFn: ({ pageParam = 1 }) => 
-      fetchNotes(projectId, pageParam, 20, filters.priority, filters.place_tag),
+    queryFn: ({ pageParam = 1 }) => fetchNotes(projectId, pageParam, 20, filters.priority, filters.place_tag),
     getNextPageParam: (lastPage) => {
       const nextPage = lastPage.meta.page + 1;
       const totalPages = Math.ceil(lastPage.meta.total / lastPage.meta.size);
@@ -99,7 +85,7 @@ export function useProjectNotes(projectId: string) {
     // Data
     notes,
     hasNextPage: hasNextPage ?? false,
-    
+
     // Loading states
     isLoading,
     isError,
@@ -108,10 +94,10 @@ export function useProjectNotes(projectId: string) {
     isCreating: createNoteMutation.isPending,
     isUpdating: updateNoteMutation.isPending,
     isDeleting: deleteNoteMutation.isPending,
-    
+
     // Filter state
     filters,
-    
+
     // Functions
     setFilters: handleSetFilters,
     fetchNextPage: handleFetchNextPage,
@@ -120,4 +106,3 @@ export function useProjectNotes(projectId: string) {
     deleteNote: deleteNoteMutation.mutate,
   };
 }
-

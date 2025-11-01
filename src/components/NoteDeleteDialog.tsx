@@ -22,17 +22,11 @@ interface NoteDeleteDialogProps {
 /**
  * Confirmation dialog for deleting a note
  */
-export function NoteDeleteDialog({
-  isOpen,
-  note,
-  isLoading,
-  onConfirm,
-  onCancel,
-}: NoteDeleteDialogProps) {
+export function NoteDeleteDialog({ isOpen, note, isLoading, onConfirm, onCancel }: NoteDeleteDialogProps) {
   // Truncate content for display (max 100 chars)
-  const displayContent = note?.content 
-    ? note.content.length > 100 
-      ? note.content.substring(0, 100) + "..." 
+  const displayContent = note?.content
+    ? note.content.length > 100
+      ? note.content.substring(0, 100) + "..."
       : note.content
     : "";
 
@@ -43,20 +37,16 @@ export function NoteDeleteDialog({
           <AlertDialogTitle>Delete Note?</AlertDialogTitle>
           <AlertDialogDescription>
             Are you sure you want to delete this note? This action cannot be undone.
-            {note && (
-              <span className="mt-2 block text-sm italic text-muted-foreground">
-                "{displayContent}"
-              </span>
-            )}
+            {note && <span className="mt-2 block text-sm italic text-muted-foreground">"{displayContent}"</span>}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={onCancel} disabled={isLoading}>
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction 
-            onClick={onConfirm} 
-            disabled={isLoading} 
+          <AlertDialogAction
+            onClick={onConfirm}
+            disabled={isLoading}
             className="bg-destructive hover:bg-destructive/90"
           >
             {isLoading && <Loader2Icon className="animate-spin" />}
@@ -67,4 +57,3 @@ export function NoteDeleteDialog({
     </AlertDialog>
   );
 }
-

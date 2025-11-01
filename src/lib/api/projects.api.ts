@@ -1,9 +1,4 @@
-import type {
-  CreateProjectCommand,
-  ProjectDto,
-  ProjectsListResponseDto,
-  UpdateProjectCommand,
-} from "../../types";
+import type { CreateProjectCommand, ProjectDto, ProjectsListResponseDto, UpdateProjectCommand } from "../../types";
 
 /**
  * API utility functions for projects endpoints
@@ -12,7 +7,7 @@ import type {
 /**
  * Fetch paginated list of projects
  */
-export async function fetchProjects(page: number = 1, size: number = 20): Promise<ProjectsListResponseDto> {
+export async function fetchProjects(page = 1, size = 20): Promise<ProjectsListResponseDto> {
   const params = new URLSearchParams({
     page: page.toString(),
     size: size.toString(),
@@ -89,4 +84,3 @@ export async function deleteProject(projectId: string): Promise<void> {
     throw new Error(errorData.message || "Failed to delete project");
   }
 }
-

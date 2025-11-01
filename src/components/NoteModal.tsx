@@ -1,24 +1,11 @@
 import { useState, useEffect } from "react";
 import type { NoteDto, NoteFormViewModel, CreateNoteCommand, UpdateNoteCommand } from "../types";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "./ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 interface NoteModalProps {
   isOpen: boolean;
@@ -205,9 +192,7 @@ export function NoteModal({ isOpen, mode, note, onSubmit, onClose, isLoading = f
                   <SelectItem value="3">Low - If time permits</SelectItem>
                 </SelectContent>
               </Select>
-              {errors.priority && (
-                <p className="text-xs text-destructive">{errors.priority}</p>
-              )}
+              {errors.priority && <p className="text-xs text-destructive">{errors.priority}</p>}
             </div>
 
             {/* Place Tags Field */}
@@ -223,9 +208,7 @@ export function NoteModal({ isOpen, mode, note, onSubmit, onClose, isLoading = f
                 onChange={handlePlaceTagsChange}
                 disabled={isLoading}
               />
-              <p className="text-xs text-muted-foreground">
-                Add tags to categorize and filter your notes
-              </p>
+              <p className="text-xs text-muted-foreground">Add tags to categorize and filter your notes</p>
             </div>
           </div>
 
@@ -242,4 +225,3 @@ export function NoteModal({ isOpen, mode, note, onSubmit, onClose, isLoading = f
     </Dialog>
   );
 }
-

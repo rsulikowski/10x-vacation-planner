@@ -3,9 +3,56 @@ import { generatePlanCommandSchema, projectIdParamSchema } from "../../../../lib
 import { planService } from "../../../../services/plan.service";
 import { createSuccessResponse, createErrorResponse, ApiError } from "../../../../lib/api-utils";
 import { DEFAULT_USER_ID } from "../../../../db/supabase.client";
-import { aiService } from "../../../../services/ai.service.mock";
+import { getAIService } from "../../../../services/ai.service";
 import { z } from "zod";
 import type { Json } from "../../../../db/database.types";
+
+export const prerender = false;
+
+/**
+ * GET /api/projects/{projectId}/plan
+ *
+ * Fetches the latest successfully generated plan for a project
+ */
+export const GET: APIRoute = async (context) => {
+  try {
+    const projectId = context.params.projectId;
+
+    if (!projectId) {
+      return createErrorResponse(400, "Bad Request", "Project ID is required");
+    }
+
+    // Fetch the latest successful plan from ai_logs (most recent by created_on)
+    const { data: aiLog, error } = await context.locals.supabase
+      .from("ai_logs")
+      .select("response, version, created_on")
+      .eq("project_id", projectId)
+      .eq("user_id", DEFAULT_USER_ID)
+      .eq("status", "success")
+      .order("created_on", { ascending: false })
+      .limit(1)
+      .single();
+
+    if (error || !aiLog) {
+      return createErrorResponse(404, "Not Found", "No plan found for this project");
+    }
+
+    // Extract schedule from response
+    const response = aiLog.response as { schedule?: unknown };
+
+    return createSuccessResponse(
+      {
+        schedule: response.schedule || [],
+        version: aiLog.version,
+        createdOn: aiLog.created_on,
+      },
+      200
+    );
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    return createErrorResponse(500, "Server Error", message);
+  }
+};
 
 /**
  * POST /api/projects/{projectId}/plan
@@ -55,6 +102,7 @@ export const POST: APIRoute = async (context) => {
     const command = generatePlanCommandSchema.parse(requestBody);
 
     // Prepare prompt and create pending log
+    const aiService = getAIService();
     prompt = aiService.generatePrompt(command);
     const { data: pendingData, error: pendingError } = await context.locals.supabase
       .from("ai_logs")
@@ -84,7 +132,12 @@ export const POST: APIRoute = async (context) => {
     if (logId) {
       await context.locals.supabase
         .from("ai_logs")
-        .update({ status: "success", response: result as unknown as Json, response_code: responseCode, duration_ms: duration })
+        .update({
+          status: "success",
+          response: result as unknown as Json,
+          response_code: responseCode,
+          duration_ms: duration,
+        })
         .eq("id", logId);
     }
     return createSuccessResponse(result, 200);

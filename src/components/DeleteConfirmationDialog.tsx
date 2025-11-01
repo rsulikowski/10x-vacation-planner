@@ -43,7 +43,11 @@ export function DeleteConfirmationDialog({
           <AlertDialogCancel onClick={onCancel} disabled={isLoading}>
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm} disabled={isLoading} className="bg-destructive hover:bg-destructive/90">
+          <AlertDialogAction
+            onClick={onConfirm}
+            disabled={isLoading}
+            className="bg-destructive hover:bg-destructive/90"
+          >
             {isLoading && <Loader2Icon className="animate-spin" />}
             Delete Project
           </AlertDialogAction>
@@ -52,4 +56,3 @@ export function DeleteConfirmationDialog({
     </AlertDialog>
   );
 }
-

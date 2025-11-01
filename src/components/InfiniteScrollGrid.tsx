@@ -79,9 +79,7 @@ export function InfiniteScrollGrid({
       <div className="flex items-center justify-center py-12">
         <div className="text-center max-w-md">
           <h3 className="text-lg font-semibold mb-2">Error Loading Notes</h3>
-          <p className="text-sm text-muted-foreground mb-4">
-            {error.message || "An unexpected error occurred"}
-          </p>
+          <p className="text-sm text-muted-foreground mb-4">{error.message || "An unexpected error occurred"}</p>
           {onRetry && (
             <Button onClick={onRetry} variant="outline">
               Retry
@@ -98,9 +96,7 @@ export function InfiniteScrollGrid({
       <div className="flex items-center justify-center py-12">
         <div className="text-center max-w-md">
           <h3 className="text-lg font-semibold mb-2">No Notes Yet</h3>
-          <p className="text-sm text-muted-foreground">
-            Start adding notes to your project to plan your trip!
-          </p>
+          <p className="text-sm text-muted-foreground">Start adding notes to your project to plan your trip!</p>
         </div>
       </div>
     );
@@ -111,12 +107,7 @@ export function InfiniteScrollGrid({
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {notes.map((note) => (
-          <NoteCard
-            key={note.id}
-            note={note}
-            onEdit={onEdit}
-            onDelete={onDelete}
-          />
+          <NoteCard key={note.id} note={note} onEdit={onEdit} onDelete={onDelete} />
         ))}
       </div>
 
@@ -134,4 +125,3 @@ export function InfiniteScrollGrid({
     </div>
   );
 }
-

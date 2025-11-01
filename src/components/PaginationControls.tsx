@@ -49,4 +49,3 @@ export function PaginationControls({ meta, onPageChange }: PaginationControlsPro
     </div>
   );
 }
-

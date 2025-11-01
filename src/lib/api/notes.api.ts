@@ -1,9 +1,4 @@
-import type {
-  CreateNoteCommand,
-  NoteDto,
-  NotesListResponseDto,
-  UpdateNoteCommand,
-} from "../../types";
+import type { CreateNoteCommand, NoteDto, NotesListResponseDto, UpdateNoteCommand } from "../../types";
 
 /**
  * API utility functions for notes endpoints
@@ -14,8 +9,8 @@ import type {
  */
 export async function fetchNotes(
   projectId: string,
-  page: number = 1,
-  size: number = 20,
+  page = 1,
+  size = 20,
   priority?: number | null,
   place_tag?: string
 ): Promise<NotesListResponseDto> {
@@ -70,11 +65,7 @@ export async function createNote(projectId: string, command: CreateNoteCommand):
 /**
  * Update an existing note
  */
-export async function updateNote(
-  projectId: string,
-  noteId: string,
-  command: UpdateNoteCommand
-): Promise<NoteDto> {
+export async function updateNote(projectId: string, noteId: string, command: UpdateNoteCommand): Promise<NoteDto> {
   const response = await fetch(`/api/projects/${projectId}/notes/${noteId}`, {
     method: "PATCH",
     headers: {
@@ -107,4 +98,3 @@ export async function deleteNote(projectId: string, noteId: string): Promise<voi
     throw new Error(errorData.message || "Failed to delete note");
   }
 }
-

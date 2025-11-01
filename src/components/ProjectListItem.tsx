@@ -58,4 +58,3 @@ export function ProjectListItem({ project, onEdit, onDelete }: ProjectListItemPr
     </div>
   );
 }
-

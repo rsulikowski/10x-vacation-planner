@@ -72,4 +72,3 @@ export function ProjectsList({ projects, isLoading, onEdit, onDelete }: Projects
     </div>
   );
 }
-

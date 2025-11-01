@@ -16,7 +16,7 @@
 - **Frontend:** Astro 5, React 19, TypeScript 5  
 - **Styling:** Tailwind CSS 4, Shadcn/ui  
 - **Backend:** Supabase (PostgreSQL, Auth)  
-- **AI Integration:** Openrouter.ai (supports OpenAI, Anthropic, Google, etc.)  
+- **AI Integration:** GROQ (fast LLM inference with Llama models)  
 - **CI/CD:** GitHub Actions  
 - **Hosting:** Docker on DigitalOcean  
 
@@ -27,7 +27,7 @@
 - Node.js v22.14.0 (see `.nvmrc`)  
 - npm (bundled with Node.js)  
 - Supabase project (URL & anon/public API key)  
-- Openrouter.ai API key  
+- GROQ API key (get it from https://console.groq.com)  
 
 ### Setup
 
@@ -44,9 +44,9 @@
    ```bash
    cp .env.example .env
    # Edit .env:
-   # SUPABASE_URL=
-   # SUPABASE_ANON_KEY=
-   # OPENROUTER_API_KEY=
+   # SUPABASE_URL=your_supabase_project_url
+   # SUPABASE_KEY=your_supabase_anon_key
+   # GROQ_API_KEY=your_groq_api_key
    ```  
 4. Start the development server  
    ```bash

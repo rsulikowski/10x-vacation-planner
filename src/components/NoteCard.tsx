@@ -1,12 +1,7 @@
 import { MoreVertical, Edit, Trash2 } from "lucide-react";
 import type { NoteDto } from "../types";
 import { Card, CardContent, CardFooter } from "./ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
 
 interface NoteCardProps {
@@ -24,9 +19,9 @@ const getPriorityBadge = (priority: number) => {
     2: { label: "Medium", className: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300" },
     3: { label: "Low", className: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300" },
   };
-  
+
   const badge = badges[priority as keyof typeof badges] || badges[3];
-  
+
   return (
     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${badge.className}`}>
       {badge.label}
@@ -46,12 +41,7 @@ export function NoteCard({ note, onEdit, onDelete }: NoteCardProps) {
           <div>{getPriorityBadge(note.priority)}</div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="size-8 -mt-1 -mr-1"
-                aria-label="Note actions"
-              >
+              <Button variant="ghost" size="icon" className="size-8 -mt-1 -mr-1" aria-label="Note actions">
                 <MoreVertical />
               </Button>
             </DropdownMenuTrigger>
@@ -60,22 +50,17 @@ export function NoteCard({ note, onEdit, onDelete }: NoteCardProps) {
                 <Edit />
                 Edit
               </DropdownMenuItem>
-              <DropdownMenuItem 
-                onClick={() => onDelete(note)}
-                className="text-destructive focus:text-destructive"
-              >
+              <DropdownMenuItem onClick={() => onDelete(note)} className="text-destructive focus:text-destructive">
                 <Trash2 />
                 Delete
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        
-        <p className="text-sm text-foreground whitespace-pre-wrap break-words">
-          {note.content}
-        </p>
+
+        <p className="text-sm text-foreground whitespace-pre-wrap break-words">{note.content}</p>
       </CardContent>
-      
+
       {note.place_tags && note.place_tags.length > 0 && (
         <CardFooter className="flex-wrap gap-1.5">
           {note.place_tags.map((tag, index) => (
@@ -91,4 +76,3 @@ export function NoteCard({ note, onEdit, onDelete }: NoteCardProps) {
     </Card>
   );
 }
-

@@ -16,10 +16,10 @@ export class PlanService {
    * @param projectId - ID projektu
    * @param command - Komenda z parametrami generowania
    * @param supabase - Klient Supabase
-   * @returns Plan podróży
+   * @returns Plan podróży z metadanymi projektu
    * @throws ApiError w przypadku błędów
    */
-  async generatePlan(projectId: string, command: GeneratePlanCommand, supabase: DbClient): Promise<PlanResponseDto> {
+  async generatePlan(projectId: string, command: GeneratePlanCommand, supabase: DbClient): Promise<{ plan: PlanResponseDto; durationDays: number }> {
     const userId = DEFAULT_USER_ID;
 
     // Krok 1: Weryfikacja istnienia projektu i własności
@@ -33,7 +33,12 @@ export class PlanService {
 
     // Krok 4: Wywołanie AI service (logowanie przeniesione do trasy API)
     const aiService = getAIService();
-    return await aiService.generatePlan(command);
+    const plan = await aiService.generatePlan(command);
+    
+    return {
+      plan,
+      durationDays: project.duration_days,
+    };
   }
 
   /**
@@ -67,7 +72,7 @@ export class PlanService {
       .from("notes")
       .select("id, content, priority, place_tags")
       .eq("project_id", projectId)
-      .order("priority", { ascending: false });
+      .order("priority", { ascending: true });
 
     if (error) {
       throw new ApiError(500, "Error fetching project notes");

@@ -94,7 +94,7 @@ export class NoteService {
     }
 
     // Pobierz notatki z paginacją
-    const { data, error } = await dataQuery.order("priority", { ascending: false }).range(offset, offset + size - 1);
+    const { data, error } = await dataQuery.order("priority", { ascending: true }).range(offset, offset + size - 1);
 
     if (error) {
       console.error("Error listing notes:", error);

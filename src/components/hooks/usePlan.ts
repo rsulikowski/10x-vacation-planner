@@ -13,7 +13,7 @@ interface UsePlanReturn {
   isGenerating: boolean;
   error: string | null;
   fetchPlan: () => Promise<void>;
-  generatePlan: (notes: NoteDto[]) => Promise<void>;
+  generatePlan: (notes: NoteDto[], projectName: string, durationDays: number) => Promise<void>;
 }
 
 export function usePlan(projectId: string): UsePlanReturn {
@@ -55,7 +55,7 @@ export function usePlan(projectId: string): UsePlanReturn {
    * Generate a new plan using AI
    */
   const generatePlan = useCallback(
-    async (notes: NoteDto[]) => {
+    async (notes: NoteDto[], projectName: string, durationDays: number) => {
       if (notes.length === 0) {
         setError("Please add notes to your project before generating a plan");
         return;
@@ -81,6 +81,8 @@ export function usePlan(projectId: string): UsePlanReturn {
           },
           body: JSON.stringify({
             model: "gpt-4o-mini",
+            project_name: projectName,
+            duration_days: durationDays,
             notes: notesData,
             preferences: {
               categories: [],

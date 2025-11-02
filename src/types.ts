@@ -76,6 +76,8 @@ export interface ScheduleItemDto {
 // Command Model for generating a plan synchronously
 export interface GeneratePlanCommand {
   model: string; // e.g. 'gpt-5'
+  project_name: string; // Name of the travel project (destination/trip name)
+  duration_days: number; // Number of days for the itinerary
   notes: {
     id: string;
     content: string;

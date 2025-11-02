@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import type { NoteDto, NoteFormViewModel, CreateNoteCommand, UpdateNoteCommand } from "../types";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { NOTE_TAGS, NOTE_TAG_LABELS } from "../lib/constants";
+import { XIcon } from "lucide-react";
 
 interface NoteModalProps {
   isOpen: boolean;
@@ -28,6 +29,7 @@ export function NoteModal({ isOpen, mode, note, onSubmit, onClose, isLoading = f
     priority: "",
     place_tags: "",
   });
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [errors, setErrors] = useState<Partial<Record<keyof NoteFormViewModel, string>>>({});
 
   // Initialize form when modal opens or note changes
@@ -39,12 +41,14 @@ export function NoteModal({ isOpen, mode, note, onSubmit, onClose, isLoading = f
           priority: note.priority.toString(),
           place_tags: note.place_tags?.join(", ") || "",
         });
+        setSelectedTags(note.place_tags || []);
       } else {
         setFormData({
           content: "",
           priority: "",
           place_tags: "",
         });
+        setSelectedTags([]);
       }
       setErrors({});
     }
@@ -78,16 +82,12 @@ export function NoteModal({ isOpen, mode, note, onSubmit, onClose, isLoading = f
 
     // Transform form data to command
     const priority = parseInt(formData.priority, 10);
-    const place_tags = formData.place_tags
-      .split(",")
-      .map((tag) => tag.trim())
-      .filter((tag) => tag.length > 0);
 
     if (mode === "edit") {
       const command: UpdateNoteCommand = {
         content: formData.content.trim(),
         priority,
-        place_tags: place_tags.length > 0 ? place_tags : null,
+        place_tags: selectedTags.length > 0 ? selectedTags : null,
       };
       onSubmit(command);
     } else {
@@ -95,7 +95,7 @@ export function NoteModal({ isOpen, mode, note, onSubmit, onClose, isLoading = f
         project_id: note?.project_id || "", // This will be overridden by the API
         content: formData.content.trim(),
         priority,
-        place_tags: place_tags.length > 0 ? place_tags : null,
+        place_tags: selectedTags.length > 0 ? selectedTags : null,
       };
       onSubmit(command);
     }
@@ -121,8 +121,14 @@ export function NoteModal({ isOpen, mode, note, onSubmit, onClose, isLoading = f
     }
   };
 
-  const handlePlaceTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, place_tags: e.target.value });
+  const handleTagToggle = (tag: string) => {
+    setSelectedTags((prev) => 
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    );
+  };
+
+  const handleRemoveTag = (tagToRemove: string) => {
+    setSelectedTags((prev) => prev.filter((tag) => tag !== tagToRemove));
   };
 
   const remainingChars = MAX_CONTENT_LENGTH - formData.content.length;
@@ -195,20 +201,54 @@ export function NoteModal({ isOpen, mode, note, onSubmit, onClose, isLoading = f
               {errors.priority && <p className="text-xs text-destructive">{errors.priority}</p>}
             </div>
 
-            {/* Place Tags Field */}
+            {/* Tags Field */}
             <div className="space-y-2">
               <Label htmlFor="note-tags" className="text-sm font-medium">
-                Place Tags
+                Tags
               </Label>
-              <Input
-                id="note-tags"
-                type="text"
-                placeholder="Paris, Museums, Food (comma-separated)"
-                value={formData.place_tags}
-                onChange={handlePlaceTagsChange}
-                disabled={isLoading}
-              />
-              <p className="text-xs text-muted-foreground">Add tags to categorize and filter your notes</p>
+              <div className="space-y-2">
+                {/* Selected Tags Display */}
+                {selectedTags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 p-2 border rounded-md bg-muted/30">
+                    {selectedTags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="inline-flex items-center gap-1 px-2 py-1 text-xs bg-primary/10 text-primary rounded-md"
+                      >
+                        {NOTE_TAG_LABELS[tag as keyof typeof NOTE_TAG_LABELS] || tag}
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveTag(tag)}
+                          className="hover:text-primary/80"
+                          aria-label={`Remove ${tag} tag`}
+                        >
+                          <XIcon className="w-3 h-3" />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+                
+                {/* Tag Selection Grid */}
+                <div className="grid grid-cols-2 gap-2 p-3 border rounded-md max-h-48 overflow-y-auto">
+                  {NOTE_TAGS.map((tag) => (
+                    <label
+                      key={tag}
+                      className="flex items-center gap-2 p-2 rounded hover:bg-muted/50 cursor-pointer text-sm"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedTags.includes(tag)}
+                        onChange={() => handleTagToggle(tag)}
+                        disabled={isLoading}
+                        className="rounded border-gray-300"
+                      />
+                      <span>{NOTE_TAG_LABELS[tag as keyof typeof NOTE_TAG_LABELS]}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground">Select tags to categorize and organize your notes</p>
             </div>
           </div>
 

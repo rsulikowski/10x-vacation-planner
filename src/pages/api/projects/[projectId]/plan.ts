@@ -61,7 +61,9 @@ export const GET: APIRoute = async (context) => {
  *
  * Request Body:
  * {
- *   "model": "gpt-5",
+ *   "model": "gpt-4o-mini",  // User-facing model name (mapped to GROQ model internally)
+ *   "project_name": "Summer Trip to Paris",  // Name of the travel project
+ *   "duration_days": 5,                      // Number of days for the itinerary
  *   "notes": [{ "id": "uuid", "content": "string", "priority": 1, "place_tags": ["string"] }],
  *   "preferences": { "categories": ["string"] }  // opcjonalne
  * }
@@ -125,7 +127,7 @@ export const POST: APIRoute = async (context) => {
     }
 
     // Call service and return result
-    const result = await planService.generatePlan(projectId, command, context.locals.supabase);
+    const { plan } = await planService.generatePlan(projectId, command, context.locals.supabase);
     const duration = Date.now() - startTime;
     responseCode = 200;
 
@@ -134,13 +136,13 @@ export const POST: APIRoute = async (context) => {
         .from("ai_logs")
         .update({
           status: "success",
-          response: result as unknown as Json,
+          response: plan as unknown as Json,
           response_code: responseCode,
           duration_ms: duration,
         })
         .eq("id", logId);
     }
-    return createSuccessResponse(result, 200);
+    return createSuccessResponse(plan, 200);
   } catch (error) {
     // Determine response code based on error type
     const duration = Date.now() - startTime;

@@ -7,8 +7,19 @@ const { projectId } = Astro.params;
 if (!projectId) {
   return Astro.redirect("/projects");
 }
+
+// Fetch project data to get duration_days
+const { data: project, error } = await Astro.locals.supabase
+  .from("travel_projects")
+  .select("id, name, duration_days")
+  .eq("id", projectId)
+  .single();
+
+if (error || !project) {
+  return Astro.redirect("/projects");
+}
 ---
 
-<Layout title={`Project | 10x Vacation Planner`}>
-  <ProjectView client:load projectId={projectId} />
+<Layout title={`${project.name} | 10x Vacation Planner`}>
+  <ProjectView client:load projectId={projectId} projectName={project.name} durationDays={project.duration_days} />
 </Layout>

@@ -114,23 +114,11 @@ export class AIService {
   }
 
   /**
-   * Generate a prompt description for logging
+   * Generate the user prompt for logging purposes
+   * Note: System prompt is not included as it's static and stored in code
    */
   generatePrompt(command: GeneratePlanCommand): string {
-    const userPrompt = this.buildUserPrompt(command);
-    return JSON.stringify(
-      {
-        model: command.model,
-        notes_count: command.notes.length,
-        high_priority_notes: command.notes.filter((n) => n.priority === 3).length,
-        medium_priority_notes: command.notes.filter((n) => n.priority === 2).length,
-        low_priority_notes: command.notes.filter((n) => n.priority === 1).length,
-        preferences: command.preferences || null,
-        prompt_preview: userPrompt.substring(0, 200) + "...",
-      },
-      null,
-      2
-    );
+    return this.buildUserPrompt(command);
   }
 
   /**
@@ -164,15 +152,21 @@ FORMATTING:
    * Build the user prompt with specific trip details
    */
   private buildUserPrompt(command: GeneratePlanCommand): string {
-    // Sort notes by priority (high to low)
-    const sortedNotes = [...command.notes].sort((a, b) => b.priority - a.priority);
+    // Sort notes by priority (low to high: 1=high, 2=medium, 3=low)
+    const sortedNotes = [...command.notes].sort((a, b) => a.priority - b.priority);
 
-    // Group notes by priority
-    const highPriorityNotes = sortedNotes.filter((n) => n.priority === 3);
+    // Group notes by priority (1=high, 2=medium, 3=low)
+    const highPriorityNotes = sortedNotes.filter((n) => n.priority === 1);
     const mediumPriorityNotes = sortedNotes.filter((n) => n.priority === 2);
-    const lowPriorityNotes = sortedNotes.filter((n) => n.priority === 1);
+    const lowPriorityNotes = sortedNotes.filter((n) => n.priority === 3);
 
     let prompt = `Please create a detailed travel itinerary based on the following information:\n\n`;
+
+    // Add project name/destination
+    prompt += `DESTINATION: ${command.project_name}\n`;
+    
+    // Add trip duration
+    prompt += `TRIP DURATION: ${command.duration_days} day${command.duration_days !== 1 ? 's' : ''}\n\n`;
 
     // Add high priority notes
     if (highPriorityNotes.length > 0) {
@@ -212,7 +206,7 @@ FORMATTING:
 
     // Add final instructions
     prompt += `INSTRUCTIONS:\n`;
-    prompt += `- Create a day-by-day itinerary with ${Math.max(3, Math.ceil(sortedNotes.length / 4))} to ${Math.min(7, Math.ceil(sortedNotes.length / 2))} days\n`;
+    prompt += `- Create a day-by-day itinerary for exactly ${command.duration_days} day${command.duration_days !== 1 ? 's' : ''}\n`;
     prompt += `- Prioritize high-priority items and include them early in the schedule\n`;
     prompt += `- Create 3-5 activities per day\n`;
     prompt += `- Ensure activities are geographically logical (use place tags as hints)\n`;
@@ -229,14 +223,14 @@ FORMATTING:
    */
   private mapModelName(requestedModel: string): string {
     const modelMap: Record<string, string> = {
-      "gpt-4": "llama-3.3-70b-versatile",
-      "gpt-4o-mini": "openai/gpt-oss-20b", // Changed from 8b-instant (doesn't support json_schema)
-      "gpt-5": "llama-3.3-70b-versatile",
-      "claude-3-opus": "llama-3.3-70b-versatile",
-      "claude-3.5-sonnet": "llama-3.3-70b-versatile",
+      "gpt-4": "openai/gpt-oss-20b",
+      "gpt-4o-mini": "openai/gpt-oss-20b",
+      "gpt-5": "openai/gpt-oss-20b",
+      "claude-3-opus": "openai/gpt-oss-20b",
+      "claude-3.5-sonnet": "openai/gpt-oss-20b",
     };
 
-    return modelMap[requestedModel] || "llama-3.3-70b-versatile";
+    return modelMap[requestedModel] || "openai/gpt-oss-20b";
   }
 }
 

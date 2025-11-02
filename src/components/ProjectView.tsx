@@ -26,12 +26,14 @@ const queryClient = new QueryClient({
 
 interface ProjectViewContentProps {
   projectId: string;
+  projectName: string;
+  durationDays: number;
 }
 
 /**
  * Internal component that uses the hooks
  */
-function ProjectViewContent({ projectId }: ProjectViewContentProps) {
+function ProjectViewContent({ projectId, projectName, durationDays }: ProjectViewContentProps) {
   const {
     notes,
     hasNextPage,
@@ -117,7 +119,7 @@ function ProjectViewContent({ projectId }: ProjectViewContentProps) {
   // Handle plan generation
   const handleGeneratePlan = useCallback(async () => {
     try {
-      await generatePlan(notes);
+      await generatePlan(notes, projectName, durationDays);
       toast.success("Travel plan generated successfully!", {
         description: "Your personalized itinerary is ready.",
         duration: 4000,
@@ -132,7 +134,7 @@ function ProjectViewContent({ projectId }: ProjectViewContentProps) {
         duration: 4000,
       });
     }
-  }, [notes, generatePlan, fetchPlan]);
+  }, [notes, projectName, durationDays, generatePlan, fetchPlan]);
 
   return (
     <div className="container mx-auto py-8 px-4">
@@ -151,18 +153,17 @@ function ProjectViewContent({ projectId }: ProjectViewContentProps) {
 
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Project Details</h1>
-        <p className="text-muted-foreground mt-1">Manage notes and generate travel plans</p>
+        <h1 className="text-3xl font-bold">{projectName}</h1>
+        <p className="text-muted-foreground mt-1">
+          {durationDays} day{durationDays !== 1 ? 's' : ''} • Manage notes and generate travel plans
+        </p>
       </div>
 
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="mb-6">
           <TabsTrigger value="notes">Notes</TabsTrigger>
-          <TabsTrigger value="plan">
-            Generated Plan
-            {plan && <span className="ml-2 text-xs text-muted-foreground">(v{plan.version})</span>}
-          </TabsTrigger>
+          <TabsTrigger value="plan">Generated Plan</TabsTrigger>
         </TabsList>
 
         {/* Notes Tab */}
@@ -213,7 +214,7 @@ function ProjectViewContent({ projectId }: ProjectViewContentProps) {
               <h2 className="text-2xl font-semibold">Generated Plan</h2>
               {plan && (
                 <p className="text-sm text-muted-foreground mt-1">
-                  Version {plan.version} • Generated {new Date(plan.createdOn).toLocaleDateString()}
+                  Generated {new Date(plan.createdOn).toLocaleDateString()}
                 </p>
               )}
             </div>
@@ -282,16 +283,18 @@ function ProjectViewContent({ projectId }: ProjectViewContentProps) {
 
 interface ProjectViewProps {
   projectId: string;
+  projectName: string;
+  durationDays: number;
 }
 
 /**
  * ProjectView component is the main container for project details with notes and plan tabs.
  * Wrapped with QueryClientProvider for React Query functionality.
  */
-export function ProjectView({ projectId }: ProjectViewProps) {
+export function ProjectView({ projectId, projectName, durationDays }: ProjectViewProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <ProjectViewContent projectId={projectId} />
+      <ProjectViewContent projectId={projectId} projectName={projectName} durationDays={durationDays} />
     </QueryClientProvider>
   );
 }

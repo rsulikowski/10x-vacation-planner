@@ -22,7 +22,7 @@ const preferencesSchema = z
 /**
  * Whitelist dozwolonych modeli AI
  */
-const ALLOWED_AI_MODELS = ["gpt-4", "gpt-4o-mini", "gpt-5", "claude-3-opus", "claude-3.5-sonnet"] as const;
+const ALLOWED_AI_MODELS = ["gpt-4", "gpt-4o-mini", "gpt-5", "claude-3-opus", "claude-3.5-sonnet", "openai/gpt-oss-20b"] as const;
 
 /**
  * Schemat walidacji dla komendy generowania planu
@@ -31,6 +31,8 @@ export const generatePlanCommandSchema = z.object({
   model: z.enum(ALLOWED_AI_MODELS, {
     errorMap: () => ({ message: `Model must be one of: ${ALLOWED_AI_MODELS.join(", ")}` }),
   }),
+  project_name: z.string().min(1, "Project name cannot be empty").max(200, "Project name too long"),
+  duration_days: z.number().int().min(1, "Duration must be at least 1 day").max(365, "Duration cannot exceed 365 days"),
   notes: z.array(noteSchema).min(1, "At least one note must be provided").max(100, "Maximum 100 notes allowed"),
   preferences: preferencesSchema,
 });

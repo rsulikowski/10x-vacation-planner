@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Filter } from "lucide-react";
 import type { NotesFilterViewModel } from "../types";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { NOTE_TAGS, NOTE_TAG_LABELS } from "../lib/constants";
 
 interface FilterControlProps {
   initialFilters: NotesFilterViewModel;
@@ -33,14 +33,15 @@ export function FilterControl({ initialFilters, onFilterChange }: FilterControlP
     });
   };
 
-  const handlePlaceTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePlaceTagChange = (value: string) => {
     setLocalFilters({
       ...localFilters,
-      place_tag: e.target.value,
+      place_tag: value === "all" ? "" : value,
     });
   };
 
   const priorityValue = localFilters.priority === null ? "all" : localFilters.priority.toString();
+  const tagValue = localFilters.place_tag === "" ? "all" : localFilters.place_tag;
 
   return (
     <div className="rounded-lg border bg-card p-4 shadow-sm">
@@ -68,18 +69,24 @@ export function FilterControl({ initialFilters, onFilterChange }: FilterControlP
           </Select>
         </div>
 
-        {/* Place Tag Filter */}
+        {/* Tag Filter */}
         <div className="space-y-2">
-          <Label htmlFor="place-tag-filter" className="text-sm font-medium">
-            Place Tag
+          <Label htmlFor="tag-filter" className="text-sm font-medium">
+            Tag
           </Label>
-          <Input
-            id="place-tag-filter"
-            type="text"
-            placeholder="Search by tag..."
-            value={localFilters.place_tag}
-            onChange={handlePlaceTagChange}
-          />
+          <Select value={tagValue} onValueChange={handlePlaceTagChange}>
+            <SelectTrigger id="tag-filter">
+              <SelectValue placeholder="All tags" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All tags</SelectItem>
+              {NOTE_TAGS.map((tag) => (
+                <SelectItem key={tag} value={tag}>
+                  {NOTE_TAG_LABELS[tag as keyof typeof NOTE_TAG_LABELS]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </div>
     </div>

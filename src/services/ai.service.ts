@@ -24,7 +24,7 @@ const PLAN_RESPONSE_SCHEMA: JSONSchema = {
         properties: {
           day: {
             type: "number",
-            description: "Day number (1, 2, 3, etc.)",
+            description: "Day number (1, 2, 3, etc.). MUST include ALL days from 1 to the total number of days requested.",
           },
           activities: {
             type: "array",
@@ -32,13 +32,13 @@ const PLAN_RESPONSE_SCHEMA: JSONSchema = {
               type: "string",
               description: "Activity description",
             },
-            description: "List of activities for the day",
+            description: "List of 3-5 activities for the day",
           },
         },
         required: ["day", "activities"],
         additionalProperties: false,
       },
-      description: "Daily schedule of activities",
+      description: "Complete daily schedule for ALL days of the trip. Must include every single day from day 1 to the last day.",
     },
   },
   required: ["schedule"],
@@ -86,9 +86,24 @@ export class AIService {
         },
       });
 
-      // Validate that we have at least some schedule items
+      // Validate that we have the expected number of days
       if (!response.data.schedule || response.data.schedule.length === 0) {
         throw new ApiError(500, "Generated plan has no schedule items");
+      }
+
+      if (response.data.schedule.length !== command.duration_days) {
+        throw new ApiError(
+          500,
+          `Generated plan has ${response.data.schedule.length} days but expected ${command.duration_days} days`
+        );
+      }
+
+      // Validate that days are sequential starting from 1
+      const dayNumbers = response.data.schedule.map((item) => item.day).sort((a, b) => a - b);
+      for (let i = 0; i < command.duration_days; i++) {
+        if (dayNumbers[i] !== i + 1) {
+          throw new ApiError(500, `Generated plan is missing day ${i + 1} or has incorrect day numbering`);
+        }
       }
 
       return response.data;
@@ -136,11 +151,13 @@ RESPONSIBILITIES:
 - Include high-priority items early in the trip when possible
 
 OUTPUT REQUIREMENTS:
-- Generate a schedule with specific days (day 1, day 2, etc.)
+- CRITICAL: Generate a COMPLETE schedule for ALL days from day 1 to the last day
+- DO NOT skip any days - every single day must be included in the response
 - Each day should have 3-5 activities
 - Activities should be specific and actionable
 - Include breaks, meals, and travel time considerations
 - Activities should be diverse and well-balanced throughout the trip
+- Days must be numbered sequentially: 1, 2, 3, etc.
 
 FORMATTING:
 - Be concise but informative in activity descriptions
@@ -206,10 +223,12 @@ FORMATTING:
 
     // Add final instructions
     prompt += `INSTRUCTIONS:\n`;
-    prompt += `- Create a day-by-day itinerary for exactly ${command.duration_days} day${command.duration_days !== 1 ? 's' : ''}\n`;
+    prompt += `- IMPORTANT: Create a COMPLETE day-by-day itinerary for ALL ${command.duration_days} day${command.duration_days !== 1 ? 's' : ''}\n`;
+    prompt += `- You MUST include every single day from Day 1 to Day ${command.duration_days}\n`;
+    prompt += `- DO NOT skip any days - the response must contain exactly ${command.duration_days} days\n`;
+    prompt += `- Each day should have 3-5 activities\n`;
     prompt += `- Prioritize high-priority items and include them early in the schedule\n`;
-    prompt += `- Create 3-5 activities per day\n`;
-    prompt += `- Ensure activities are geographically logical (use place tags as hints)\n`;
+    prompt += `- Ensure activities are geographically logical\n`;
     prompt += `- Include practical activities like meals, breaks, and travel time\n`;
     prompt += `- Make the schedule realistic and enjoyable\n`;
 

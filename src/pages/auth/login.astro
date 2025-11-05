@@ -1,0 +1,14 @@
+---
+import AuthLayout from "../../layouts/AuthLayout.astro";
+import { LoginForm } from "../../components/auth/LoginForm";
+
+export const prerender = false;
+
+// Middleware handles redirect for authenticated users
+// If user is already logged in, they'll be redirected to /projects automatically
+---
+
+<AuthLayout title="Login | VacationPlanner">
+  <LoginForm client:load />
+</AuthLayout>
+

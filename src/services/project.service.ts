@@ -1,9 +1,10 @@
 import type { CreateProjectCommand, ProjectDto, ProjectsListResponseDto, UpdateProjectCommand } from "../types";
 import { ApiError } from "../lib/api-utils";
-import type { supabaseClient } from "../db/supabase.client";
+import type { SupabaseClient } from "../db/supabase.client";
+import type { Database } from "../db/database.types";
 import type { ValidatedListProjectsQuery } from "../lib/schemas/project.schema";
 
-type DbClient = typeof supabaseClient;
+type DbClient = SupabaseClient<Database>;
 
 /**
  * Service odpowiedzialny za zarządzanie projektami podróży

@@ -31,30 +31,27 @@ Planning engaging and interesting trips is time-consuming and requires knowledge
 ## 5. User Stories
 
 - ID: US-001
-  Title: Account Registration
+  Title: Account Registration - not needed for MVP
   Description: As a new user, I want to register an account by providing email and password so that I can access the application
   Acceptance Criteria:
   - The form requires a valid email format and a minimum password length
-  - Upon registration, a verification email with an expiring link is sent
-  - The account remains inactive until verification
+  - The account is automatically activated
 
 - ID: US-002
-  Title: Email Verification
-  Description: As a user, I want to verify my email address by clicking a link so that I can activate my account
-  Acceptance Criteria:
-  - The verification link expires after a set time
-  - Clicking the link changes the account status to active
-  - An error message is displayed in case of failure
-
-- ID: US-003
   Title: User Login
   Description: As a user, I want to log in with email and password so that I can use the application
   Acceptance Criteria:
-  - Successful login redirects to the dashboard
+  - Successful login redirects to the dashboard with projects
   - Failed login shows an invalid credentials message
 
+- ID: US-003
+  Title: User Logout
+  Description: As a logged in user, I want to log out
+  Acceptance Criteria:
+  - Successful logout redirects to the landing page
+
 - ID: US-004
-  Title: Password Reset
+  Title: Password Reset - not needed for MVP
   Description: As a user, I want to reset my password via email so that I can regain access
   Acceptance Criteria:
   - User provides the email associated with the account
@@ -62,11 +59,12 @@ Planning engaging and interesting trips is time-consuming and requires knowledge
   - After changing the password, the user can log in with the new credentials
 
 - ID: US-005
-  Title: Save Travel Preferences
+  Title: Save Travel Preferences - not needed for MVP
   Description: As a user, I want to define travel preferences in my profile so that AI can include them in plan generation
   Acceptance Criteria:
   - Ability to select preference categories (e.g., beach, mountains)
   - Preferences are saved and visible in the profile
+  - Preferences are located in the profile view accessible in the top-right corner. In the same place user information can be updated
 
 - ID: US-006
   Title: Create Travel Project

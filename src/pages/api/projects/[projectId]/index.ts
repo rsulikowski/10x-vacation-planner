@@ -2,7 +2,6 @@ import type { APIRoute } from "astro";
 import { handleApiError, createSuccessResponse, ApiError } from "../../../../lib/api-utils";
 import { projectIdParamSchema, updateProjectCommandSchema } from "../../../../lib/schemas/project.schema";
 import { projectService } from "../../../../services/project.service";
-import { DEFAULT_USER_ID } from "../../../../db/supabase.client";
 
 /**
  * GET /api/projects/{projectId}
@@ -19,13 +18,18 @@ import { DEFAULT_USER_ID } from "../../../../db/supabase.client";
  *
  * Error Codes:
  * - 400: Invalid projectId UUID format
+ * - 401: User not authenticated
  * - 404: Project not found or not owned by user
  * - 500: Server error or database error
  */
 export const GET: APIRoute = async (context) => {
   try {
+    const user = context.locals.user;
+    if (!user) {
+      throw new ApiError(401, "Unauthorized");
+    }
     const projectId = projectIdParamSchema.parse(context.params.projectId);
-    const project = await projectService.getProject(projectId, DEFAULT_USER_ID, context.locals.supabase);
+    const project = await projectService.getProject(projectId, user.id, context.locals.supabase);
     return createSuccessResponse(project, 200);
   } catch (error) {
     return handleApiError(error);
@@ -48,11 +52,16 @@ export const GET: APIRoute = async (context) => {
  *
  * Error Codes:
  * - 400: Invalid input
+ * - 401: User not authenticated
  * - 404: Project not found
  * - 500: Server error
  */
 export const PATCH: APIRoute = async (context) => {
   try {
+    const user = context.locals.user;
+    if (!user) {
+      throw new ApiError(401, "Unauthorized");
+    }
     const projectId = projectIdParamSchema.parse(context.params.projectId);
 
     let body: unknown;
@@ -63,7 +72,7 @@ export const PATCH: APIRoute = async (context) => {
     }
 
     const command = updateProjectCommandSchema.parse(body);
-    const project = await projectService.updateProject(projectId, DEFAULT_USER_ID, command, context.locals.supabase);
+    const project = await projectService.updateProject(projectId, user.id, command, context.locals.supabase);
     return createSuccessResponse(project, 200);
   } catch (error) {
     return handleApiError(error);
@@ -79,13 +88,18 @@ export const PATCH: APIRoute = async (context) => {
  *
  * Error Codes:
  * - 400: Invalid projectId
+ * - 401: User not authenticated
  * - 404: Project not found
  * - 500: Server error
  */
 export const DELETE: APIRoute = async (context) => {
   try {
+    const user = context.locals.user;
+    if (!user) {
+      throw new ApiError(401, "Unauthorized");
+    }
     const projectId = projectIdParamSchema.parse(context.params.projectId);
-    await projectService.deleteProject(projectId, DEFAULT_USER_ID, context.locals.supabase);
+    await projectService.deleteProject(projectId, user.id, context.locals.supabase);
     return new Response(null, { status: 204 });
   } catch (error) {
     return handleApiError(error);

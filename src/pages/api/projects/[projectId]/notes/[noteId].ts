@@ -6,7 +6,6 @@ import {
   updateNoteCommandSchema,
 } from "../../../../../lib/schemas/note.schema";
 import { noteService } from "../../../../../services/note.service";
-import { DEFAULT_USER_ID } from "../../../../../db/supabase.client";
 
 /**
  * GET /api/projects/{projectId}/notes/{noteId}
@@ -15,9 +14,13 @@ import { DEFAULT_USER_ID } from "../../../../../db/supabase.client";
  */
 export const GET: APIRoute = async (context) => {
   try {
+    const user = context.locals.user;
+    if (!user) {
+      throw new ApiError(401, "Unauthorized");
+    }
     const projectId = projectIdParamSchema.parse(context.params.projectId);
     const noteId = noteIdParamSchema.parse(context.params.noteId);
-    const note = await noteService.getNote(noteId, projectId, DEFAULT_USER_ID, context.locals.supabase);
+    const note = await noteService.getNote(noteId, projectId, user.id, context.locals.supabase);
     return createSuccessResponse(note, 200);
   } catch (error) {
     return handleApiError(error);
@@ -31,6 +34,10 @@ export const GET: APIRoute = async (context) => {
  */
 export const PATCH: APIRoute = async (context) => {
   try {
+    const user = context.locals.user;
+    if (!user) {
+      throw new ApiError(401, "Unauthorized");
+    }
     const projectId = projectIdParamSchema.parse(context.params.projectId);
     const noteId = noteIdParamSchema.parse(context.params.noteId);
 
@@ -42,7 +49,7 @@ export const PATCH: APIRoute = async (context) => {
     }
 
     const command = updateNoteCommandSchema.parse(body);
-    const note = await noteService.updateNote(noteId, projectId, DEFAULT_USER_ID, command, context.locals.supabase);
+    const note = await noteService.updateNote(noteId, projectId, user.id, command, context.locals.supabase);
     return createSuccessResponse(note, 200);
   } catch (error) {
     return handleApiError(error);
@@ -56,9 +63,13 @@ export const PATCH: APIRoute = async (context) => {
  */
 export const DELETE: APIRoute = async (context) => {
   try {
+    const user = context.locals.user;
+    if (!user) {
+      throw new ApiError(401, "Unauthorized");
+    }
     const projectId = projectIdParamSchema.parse(context.params.projectId);
     const noteId = noteIdParamSchema.parse(context.params.noteId);
-    await noteService.deleteNote(noteId, projectId, DEFAULT_USER_ID, context.locals.supabase);
+    await noteService.deleteNote(noteId, projectId, user.id, context.locals.supabase);
     return new Response(null, { status: 204 });
   } catch (error) {
     return handleApiError(error);

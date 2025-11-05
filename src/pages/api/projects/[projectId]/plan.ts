@@ -2,7 +2,6 @@ import type { APIRoute } from "astro";
 import { generatePlanCommandSchema, projectIdParamSchema } from "../../../../lib/schemas/plan.schema";
 import { planService } from "../../../../services/plan.service";
 import { createSuccessResponse, createErrorResponse, ApiError } from "../../../../lib/api-utils";
-import { DEFAULT_USER_ID } from "../../../../db/supabase.client";
 import { getAIService } from "../../../../services/ai.service";
 import { z } from "zod";
 import type { Json } from "../../../../db/database.types";
@@ -16,6 +15,11 @@ export const prerender = false;
  */
 export const GET: APIRoute = async (context) => {
   try {
+    const user = context.locals.user;
+    if (!user) {
+      return createErrorResponse(401, "Unauthorized", "User not authenticated");
+    }
+
     const projectId = context.params.projectId;
 
     if (!projectId) {
@@ -23,11 +27,11 @@ export const GET: APIRoute = async (context) => {
     }
 
     // Fetch the latest successful plan from ai_logs (most recent by created_on)
+    // RLS will automatically filter by user_id
     const { data: aiLog, error } = await context.locals.supabase
       .from("ai_logs")
       .select("response, version, created_on")
       .eq("project_id", projectId)
-      .eq("user_id", DEFAULT_USER_ID)
       .eq("status", "success")
       .order("created_on", { ascending: false })
       .limit(1)
@@ -75,13 +79,16 @@ export const GET: APIRoute = async (context) => {
  *
  * Error Codes:
  * - 400: Invalid input data validation
+ * - 401: User not authenticated
  * - 404: Project does not exist or does not belong to user
  * - 500: Server error or AI service error
- *
- * UWAGA: Autoryzacja JWT zostanie zaimplementowana później.
- * Obecnie używany jest DEFAULT_USER_ID z konfiguracji Supabase.
  */
 export const POST: APIRoute = async (context) => {
+  const user = context.locals.user;
+  if (!user) {
+    return createErrorResponse(401, "Unauthorized", "User not authenticated");
+  }
+
   const startTime = Date.now();
   let logId: string | null = null;
   let prompt = "";
@@ -110,7 +117,7 @@ export const POST: APIRoute = async (context) => {
       .from("ai_logs")
       .insert({
         project_id: projectId,
-        user_id: DEFAULT_USER_ID,
+        user_id: user.id,
         prompt,
         request_body: requestBody as Json,
         response: {},
@@ -127,7 +134,7 @@ export const POST: APIRoute = async (context) => {
     }
 
     // Call service and return result
-    const { plan } = await planService.generatePlan(projectId, command, context.locals.supabase);
+    const { plan } = await planService.generatePlan(projectId, user.id, command, context.locals.supabase);
     const duration = Date.now() - startTime;
     responseCode = 200;
 
@@ -169,16 +176,19 @@ export const POST: APIRoute = async (context) => {
         .update({ status: "failure", response: { error: message }, response_code: responseCode, duration_ms: duration })
         .eq("id", logId);
     } else {
-      await context.locals.supabase.from("ai_logs").insert({
-        project_id: context.params.projectId!,
-        user_id: DEFAULT_USER_ID,
-        prompt,
-        request_body: requestBody as Json,
-        response: { error: message },
-        response_code: responseCode,
-        status: "failure",
-        duration_ms: duration,
-      });
+      const user = context.locals.user;
+      if (user) {
+        await context.locals.supabase.from("ai_logs").insert({
+          project_id: context.params.projectId!,
+          user_id: user.id,
+          prompt,
+          request_body: requestBody as Json,
+          response: { error: message },
+          response_code: responseCode,
+          status: "failure",
+          duration_ms: duration,
+        });
+      }
     }
 
     // Return error response with the same status code logged to database

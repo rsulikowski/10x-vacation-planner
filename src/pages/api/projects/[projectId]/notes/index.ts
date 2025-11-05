@@ -6,7 +6,6 @@ import {
   listNotesQuerySchema,
 } from "../../../../../lib/schemas/note.schema";
 import { noteService } from "../../../../../services/note.service";
-import { DEFAULT_USER_ID } from "../../../../../db/supabase.client";
 
 /**
  * GET /api/projects/{projectId}/notes
@@ -24,9 +23,16 @@ import { DEFAULT_USER_ID } from "../../../../../db/supabase.client";
  *   "data": [{ "id": "uuid", "project_id": "uuid", "content": "string", "priority": 1, "place_tags": [...], "updated_on": "..." }],
  *   "meta": { "page": 1, "size": 20, "total": 1 }
  * }
+ *
+ * Error Codes:
+ * - 401: User not authenticated
  */
 export const GET: APIRoute = async (context) => {
   try {
+    const user = context.locals.user;
+    if (!user) {
+      throw new ApiError(401, "Unauthorized");
+    }
     const projectId = projectIdParamSchema.parse(context.params.projectId);
 
     const query = listNotesQuerySchema.parse({
@@ -36,7 +42,7 @@ export const GET: APIRoute = async (context) => {
       place_tag: context.url.searchParams.get("place_tag"),
     });
 
-    const result = await noteService.listNotes(projectId, DEFAULT_USER_ID, query, context.locals.supabase);
+    const result = await noteService.listNotes(projectId, user.id, query, context.locals.supabase);
     return createSuccessResponse(result, 200);
   } catch (error) {
     return handleApiError(error);
@@ -70,19 +76,23 @@ export const GET: APIRoute = async (context) => {
  *
  * Error Codes:
  * - 400: Invalid projectId UUID or input data validation failure
+ * - 401: User not authenticated
  * - 404: Project not found or does not belong to user
  * - 500: Server error or database error
- *
- * UWAGA: Autoryzacja JWT zostanie zaimplementowana później.
- * Obecnie używany jest DEFAULT_USER_ID z konfiguracji Supabase.
  */
 export const POST: APIRoute = async (context) => {
   try {
+    // Get authenticated user
+    const user = context.locals.user;
+    if (!user) {
+      throw new ApiError(401, "Unauthorized");
+    }
+
     // Krok 1: Walidacja projectId z URL
     const projectId = projectIdParamSchema.parse(context.params.projectId);
 
     // Krok 2: Weryfikacja własności projektu
-    await noteService.verifyProjectOwnership(projectId, DEFAULT_USER_ID, context.locals.supabase);
+    await noteService.verifyProjectOwnership(projectId, user.id, context.locals.supabase);
 
     // Krok 3: Parsowanie i walidacja JSON body
     let body: unknown;

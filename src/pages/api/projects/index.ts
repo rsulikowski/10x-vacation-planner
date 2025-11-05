@@ -2,7 +2,6 @@ import type { APIRoute } from "astro";
 import { handleApiError, createSuccessResponse, ApiError } from "../../../lib/api-utils";
 import { createProjectCommandSchema, listProjectsQuerySchema } from "../../../lib/schemas/project.schema";
 import { projectService } from "../../../services/project.service";
-import { DEFAULT_USER_ID } from "../../../db/supabase.client";
 
 /**
  * GET /api/projects
@@ -23,14 +22,17 @@ import { DEFAULT_USER_ID } from "../../../db/supabase.client";
  *
  * Error Codes:
  * - 400: Invalid query parameters
+ * - 401: User not authenticated
  * - 500: Server error or database error
- *
- * UWAGA: Autoryzacja JWT zostanie zaimplementowana później.
- * Obecnie używany jest DEFAULT_USER_ID z konfiguracji Supabase.
  */
 export const GET: APIRoute = async (context) => {
   try {
-    const userId = DEFAULT_USER_ID;
+    // Get authenticated user from middleware
+    const user = context.locals.user;
+    if (!user) {
+      throw new ApiError(401, "Unauthorized");
+    }
+    const userId = user.id;
 
     // Parsowanie i walidacja parametrów zapytania
     const query = listProjectsQuerySchema.parse({
@@ -71,15 +73,17 @@ export const GET: APIRoute = async (context) => {
  *
  * Error Codes:
  * - 400: Invalid input data validation
+ * - 401: User not authenticated
  * - 500: Server error or database error
- *
- * UWAGA: Autoryzacja JWT zostanie zaimplementowana później.
- * Obecnie używany jest DEFAULT_USER_ID z konfiguracji Supabase.
  */
 export const POST: APIRoute = async (context) => {
   try {
-    // Krok 1: Użycie DEFAULT_USER_ID (autoryzacja JWT będzie dodana później)
-    const userId = DEFAULT_USER_ID;
+    // Get authenticated user from middleware
+    const user = context.locals.user;
+    if (!user) {
+      throw new ApiError(401, "Unauthorized");
+    }
+    const userId = user.id;
 
     // Krok 2: Parsowanie i walidacja JSON body
     let body: unknown;

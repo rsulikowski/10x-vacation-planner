@@ -1,8 +1,18 @@
 ---
-import Welcome from "../components/Welcome.astro";
+import LandingPage from "../components/LandingPage.astro";
 import Layout from "../layouts/Layout.astro";
+
+export const prerender = false;
+
+// Check if user is authenticated
+const user = Astro.locals.user;
+
+// If authenticated, redirect to projects page
+if (user) {
+  return Astro.redirect("/projects");
+}
 ---
 
-<Layout>
-  <Welcome />
+<Layout title="VacationPlanner - Plan Your Dream Vacation">
+  <LandingPage />
 </Layout>

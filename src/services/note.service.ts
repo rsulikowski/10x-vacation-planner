@@ -1,9 +1,10 @@
 import type { NoteDto, NotesListResponseDto, UpdateNoteCommand } from "../types";
 import { ApiError } from "../lib/api-utils";
-import type { supabaseClient } from "../db/supabase.client";
+import type { SupabaseClient } from "../db/supabase.client";
+import type { Database } from "../db/database.types";
 import type { ValidatedListNotesQuery } from "../lib/schemas/note.schema";
 
-type DbClient = typeof supabaseClient;
+type DbClient = SupabaseClient<Database>;
 
 /**
  * Typ dla komendy tworzenia notatki (bez project_id, który pochodzi z URL)

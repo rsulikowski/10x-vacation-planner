@@ -2,9 +2,9 @@ import type { Database } from "../db/database.types";
 import type { GeneratePlanCommand, PlanResponseDto } from "../types";
 import { ApiError } from "../lib/api-utils";
 import { getAIService } from "./ai.service";
-import { DEFAULT_USER_ID, type supabaseClient } from "../db/supabase.client";
+import type { SupabaseClient } from "../db/supabase.client";
 
-type DbClient = typeof supabaseClient;
+type DbClient = SupabaseClient<Database>;
 
 /**
  * Service odpowiedzialny za generowanie planu podróży
@@ -14,14 +14,13 @@ export class PlanService {
    * Generuje plan podróży dla projektu
    *
    * @param projectId - ID projektu
+   * @param userId - ID użytkownika (dla weryfikacji własności)
    * @param command - Komenda z parametrami generowania
    * @param supabase - Klient Supabase
    * @returns Plan podróży z metadanymi projektu
    * @throws ApiError w przypadku błędów
    */
-  async generatePlan(projectId: string, command: GeneratePlanCommand, supabase: DbClient): Promise<{ plan: PlanResponseDto; durationDays: number }> {
-    const userId = DEFAULT_USER_ID;
-
+  async generatePlan(projectId: string, userId: string, command: GeneratePlanCommand, supabase: DbClient): Promise<{ plan: PlanResponseDto; durationDays: number }> {
     // Krok 1: Weryfikacja istnienia projektu i własności
     const project = await this.fetchAndVerifyProject(projectId, userId, supabase);
 

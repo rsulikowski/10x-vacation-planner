@@ -1,5 +1,6 @@
-import { render, RenderOptions } from '@testing-library/react';
-import { ReactElement } from 'react';
+import { render } from '@testing-library/react';
+import type { RenderOptions } from '@testing-library/react';
+import type { ReactElement } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Create a custom render function that includes providers
@@ -7,6 +8,9 @@ const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
+        retry: false,
+      },
+      mutations: {
         retry: false,
       },
     },

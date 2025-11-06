@@ -17,6 +17,7 @@
 - **Styling:** Tailwind CSS 4, Shadcn/ui  
 - **Backend:** Supabase (PostgreSQL, Auth)  
 - **AI Integration:** GROQ (fast LLM inference with Llama models)  
+- **Testing:** Vitest + React Testing Library (unit/integration), Playwright (E2E)  
 - **CI/CD:** GitHub Actions  
 - **Hosting:** Docker on DigitalOcean  
 

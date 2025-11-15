@@ -1,5 +1,8 @@
 import { test, expect } from '@playwright/test';
 
+// Override authentication for these tests since we're testing public pages
+test.use({ storageState: { cookies: [], origins: [] } });
+
 test.describe('Landing Page', () => {
   test('should load the homepage', async ({ page }) => {
     await page.goto('/');

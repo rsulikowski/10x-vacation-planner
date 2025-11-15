@@ -128,7 +128,7 @@ export function ProjectFormModal({ isOpen, mode, initialData, isLoading, onSubmi
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent showCloseButton={!isLoading}>
+      <DialogContent showCloseButton={!isLoading} data-testid="project-form-modal">
         <DialogHeader>
           <DialogTitle>{mode === "create" ? "Create New Project" : "Edit Project"}</DialogTitle>
           <DialogDescription>
@@ -154,6 +154,7 @@ export function ProjectFormModal({ isOpen, mode, initialData, isLoading, onSubmi
                 aria-invalid={!!errors.name}
                 disabled={isLoading}
                 autoFocus
+                data-testid="project-name-input"
               />
               {errors.name && <p className="text-destructive text-sm">{errors.name}</p>}
             </div>
@@ -173,6 +174,7 @@ export function ProjectFormModal({ isOpen, mode, initialData, isLoading, onSubmi
                 placeholder="e.g., 7"
                 aria-invalid={!!errors.duration_days}
                 disabled={isLoading}
+                data-testid="project-duration-input"
               />
               {errors.duration_days && <p className="text-destructive text-sm">{errors.duration_days}</p>}
             </div>
@@ -187,16 +189,17 @@ export function ProjectFormModal({ isOpen, mode, initialData, isLoading, onSubmi
                 onChange={handleDateChange}
                 aria-invalid={!!errors.planned_date}
                 disabled={isLoading}
+                data-testid="project-planned-date-input"
               />
               {errors.planned_date && <p className="text-destructive text-sm">{errors.planned_date}</p>}
             </div>
           </div>
 
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={onClose} disabled={isLoading}>
+            <Button type="button" variant="outline" onClick={onClose} disabled={isLoading} data-testid="project-form-cancel-button">
               Cancel
             </Button>
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading} data-testid="project-form-submit-button">
               {isLoading && <Loader2Icon className="animate-spin" />}
               {mode === "create" ? "Create Project" : "Save Changes"}
             </Button>

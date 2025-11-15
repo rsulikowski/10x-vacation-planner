@@ -2,6 +2,10 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from './pages/login.page';
 import { testUsers } from './fixtures/test-data';
 
+// Use a separate test instance without authentication
+// This overrides the global storageState so we can test the login page
+test.use({ storageState: { cookies: [], origins: [] } });
+
 test.describe('Authentication Flow', () => {
   let loginPage: LoginPage;
 
@@ -35,19 +39,6 @@ test.describe('Authentication Flow', () => {
     await page.waitForTimeout(1000);
     // If login failed, we should still be on login page
     await expect(page).toHaveURL(/\/auth\/login/);
-  });
-
-  // Note: This test will fail if you don't have actual test user in your database
-  test.skip('should login successfully with valid credentials', async ({
-    page,
-  }) => {
-    await loginPage.login(
-      testUsers.validUser.email,
-      testUsers.validUser.password,
-    );
-
-    // Should redirect to projects page after successful login
-    await expect(page).toHaveURL(/\/projects/);
   });
 });
 

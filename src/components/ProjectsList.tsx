@@ -65,7 +65,7 @@ export function ProjectsList({ projects, isLoading, onEdit, onDelete }: Projects
 
   // Projects list
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-testid="projects-list">
       {projects.map((project) => (
         <ProjectListItem key={project.id} project={project} onEdit={onEdit} onDelete={onDelete} />
       ))}

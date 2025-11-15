@@ -1,4 +1,10 @@
 import { defineConfig, devices } from '@playwright/test';
+import { resolve } from 'node:path';
+import dotenv from 'dotenv';
+
+// Load .env.test file with override to ensure fresh values
+const envPath = resolve(process.cwd(), '.env.test');
+dotenv.config({ path: envPath, override: true, quiet: true });
 
 /**
  * Read environment variables from file.
@@ -20,7 +26,9 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [
+    ['html', { open: 'always' }] // Always auto-open report after tests
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
@@ -33,9 +41,19 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    // Setup project for authentication
+    {
+      name: 'setup',
+      testMatch: /.*\.setup\.ts/,
+    },
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { 
+        ...devices['Desktop Chrome'],
+        // Use prepared auth state
+        storageState: 'playwright/.auth/user.json',
+      },
+      dependencies: ['setup'],
     },
   ],
 

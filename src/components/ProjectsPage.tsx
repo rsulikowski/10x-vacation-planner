@@ -62,7 +62,7 @@ function ProjectsPageContent() {
           <h1 className="text-3xl font-bold">Projects</h1>
           <p className="text-muted-foreground mt-1">Manage your travel projects</p>
         </div>
-        <Button onClick={handleCreateProject} size="default">
+        <Button onClick={handleCreateProject} size="default" data-testid="new-project-button">
           <PlusIcon />
           New Project
         </Button>

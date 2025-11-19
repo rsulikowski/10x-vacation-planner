@@ -55,10 +55,27 @@
    ```  
 5. Open your browser at `http://localhost:3000`
 
+## CI/CD Pipeline
+
+![CI/CD](https://github.com/YOUR_USERNAME/10x-vacation-planner/workflows/CI%2FCD%20Pipeline/badge.svg)
+
+This project uses GitHub Actions for continuous integration and deployment:
+
+- **Full CI/CD Pipeline** - Runs on push to `main` branch or manually
+  - Linting (ESLint)
+  - Unit tests (Vitest)
+  - Production build (Astro)
+
+- **Quick Check** - Runs on Pull Requests for fast feedback
+  - Linting + Unit tests + Build (without E2E)
+
+For detailed information about the CI/CD setup, see [docs/CI_CD_SETUP.md](docs/CI_CD_SETUP.md).
+
 ## Available Scripts
 
 In the project root, you can run:
 
+### Development
 - `npm run dev`  
   Start Astro in development mode (hot reload).
 
@@ -68,9 +85,7 @@ In the project root, you can run:
 - `npm run preview`  
   Preview the production build locally.
 
-- `npm run astro`  
-  Run any Astro CLI command (e.g., `npm run astro -- help`).
-
+### Code Quality
 - `npm run lint`  
   Run ESLint to check code quality.
 
@@ -79,6 +94,22 @@ In the project root, you can run:
 
 - `npm run format`  
   Run Prettier to format code.
+
+### Testing
+- `npm run test`  
+  Run unit tests in watch mode.
+
+- `npm run test:run`  
+  Run unit tests once.
+
+- `npm run test:coverage`  
+  Run unit tests with coverage report.
+
+- `npm run test:e2e`  
+  Run end-to-end tests with Playwright.
+
+- `npm run test:e2e:ui`  
+  Run E2E tests in interactive UI mode.
 
 ## API Endpoints
 

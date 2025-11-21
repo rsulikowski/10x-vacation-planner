@@ -954,6 +954,5 @@ describe("useProjectNotes", () => {
         expect(toast.error).toHaveBeenCalledWith("Failed to delete note");
       });
     });
-
   });
 });

@@ -241,7 +241,7 @@ ProjectFormModal                →  project-form-modal
 
 ```typescript
 // 1. Import POMs from barrel export
-import { ProjectsPage, ProjectFormModal, ProjectListItem } from './pages';
+import { ProjectsPage, ProjectFormModal, ProjectListItem } from "./pages";
 
 // 2. Initialize in beforeEach
 test.beforeEach(async ({ page }) => {
@@ -251,18 +251,18 @@ test.beforeEach(async ({ page }) => {
 });
 
 // 3. Use high-level methods in tests
-test('example', async ({ page }) => {
+test("example", async ({ page }) => {
   // Navigate and interact
   await projectsPage.clickNewProject();
-  
+
   // Use composite methods for complex actions
   await projectFormModal.createProject({
-    name: 'Paris',
+    name: "Paris",
     duration: 7,
   });
-  
+
   // Verify with specific POMs
-  const item = new ProjectListItem(page, 'Paris');
+  const item = new ProjectListItem(page, "Paris");
   await expect(item.container).toBeVisible();
 });
 ```
@@ -297,4 +297,3 @@ IDE autocomplete        Reduced code           Isolated
 Compile-time            Common actions         Component
 errors                  encapsulated           independence
 ```
-

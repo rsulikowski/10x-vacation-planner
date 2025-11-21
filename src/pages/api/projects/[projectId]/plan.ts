@@ -128,6 +128,7 @@ export const POST: APIRoute = async (context) => {
       .select("id")
       .single();
     if (pendingError || !pendingData) {
+      // eslint-disable-next-line no-console
       console.error("Error creating AI log entry:", pendingError);
     } else {
       logId = pendingData.id;
@@ -177,9 +178,9 @@ export const POST: APIRoute = async (context) => {
         .eq("id", logId);
     } else {
       const user = context.locals.user;
-      if (user) {
+      if (user && context.params.projectId) {
         await context.locals.supabase.from("ai_logs").insert({
-          project_id: context.params.projectId!,
+          project_id: context.params.projectId,
           user_id: user.id,
           prompt,
           request_body: requestBody as Json,

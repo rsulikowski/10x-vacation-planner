@@ -15,50 +15,56 @@
 </decisions>
 
 <matched_recommendations>
-1. Zdefiniowanie słownika tagów i integracja z API autouzupełniania miejsc.  
-2. Dodanie spinnera i obsługa timeout/error z opcją „Spróbuj ponownie”.  
-3. Rozbudowa modelu notatki o priorytet i planowaną datę wyjazdu.  
-4. Logowanie zapytań i odpowiedzi AI w osobnej tabeli.  
-5. Prostota logowania email/hasło z weryfikacją i obsługą resetu.  
-6. Wdrożenie HTTPS i przechowywanie sekretów w env vars.  
-7. Hostowanie backendu na Supabase + DigitalOcean i CI/CD przez GitHub Actions.  
-8. Ograniczenie interfejsu do jednego języka (angielskiego) na start.  
+
+1. Zdefiniowanie słownika tagów i integracja z API autouzupełniania miejsc.
+2. Dodanie spinnera i obsługa timeout/error z opcją „Spróbuj ponownie”.
+3. Rozbudowa modelu notatki o priorytet i planowaną datę wyjazdu.
+4. Logowanie zapytań i odpowiedzi AI w osobnej tabeli.
+5. Prostota logowania email/hasło z weryfikacją i obsługą resetu.
+6. Wdrożenie HTTPS i przechowywanie sekretów w env vars.
+7. Hostowanie backendu na Supabase + DigitalOcean i CI/CD przez GitHub Actions.
+8. Ograniczenie interfejsu do jednego języka (angielskiego) na start.
 9. Wprowadzenie koncepcji projektów podróży grupujących notatki (nowa rekomendacja wynikająca z doprecyzowania historii).
-</matched_recommendations>
+   </matched_recommendations>
 
 <prd_planning_summary>
 a. Główne wymagania funkcjonalne:
-- Rejestracja i logowanie: email/hasło, weryfikacja mailowa, wygasające linki, reset hasła.  
-- Zarządzanie projektami podróży: CRUD projektów z metadanymi (przybliżona długość i data).  
-- Zarządzanie notatkami w projekcie: CRUD notatek z tagami miejsca i czasu, priorytetem i datą wyjazdu.  
-- Generowanie planu AI: synchroniczne wywołanie uwzględniające wszystkie notatki projektu, zwracające dzienny harmonogram.  
-- UI: spinner „Trwa generowanie planu…”, powiadomienia o błędach z opcją „Spróbuj ponownie”.  
+
+- Rejestracja i logowanie: email/hasło, weryfikacja mailowa, wygasające linki, reset hasła.
+- Zarządzanie projektami podróży: CRUD projektów z metadanymi (przybliżona długość i data).
+- Zarządzanie notatkami w projekcie: CRUD notatek z tagami miejsca i czasu, priorytetem i datą wyjazdu.
+- Generowanie planu AI: synchroniczne wywołanie uwzględniające wszystkie notatki projektu, zwracające dzienny harmonogram.
+- UI: spinner „Trwa generowanie planu…”, powiadomienia o błędach z opcją „Spróbuj ponownie”.
 - Logowanie AI: osobna tabela przechowująca prompt, odpowiedź, status i czas wykonania.
 
 b. Kluczowe historie użytkownika:
-1. Tworzę projekt podróży z przybliżoną długością i datą, by grupować notatki.  
-2. Dodaję w projekcie dowolną liczbę notatek (miejsce lub preferencje czasu), by zebrać inspiracje.  
-3. Przełączam się między projektami z głównego menu, by edytować lub usuwać notatki.  
-4. W widoku projektu przeglądam szczegóły (data, długość, notatki) przed generowaniem.  
-5. Generuję plan: system uwzględnia wszystkie notatki projektu i zwraca harmonogram.  
-6. Widzę spinner i w razie błędu otrzymuję opis przyczyny z opcją ponowienia.  
 
-c. Kryteria sukcesu i metryki: 
-- 75% użytkowników generuje ≥3 plany rocznie.  
-- Czas odpowiedzi AI ≤60 s.  
+1. Tworzę projekt podróży z przybliżoną długością i datą, by grupować notatki.
+2. Dodaję w projekcie dowolną liczbę notatek (miejsce lub preferencje czasu), by zebrać inspiracje.
+3. Przełączam się między projektami z głównego menu, by edytować lub usuwać notatki.
+4. W widoku projektu przeglądam szczegóły (data, długość, notatki) przed generowaniem.
+5. Generuję plan: system uwzględnia wszystkie notatki projektu i zwraca harmonogram.
+6. Widzę spinner i w razie błędu otrzymuję opis przyczyny z opcją ponowienia.
+
+c. Kryteria sukcesu i metryki:
+
+- 75% użytkowników generuje ≥3 plany rocznie.
+- Czas odpowiedzi AI ≤60 s.
 - Zapis i monitorowanie statusów prób generowania planów.
 
 d. Obszary wymagające dalszego doprecyzowania:
-- Wybór konkretnego API do autouzupełniania miejsc (koszty, limity).  
-- Lista wartości do tagów czasu i sposób prezentacji.  
+
+- Wybór konkretnego API do autouzupełniania miejsc (koszty, limity).
+- Lista wartości do tagów czasu i sposób prezentacji.
 - Detale harmonogramu generacji i wyzwalania raportów miesięcznych.
-</prd_planning_summary>
+  </prd_planning_summary>
 
 <unresolved_issues>
-- Dokładna lista wartości tagów czasu i ich UI.  
-- Mechanizm wysyłki maili weryfikacyjnych i resetu.  
-- Monitorowanie i alertowanie awarii usługi AI.  
+
+- Dokładna lista wartości tagów czasu i ich UI.
+- Mechanizm wysyłki maili weryfikacyjnych i resetu.
+- Monitorowanie i alertowanie awarii usługi AI.
 - Strategia wersjonowania po MVP.
-</unresolved_issues>
+  </unresolved_issues>
 
 </conversation_summary>

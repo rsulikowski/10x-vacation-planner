@@ -28,14 +28,18 @@ export const listProjectsQuerySchema = z
     sort: z.string().nullable().optional(),
     order: z.string().nullable().optional(),
   })
-  .transform((data) => ({
-    page: data.page ? parseInt(data.page, 10) : 1,
-    size: data.size ? Math.min(parseInt(data.size, 10), 100) : 20,
-    sort: (["created_on", "name", "duration_days", "planned_date"] as const).includes(data.sort as any)
-      ? (data.sort as "created_on" | "name" | "duration_days" | "planned_date")
-      : "created_on",
-    order: data.order === "asc" || data.order === "desc" ? data.order : "desc",
-  }))
+  .transform((data) => {
+    const validSorts = ["created_on", "name", "duration_days", "planned_date"] as const;
+    type ValidSort = (typeof validSorts)[number];
+    const isValidSort = (sort: string | null | undefined): sort is ValidSort => validSorts.includes(sort as ValidSort);
+
+    return {
+      page: data.page ? parseInt(data.page, 10) : 1,
+      size: data.size ? Math.min(parseInt(data.size, 10), 100) : 20,
+      sort: isValidSort(data.sort) ? data.sort : "created_on",
+      order: data.order === "asc" || data.order === "desc" ? data.order : "desc",
+    };
+  })
   .refine((data) => data.page >= 1, { message: "Page must be at least 1", path: ["page"] })
   .refine((data) => data.size >= 1, { message: "Size must be at least 1", path: ["size"] });
 

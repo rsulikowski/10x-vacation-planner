@@ -5,12 +5,14 @@
 ### Projects Endpoints
 
 #### 1. POST /api/projects - Create Project
+
 - **File**: `src/pages/api/projects/index.ts`
 - **Service**: `ProjectService.createProject()`
 - **Schema**: `createProjectCommandSchema`
 - **Status**: ✅ Complete with tests
 
 #### 2. GET /api/projects - List Projects
+
 - **File**: `src/pages/api/projects/index.ts`
 - **Service**: `ProjectService.listProjects()`
 - **Schema**: `listProjectsQuerySchema`
@@ -18,12 +20,14 @@
 - **Status**: ✅ Complete
 
 #### 3. GET /api/projects/{projectId} - Get Project
+
 - **File**: `src/pages/api/projects/[projectId]/index.ts`
 - **Service**: `ProjectService.getProject()`
 - **Schema**: `projectIdParamSchema`
 - **Status**: ✅ Complete
 
 #### 4. PATCH /api/projects/{projectId} - Update Project
+
 - **File**: `src/pages/api/projects/[projectId]/index.ts`
 - **Service**: `ProjectService.updateProject()`
 - **Schema**: `updateProjectCommandSchema`
@@ -31,6 +35,7 @@
 - **Status**: ✅ Complete
 
 #### 5. DELETE /api/projects/{projectId} - Delete Project
+
 - **File**: `src/pages/api/projects/[projectId]/index.ts`
 - **Service**: `ProjectService.deleteProject()`
 - **Response**: 204 No Content
@@ -39,12 +44,14 @@
 ### Notes Endpoints
 
 #### 6. POST /api/projects/{projectId}/notes - Create Note
+
 - **File**: `src/pages/api/projects/[projectId]/notes/index.ts`
 - **Service**: `NoteService.createNote()`
 - **Schema**: `createNoteCommandSchema`
 - **Status**: ✅ Complete with tests
 
 #### 7. GET /api/projects/{projectId}/notes - List Notes
+
 - **File**: `src/pages/api/projects/[projectId]/notes/index.ts`
 - **Service**: `NoteService.listNotes()`
 - **Schema**: `listNotesQuerySchema`
@@ -52,11 +59,13 @@
 - **Status**: ✅ Complete
 
 #### 8. GET /api/projects/{projectId}/notes/{noteId} - Get Note
+
 - **File**: `src/pages/api/projects/[projectId]/notes/[noteId].ts`
 - **Service**: `NoteService.getNote()`
 - **Status**: ✅ Complete
 
 #### 9. PATCH /api/projects/{projectId}/notes/{noteId} - Update Note
+
 - **File**: `src/pages/api/projects/[projectId]/notes/[noteId].ts`
 - **Service**: `NoteService.updateNote()`
 - **Schema**: `updateNoteCommandSchema`
@@ -64,6 +73,7 @@
 - **Status**: ✅ Complete
 
 #### 10. DELETE /api/projects/{projectId}/notes/{noteId} - Delete Note
+
 - **File**: `src/pages/api/projects/[projectId]/notes/[noteId].ts`
 - **Service**: `NoteService.deleteNote()`
 - **Response**: 204 No Content
@@ -72,6 +82,7 @@
 ### AI Plan Generation
 
 #### 11. POST /api/projects/{projectId}/plan - Generate Plan
+
 - **File**: `src/pages/api/projects/[projectId]/plan.ts`
 - **Service**: `PlanService.generatePlan()`, `AIService.generatePlan()`
 - **Schema**: `generatePlanCommandSchema`
@@ -139,6 +150,7 @@ Currently using `DEFAULT_USER_ID` for all endpoints. JWT authentication will be 
 ## Testing
 
 Test files created:
+
 - `.ai/project-creation-tests.md` - 10 test cases for project creation
 - `.ai/note-creation-tests.md` - 14 test cases for note creation
 - `.ai/implementation-plans/list-projects-tests.md` - 5 test cases for listing projects
@@ -184,8 +196,8 @@ src/
 ## Next Steps
 
 The core CRUD API is complete. Remaining work:
+
 1. Implement JWT authentication (replace DEFAULT_USER_ID)
 2. Add more comprehensive test suites if needed
 3. Consider adding user profile endpoints (GET /users/me, PATCH /users/me/preferences)
 4. Consider adding AI logs endpoints (GET /projects/{projectId}/logs)
-

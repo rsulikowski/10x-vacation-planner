@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useQueryClient, useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import type { NoteDto, CreateNoteCommand, UpdateNoteCommand, NotesFilterViewModel } from "../../types";
+import type { CreateNoteCommand, UpdateNoteCommand, NotesFilterViewModel } from "../../types";
 import { fetchNotes, createNote, updateNote, deleteNote } from "../../lib/api/notes.api";
 
 /**

@@ -3,6 +3,7 @@
 ## 1. Tables
 
 ### users
+
 This table is managed by Supabase Auth
 
 - **id**: UUID PRIMARY KEY DEFAULT gen_random_uuid()
@@ -13,6 +14,7 @@ This table is managed by Supabase Auth
 - **preferences**: JSONB NULL
 
 ### travel_projects
+
 - **id**: UUID PRIMARY KEY DEFAULT gen_random_uuid()
 - **user_id**: UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
 - **name**: TEXT NOT NULL
@@ -21,6 +23,7 @@ This table is managed by Supabase Auth
 - **planned_date**: DATE NULL
 
 ### notes
+
 - **id**: UUID PRIMARY KEY DEFAULT gen_random_uuid()
 - **project_id**: UUID NOT NULL REFERENCES travel_projects(id) ON DELETE CASCADE
 - **content**: TEXT NOT NULL
@@ -28,9 +31,10 @@ This table is managed by Supabase Auth
 - **place_tags**: TEXT[] NULL
 - **updated_on**: TIMESTAMPTZ NOT NULL DEFAULT now()
 
-*Trigger will update `updated_on` on each UPDATE.*
+_Trigger will update `updated_on` on each UPDATE._
 
 ### ai_logs
+
 - **id**: UUID PRIMARY KEY DEFAULT gen_random_uuid()
 - **user_id**: UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
 - **project_id**: UUID NOT NULL REFERENCES travel_projects(id) ON DELETE CASCADE
@@ -61,6 +65,7 @@ This table is managed by Supabase Auth
 Enable RLS on all tables containing user-scoped data.
 
 ### travel_projects
+
 ```sql
 ALTER TABLE travel_projects ENABLE ROW LEVEL SECURITY;
 CREATE POLICY travel_projects_select ON travel_projects FOR SELECT USING (user_id = auth.uid());
@@ -68,6 +73,7 @@ CREATE POLICY travel_projects_modify ON travel_projects FOR INSERT, UPDATE, DELE
 ```
 
 ### notes
+
 ```sql
 ALTER TABLE notes ENABLE ROW LEVEL SECURITY;
 CREATE POLICY notes_select ON notes FOR SELECT USING (
@@ -87,6 +93,7 @@ CREATE POLICY notes_modify ON notes FOR INSERT, UPDATE, DELETE WITH CHECK (
 ```
 
 ### ai_logs
+
 ```sql
 ALTER TABLE ai_logs ENABLE ROW LEVEL SECURITY;
 CREATE POLICY ai_logs_select ON ai_logs FOR SELECT USING (user_id = auth.uid());

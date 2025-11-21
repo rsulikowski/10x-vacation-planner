@@ -21,17 +21,21 @@ e2e/
 ## Page Object Models
 
 ### LoginPage (`login.page.ts`)
+
 Handles authentication flow.
 
 **Methods:**
+
 - `goto()` - Navigate to login page
 - `login(email, password)` - Perform login
 - `getErrorMessage()` - Get error message text
 
 ### ProjectsPage (`projects.page.ts`)
+
 Handles the main projects list page.
 
 **Methods:**
+
 - `goto()` - Navigate to projects page
 - `clickNewProject()` - Open the create project modal
 - `getProjectByName(name)` - Get project locator by name
@@ -42,9 +46,11 @@ Handles the main projects list page.
 - `getProjectCount()` - Get number of projects
 
 ### ProjectFormModal (`project-form-modal.page.ts`)
+
 Handles the project creation/edit modal dialog.
 
 **Methods:**
+
 - `waitForModal()` - Wait for modal to appear
 - `waitForModalClose()` - Wait for modal to close
 - `isCreateMode()` - Check if in create mode
@@ -66,14 +72,17 @@ Handles the project creation/edit modal dialog.
 - `hasDurationError()` - Check if duration validation error is shown
 
 ### ProjectListItem (`project-list-item.page.ts`)
+
 Represents an individual project card in the list.
 
 **Constructor:**
+
 - `new ProjectListItem(page, 'Project Name')` - By name
 - `new ProjectListItem(page, { name: 'Project Name' })` - By name object
 - `new ProjectListItem(page, { id: 'uuid' })` - By ID
 
 **Methods:**
+
 - `waitForVisible()` - Wait for item to be visible
 - `isVisible()` - Check if item is visible
 - `getProjectName()` - Get project name
@@ -89,10 +98,10 @@ Represents an individual project card in the list.
 ### Basic Test Structure
 
 ```typescript
-import { test, expect } from '@playwright/test';
-import { ProjectsPage, ProjectFormModal, ProjectListItem } from './pages';
+import { test, expect } from "@playwright/test";
+import { ProjectsPage, ProjectFormModal, ProjectListItem } from "./pages";
 
-test.describe('Project Management', () => {
+test.describe("Project Management", () => {
   let projectsPage: ProjectsPage;
   let projectFormModal: ProjectFormModal;
 
@@ -102,12 +111,12 @@ test.describe('Project Management', () => {
     await projectsPage.goto();
   });
 
-  test('should create a project', async ({ page }) => {
+  test("should create a project", async ({ page }) => {
     // Arrange
     const projectData = {
-      name: 'Trip to Paris',
+      name: "Trip to Paris",
       duration: 7,
-      plannedDate: '2025-12-01',
+      plannedDate: "2025-12-01",
     };
 
     // Act
@@ -123,20 +132,20 @@ test.describe('Project Management', () => {
 ### Working with Project List Items
 
 ```typescript
-test('should edit a project', async ({ page }) => {
+test("should edit a project", async ({ page }) => {
   // Get a specific project
-  const projectItem = new ProjectListItem(page, 'Trip to Paris');
-  
+  const projectItem = new ProjectListItem(page, "Trip to Paris");
+
   // Click edit
   await projectItem.clickEdit();
-  
+
   // Edit in modal
   await projectFormModal.waitForModal();
-  await projectFormModal.fillName('Trip to London');
+  await projectFormModal.fillName("Trip to London");
   await projectFormModal.submit();
-  
+
   // Verify update
-  const newProjectItem = new ProjectListItem(page, 'Trip to London');
+  const newProjectItem = new ProjectListItem(page, "Trip to London");
   await expect(newProjectItem.container).toBeVisible();
 });
 ```
@@ -144,13 +153,13 @@ test('should edit a project', async ({ page }) => {
 ### Validation Testing
 
 ```typescript
-test('should show validation errors', async () => {
+test("should show validation errors", async () => {
   await projectsPage.clickNewProject();
   await projectFormModal.waitForModal();
-  
+
   // Try to submit empty form
   await projectFormModal.submit();
-  
+
   // Check for errors
   expect(await projectFormModal.hasNameError()).toBe(true);
   expect(await projectFormModal.isSubmitDisabled()).toBe(false);
@@ -162,11 +171,13 @@ test('should show validation errors', async () => {
 The following `data-testid` attributes are available:
 
 ### Projects Page
+
 - `new-project-button` - The "New Project" button
 - `projects-list` - The grid container of projects
 - `project-list-item` - Each project card (also has `data-project-id` and `data-project-name`)
 
 ### Project Form Modal
+
 - `project-form-modal` - The modal container
 - `project-name-input` - Name input field
 - `project-duration-input` - Duration input field
@@ -213,4 +224,3 @@ npx playwright show-report
 # Open trace viewer
 npx playwright show-trace trace.zip
 ```
-

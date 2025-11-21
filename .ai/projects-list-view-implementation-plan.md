@@ -1,15 +1,19 @@
 # View Implementation Plan: Projects List
 
 ## 1. Overview
+
 This document outlines the implementation plan for the Projects List view. The primary purpose of this view is to allow users to see a paginated list of their travel projects, and to perform Create, Read, Update, and Delete (CRUD) operations on them. The view will feature a main list display, a button to initiate project creation, and modals for creating/editing and confirming deletion of a project.
 
 ## 2. View Routing
+
 The Projects List view will be accessible at the following application path:
+
 - **Path**: `/projects`
 
 This will be an Astro page (`src/pages/projects/index.astro`) that mounts a client-side rendered React component to handle the dynamic functionality.
 
 ## 3. Component Structure
+
 The view will be composed of several React components, organized in a hierarchical structure. We will leverage `shadcn/ui` for base components like buttons, modals, and inputs.
 
 ```
@@ -31,6 +35,7 @@ The view will be composed of several React components, organized in a hierarchic
 ## 4. Component Details
 
 ### `ProjectsPage` (Container)
+
 - **Component description**: The main client-side entry point that orchestrates the entire view. It manages application state, API calls, and controls the visibility and data for modals.
 - **Main elements**: Renders `ProjectsList`, `PaginationControls`, and the "New Project" button. It also conditionally renders `ProjectFormModal` and `DeleteConfirmationDialog`.
 - **Handled interactions**:
@@ -42,6 +47,7 @@ The view will be composed of several React components, organized in a hierarchic
 - **Props**: None.
 
 ### `ProjectsList`
+
 - **Component description**: A presentational component that renders the list of projects or an empty state message.
 - **Main elements**: A `<ul>` or `<div>` that maps over the project data to render `ProjectListItem` components. If the data array is empty, it renders the `EmptyStateView`.
 - **Handled interactions**: Bubbles up `onEdit` and `onDelete` events from `ProjectListItem` to the `ProjectsPage` parent.
@@ -52,6 +58,7 @@ The view will be composed of several React components, organized in a hierarchic
   - `onDelete: (project: ProjectDto) => void`
 
 ### `ProjectFormModal`
+
 - **Component description**: A modal dialog for creating or editing a project. It contains a form with input fields and validation.
 - **Main elements**: `Dialog` (shadcn), `form`, `Input` for name and duration, `DatePicker` for planned date, `Button` for Save/Cancel.
 - **Handled interactions**:
@@ -71,6 +78,7 @@ The view will be composed of several React components, organized in a hierarchic
   - `onClose: () => void`
 
 ### `DeleteConfirmationDialog`
+
 - **Component description**: A simple modal to confirm that the user wants to delete a project, preventing accidental deletion.
 - **Main elements**: `AlertDialog` (shadcn), text displaying the name of the project to be deleted, "Confirm" and "Cancel" buttons.
 - **Handled interactions**:
@@ -84,6 +92,7 @@ The view will be composed of several React components, organized in a hierarchic
   - `onCancel: () => void`
 
 ### `PaginationControls`
+
 - **Component description**: Renders pagination buttons and displays the current page information.
 - **Main elements**: "Previous" and "Next" buttons, text indicating `Page X of Y`.
 - **Handled interactions**: Clicking "Previous" or "Next" to change the current page.
@@ -93,6 +102,7 @@ The view will be composed of several React components, organized in a hierarchic
   - `onPageChange: (newPage: number) => void`
 
 ## 5. Types
+
 The implementation will use existing DTOs for API communication and introduce new ViewModels for managing component state.
 
 - **`ProjectDto`** (API): `{ id, name, duration_days, planned_date }`
@@ -101,6 +111,7 @@ The implementation will use existing DTOs for API communication and introduce ne
 - **`UpdateProjectCommand`** (API): `{ name?, duration_days?, planned_date? }`
 
 - **`ProjectFormViewModel`** (New ViewModel): Represents the state of the project creation/edit form.
+
   ```typescript
   interface ProjectFormViewModel {
     name: string;
@@ -112,13 +123,14 @@ The implementation will use existing DTOs for API communication and introduce ne
 - **`ModalState`** (New ViewModel): A discriminated union to manage the state of all modals in the view, ensuring type safety.
   ```typescript
   type ModalState =
-    | { type: 'closed' }
-    | { type: 'create_project' }
-    | { type: 'edit_project'; project: ProjectDto }
-    | { type: 'delete_project'; project: ProjectDto };
+    | { type: "closed" }
+    | { type: "create_project" }
+    | { type: "edit_project"; project: ProjectDto }
+    | { type: "delete_project"; project: ProjectDto };
   ```
 
 ## 6. State Management
+
 We will use **TanStack Query (`@tanstack/react-query`)** for server state management. This is ideal for handling data fetching, caching, and mutations (create, update, delete) declaratively.
 
 - **`useQuery`**: Will be used to fetch the paginated list of projects. The query key will include the page number and other filters, e.g., `['projects', { page: 1, size: 10 }]`.
@@ -129,6 +141,7 @@ We will use **TanStack Query (`@tanstack/react-query`)** for server state manage
 A custom hook, `useProjectsPage`, will encapsulate all this logic to keep the `ProjectsPage` component clean.
 
 ## 7. API Integration
+
 The view will interact with the `/api/projects` endpoints. All communication will be handled via `fetch` or a lightweight wrapper like `axios`.
 
 - **`GET /api/projects?page={page}&size={size}`**:
@@ -147,6 +160,7 @@ The view will interact with the `/api/projects` endpoints. All communication wil
   - **Response Type**: `204 No Content`.
 
 ## 8. User Interactions
+
 - **View Projects**: On page load, the first page of projects is fetched and displayed.
 - **Navigate Pages**: User clicks "Next" or "Previous" on `PaginationControls`. The `onPageChange` event updates the page number in state, triggering a new API call via TanStack Query.
 - **Create Project**:
@@ -166,6 +180,7 @@ The view will interact with the `/api/projects` endpoints. All communication wil
   4. The `onConfirm` handler triggers the `deleteProject` mutation. On success, the dialog closes and the list is refreshed.
 
 ## 9. Conditions and Validation
+
 - **Form Validation**: Performed client-side in the `ProjectFormModal` before submission.
   - An error message is displayed below the respective input field if validation fails (e.g., "Name is required", "Duration must be at least 1").
   - The "Save" button may be disabled until the form is valid.
@@ -180,6 +195,7 @@ The view will interact with the `/api/projects` endpoints. All communication wil
   - A loading indicator is shown on the "Save" button in the modal while a create/update mutation is in progress.
 
 ## 10. Error Handling
+
 - **Data Fetching Errors**: If the initial `GET /api/projects` call fails, a full-page error message will be displayed with a "Retry" button. TanStack Query's `isError` and `error` properties will be used to detect this.
 - **Mutation Errors**: If a `create`, `update`, or `delete` operation fails:
   - A toast notification (using `sonner` from `shadcn/ui`) will appear with a descriptive error message (e.g., "Failed to create project. Please try again.").
@@ -187,6 +203,7 @@ The view will interact with the `/api/projects` endpoints. All communication wil
 - **Validation Errors**: If the API returns a 400 Bad Request due to validation failure, the error message should be displayed to the user, ideally next to the relevant form field if possible, or in a general error message area within the modal.
 
 ## 11. Implementation Steps
+
 1.  **Setup**: Create the Astro page file `src/pages/projects/index.astro`. Install `@tanstack/react-query` and any required `shadcn/ui` components (`dialog`, `button`, `input`, `sonner`, `alert-dialog`).
 2.  **Component Scaffolding**: Create placeholder files for all the React components listed in the structure (`ProjectsPage.tsx`, `ProjectsList.tsx`, etc.).
 3.  **Type Definitions**: Add the new `ProjectFormViewModel` and `ModalState` types to a relevant types file (e.g., `src/types.ts` or a new view-specific file).

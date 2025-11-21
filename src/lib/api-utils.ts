@@ -56,6 +56,8 @@ export function handleZodError(error: z.ZodError): Response {
  * Główna funkcja obsługi błędów API
  */
 export function handleApiError(error: unknown): Response {
+  // Log error for debugging (suppress console warning - this is intentional logging)
+  // eslint-disable-next-line no-console
   console.error("API Error:", error);
 
   if (error instanceof ApiError) {

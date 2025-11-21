@@ -1,4 +1,4 @@
-import type { Page, Locator } from '@playwright/test';
+import type { Page, Locator } from "@playwright/test";
 
 /**
  * Page Object Model for Login Page
@@ -14,12 +14,12 @@ export class LoginPage {
     this.page = page;
     this.emailInput = page.getByLabel(/email/i);
     this.passwordInput = page.getByLabel(/password/i);
-    this.submitButton = page.getByRole('button', { name: /log in/i });
-    this.errorMessage = page.getByRole('alert');
+    this.submitButton = page.getByRole("button", { name: /log in/i });
+    this.errorMessage = page.getByRole("alert");
   }
 
   async goto() {
-    await this.page.goto('/auth/login');
+    await this.page.goto("/auth/login");
   }
 
   async login(email: string, password: string) {
@@ -32,4 +32,3 @@ export class LoginPage {
     return this.errorMessage.textContent();
   }
 }
-

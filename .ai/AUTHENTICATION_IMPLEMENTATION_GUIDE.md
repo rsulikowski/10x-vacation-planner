@@ -5,18 +5,21 @@
 The authentication system has been successfully integrated into VacationPlanner with the following components:
 
 ### 1. **Infrastructure Updates**
+
 - ✅ Installed `@supabase/ssr` package
 - ✅ Updated Supabase client with SSR pattern (createServerClient + getAll/setAll)
 - ✅ Updated env.d.ts with User type in Locals
 - ✅ Created auth validation schema (auth.schema.ts)
 
 ### 2. **Backend Implementation**
+
 - ✅ Enhanced middleware with authentication logic and route protection
 - ✅ Created POST `/api/auth/login` endpoint
 - ✅ Created POST `/api/auth/logout` endpoint
 - ✅ Created RLS migration file (`20251105_enable_rls_policies.sql`)
 
 ### 3. **Frontend Integration**
+
 - ✅ Updated login.astro with auth redirect logic
 - ✅ Updated index.astro with landing page and auth redirect
 - ✅ Updated Layout.astro with UserMenu integration
@@ -31,6 +34,7 @@ The authentication system has been successfully integrated into VacationPlanner 
 The RLS (Row-Level Security) migration must be applied to enable proper data isolation between users.
 
 **⚠️ IMPORTANT**: Before running the migration, ensure you have:
+
 - Supabase CLI installed (`npm install -g supabase`)
 - Your local Supabase instance running OR access to remote Supabase project
 
@@ -67,9 +71,9 @@ After running the migration, verify that RLS is enabled:
 
 ```sql
 -- Run this query in Supabase SQL Editor
-SELECT tablename, rowsecurity 
-FROM pg_tables 
-WHERE schemaname = 'public' 
+SELECT tablename, rowsecurity
+FROM pg_tables
+WHERE schemaname = 'public'
 AND tablename IN ('travel_projects', 'notes', 'ai_logs');
 ```
 
@@ -189,7 +193,8 @@ The server should start on `http://localhost:4321` (or your configured port).
 
 ### Problem: "Migration failed" or "Policy already exists"
 
-**Solution**: 
+**Solution**:
+
 ```sql
 -- Drop existing policies first (if migration fails)
 DROP POLICY IF EXISTS travel_projects_select_policy ON travel_projects;
@@ -211,11 +216,13 @@ DROP POLICY IF EXISTS ai_logs_delete_policy ON ai_logs;
 ### Problem: "Invalid credentials" even with correct password
 
 **Possible causes**:
+
 1. Email not confirmed (if Supabase requires confirmation)
 2. User account disabled
 3. Password incorrect
 
 **Solution**:
+
 - Go to Supabase Dashboard → Authentication → Users
 - Click on the user
 - Verify "Email confirmed" is checked
@@ -224,20 +231,27 @@ DROP POLICY IF EXISTS ai_logs_delete_policy ON ai_logs;
 ### Problem: "Cannot access projects" after login
 
 **Possible causes**:
+
 1. RLS policies not applied correctly
 2. User ID mismatch
 
 **Solution**:
+
 1. Verify RLS is enabled:
+
 ```sql
-SELECT tablename, rowsecurity FROM pg_tables 
+SELECT tablename, rowsecurity FROM pg_tables
 WHERE tablename = 'travel_projects';
 ```
+
 2. Check if policies exist:
+
 ```sql
 SELECT * FROM pg_policies WHERE tablename = 'travel_projects';
 ```
+
 3. Manually test policy:
+
 ```sql
 -- Run as authenticated user
 SET request.jwt.claim.sub = 'user-id-here';
@@ -247,10 +261,12 @@ SELECT * FROM travel_projects;
 ### Problem: "Middleware infinite redirect loop"
 
 **Possible causes**:
+
 - Middleware logic error
 - Cookie not being set correctly
 
 **Solution**:
+
 1. Check browser console for errors
 2. Check browser DevTools → Application → Cookies
 3. Verify cookies `sb-access-token` and `sb-refresh-token` are set
@@ -261,6 +277,7 @@ SELECT * FROM travel_projects;
 **Cause**: User object is undefined in component
 
 **Solution**:
+
 - Check that `Astro.locals.user` is defined in the page
 - Verify middleware is running (add console.log in middleware)
 - Check that page has `export const prerender = false;`
@@ -288,12 +305,14 @@ grep -r "DEFAULT_USER_ID" src/
 ```
 
 Common files that might need updates:
+
 - `src/services/project.service.ts`
 - `src/services/note.service.ts`
 - `src/pages/api/projects/index.ts`
 - Any other API endpoints
 
 **Replace pattern**:
+
 ```typescript
 // OLD (REMOVE):
 import { DEFAULT_USER_ID } from "../db/supabase.client.ts";
@@ -340,6 +359,7 @@ This implementation satisfies the following user stories from the PRD:
 ## 🔐 Security Implementation Notes
 
 ### Authentication Method
+
 - **Method**: Email/Password with Supabase Auth
 - **Session Storage**: HTTP-only cookies (prevents XSS attacks)
 - **Cookie Attributes**:
@@ -349,16 +369,19 @@ This implementation satisfies the following user stories from the PRD:
   - `path: '/'` - Available to all routes
 
 ### Token Management
+
 - **Access Token**: Expires after 1 hour
 - **Refresh Token**: Expires after 7 days
 - **Automatic Refresh**: Handled by Supabase SSR library
 
 ### Row-Level Security (RLS)
+
 - **Enabled on**: `travel_projects`, `notes`, `ai_logs`
 - **Policy Type**: User-scoped (uses `auth.uid()`)
 - **Operations Protected**: SELECT, INSERT, UPDATE, DELETE
 
 ### Rate Limiting
+
 - **Not implemented in MVP** (recommended for production)
 - **Recommendation**: Add rate limiting to `/api/auth/login` endpoint
   - Suggested limit: 10 attempts per IP per hour
@@ -447,6 +470,7 @@ LOGOUT:
 ## 🎉 Summary
 
 The authentication system is fully implemented and follows:
+
 - ✅ Supabase Auth best practices (SSR pattern)
 - ✅ Cursor rules for Astro and React
 - ✅ Auth specification from `auth-spec.md`
@@ -454,6 +478,7 @@ The authentication system is fully implemented and follows:
 - ✅ Accessibility standards (ARIA labels, keyboard navigation)
 
 **Next Steps**:
+
 1. Run the database migration
 2. Test the authentication flow thoroughly
 3. Update remaining API endpoints to use `context.locals.user.id`
@@ -462,7 +487,7 @@ The authentication system is fully implemented and follows:
 
 **Questions or Issues?**
 Refer to the Troubleshooting Guide above or consult:
+
 - `.ai/auth-spec.md` - Detailed architecture specification
 - `.cursor/rules/supabase-auth.mdc` - Supabase Auth integration guide
 - Supabase Documentation: https://supabase.com/docs/guides/auth/server-side
-

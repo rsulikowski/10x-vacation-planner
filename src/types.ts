@@ -95,7 +95,6 @@ export interface PlanResponseDto {
 // --- AI Logs ---
 // Underlying Supabase-generated types
 type AiLogRow = Database["public"]["Tables"]["ai_logs"]["Row"];
-type AiLogInsert = Database["public"]["Tables"]["ai_logs"]["Insert"];
 
 // DTO for a single AI log entry
 export type AILogDto = Pick<

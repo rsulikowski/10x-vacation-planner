@@ -1,4 +1,4 @@
-import type { Page, Locator } from '@playwright/test';
+import type { Page, Locator } from "@playwright/test";
 
 /**
  * Page Object Model for Projects Page
@@ -11,16 +11,16 @@ export class ProjectsPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.newProjectButton = page.getByTestId('new-project-button');
-    this.projectsList = page.getByTestId('projects-list');
-    this.pageTitle = page.getByRole('heading', { name: /projects/i, level: 1 });
+    this.newProjectButton = page.getByTestId("new-project-button");
+    this.projectsList = page.getByTestId("projects-list");
+    this.pageTitle = page.getByRole("heading", { name: /projects/i, level: 1 });
   }
 
   /**
    * Navigate to the projects page
    */
   async goto() {
-    await this.page.goto('/projects');
+    await this.page.goto("/projects");
   }
 
   /**
@@ -48,14 +48,14 @@ export class ProjectsPage {
    * Get all project items
    */
   getAllProjects(): Locator {
-    return this.page.getByTestId('project-list-item');
+    return this.page.getByTestId("project-list-item");
   }
 
   /**
    * Wait for the projects list to be visible
    */
   async waitForProjectsList() {
-    await this.projectsList.waitFor({ state: 'visible' });
+    await this.projectsList.waitFor({ state: "visible" });
   }
 
   /**
@@ -73,4 +73,3 @@ export class ProjectsPage {
     return await this.getAllProjects().count();
   }
 }
-

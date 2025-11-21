@@ -1,63 +1,63 @@
 Jesteś doświadczonym inżynierem QA, którego zadaniem jest stworzenie kompleksowego planu testów dla projektu programistycznego. Przeanalizuj poniższe informacje o projekcie:
 
-<kod_projektu>
-================================================
-FILE: README.md
-================================================
+# <kod_projektu>
+
+# FILE: README.md
+
 # VacationPlanner
 
 > A web application to save and manage free-form trip notes, organize them into travel projects, and generate AI-powered daily itineraries based on user preferences.
 
 ## Table of Contents
 
-1. [Tech Stack](#tech-stack)  
-2. [Getting Started Locally](#getting-started-locally)  
-3. [Available Scripts](#available-scripts)  
-4. [Project Scope](#project-scope)  
-5. [Project Status](#project-status)  
-6. [License](#license)  
+1. [Tech Stack](#tech-stack)
+2. [Getting Started Locally](#getting-started-locally)
+3. [Available Scripts](#available-scripts)
+4. [Project Scope](#project-scope)
+5. [Project Status](#project-status)
+6. [License](#license)
 
 ## Tech Stack
 
-- **Frontend:** Astro 5, React 19, TypeScript 5  
-- **Styling:** Tailwind CSS 4, Shadcn/ui  
-- **Backend:** Supabase (PostgreSQL, Auth)  
-- **AI Integration:** GROQ (fast LLM inference with Llama models)  
-- **CI/CD:** GitHub Actions  
-- **Hosting:** Docker on DigitalOcean  
+- **Frontend:** Astro 5, React 19, TypeScript 5
+- **Styling:** Tailwind CSS 4, Shadcn/ui
+- **Backend:** Supabase (PostgreSQL, Auth)
+- **AI Integration:** GROQ (fast LLM inference with Llama models)
+- **CI/CD:** GitHub Actions
+- **Hosting:** Docker on DigitalOcean
 
 ## Getting Started Locally
 
 ### Prerequisites
 
-- Node.js v22.14.0 (see `.nvmrc`)  
-- npm (bundled with Node.js)  
-- Supabase project (URL & anon/public API key)  
-- GROQ API key (get it from https://console.groq.com)  
+- Node.js v22.14.0 (see `.nvmrc`)
+- npm (bundled with Node.js)
+- Supabase project (URL & anon/public API key)
+- GROQ API key (get it from https://console.groq.com)
 
 ### Setup
 
-1. Clone this repository  
+1. Clone this repository
    ```bash
    git clone https://github.com/your-org/vacation-planner.git
    cd vacation-planner
-   ```  
-2. Install dependencies  
+   ```
+2. Install dependencies
    ```bash
    npm install
-   ```  
-3. Copy and configure environment variables  
+   ```
+3. Copy and configure environment variables
    ```bash
    cp .env.example .env
    # Edit .env:
    # SUPABASE_URL=your_supabase_project_url
    # SUPABASE_KEY=your_supabase_anon_key
    # GROQ_API_KEY=your_groq_api_key
-   ```  
-4. Start the development server  
+   ```
+4. Start the development server
    ```bash
    npm run dev
-   ```  
+   ```
 5. Open your browser at `http://localhost:3000`
 
 ## Available Scripts
@@ -92,6 +92,7 @@ In the project root, you can run:
 Synchroniczne generowanie planu podróży dla projektu.
 
 **Request:**
+
 ```json
 {
   "model": "claude-3.5-sonnet",
@@ -110,6 +111,7 @@ Synchroniczne generowanie planu podróży dla projektu.
 ```
 
 **Response (200 OK):**
+
 ```json
 {
   "schedule": [
@@ -122,6 +124,7 @@ Synchroniczne generowanie planu podróży dla projektu.
 ```
 
 **Dozwolone modele AI:**
+
 - `gpt-4`, `gpt-5`
 - `claude-3-opus`, `claude-3.5-sonnet`
 
@@ -132,35 +135,35 @@ Zobacz [.ai/postman-testing-guide.md](.ai/postman-testing-guide.md) dla szczegó
 
 ### Core Features
 
-- **User Authentication**  
-  - Email/password registration with verification and expiring links  
-  - Password reset via email  
+- **User Authentication**
+  - Email/password registration with verification and expiring links
+  - Password reset via email
 
-- **User Profile & Preferences**  
-  - Save tourism preferences (e.g., beach, mountains)  
-  - Persist preferences for AI itinerary generation  
+- **User Profile & Preferences**
+  - Save tourism preferences (e.g., beach, mountains)
+  - Persist preferences for AI itinerary generation
 
-- **Travel Project Management**  
-  - Create, read, update, delete travel projects (name, duration, date)  
-  - Switch between multiple projects  
+- **Travel Project Management**
+  - Create, read, update, delete travel projects (name, duration, date)
+  - Switch between multiple projects
 
-- **Notes & Inspiration**  
-  - CRUD notes with place/tag autocomplete, time tags, and priority  
+- **Notes & Inspiration**
+  - CRUD notes with place/tag autocomplete, time tags, and priority
 
-- **AI-Powered Itinerary Generation**  
-  - Single-request daily schedule generation (≤60s)  
-  - Loading spinner and retry on error  
-  - Logs AI interactions (prompt, response, status, timestamp)  
+- **AI-Powered Itinerary Generation**
+  - Single-request daily schedule generation (≤60s)
+  - Loading spinner and retry on error
+  - Logs AI interactions (prompt, response, status, timestamp)
 
-- **Monthly Reports**  
-  - Summarize generated plans and usage statistics  
+- **Monthly Reports**
+  - Summarize generated plans and usage statistics
 
 ### Boundaries & MVP Limitations
 
-- No plan sharing between accounts  
-- No advanced media (images) or detailed logistics  
-- No admin panel or AI log retention  
-- No real-time monitoring/alerting for AI services  
+- No plan sharing between accounts
+- No advanced media (images) or detailed logistics
+- No admin panel or AI log retention
+- No real-time monitoring/alerting for AI services
 
 ## Project Status
 
@@ -170,9 +173,7 @@ See [Issues](https://github.com/your-org/vacation-planner/issues) for roadmap an
 ## License
 
 > _No license specified._  
-Please add a `LICENSE` file to define the terms under which the project is released.
-
-
+> Please add a `LICENSE` file to define the terms under which the project is released.
 
 ================================================
 FILE: astro.config.mjs
@@ -187,46 +188,42 @@ import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "server",
-  integrations: [react(), sitemap()],
-  server: { port: 3000 },
-  vite: {
-    plugins: [tailwindcss()],
-  },
-  adapter: node({
-    mode: "standalone",
-  }),
+output: "server",
+integrations: [react(), sitemap()],
+server: { port: 3000 },
+vite: {
+plugins: [tailwindcss()],
+},
+adapter: node({
+mode: "standalone",
+}),
 });
-
-
 
 ================================================
 FILE: components.json
 ================================================
 {
-  "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "new-york",
-  "rsc": false,
-  "tsx": true,
-  "tailwind": {
-    "config": "",
-    "css": "src/styles/global.css",
-    "baseColor": "neutral",
-    "cssVariables": true,
-    "prefix": ""
-  },
-  "iconLibrary": "lucide",
-  "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils",
-    "ui": "@/components/ui",
-    "lib": "@/lib",
-    "hooks": "@/hooks"
-  },
-  "registries": {}
+"$schema": "https://ui.shadcn.com/schema.json",
+"style": "new-york",
+"rsc": false,
+"tsx": true,
+"tailwind": {
+"config": "",
+"css": "src/styles/global.css",
+"baseColor": "neutral",
+"cssVariables": true,
+"prefix": ""
+},
+"iconLibrary": "lucide",
+"aliases": {
+"components": "@/components",
+"utils": "@/lib/utils",
+"ui": "@/components/ui",
+"lib": "@/lib",
+"hooks": "@/hooks"
+},
+"registries": {}
 }
-
-
 
 ================================================
 FILE: eslint.config.js
@@ -244,160 +241,154 @@ import { fileURLToPath } from "node:url";
 import tseslint from "typescript-eslint";
 
 // File path setup
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const gitignorePath = path.resolve(__dirname, ".gitignore");
+const **filename = fileURLToPath(import.meta.url);
+const **dirname = path.dirname(**filename);
+const gitignorePath = path.resolve(**dirname, ".gitignore");
 
 const baseConfig = tseslint.config({
-  extends: [eslint.configs.recommended, tseslint.configs.strict, tseslint.configs.stylistic],
-  rules: {
-    "no-console": "warn",
-    "no-unused-vars": "off",
-  },
+extends: [eslint.configs.recommended, tseslint.configs.strict, tseslint.configs.stylistic],
+rules: {
+"no-console": "warn",
+"no-unused-vars": "off",
+},
 });
 
 const jsxA11yConfig = tseslint.config({
-  files: ["**/*.{js,jsx,ts,tsx}"],
-  extends: [jsxA11y.flatConfigs.recommended],
-  languageOptions: {
-    ...jsxA11y.flatConfigs.recommended.languageOptions,
-  },
-  rules: {
-    ...jsxA11y.flatConfigs.recommended.rules,
-  },
+files: ["**/*.{js,jsx,ts,tsx}"],
+extends: [jsxA11y.flatConfigs.recommended],
+languageOptions: {
+...jsxA11y.flatConfigs.recommended.languageOptions,
+},
+rules: {
+...jsxA11y.flatConfigs.recommended.rules,
+},
 });
 
 const reactConfig = tseslint.config({
-  files: ["**/*.{js,jsx,ts,tsx}"],
-  extends: [pluginReact.configs.flat.recommended],
-  languageOptions: {
-    ...pluginReact.configs.flat.recommended.languageOptions,
-    globals: {
-      window: true,
-      document: true,
-    },
-  },
-  plugins: {
-    "react-hooks": eslintPluginReactHooks,
-    "react-compiler": reactCompiler,
-  },
-  settings: { react: { version: "detect" } },
-  rules: {
-    ...eslintPluginReactHooks.configs.recommended.rules,
-    "react/react-in-jsx-scope": "off",
-    "react-compiler/react-compiler": "error",
-  },
+files: ["**/*.{js,jsx,ts,tsx}"],
+extends: [pluginReact.configs.flat.recommended],
+languageOptions: {
+...pluginReact.configs.flat.recommended.languageOptions,
+globals: {
+window: true,
+document: true,
+},
+},
+plugins: {
+"react-hooks": eslintPluginReactHooks,
+"react-compiler": reactCompiler,
+},
+settings: { react: { version: "detect" } },
+rules: {
+...eslintPluginReactHooks.configs.recommended.rules,
+"react/react-in-jsx-scope": "off",
+"react-compiler/react-compiler": "error",
+},
 });
 
 export default tseslint.config(
-  includeIgnoreFile(gitignorePath),
-  baseConfig,
-  jsxA11yConfig,
-  reactConfig,
-  eslintPluginAstro.configs["flat/recommended"],
-  eslintPluginPrettier
+includeIgnoreFile(gitignorePath),
+baseConfig,
+jsxA11yConfig,
+reactConfig,
+eslintPluginAstro.configs["flat/recommended"],
+eslintPluginPrettier
 );
-
-
 
 ================================================
 FILE: package.json
 ================================================
 {
-  "name": "10x-vacation-planner",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write ."
-  },
-  "dependencies": {
-    "@astrojs/node": "^9.4.3",
-    "@astrojs/react": "^4.3.1",
-    "@astrojs/sitemap": "^3.5.1",
-    "@radix-ui/react-alert-dialog": "^1.1.15",
-    "@radix-ui/react-dialog": "^1.1.15",
-    "@radix-ui/react-dropdown-menu": "^2.1.16",
-    "@radix-ui/react-label": "^2.1.7",
-    "@radix-ui/react-select": "^2.2.6",
-    "@radix-ui/react-slot": "^1.2.3",
-    "@radix-ui/react-tabs": "^1.1.13",
-    "@supabase/ssr": "^0.7.0",
-    "@supabase/supabase-js": "^2.75.0",
-    "@tailwindcss/vite": "^4.1.13",
-    "@tanstack/react-query": "^5.90.5",
-    "@types/react": "^19.1.12",
-    "@types/react-dom": "^19.1.9",
-    "ajv": "^8.17.1",
-    "astro": "^5.13.7",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.487.0",
-    "next-themes": "^0.4.6",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "sonner": "^2.0.7",
-    "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.1.13",
-    "zod": "^3.25.76"
-  },
-  "devDependencies": {
-    "@eslint/compat": "1.2.7",
-    "@eslint/js": "9.23.0",
-    "@typescript-eslint/eslint-plugin": "8.28.0",
-    "@typescript-eslint/parser": "8.28.0",
-    "eslint": "9.23.0",
-    "eslint-config-prettier": "10.1.1",
-    "eslint-import-resolver-typescript": "4.2.5",
-    "eslint-plugin-astro": "1.3.1",
-    "eslint-plugin-import": "2.31.0",
-    "eslint-plugin-jsx-a11y": "6.10.2",
-    "eslint-plugin-prettier": "5.2.5",
-    "eslint-plugin-react": "7.37.4",
-    "eslint-plugin-react-compiler": "19.0.0-beta-aeaed83-20250323",
-    "eslint-plugin-react-hooks": "5.2.0",
-    "husky": "9.1.7",
-    "lint-staged": "15.5.0",
-    "prettier-plugin-astro": "0.14.1",
-    "supabase": "^2.51.0",
-    "tw-animate-css": "^1.4.0",
-    "typescript-eslint": "8.28.0"
-  },
-  "lint-staged": {
-    "*.{ts,tsx,astro}": [
-      "eslint --fix"
-    ],
-    "*.{json,css,md}": [
-      "prettier --write"
-    ]
-  }
+"name": "10x-vacation-planner",
+"type": "module",
+"version": "0.0.1",
+"scripts": {
+"dev": "astro dev",
+"build": "astro build",
+"preview": "astro preview",
+"astro": "astro",
+"lint": "eslint .",
+"lint:fix": "eslint . --fix",
+"format": "prettier --write ."
+},
+"dependencies": {
+"@astrojs/node": "^9.4.3",
+"@astrojs/react": "^4.3.1",
+"@astrojs/sitemap": "^3.5.1",
+"@radix-ui/react-alert-dialog": "^1.1.15",
+"@radix-ui/react-dialog": "^1.1.15",
+"@radix-ui/react-dropdown-menu": "^2.1.16",
+"@radix-ui/react-label": "^2.1.7",
+"@radix-ui/react-select": "^2.2.6",
+"@radix-ui/react-slot": "^1.2.3",
+"@radix-ui/react-tabs": "^1.1.13",
+"@supabase/ssr": "^0.7.0",
+"@supabase/supabase-js": "^2.75.0",
+"@tailwindcss/vite": "^4.1.13",
+"@tanstack/react-query": "^5.90.5",
+"@types/react": "^19.1.12",
+"@types/react-dom": "^19.1.9",
+"ajv": "^8.17.1",
+"astro": "^5.13.7",
+"class-variance-authority": "^0.7.1",
+"clsx": "^2.1.1",
+"lucide-react": "^0.487.0",
+"next-themes": "^0.4.6",
+"react": "^19.1.1",
+"react-dom": "^19.1.1",
+"sonner": "^2.0.7",
+"tailwind-merge": "^3.3.1",
+"tailwindcss": "^4.1.13",
+"zod": "^3.25.76"
+},
+"devDependencies": {
+"@eslint/compat": "1.2.7",
+"@eslint/js": "9.23.0",
+"@typescript-eslint/eslint-plugin": "8.28.0",
+"@typescript-eslint/parser": "8.28.0",
+"eslint": "9.23.0",
+"eslint-config-prettier": "10.1.1",
+"eslint-import-resolver-typescript": "4.2.5",
+"eslint-plugin-astro": "1.3.1",
+"eslint-plugin-import": "2.31.0",
+"eslint-plugin-jsx-a11y": "6.10.2",
+"eslint-plugin-prettier": "5.2.5",
+"eslint-plugin-react": "7.37.4",
+"eslint-plugin-react-compiler": "19.0.0-beta-aeaed83-20250323",
+"eslint-plugin-react-hooks": "5.2.0",
+"husky": "9.1.7",
+"lint-staged": "15.5.0",
+"prettier-plugin-astro": "0.14.1",
+"supabase": "^2.51.0",
+"tw-animate-css": "^1.4.0",
+"typescript-eslint": "8.28.0"
+},
+"lint-staged": {
+"_.{ts,tsx,astro}": [
+"eslint --fix"
+],
+"_.{json,css,md}": [
+"prettier --write"
+]
 }
-
-
+}
 
 ================================================
 FILE: tsconfig.json
 ================================================
 {
-  "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"],
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
+"extends": "astro/tsconfigs/strict",
+"include": [".astro/types.d.ts", "**/*"],
+"exclude": ["dist"],
+"compilerOptions": {
+"jsx": "react-jsx",
+"jsxImportSource": "react",
+"baseUrl": ".",
+"paths": {
+"@/_": ["./src/_"]
 }
-
-
+}
+}
 
 ================================================
 FILE: .env.example
@@ -406,38 +397,35 @@ SUPABASE_URL=###
 SUPABASE_KEY=###
 OPENROUTER_API_KEY=###
 
-
 ================================================
 FILE: .nvmrc
 ================================================
 22.14.0
 
-
 ================================================
 FILE: .prettierrc.json
 ================================================
 {
-  "semi": true,
-  "singleQuote": false,
-  "tabWidth": 2,
-  "printWidth": 120,
-  "trailingComma": "es5",
-  "plugins": ["prettier-plugin-astro"],
-  "overrides": [
-    {
-      "files": "*.astro",
-      "options": {
-        "parser": "astro"
-      }
-    }
-  ]
+"semi": true,
+"singleQuote": false,
+"tabWidth": 2,
+"printWidth": 120,
+"trailingComma": "es5",
+"plugins": ["prettier-plugin-astro"],
+"overrides": [
+{
+"files": "*.astro",
+"options": {
+"parser": "astro"
 }
-
-
+}
+]
+}
 
 ================================================
 FILE: .windsurfrules
 ================================================
+
 # AI Rules for {{project-name}}
 
 {{project-description}}
@@ -521,7 +509,7 @@ When modifying the directory structure, always update this section.
 - Leverage View Transitions API for smooth page transitions (use ClientRouter)
 - Use content collections with type safety for blog posts, documentation, etc.
 - Leverage Server Endpoints for API routes
-- Use POST, GET  - uppercase format for endpoint handlers
+- Use POST, GET - uppercase format for endpoint handlers
 - Use `export const prerender = false` for API routes
 - Use zod for input validation in API routes
 - Extract logic into services in `src/lib/services`
@@ -552,10 +540,10 @@ When modifying the directory structure, always update this section.
 - Use supabase from context.locals in Astro routes instead of importing supabaseClient directly
 - Use SupabaseClient type from `src/db/supabase.client.ts`, not from `@supabase/supabase-js`
 
-
 ================================================
 FILE: docs/GROQ_IMPLEMENTATION_SUMMARY.md
 ================================================
+
 # GROQ Service Integration Summary
 
 ## ✅ Implementation Complete
@@ -565,6 +553,7 @@ The GROQ service has been successfully implemented according to the implementati
 ## 📦 Deliverables
 
 ### Core Implementation (3 files)
+
 1. **`src/lib/groq.types.ts`** - Type definitions and interfaces
    - ChatRequest, ChatResponse types
    - JSON schema types
@@ -581,12 +570,13 @@ The GROQ service has been successfully implemented according to the implementati
    - GROQService class with full functionality
    - Constructor with configuration validation
    - Public methods: sendChat, setApiKey, setDefaultModel, setDefaultParams, setTimeoutMs
-   - Private methods: _buildPayload, _validateResponse, _request, _requestWithRetry
+   - Private methods: \_buildPayload, \_validateResponse, \_request, \_requestWithRetry
    - Error handling with retry logic (exponential backoff)
    - Request timeout support
    - JSON schema validation using AJV
 
 ### Testing & Documentation (5 files)
+
 4. **`src/pages/api/test-groq.ts`** - REST API test endpoint
    - POST endpoint for testing GROQ service
    - Example schema and request handling
@@ -617,6 +607,7 @@ The GROQ service has been successfully implemented according to the implementati
    - Next steps
 
 ### Integration Example (1 file)
+
 9. **`src/services/ai.service.groq.ts`** - Real AI service implementation
    - Replaces mock AI service with GROQ integration
    - Generates travel itineraries based on user notes
@@ -629,16 +620,19 @@ The GROQ service has been successfully implemented according to the implementati
 ### ✅ From Implementation Plan - Steps 1-3 Completed
 
 **Step 1: Types and Interfaces** ✅
+
 - All type definitions created in `groq.types.ts`
 - Full TypeScript coverage
 - Generic type support for responses
 
 **Step 2: Custom Error Classes** ✅
+
 - 7 error types covering all scenarios
 - Error utility functions (isRetryable, getRetryAfter)
 - Proper error inheritance and structure
 
 **Step 3: GROQService Implementation** ✅
+
 - Constructor with validation
 - All public methods implemented
 - All private methods implemented
@@ -650,17 +644,20 @@ The GROQ service has been successfully implemented according to the implementati
 ### Additional Deliverables (Beyond Plan)
 
 **Testing Infrastructure** 🎁
+
 - Visual test interface (better than unit tests for now)
 - API test endpoint
 - Multiple testing methods documented
 
 **Documentation** 📚
+
 - 3 comprehensive documentation files
 - Quick start guide
 - Usage examples with real-world scenarios
 - Troubleshooting guide
 
 **Production Integration** 🚀
+
 - Real AI service implementation using GROQ
 - Drop-in replacement for mock service
 - Production-ready error handling
@@ -668,12 +665,14 @@ The GROQ service has been successfully implemented according to the implementati
 ## 🧪 How to Test
 
 ### Method 1: Visual Interface (Recommended)
+
 ```bash
 npm run dev
 # Open browser to: http://localhost:4321/test/groq
 ```
 
 ### Method 2: API Endpoint
+
 ```powershell
 # PowerShell
 Invoke-RestMethod -Uri "http://localhost:4321/api/test-groq" `
@@ -683,13 +682,15 @@ Invoke-RestMethod -Uri "http://localhost:4321/api/test-groq" `
 ```
 
 ### Method 3: Code Integration
+
 Replace mock service with GROQ service in your endpoints:
+
 ```typescript
 // Old (mock)
-import { aiService } from './services/ai.service.mock';
+import { aiService } from "./services/ai.service.mock";
 
 // New (GROQ)
-import { aiService } from './services/ai.service.groq';
+import { aiService } from "./services/ai.service.groq";
 ```
 
 ## 📊 Implementation Statistics
@@ -705,11 +706,13 @@ import { aiService } from './services/ai.service.groq';
 ## 🔧 Configuration
 
 Environment variable already set up:
+
 ```env
 GROQ_API_KEY=your_api_key_here
 ```
 
 Default configuration:
+
 - Base URL: `https://api.groq.com/openai/v1`
 - Default Model: `gpt-4`
 - Temperature: `0.8`
@@ -720,18 +723,21 @@ Default configuration:
 ## 🚀 Next Steps (Your Choice)
 
 ### Option A: Test with Mock Data
+
 1. Start dev server: `npm run dev`
 2. Visit: `http://localhost:4321/test/groq`
 3. Try the test prompts
 4. Verify API key works
 
 ### Option B: Integrate into Production
+
 1. Replace mock AI service imports with GROQ service
 2. Test plan generation with real data
 3. Monitor token usage and costs
 4. Adjust parameters as needed
 
 ### Option C: Extend Functionality
+
 1. Add streaming support
 2. Implement caching layer
 3. Add more specialized prompts
@@ -764,16 +770,15 @@ The GROQ service is fully implemented and ready to test. Simply start your dev s
 ---
 
 **Need Help?** Check the documentation:
+
 - Quick Start: `docs/GROQ_SERVICE_README.md`
 - Testing Guide: `docs/GROQ_TESTING_GUIDE.md`
 - Usage Examples: `docs/GROQ_USAGE_EXAMPLES.md`
 
-
-
-
 ================================================
 FILE: docs/GROQ_SERVICE_README.md
 ================================================
+
 # GROQ Service Implementation - Quick Start
 
 ## ✅ Implementation Complete
@@ -783,11 +788,13 @@ The GROQ service has been successfully implemented with full TypeScript support,
 ## 📁 Files Created
 
 ### Core Service Files
+
 - `src/lib/groq.types.ts` - TypeScript type definitions
 - `src/lib/errors.ts` - Custom error classes
 - `src/lib/groq.service.ts` - Main GROQ service implementation
 
 ### Testing & Documentation
+
 - `src/pages/api/test-groq.ts` - API endpoint for testing
 - `src/pages/test/groq.astro` - Visual test interface
 - `docs/GROQ_TESTING_GUIDE.md` - Complete testing guide
@@ -796,12 +803,15 @@ The GROQ service has been successfully implemented with full TypeScript support,
 ## 🚀 Quick Start Guide
 
 ### 1. Environment Setup
+
 Your `.env` file should already have:
+
 ```env
 GROQ_API_KEY=your_groq_api_key_here
 ```
 
 ### 2. Start Dev Server
+
 ```bash
 npm run dev
 ```
@@ -809,7 +819,9 @@ npm run dev
 ### 3. Test the Service
 
 #### Option A: Visual Interface (Easiest)
+
 Open your browser and navigate to:
+
 ```
 http://localhost:4321/test/groq
 ```
@@ -817,6 +829,7 @@ http://localhost:4321/test/groq
 Click "Test GROQ Service" or try the quick prompt buttons!
 
 #### Option B: API Endpoint
+
 ```bash
 # PowerShell (Windows)
 Invoke-RestMethod -Uri "http://localhost:4321/api/test-groq" `
@@ -833,61 +846,63 @@ curl -X POST http://localhost:4321/api/test-groq \
 ## 📖 Usage in Your Code
 
 ### Basic Example
+
 ```typescript
-import { GROQService } from './lib/groq.service';
+import { GROQService } from "./lib/groq.service";
 
 const groq = new GROQService({
   apiKey: import.meta.env.GROQ_API_KEY,
 });
 
 const schema = {
-  type: 'object',
+  type: "object",
   properties: {
-    answer: { type: 'string' }
+    answer: { type: "string" },
   },
-  required: ['answer']
+  required: ["answer"],
 };
 
 const result = await groq.sendChat({
-  userMessage: 'What is the capital of France?',
-  responseSchema: schema
+  userMessage: "What is the capital of France?",
+  responseSchema: schema,
 });
 
 console.log(result.data.answer); // "Paris"
 ```
 
 ### Vacation Planner Example
+
 ```typescript
-import { GROQService } from './lib/groq.service';
+import { GROQService } from "./lib/groq.service";
 
 const groq = new GROQService({
   apiKey: import.meta.env.GROQ_API_KEY,
-  defaultModel: 'llama-3.3-70b-versatile',
+  defaultModel: "llama-3.3-70b-versatile",
 });
 
 const schema = {
-  type: 'object',
+  type: "object",
   properties: {
     itinerary: {
-      type: 'array',
+      type: "array",
       items: {
-        type: 'object',
+        type: "object",
         properties: {
-          day: { type: 'number' },
-          activities: { type: 'array', items: { type: 'string' } }
+          day: { type: "number" },
+          activities: { type: "array", items: { type: "string" } },
         },
-        required: ['day', 'activities']
-      }
-    }
+        required: ["day", "activities"],
+      },
+    },
   },
-  required: ['itinerary']
+  required: ["itinerary"],
 };
 
 const result = await groq.sendChat({
-  systemMessage: 'You are a travel planning assistant.',
-  userMessage: 'Create a 3-day itinerary for Paris',
+  systemMessage: "You are a travel planning assistant.",
+  userMessage: "Create a 3-day itinerary for Paris",
   responseSchema: schema,
-  schemaName: 'TripItinerary'
+  schemaName: "TripItinerary",
 });
 ```
 
@@ -898,30 +913,32 @@ const result = await groq.sendChat({
 ✅ **Auto Retry**: Exponential backoff for transient errors  
 ✅ **Schema Validation**: AJV-powered JSON schema validation  
 ✅ **Timeout Control**: Configurable request timeouts  
-✅ **Flexible API**: Support for simple and complex chat formats  
+✅ **Flexible API**: Support for simple and complex chat formats
 
 ## 🔧 Configuration
 
 ```typescript
 const groq = new GROQService({
   apiKey: import.meta.env.GROQ_API_KEY,
-  baseUrl: 'https://api.groq.com/openai/v1', // Optional
-  defaultModel: 'llama-3.3-70b-versatile',    // Optional
-  defaultParams: {                             // Optional
+  baseUrl: "https://api.groq.com/openai/v1", // Optional
+  defaultModel: "llama-3.3-70b-versatile", // Optional
+  defaultParams: {
+    // Optional
     temperature: 0.7,
-    max_tokens: 2000
-  }
+    max_tokens: 2000,
+  },
 });
 
 // Update at runtime
-groq.setTimeoutMs(60000);  // 60 seconds
-groq.setDefaultModel('gpt-4');
+groq.setTimeoutMs(60000); // 60 seconds
+groq.setDefaultModel("gpt-4");
 groq.setDefaultParams({ temperature: 0.5 });
 ```
 
 ## 📚 Documentation
 
 For detailed information:
+
 - **Testing Guide**: `docs/GROQ_TESTING_GUIDE.md`
 - **Usage Examples**: `docs/GROQ_USAGE_EXAMPLES.md`
 - **Test Interface**: http://localhost:4321/test/groq
@@ -929,18 +946,22 @@ For detailed information:
 ## 🐛 Troubleshooting
 
 ### 401 Authentication Error
+
 - Check that `GROQ_API_KEY` is set in `.env`
 - Restart dev server after changing environment variables
 
 ### 429 Rate Limit
+
 - Service automatically retries with backoff
 - Check your GROQ account for rate limits
 
 ### Validation Error
+
 - Ensure JSON schema matches expected response
 - Check schema examples in `docs/GROQ_USAGE_EXAMPLES.md`
 
 ### Network/Timeout Error
+
 - Increase timeout: `groq.setTimeoutMs(60000)`
 - Check network connection
 
@@ -954,6 +975,7 @@ For detailed information:
 ## 📦 Dependencies
 
 The following package was installed:
+
 - `ajv` - JSON schema validation
 
 ## 🔒 Security Notes
@@ -967,12 +989,10 @@ The following package was installed:
 
 **Ready to test?** Visit http://localhost:4321/test/groq after starting your dev server!
 
-
-
-
 ================================================
 FILE: docs/GROQ_TESTING_GUIDE.md
 ================================================
+
 # GROQ Service Testing Guide
 
 This guide provides instructions for testing the GROQ service implementation with your API key.
@@ -985,6 +1005,7 @@ This guide provides instructions for testing the GROQ service implementation wit
 ## Environment Setup
 
 Your `.env` file should contain:
+
 ```env
 SUPABASE_URL=your_supabase_url
 SUPABASE_KEY=your_supabase_key
@@ -998,11 +1019,13 @@ GROQ_API_KEY=your_groq_api_key_here
 We've created a test endpoint at `/api/test-groq` for easy testing.
 
 #### 1. Start the dev server
+
 ```bash
 npm run dev
 ```
 
 #### 2. Test with cURL
+
 ```bash
 # Simple test
 curl -X POST http://localhost:4321/api/test-groq \
@@ -1016,6 +1039,7 @@ curl -X POST http://localhost:4321/api/test-groq \
 ```
 
 #### 3. Test with PowerShell (Windows)
+
 ```powershell
 # Simple test
 Invoke-RestMethod -Uri "http://localhost:4321/api/test-groq" `
@@ -1031,10 +1055,12 @@ Invoke-RestMethod -Uri "http://localhost:4321/api/test-groq" `
 ```
 
 #### 4. Test with a REST client (Postman, Insomnia, etc.)
+
 - **Method**: POST
 - **URL**: `http://localhost:4321/api/test-groq`
 - **Headers**: `Content-Type: application/json`
 - **Body**:
+
 ```json
 {
   "prompt": "Tell me a short joke"
@@ -1047,9 +1073,9 @@ You can create custom endpoints using the GROQ service. Here's an example:
 
 ```typescript
 // src/pages/api/your-endpoint.ts
-import type { APIRoute } from 'astro';
-import { GROQService } from '../../lib/groq.service';
-import type { JSONSchema } from '../../lib/groq.types';
+import type { APIRoute } from "astro";
+import { GROQService } from "../../lib/groq.service";
+import type { JSONSchema } from "../../lib/groq.types";
 
 export const prerender = false;
 
@@ -1061,22 +1087,22 @@ export const POST: APIRoute = async ({ request }) => {
 
   // Define your schema
   const schema: JSONSchema = {
-    type: 'object',
+    type: "object",
     properties: {
-      answer: { type: 'string' }
+      answer: { type: "string" },
     },
-    required: ['answer']
+    required: ["answer"],
   };
 
   // Make request
   const result = await groq.sendChat({
-    systemMessage: 'You are a helpful assistant.',
-    userMessage: 'Your question here',
-    responseSchema: schema
+    systemMessage: "You are a helpful assistant.",
+    userMessage: "Your question here",
+    responseSchema: schema,
   });
 
   return new Response(JSON.stringify(result.data), {
-    headers: { 'Content-Type': 'application/json' }
+    headers: { "Content-Type": "application/json" },
   });
 };
 ```
@@ -1087,7 +1113,7 @@ Create a file `test-groq.mjs` in your project root:
 
 ```javascript
 // test-groq.mjs
-import { GROQService } from './dist/server/chunks/groq.service.mjs';
+import { GROQService } from "./dist/server/chunks/groq.service.mjs";
 
 async function testGroq() {
   const groq = new GROQService({
@@ -1095,23 +1121,23 @@ async function testGroq() {
   });
 
   const schema = {
-    type: 'object',
+    type: "object",
     properties: {
-      answer: { type: 'string' }
+      answer: { type: "string" },
     },
-    required: ['answer']
+    required: ["answer"],
   };
 
   try {
     const result = await groq.sendChat({
-      systemMessage: 'You are a helpful assistant.',
-      userMessage: 'Tell me a short joke',
-      responseSchema: schema
+      systemMessage: "You are a helpful assistant.",
+      userMessage: "Tell me a short joke",
+      responseSchema: schema,
     });
-    
-    console.log('Success:', result.data);
+
+    console.log("Success:", result.data);
   } catch (error) {
-    console.error('Error:', error.message);
+    console.error("Error:", error.message);
   }
 }
 
@@ -1119,6 +1145,7 @@ testGroq();
 ```
 
 Then run:
+
 ```bash
 # First build the project
 npm run build
@@ -1130,6 +1157,7 @@ node test-groq.mjs
 ## Expected Response Format
 
 Successful response:
+
 ```json
 {
   "success": true,
@@ -1151,6 +1179,7 @@ Successful response:
 ```
 
 Error response:
+
 ```json
 {
   "success": false,
@@ -1165,21 +1194,25 @@ Error response:
 ## Troubleshooting
 
 ### 401 Authentication Error
+
 - Verify your `GROQ_API_KEY` is correctly set in `.env`
 - Ensure the API key is valid and active
 - Restart the dev server after changing environment variables
 
 ### 429 Rate Limit Error
+
 - Wait a few moments before retrying
 - The service will automatically retry with exponential backoff
 - Check your GROQ account for rate limits
 
 ### Timeout Error
+
 - Increase timeout: `groq.setTimeoutMs(60000)` for 60 seconds
 - Check your network connection
 - Try a simpler prompt
 
 ### Validation Error
+
 - Ensure your JSON schema matches the expected response structure
 - Check that all required fields are properly defined
 - Verify the AI can generate responses in the requested format
@@ -1190,45 +1223,45 @@ Here's how to integrate GROQ service into your vacation planner:
 
 ```typescript
 // src/services/ai.service.ts
-import { GROQService } from '../lib/groq.service';
-import type { JSONSchema } from '../lib/groq.types';
+import { GROQService } from "../lib/groq.service";
+import type { JSONSchema } from "../lib/groq.types";
 
 const groq = new GROQService({
   apiKey: import.meta.env.GROQ_API_KEY,
-  defaultModel: 'llama-3.3-70b-versatile',
+  defaultModel: "llama-3.3-70b-versatile",
   defaultParams: {
     temperature: 0.7,
-    max_tokens: 2000
-  }
+    max_tokens: 2000,
+  },
 });
 
 export async function generateItinerary(notes: string[], dates: string[]) {
   const schema: JSONSchema = {
-    type: 'object',
+    type: "object",
     properties: {
       itinerary: {
-        type: 'array',
+        type: "array",
         items: {
-          type: 'object',
+          type: "object",
           properties: {
-            date: { type: 'string' },
+            date: { type: "string" },
             activities: {
-              type: 'array',
-              items: { type: 'string' }
-            }
+              type: "array",
+              items: { type: "string" },
+            },
           },
-          required: ['date', 'activities']
-        }
-      }
+          required: ["date", "activities"],
+        },
+      },
     },
-    required: ['itinerary']
+    required: ["itinerary"],
   };
 
   const result = await groq.sendChat({
-    systemMessage: 'You are a travel planning assistant.',
-    userMessage: `Create a detailed itinerary based on these notes: ${notes.join(', ')}`,
+    systemMessage: "You are a travel planning assistant.",
+    userMessage: `Create a detailed itinerary based on these notes: ${notes.join(", ")}`,
     responseSchema: schema,
-    schemaName: 'TripItinerary'
+    schemaName: "TripItinerary",
   });
 
   return result.data;
@@ -1238,13 +1271,15 @@ export async function generateItinerary(notes: string[], dates: string[]) {
 ## Available Models
 
 Common GROQ-compatible models:
+
 - `llama-3.3-70b-versatile` - Good balance of speed and quality
 - `gpt-4` - High quality responses (if available)
 - `gpt-3.5-turbo` - Faster, good for simpler tasks
 
 Change the model:
+
 ```typescript
-groq.setDefaultModel('llama-3.3-70b-versatile');
+groq.setDefaultModel("llama-3.3-70b-versatile");
 ```
 
 ## Advanced Configuration
@@ -1252,17 +1287,17 @@ groq.setDefaultModel('llama-3.3-70b-versatile');
 ```typescript
 const groq = new GROQService({
   apiKey: import.meta.env.GROQ_API_KEY,
-  baseUrl: 'https://api.groq.com/openai/v1', // Custom base URL
-  defaultModel: 'llama-3.3-70b-versatile',
+  baseUrl: "https://api.groq.com/openai/v1", // Custom base URL
+  defaultModel: "llama-3.3-70b-versatile",
   defaultParams: {
-    temperature: 0.8,      // Creativity (0-1)
-    max_tokens: 1500,      // Response length
-    top_p: 0.9,            // Nucleus sampling
-  }
+    temperature: 0.8, // Creativity (0-1)
+    max_tokens: 1500, // Response length
+    top_p: 0.9, // Nucleus sampling
+  },
 });
 
 // Update settings at runtime
-groq.setTimeoutMs(60000);  // 60 second timeout
+groq.setTimeoutMs(60000); // 60 second timeout
 groq.setDefaultParams({ temperature: 0.5 });
 ```
 
@@ -1273,12 +1308,10 @@ groq.setDefaultParams({ temperature: 0.5 });
 3. Integrate the service into your vacation planner features
 4. Monitor usage and adjust parameters for optimal results
 
-
-
-
 ================================================
 FILE: docs/GROQ_USAGE_EXAMPLES.md
 ================================================
+
 # GROQ Service Usage Examples
 
 This document provides practical examples of using the GROQ service in different scenarios.
@@ -1288,24 +1321,24 @@ This document provides practical examples of using the GROQ service in different
 ### Simple Question-Answer
 
 ```typescript
-import { GROQService } from '../lib/groq.service';
-import type { JSONSchema } from '../lib/groq.types';
+import { GROQService } from "../lib/groq.service";
+import type { JSONSchema } from "../lib/groq.types";
 
 const groq = new GROQService({
   apiKey: import.meta.env.GROQ_API_KEY,
 });
 
 const schema: JSONSchema = {
-  type: 'object',
+  type: "object",
   properties: {
-    answer: { type: 'string' }
+    answer: { type: "string" },
   },
-  required: ['answer']
+  required: ["answer"],
 };
 
 const result = await groq.sendChat({
-  userMessage: 'What is the capital of France?',
-  responseSchema: schema
+  userMessage: "What is the capital of France?",
+  responseSchema: schema,
 });
 
 console.log(result.data.answer); // "Paris"
@@ -1315,18 +1348,18 @@ console.log(result.data.answer); // "Paris"
 
 ```typescript
 const result = await groq.sendChat({
-  systemMessage: 'You are a travel expert specializing in European destinations.',
-  userMessage: 'Recommend 3 must-visit places in Paris',
+  systemMessage: "You are a travel expert specializing in European destinations.",
+  userMessage: "Recommend 3 must-visit places in Paris",
   responseSchema: {
-    type: 'object',
+    type: "object",
     properties: {
       recommendations: {
-        type: 'array',
-        items: { type: 'string' }
-      }
+        type: "array",
+        items: { type: "string" },
+      },
     },
-    required: ['recommendations']
-  }
+    required: ["recommendations"],
+  },
 });
 ```
 
@@ -1335,48 +1368,44 @@ const result = await groq.sendChat({
 ### 1. Generate Trip Itinerary
 
 ```typescript
-import { GROQService } from '../lib/groq.service';
+import { GROQService } from "../lib/groq.service";
 
-export async function generateItinerary(
-  destination: string,
-  days: number,
-  notes: string[]
-) {
+export async function generateItinerary(destination: string, days: number, notes: string[]) {
   const groq = new GROQService({
     apiKey: import.meta.env.GROQ_API_KEY,
   });
 
   const schema = {
-    type: 'object',
+    type: "object",
     properties: {
-      title: { type: 'string' },
+      title: { type: "string" },
       days: {
-        type: 'array',
+        type: "array",
         items: {
-          type: 'object',
+          type: "object",
           properties: {
-            day: { type: 'number' },
-            date: { type: 'string' },
+            day: { type: "number" },
+            date: { type: "string" },
             activities: {
-              type: 'array',
+              type: "array",
               items: {
-                type: 'object',
+                type: "object",
                 properties: {
-                  time: { type: 'string' },
-                  activity: { type: 'string' },
-                  location: { type: 'string' },
-                  duration: { type: 'string' },
-                  notes: { type: 'string' }
+                  time: { type: "string" },
+                  activity: { type: "string" },
+                  location: { type: "string" },
+                  duration: { type: "string" },
+                  notes: { type: "string" },
                 },
-                required: ['time', 'activity', 'location']
-              }
-            }
+                required: ["time", "activity", "location"],
+              },
+            },
           },
-          required: ['day', 'activities']
-        }
-      }
+          required: ["day", "activities"],
+        },
+      },
     },
-    required: ['title', 'days']
+    required: ["title", "days"],
   };
 
   const result = await groq.sendChat({
@@ -1384,9 +1413,9 @@ export async function generateItinerary(
                    based on user preferences. Consider travel time between locations, 
                    opening hours, and logical daily flow.`,
     userMessage: `Create a ${days}-day itinerary for ${destination}. 
-                 User notes: ${notes.join('; ')}`,
+                 User notes: ${notes.join("; ")}`,
     responseSchema: schema,
-    schemaName: 'TripItinerary'
+    schemaName: "TripItinerary",
   });
 
   return result.data;
@@ -1402,30 +1431,30 @@ export async function categorizeNote(noteText: string) {
   });
 
   const schema = {
-    type: 'object',
+    type: "object",
     properties: {
       category: {
-        type: 'string',
-        enum: ['attraction', 'restaurant', 'hotel', 'activity', 'transport', 'general']
+        type: "string",
+        enum: ["attraction", "restaurant", "hotel", "activity", "transport", "general"],
       },
-      subcategory: { type: 'string' },
+      subcategory: { type: "string" },
       priority: {
-        type: 'string',
-        enum: ['high', 'medium', 'low']
+        type: "string",
+        enum: ["high", "medium", "low"],
       },
       tags: {
-        type: 'array',
-        items: { type: 'string' }
-      }
+        type: "array",
+        items: { type: "string" },
+      },
     },
-    required: ['category', 'priority', 'tags']
+    required: ["category", "priority", "tags"],
   };
 
   const result = await groq.sendChat({
-    systemMessage: 'Analyze travel notes and categorize them accurately.',
+    systemMessage: "Analyze travel notes and categorize them accurately.",
     userMessage: `Categorize this travel note: "${noteText}"`,
     responseSchema: schema,
-    schemaName: 'NoteCategory'
+    schemaName: "NoteCategory",
   });
 
   return result.data;
@@ -1435,50 +1464,47 @@ export async function categorizeNote(noteText: string) {
 ### 3. Suggest Attractions Based on Preferences
 
 ```typescript
-export async function suggestAttractions(
-  destination: string,
-  preferences: string[]
-) {
+export async function suggestAttractions(destination: string, preferences: string[]) {
   const groq = new GROQService({
     apiKey: import.meta.env.GROQ_API_KEY,
     defaultParams: {
       temperature: 0.7, // More creative suggestions
-    }
+    },
   });
 
   const schema = {
-    type: 'object',
+    type: "object",
     properties: {
       suggestions: {
-        type: 'array',
+        type: "array",
         items: {
-          type: 'object',
+          type: "object",
           properties: {
-            name: { type: 'string' },
-            description: { type: 'string' },
-            matchReason: { type: 'string' },
-            estimatedTime: { type: 'string' },
-            bestTimeToVisit: { type: 'string' },
+            name: { type: "string" },
+            description: { type: "string" },
+            matchReason: { type: "string" },
+            estimatedTime: { type: "string" },
+            bestTimeToVisit: { type: "string" },
             costLevel: {
-              type: 'string',
-              enum: ['free', 'low', 'medium', 'high']
-            }
+              type: "string",
+              enum: ["free", "low", "medium", "high"],
+            },
           },
-          required: ['name', 'description', 'matchReason']
-        }
-      }
+          required: ["name", "description", "matchReason"],
+        },
+      },
     },
-    required: ['suggestions']
+    required: ["suggestions"],
   };
 
   const result = await groq.sendChat({
-    systemMessage: 'You are a local travel expert who knows hidden gems.',
-    userMessage: `Suggest 5 attractions in ${destination} for someone interested in: ${preferences.join(', ')}`,
+    systemMessage: "You are a local travel expert who knows hidden gems.",
+    userMessage: `Suggest 5 attractions in ${destination} for someone interested in: ${preferences.join(", ")}`,
     responseSchema: schema,
-    schemaName: 'AttractionSuggestions',
+    schemaName: "AttractionSuggestions",
     parameters: {
-      max_tokens: 2000 // Override for longer responses
-    }
+      max_tokens: 2000, // Override for longer responses
+    },
   });
 
   return result.data.suggestions;
@@ -1494,34 +1520,34 @@ export async function optimizeSchedule(activities: Activity[], travelDate: strin
   });
 
   const schema = {
-    type: 'object',
+    type: "object",
     properties: {
       optimizedSchedule: {
-        type: 'array',
+        type: "array",
         items: {
-          type: 'object',
+          type: "object",
           properties: {
-            startTime: { type: 'string' },
-            endTime: { type: 'string' },
-            activity: { type: 'string' },
-            location: { type: 'string' },
-            travelTimeFromPrevious: { type: 'string' },
-            reasoning: { type: 'string' }
+            startTime: { type: "string" },
+            endTime: { type: "string" },
+            activity: { type: "string" },
+            location: { type: "string" },
+            travelTimeFromPrevious: { type: "string" },
+            reasoning: { type: "string" },
           },
-          required: ['startTime', 'endTime', 'activity', 'location']
-        }
+          required: ["startTime", "endTime", "activity", "location"],
+        },
       },
       tips: {
-        type: 'array',
-        items: { type: 'string' }
-      }
+        type: "array",
+        items: { type: "string" },
+      },
     },
-    required: ['optimizedSchedule']
+    required: ["optimizedSchedule"],
   };
 
-  const activitiesText = activities.map(a => 
-    `${a.name} (priority: ${a.priority}, duration: ${a.estimatedDuration})`
-  ).join('; ');
+  const activitiesText = activities
+    .map((a) => `${a.name} (priority: ${a.priority}, duration: ${a.estimatedDuration})`)
+    .join("; ");
 
   const result = await groq.sendChat({
     systemMessage: `You are a travel optimizer. Arrange activities logically considering:
@@ -1531,7 +1557,7 @@ export async function optimizeSchedule(activities: Activity[], travelDate: strin
                    - Meal times and rest periods`,
     userMessage: `Optimize this schedule for ${travelDate}: ${activitiesText}`,
     responseSchema: schema,
-    schemaName: 'OptimizedSchedule'
+    schemaName: "OptimizedSchedule",
   });
 
   return result.data;
@@ -1543,7 +1569,7 @@ export async function optimizeSchedule(activities: Activity[], travelDate: strin
 ### Multi-Turn Conversation
 
 ```typescript
-import type { ChatMessage } from '../lib/groq.types';
+import type { ChatMessage } from "../lib/groq.types";
 
 export class TravelPlannerConversation {
   private messages: ChatMessage[] = [];
@@ -1556,36 +1582,36 @@ export class TravelPlannerConversation {
 
     // Add initial system message
     this.messages.push({
-      role: 'system',
-      content: 'You are a helpful travel planning assistant.'
+      role: "system",
+      content: "You are a helpful travel planning assistant.",
     });
   }
 
   async ask(question: string) {
     // Add user message
     this.messages.push({
-      role: 'user',
-      content: question
+      role: "user",
+      content: question,
     });
 
     const schema = {
-      type: 'object',
+      type: "object",
       properties: {
-        response: { type: 'string' }
+        response: { type: "string" },
       },
-      required: ['response']
+      required: ["response"],
     };
 
     // Send entire conversation history
     const result = await this.groq.sendChat({
       messages: this.messages,
-      responseSchema: schema
+      responseSchema: schema,
     });
 
     // Add assistant response to history
     this.messages.push({
-      role: 'assistant',
-      content: result.data.response
+      role: "assistant",
+      content: result.data.response,
     });
 
     return result.data.response;
@@ -1594,21 +1620,15 @@ export class TravelPlannerConversation {
 
 // Usage:
 const conversation = new TravelPlannerConversation();
-await conversation.ask('I want to visit Japan');
-await conversation.ask('What should I see in Tokyo?');
-await conversation.ask('How many days should I spend there?');
+await conversation.ask("I want to visit Japan");
+await conversation.ask("What should I see in Tokyo?");
+await conversation.ask("How many days should I spend there?");
 ```
 
 ### Error Handling
 
 ```typescript
-import {
-  ValidationError,
-  RateLimitError,
-  AuthenticationError,
-  NetworkError,
-  TimeoutError
-} from '../lib/errors';
+import { ValidationError, RateLimitError, AuthenticationError, NetworkError, TimeoutError } from "../lib/errors";
 
 export async function robustGeneration(prompt: string, maxRetries = 3) {
   const groq = new GROQService({
@@ -1621,26 +1641,27 @@ export async function robustGeneration(prompt: string, maxRetries = 3) {
     try {
       const result = await groq.sendChat({
         userMessage: prompt,
-        responseSchema: { /* your schema */ }
+        responseSchema: {
+          /* your schema */
+        },
       });
 
       return { success: true, data: result.data };
-
     } catch (error) {
       if (error instanceof AuthenticationError) {
         // Don't retry auth errors
-        return { 
-          success: false, 
-          error: 'Invalid API key. Please check your configuration.' 
+        return {
+          success: false,
+          error: "Invalid API key. Please check your configuration.",
         };
       }
 
       if (error instanceof ValidationError) {
         // Schema mismatch - adjust prompt or schema
-        console.error('Validation failed:', error.validationErrors);
-        return { 
-          success: false, 
-          error: 'AI response did not match expected format.' 
+        console.error("Validation failed:", error.validationErrors);
+        return {
+          success: false,
+          error: "AI response did not match expected format.",
         };
       }
 
@@ -1648,7 +1669,7 @@ export async function robustGeneration(prompt: string, maxRetries = 3) {
         // Wait for rate limit to clear
         const waitTime = error.retryAfter || 60;
         console.log(`Rate limited. Waiting ${waitTime} seconds...`);
-        await new Promise(resolve => setTimeout(resolve, waitTime * 1000));
+        await new Promise((resolve) => setTimeout(resolve, waitTime * 1000));
         attempt++;
         continue;
       }
@@ -1657,23 +1678,23 @@ export async function robustGeneration(prompt: string, maxRetries = 3) {
         // Network issues - retry
         attempt++;
         if (attempt >= maxRetries) {
-          return { 
-            success: false, 
-            error: 'Network error after multiple attempts.' 
+          return {
+            success: false,
+            error: "Network error after multiple attempts.",
           };
         }
         continue;
       }
 
       // Unknown error
-      return { 
-        success: false, 
-        error: 'An unexpected error occurred.' 
+      return {
+        success: false,
+        error: "An unexpected error occurred.",
       };
     }
   }
 
-  return { success: false, error: 'Max retries exceeded.' };
+  return { success: false, error: "Max retries exceeded." };
 }
 ```
 
@@ -1683,21 +1704,21 @@ export async function robustGeneration(prompt: string, maxRetries = 3) {
 // For faster responses with simpler tasks
 const fastGroq = new GROQService({
   apiKey: import.meta.env.GROQ_API_KEY,
-  defaultModel: 'gpt-3.5-turbo',
+  defaultModel: "gpt-3.5-turbo",
   defaultParams: {
     temperature: 0.3,
-    max_tokens: 500
-  }
+    max_tokens: 500,
+  },
 });
 
 // For complex travel planning
 const detailedGroq = new GROQService({
   apiKey: import.meta.env.GROQ_API_KEY,
-  defaultModel: 'llama-3.3-70b-versatile',
+  defaultModel: "llama-3.3-70b-versatile",
   defaultParams: {
     temperature: 0.7,
-    max_tokens: 3000
-  }
+    max_tokens: 3000,
+  },
 });
 ```
 
@@ -1717,10 +1738,12 @@ export async function processLongItinerary(notes: string[]) {
 
   for (let i = 0; i < notes.length; i += batchSize) {
     const batch = notes.slice(i, i + batchSize);
-    
+
     const result = await groq.sendChat({
-      userMessage: `Process these travel notes: ${batch.join('; ')}`,
-      responseSchema: { /* schema */ }
+      userMessage: `Process these travel notes: ${batch.join("; ")}`,
+      responseSchema: {
+        /* schema */
+      },
     });
 
     results.push(result.data);
@@ -1759,15 +1782,12 @@ interface ItineraryResponse {
 // Use with generics
 const result = await groq.sendChat<ItineraryResponse>({
   userMessage: prompt,
-  responseSchema: schema
+  responseSchema: schema,
 });
 
 // Now result.data is fully typed!
 console.log(result.data.title); // TypeScript knows this exists
 ```
-
-
-
 
 ================================================
 FILE: src/env.d.ts
@@ -1779,27 +1799,25 @@ import type { SupabaseClient } from "./db/supabase.client.ts";
 import type { Database } from "./db/database.types.ts";
 
 declare global {
-  namespace App {
-    interface Locals {
-      supabase: SupabaseClient<Database>;
-      user?: User;
-    }
-  }
+namespace App {
+interface Locals {
+supabase: SupabaseClient<Database>;
+user?: User;
+}
+}
 }
 
 interface ImportMetaEnv {
-  readonly SUPABASE_URL: string;
-  readonly SUPABASE_KEY: string;
-  readonly OPENROUTER_API_KEY: string;
-  readonly GROQ_API_KEY: string;
-  // more env variables...
+readonly SUPABASE_URL: string;
+readonly SUPABASE_KEY: string;
+readonly OPENROUTER_API_KEY: string;
+readonly GROQ_API_KEY: string;
+// more env variables...
 }
 
 interface ImportMeta {
-  readonly env: ImportMetaEnv;
+readonly env: ImportMetaEnv;
 }
-
-
 
 ================================================
 FILE: src/types.ts
@@ -1810,31 +1828,31 @@ import type { Database } from "./db/database.types";
 // --- User & Preferences ---
 // Standalone preferences shape (not directly mapped to a table)
 export interface PreferencesDto {
-  categories: string[];
+categories: string[];
 }
 
 // Response DTO for user profile
 export interface UserProfileDto {
-  id: string;
-  email: string;
-  preferences: PreferencesDto;
+id: string;
+email: string;
+preferences: PreferencesDto;
 }
 
 // Command Model for updating user preferences
 export interface UpdatePreferencesCommand {
-  preferences: PreferencesDto;
+preferences: PreferencesDto;
 }
 
 // --- Pagination ---
 export interface PaginationMetaDto {
-  page: number;
-  size: number;
-  total: number;
+page: number;
+size: number;
+total: number;
 }
 
 export interface PaginatedDto<T> {
-  data: T[];
-  meta: PaginationMetaDto;
+data: T[];
+meta: PaginationMetaDto;
 }
 
 // --- Projects ---
@@ -1875,27 +1893,27 @@ export type NotesListResponseDto = PaginatedDto<NoteDto>;
 // --- AI Plan Generation ---
 // Schedule item returned by plan generation
 export interface ScheduleItemDto {
-  day: number;
-  activities: string[];
+day: number;
+activities: string[];
 }
 
 // Command Model for generating a plan synchronously
 export interface GeneratePlanCommand {
-  model: string; // e.g. 'gpt-5'
-  project_name: string; // Name of the travel project (destination/trip name)
-  duration_days: number; // Number of days for the itinerary
-  notes: {
-    id: string;
-    content: string;
-    priority: number;
-    place_tags: string[] | null;
-  }[];
-  preferences?: PreferencesDto;
+model: string; // e.g. 'gpt-5'
+project_name: string; // Name of the travel project (destination/trip name)
+duration_days: number; // Number of days for the itinerary
+notes: {
+id: string;
+content: string;
+priority: number;
+place_tags: string[] | null;
+}[];
+preferences?: PreferencesDto;
 }
 
 // Response DTO for plan generation
 export interface PlanResponseDto {
-  schedule: ScheduleItemDto[];
+schedule: ScheduleItemDto[];
 }
 
 // --- AI Logs ---
@@ -1905,9 +1923,10 @@ type AiLogInsert = Database["public"]["Tables"]["ai_logs"]["Insert"];
 
 // DTO for a single AI log entry
 export type AILogDto = Pick<
-  AiLogRow,
-  "id" | "project_id" | "prompt" | "response" | "status" | "duration_ms" | "version" | "created_on"
->;
+AiLogRow,
+"id" | "project_id" | "prompt" | "response" | "status" | "duration_ms" | "version" | "created_on"
+
+> ;
 
 // Paginated list response for AI logs
 export type AILogsListResponseDto = PaginatedDto<AILogDto>;
@@ -1915,29 +1934,29 @@ export type AILogsListResponseDto = PaginatedDto<AILogDto>;
 // --- ViewModels ---
 // ViewModel for project creation/edit form state
 export interface ProjectFormViewModel {
-  name: string;
-  duration_days: string; // Use string for input flexibility, parse on submit
-  planned_date: Date | null; // Use Date object for date picker components
+name: string;
+duration_days: string; // Use string for input flexibility, parse on submit
+planned_date: Date | null; // Use Date object for date picker components
 }
 
 // Discriminated union to manage modal state in Projects view
 export type ModalState =
-  | { type: "closed" }
-  | { type: "create_project" }
-  | { type: "edit_project"; project: ProjectDto }
-  | { type: "delete_project"; project: ProjectDto };
+| { type: "closed" }
+| { type: "create_project" }
+| { type: "edit_project"; project: ProjectDto }
+| { type: "delete_project"; project: ProjectDto };
 
 // ViewModel for note creation/edit form state
 export interface NoteFormViewModel {
-  content: string;
-  priority: string; // Stored as string from <select> value, e.g., "1"
-  place_tags: string; // Comma-separated string for the input field
+content: string;
+priority: string; // Stored as string from <select> value, e.g., "1"
+place_tags: string; // Comma-separated string for the input field
 }
 
 // ViewModel for notes filter state
 export interface NotesFilterViewModel {
-  priority: number | null;
-  place_tag: string;
+priority: number | null;
+place_tag: string;
 }
 
 // Discriminated union to manage modal state in Notes view
@@ -1945,71 +1964,68 @@ export type NoteModalState = { type: "closed" } | { type: "create_note" } | { ty
 
 // --- End of DTOs and Command Models ---
 
-
-
 ================================================
 FILE: src/components/DeleteConfirmationDialog.tsx
 ================================================
 import type { ProjectDto } from "../types";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
+AlertDialog,
+AlertDialogAction,
+AlertDialogCancel,
+AlertDialogContent,
+AlertDialogDescription,
+AlertDialogFooter,
+AlertDialogHeader,
+AlertDialogTitle,
 } from "./ui/alert-dialog";
 import { Loader2Icon } from "lucide-react";
 
 interface DeleteConfirmationDialogProps {
-  isOpen: boolean;
-  project: ProjectDto | null;
-  isLoading: boolean;
-  onConfirm: () => void;
-  onCancel: () => void;
+isOpen: boolean;
+project: ProjectDto | null;
+isLoading: boolean;
+onConfirm: () => void;
+onCancel: () => void;
 }
 
-/**
- * Confirmation dialog for deleting a project
- */
-export function DeleteConfirmationDialog({
+/\*\*
+
+- Confirmation dialog for deleting a project
+  \*/
+  export function DeleteConfirmationDialog({
   isOpen,
   project,
   isLoading,
   onConfirm,
   onCancel,
-}: DeleteConfirmationDialogProps) {
+  }: DeleteConfirmationDialogProps) {
   return (
-    <AlertDialog open={isOpen} onOpenChange={(open) => !open && onCancel()}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This will permanently delete the project{" "}
-            <span className="font-semibold text-foreground">"{project?.name}"</span>. This action cannot be undone.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel onClick={onCancel} disabled={isLoading}>
-            Cancel
-          </AlertDialogCancel>
-          <AlertDialogAction
-            onClick={onConfirm}
-            disabled={isLoading}
-            className="bg-destructive hover:bg-destructive/90"
-          >
-            {isLoading && <Loader2Icon className="animate-spin" />}
-            Delete Project
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+  <AlertDialog open={isOpen} onOpenChange={(open) => !open && onCancel()}>
+  <AlertDialogContent>
+  <AlertDialogHeader>
+  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+  <AlertDialogDescription>
+  This will permanently delete the project{" "}
+  <span className="font-semibold text-foreground">"{project?.name}"</span>. This action cannot be undone.
+  </AlertDialogDescription>
+  </AlertDialogHeader>
+  <AlertDialogFooter>
+  <AlertDialogCancel onClick={onCancel} disabled={isLoading}>
+  Cancel
+  </AlertDialogCancel>
+  <AlertDialogAction
+              onClick={onConfirm}
+              disabled={isLoading}
+              className="bg-destructive hover:bg-destructive/90"
+            >
+  {isLoading && <Loader2Icon className="animate-spin" />}
+  Delete Project
+  </AlertDialogAction>
+  </AlertDialogFooter>
+  </AlertDialogContent>
+  </AlertDialog>
   );
-}
-
-
+  }
 
 ================================================
 FILE: src/components/FilterControl.tsx
@@ -2022,49 +2038,51 @@ import { Label } from "./ui/label";
 import { NOTE_TAGS, NOTE_TAG_LABELS } from "../lib/constants";
 
 interface FilterControlProps {
-  initialFilters: NotesFilterViewModel;
-  onFilterChange: (filters: NotesFilterViewModel) => void;
+initialFilters: NotesFilterViewModel;
+onFilterChange: (filters: NotesFilterViewModel) => void;
 }
 
-/**
- * FilterControl component provides UI for filtering notes by priority and place tag.
- * Implements debouncing to prevent excessive API calls while typing.
- */
-export function FilterControl({ initialFilters, onFilterChange }: FilterControlProps) {
+/\*\*
+
+- FilterControl component provides UI for filtering notes by priority and place tag.
+- Implements debouncing to prevent excessive API calls while typing.
+  \*/
+  export function FilterControl({ initialFilters, onFilterChange }: FilterControlProps) {
   const [localFilters, setLocalFilters] = useState<NotesFilterViewModel>(initialFilters);
 
-  // Debounce filter changes - wait 500ms after user stops typing
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      onFilterChange(localFilters);
-    }, 500);
+// Debounce filter changes - wait 500ms after user stops typing
+useEffect(() => {
+const timeoutId = setTimeout(() => {
+onFilterChange(localFilters);
+}, 500);
 
     return () => clearTimeout(timeoutId);
-  }, [localFilters, onFilterChange]);
 
-  const handlePriorityChange = (value: string) => {
-    setLocalFilters({
-      ...localFilters,
-      priority: value === "all" ? null : parseInt(value, 10),
-    });
-  };
+}, [localFilters, onFilterChange]);
 
-  const handlePlaceTagChange = (value: string) => {
-    setLocalFilters({
-      ...localFilters,
-      place_tag: value === "all" ? "" : value,
-    });
-  };
+const handlePriorityChange = (value: string) => {
+setLocalFilters({
+...localFilters,
+priority: value === "all" ? null : parseInt(value, 10),
+});
+};
 
-  const priorityValue = localFilters.priority === null ? "all" : localFilters.priority.toString();
-  const tagValue = localFilters.place_tag === "" ? "all" : localFilters.place_tag;
+const handlePlaceTagChange = (value: string) => {
+setLocalFilters({
+...localFilters,
+place_tag: value === "all" ? "" : value,
+});
+};
 
-  return (
-    <div className="rounded-lg border bg-card p-4 shadow-sm">
-      <div className="flex items-center gap-2 mb-4">
-        <Filter className="size-4 text-muted-foreground" />
-        <h3 className="text-sm font-semibold">Filter Notes</h3>
-      </div>
+const priorityValue = localFilters.priority === null ? "all" : localFilters.priority.toString();
+const tagValue = localFilters.place_tag === "" ? "all" : localFilters.place_tag;
+
+return (
+<div className="rounded-lg border bg-card p-4 shadow-sm">
+<div className="flex items-center gap-2 mb-4">
+<Filter className="size-4 text-muted-foreground" />
+<h3 className="text-sm font-semibold">Filter Notes</h3>
+</div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Priority Filter */}
@@ -2106,10 +2124,9 @@ export function FilterControl({ initialFilters, onFilterChange }: FilterControlP
         </div>
       </div>
     </div>
-  );
+
+);
 }
-
-
 
 ================================================
 FILE: src/components/InfiniteScrollGrid.tsx
@@ -2121,23 +2138,24 @@ import { NoteCard } from "./NoteCard";
 import { Button } from "./ui/button";
 
 interface InfiniteScrollGridProps {
-  notes: NoteDto[];
-  hasNextPage: boolean;
-  isLoading: boolean;
-  isFetchingNextPage: boolean;
-  error: Error | null;
-  onLoadMore: () => void;
-  onEdit: (note: NoteDto) => void;
-  onDelete: (note: NoteDto) => void;
-  onRetry?: () => void;
+notes: NoteDto[];
+hasNextPage: boolean;
+isLoading: boolean;
+isFetchingNextPage: boolean;
+error: Error | null;
+onLoadMore: () => void;
+onEdit: (note: NoteDto) => void;
+onDelete: (note: NoteDto) => void;
+onRetry?: () => void;
 }
 
-/**
- * InfiniteScrollGrid displays a grid of notes with infinite scroll functionality.
- * Uses IntersectionObserver to detect when the sentinel element is visible
- * and triggers loading the next page.
- */
-export function InfiniteScrollGrid({
+/\*\*
+
+- InfiniteScrollGrid displays a grid of notes with infinite scroll functionality.
+- Uses IntersectionObserver to detect when the sentinel element is visible
+- and triggers loading the next page.
+  \*/
+  export function InfiniteScrollGrid({
   notes,
   hasNextPage,
   isLoading,
@@ -2147,14 +2165,14 @@ export function InfiniteScrollGrid({
   onEdit,
   onDelete,
   onRetry,
-}: InfiniteScrollGridProps) {
+  }: InfiniteScrollGridProps) {
   const sentinelRef = useRef<HTMLDivElement>(null);
 
-  // Set up IntersectionObserver for infinite scroll
-  useEffect(() => {
-    if (!sentinelRef.current || !hasNextPage || isFetchingNextPage) {
-      return;
-    }
+// Set up IntersectionObserver for infinite scroll
+useEffect(() => {
+if (!sentinelRef.current || !hasNextPage || isFetchingNextPage) {
+return;
+}
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -2175,57 +2193,58 @@ export function InfiniteScrollGrid({
     return () => {
       observer.disconnect();
     };
-  }, [hasNextPage, isFetchingNextPage, onLoadMore]);
 
-  // Initial loading state
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <div className="text-center">
-          <LoaderCircle className="size-8 animate-spin text-primary mx-auto mb-3" />
-          <p className="text-sm text-muted-foreground">Loading notes...</p>
-        </div>
-      </div>
-    );
-  }
+}, [hasNextPage, isFetchingNextPage, onLoadMore]);
 
-  // Error state
-  if (error && notes.length === 0) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <div className="text-center max-w-md">
-          <h3 className="text-lg font-semibold mb-2">Error Loading Notes</h3>
-          <p className="text-sm text-muted-foreground mb-4">{error.message || "An unexpected error occurred"}</p>
-          {onRetry && (
-            <Button onClick={onRetry} variant="outline">
-              Retry
-            </Button>
-          )}
-        </div>
-      </div>
-    );
-  }
+// Initial loading state
+if (isLoading) {
+return (
+<div className="flex items-center justify-center py-12">
+<div className="text-center">
+<LoaderCircle className="size-8 animate-spin text-primary mx-auto mb-3" />
+<p className="text-sm text-muted-foreground">Loading notes...</p>
+</div>
+</div>
+);
+}
 
-  // Empty state
-  if (notes.length === 0) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <div className="text-center max-w-md">
-          <h3 className="text-lg font-semibold mb-2">No Notes Yet</h3>
-          <p className="text-sm text-muted-foreground">Start adding notes to your project to plan your trip!</p>
-        </div>
-      </div>
-    );
-  }
+// Error state
+if (error && notes.length === 0) {
+return (
+<div className="flex items-center justify-center py-12">
+<div className="text-center max-w-md">
+<h3 className="text-lg font-semibold mb-2">Error Loading Notes</h3>
+<p className="text-sm text-muted-foreground mb-4">{error.message || "An unexpected error occurred"}</p>
+{onRetry && (
+<Button onClick={onRetry} variant="outline">
+Retry
+</Button>
+)}
+</div>
+</div>
+);
+}
 
-  // Grid with notes
-  return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {notes.map((note) => (
-          <NoteCard key={note.id} note={note} onEdit={onEdit} onDelete={onDelete} />
-        ))}
-      </div>
+// Empty state
+if (notes.length === 0) {
+return (
+<div className="flex items-center justify-center py-12">
+<div className="text-center max-w-md">
+<h3 className="text-lg font-semibold mb-2">No Notes Yet</h3>
+<p className="text-sm text-muted-foreground">Start adding notes to your project to plan your trip!</p>
+</div>
+</div>
+);
+}
+
+// Grid with notes
+return (
+<div className="space-y-6">
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+{notes.map((note) => (
+<NoteCard key={note.id} note={note} onEdit={onEdit} onDelete={onDelete} />
+))}
+</div>
 
       {/* Sentinel element for infinite scroll */}
       {hasNextPage && (
@@ -2239,18 +2258,20 @@ export function InfiniteScrollGrid({
         </div>
       )}
     </div>
-  );
+
+);
 }
-
-
 
 ================================================
 FILE: src/components/LandingPage.astro
 ================================================
+
 ---
+
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { MapPinIcon, NotebookIcon, SparklesIcon } from "lucide-react";
+
 ---
 
 <div class="container mx-auto px-4 py-16">
@@ -2308,6 +2329,7 @@ import { MapPinIcon, NotebookIcon, SparklesIcon } from "lucide-react";
         </CardDescription>
       </CardHeader>
     </Card>
+
   </div>
 
   <!-- Call to Action -->
@@ -2323,33 +2345,30 @@ import { MapPinIcon, NotebookIcon, SparklesIcon } from "lucide-react";
   </div>
 </div>
 
-
-
-
 ================================================
 FILE: src/components/LoadingOverlay.tsx
 ================================================
 interface LoadingOverlayProps {
-  isLoading: boolean;
+isLoading: boolean;
 }
 
 export function LoadingOverlay({ isLoading }: LoadingOverlayProps) {
-  if (!isLoading) {
-    return null;
-  }
+if (!isLoading) {
+return null;
+}
 
-  return (
-    <div
+return (
+<div
       className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center"
       aria-busy="true"
       role="status"
     >
-      <div className="bg-card p-8 rounded-lg shadow-lg border flex flex-col items-center gap-4">
-        {/* Spinner */}
-        <div className="relative w-16 h-16">
-          <div className="absolute inset-0 border-4 border-primary/20 rounded-full"></div>
-          <div className="absolute inset-0 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-        </div>
+<div className="bg-card p-8 rounded-lg shadow-lg border flex flex-col items-center gap-4">
+{/_ Spinner _/}
+<div className="relative w-16 h-16">
+<div className="absolute inset-0 border-4 border-primary/20 rounded-full"></div>
+<div className="absolute inset-0 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+</div>
 
         {/* Loading message */}
         <div className="text-center">
@@ -2358,10 +2377,9 @@ export function LoadingOverlay({ isLoading }: LoadingOverlayProps) {
         </div>
       </div>
     </div>
-  );
+
+);
 }
-
-
 
 ================================================
 FILE: src/components/NoteCard.tsx
@@ -2373,144 +2391,144 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Button } from "./ui/button";
 
 interface NoteCardProps {
-  note: NoteDto;
-  onEdit: (note: NoteDto) => void;
-  onDelete: (note: NoteDto) => void;
+note: NoteDto;
+onEdit: (note: NoteDto) => void;
+onDelete: (note: NoteDto) => void;
 }
 
-/**
- * Priority badge styling based on priority level
- */
-const getPriorityBadge = (priority: number) => {
+/\*\*
+
+- Priority badge styling based on priority level
+  \*/
+  const getPriorityBadge = (priority: number) => {
   const badges = {
-    1: { label: "High", className: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300" },
-    2: { label: "Medium", className: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300" },
-    3: { label: "Low", className: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300" },
+  1: { label: "High", className: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300" },
+  2: { label: "Medium", className: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300" },
+  3: { label: "Low", className: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300" },
   };
 
-  const badge = badges[priority as keyof typeof badges] || badges[3];
+const badge = badges[priority as keyof typeof badges] || badges[3];
 
-  return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${badge.className}`}>
-      {badge.label}
-    </span>
-  );
+return (
+<span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${badge.className}`}>
+{badge.label}
+</span>
+);
 };
 
-/**
- * NoteCard component displays a single note with its content, priority, and tags.
- * Provides edit and delete actions via a dropdown menu.
- */
-export function NoteCard({ note, onEdit, onDelete }: NoteCardProps) {
+/\*\*
+
+- NoteCard component displays a single note with its content, priority, and tags.
+- Provides edit and delete actions via a dropdown menu.
+  \*/
+  export function NoteCard({ note, onEdit, onDelete }: NoteCardProps) {
   return (
-    <Card className="flex flex-col h-full">
-      <CardContent className="flex-1 pt-6">
-        <div className="flex items-start justify-between gap-2 mb-3">
-          <div>{getPriorityBadge(note.priority)}</div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="size-8 -mt-1 -mr-1" aria-label="Note actions">
-                <MoreVertical />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => onEdit(note)}>
-                <Edit />
-                Edit
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => onDelete(note)} className="text-destructive focus:text-destructive">
-                <Trash2 />
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+  <Card className="flex flex-col h-full">
+  <CardContent className="flex-1 pt-6">
+  <div className="flex items-start justify-between gap-2 mb-3">
+  <div>{getPriorityBadge(note.priority)}</div>
+  <DropdownMenu>
+  <DropdownMenuTrigger asChild>
+  <Button variant="ghost" size="icon" className="size-8 -mt-1 -mr-1" aria-label="Note actions">
+  <MoreVertical />
+  </Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent align="end">
+  <DropdownMenuItem onClick={() => onEdit(note)}>
+  <Edit />
+  Edit
+  </DropdownMenuItem>
+  <DropdownMenuItem onClick={() => onDelete(note)} className="text-destructive focus:text-destructive">
+  <Trash2 />
+  Delete
+  </DropdownMenuItem>
+  </DropdownMenuContent>
+  </DropdownMenu>
+  </div>
 
-        <p className="text-sm text-foreground whitespace-pre-wrap break-words">{note.content}</p>
-      </CardContent>
+          <p className="text-sm text-foreground whitespace-pre-wrap break-words">{note.content}</p>
+        </CardContent>
 
-      {note.place_tags && note.place_tags.length > 0 && (
-        <CardFooter className="flex-wrap gap-1.5">
-          {note.place_tags.map((tag, index) => (
-            <span
-              key={index}
-              className="inline-flex items-center rounded-md bg-secondary px-2 py-1 text-xs font-medium text-secondary-foreground"
-            >
-              {tag}
-            </span>
-          ))}
-        </CardFooter>
-      )}
-    </Card>
+        {note.place_tags && note.place_tags.length > 0 && (
+          <CardFooter className="flex-wrap gap-1.5">
+            {note.place_tags.map((tag, index) => (
+              <span
+                key={index}
+                className="inline-flex items-center rounded-md bg-secondary px-2 py-1 text-xs font-medium text-secondary-foreground"
+              >
+                {tag}
+              </span>
+            ))}
+          </CardFooter>
+        )}
+      </Card>
+
   );
-}
-
-
+  }
 
 ================================================
 FILE: src/components/NoteDeleteDialog.tsx
 ================================================
 import type { NoteDto } from "../types";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
+AlertDialog,
+AlertDialogAction,
+AlertDialogCancel,
+AlertDialogContent,
+AlertDialogDescription,
+AlertDialogFooter,
+AlertDialogHeader,
+AlertDialogTitle,
 } from "./ui/alert-dialog";
 import { Loader2Icon } from "lucide-react";
 
 interface NoteDeleteDialogProps {
-  isOpen: boolean;
-  note: NoteDto | null;
-  isLoading: boolean;
-  onConfirm: () => void;
-  onCancel: () => void;
+isOpen: boolean;
+note: NoteDto | null;
+isLoading: boolean;
+onConfirm: () => void;
+onCancel: () => void;
 }
 
-/**
- * Confirmation dialog for deleting a note
- */
-export function NoteDeleteDialog({ isOpen, note, isLoading, onConfirm, onCancel }: NoteDeleteDialogProps) {
+/\*\*
+
+- Confirmation dialog for deleting a note
+  \*/
+  export function NoteDeleteDialog({ isOpen, note, isLoading, onConfirm, onCancel }: NoteDeleteDialogProps) {
   // Truncate content for display (max 100 chars)
   const displayContent = note?.content
-    ? note.content.length > 100
-      ? note.content.substring(0, 100) + "..."
-      : note.content
-    : "";
+  ? note.content.length > 100
+  ? note.content.substring(0, 100) + "..."
+  : note.content
+  : "";
 
-  return (
-    <AlertDialog open={isOpen} onOpenChange={(open) => !open && onCancel()}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Delete Note?</AlertDialogTitle>
-          <AlertDialogDescription>
-            Are you sure you want to delete this note? This action cannot be undone.
-            {note && <span className="mt-2 block text-sm italic text-muted-foreground">"{displayContent}"</span>}
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel onClick={onCancel} disabled={isLoading}>
-            Cancel
-          </AlertDialogCancel>
-          <AlertDialogAction
+return (
+<AlertDialog open={isOpen} onOpenChange={(open) => !open && onCancel()}>
+<AlertDialogContent>
+<AlertDialogHeader>
+<AlertDialogTitle>Delete Note?</AlertDialogTitle>
+<AlertDialogDescription>
+Are you sure you want to delete this note? This action cannot be undone.
+{note && <span className="mt-2 block text-sm italic text-muted-foreground">"{displayContent}"</span>}
+</AlertDialogDescription>
+</AlertDialogHeader>
+<AlertDialogFooter>
+<AlertDialogCancel onClick={onCancel} disabled={isLoading}>
+Cancel
+</AlertDialogCancel>
+<AlertDialogAction
             onClick={onConfirm}
             disabled={isLoading}
             className="bg-destructive hover:bg-destructive/90"
           >
-            {isLoading && <Loader2Icon className="animate-spin" />}
-            Delete Note
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  );
+{isLoading && <Loader2Icon className="animate-spin" />}
+Delete Note
+</AlertDialogAction>
+</AlertDialogFooter>
+</AlertDialogContent>
+</AlertDialog>
+);
 }
-
-
 
 ================================================
 FILE: src/components/NoteModal.tsx
@@ -2526,53 +2544,54 @@ import { NOTE_TAGS, NOTE_TAG_LABELS } from "../lib/constants";
 import { XIcon } from "lucide-react";
 
 interface NoteModalProps {
-  isOpen: boolean;
-  mode: "create" | "edit";
-  note?: NoteDto;
-  onSubmit: (data: CreateNoteCommand | UpdateNoteCommand) => void;
-  onClose: () => void;
-  isLoading?: boolean;
+isOpen: boolean;
+mode: "create" | "edit";
+note?: NoteDto;
+onSubmit: (data: CreateNoteCommand | UpdateNoteCommand) => void;
+onClose: () => void;
+isLoading?: boolean;
 }
 
 const MAX_CONTENT_LENGTH = 300;
 
-/**
- * NoteModal component provides a dialog for creating or editing notes.
- * Includes form validation and character limit enforcement (300 chars max).
- */
-export function NoteModal({ isOpen, mode, note, onSubmit, onClose, isLoading = false }: NoteModalProps) {
+/\*\*
+
+- NoteModal component provides a dialog for creating or editing notes.
+- Includes form validation and character limit enforcement (300 chars max).
+  \*/
+  export function NoteModal({ isOpen, mode, note, onSubmit, onClose, isLoading = false }: NoteModalProps) {
   const [formData, setFormData] = useState<NoteFormViewModel>({
-    content: "",
-    priority: "",
-    place_tags: "",
+  content: "",
+  priority: "",
+  place_tags: "",
   });
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [errors, setErrors] = useState<Partial<Record<keyof NoteFormViewModel, string>>>({});
 
-  // Initialize form when modal opens or note changes
-  useEffect(() => {
-    if (isOpen) {
-      if (mode === "edit" && note) {
-        setFormData({
-          content: note.content,
-          priority: note.priority.toString(),
-          place_tags: note.place_tags?.join(", ") || "",
-        });
-        setSelectedTags(note.place_tags || []);
-      } else {
-        setFormData({
-          content: "",
-          priority: "",
-          place_tags: "",
-        });
-        setSelectedTags([]);
-      }
-      setErrors({});
-    }
-  }, [isOpen, mode, note]);
+// Initialize form when modal opens or note changes
+useEffect(() => {
+if (isOpen) {
+if (mode === "edit" && note) {
+setFormData({
+content: note.content,
+priority: note.priority.toString(),
+place_tags: note.place_tags?.join(", ") || "",
+});
+setSelectedTags(note.place_tags || []);
+} else {
+setFormData({
+content: "",
+priority: "",
+place_tags: "",
+});
+setSelectedTags([]);
+}
+setErrors({});
+}
+}, [isOpen, mode, note]);
 
-  const validateForm = (): boolean => {
-    const newErrors: Partial<Record<keyof NoteFormViewModel, string>> = {};
+const validateForm = (): boolean => {
+const newErrors: Partial<Record<keyof NoteFormViewModel, string>> = {};
 
     // Validate content
     if (!formData.content.trim()) {
@@ -2588,10 +2607,11 @@ export function NoteModal({ isOpen, mode, note, onSubmit, onClose, isLoading = f
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+};
+
+const handleSubmit = (e: React.FormEvent) => {
+e.preventDefault();
 
     if (!validateForm()) {
       return;
@@ -2616,52 +2636,53 @@ export function NoteModal({ isOpen, mode, note, onSubmit, onClose, isLoading = f
       };
       onSubmit(command);
     }
-  };
 
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    // Enforce max length
-    if (value.length <= MAX_CONTENT_LENGTH) {
-      setFormData({ ...formData, content: value });
-      // Clear error if content becomes valid
-      if (errors.content && value.trim()) {
-        setErrors({ ...errors, content: undefined });
-      }
-    }
-  };
+};
 
-  const handlePriorityChange = (value: string) => {
-    setFormData({ ...formData, priority: value });
-    // Clear error when priority is selected
-    if (errors.priority) {
-      setErrors({ ...errors, priority: undefined });
-    }
-  };
+const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+const value = e.target.value;
+// Enforce max length
+if (value.length <= MAX_CONTENT_LENGTH) {
+setFormData({ ...formData, content: value });
+// Clear error if content becomes valid
+if (errors.content && value.trim()) {
+setErrors({ ...errors, content: undefined });
+}
+}
+};
 
-  const handleTagToggle = (tag: string) => {
-    setSelectedTags((prev) => 
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-    );
-  };
+const handlePriorityChange = (value: string) => {
+setFormData({ ...formData, priority: value });
+// Clear error when priority is selected
+if (errors.priority) {
+setErrors({ ...errors, priority: undefined });
+}
+};
 
-  const handleRemoveTag = (tagToRemove: string) => {
-    setSelectedTags((prev) => prev.filter((tag) => tag !== tagToRemove));
-  };
+const handleTagToggle = (tag: string) => {
+setSelectedTags((prev) =>
+prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+);
+};
 
-  const remainingChars = MAX_CONTENT_LENGTH - formData.content.length;
-  const isFormValid = formData.content.trim() && formData.priority;
+const handleRemoveTag = (tagToRemove: string) => {
+setSelectedTags((prev) => prev.filter((tag) => tag !== tagToRemove));
+};
 
-  return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[525px]">
-        <DialogHeader>
-          <DialogTitle>{mode === "create" ? "Create New Note" : "Edit Note"}</DialogTitle>
-          <DialogDescription>
-            {mode === "create"
-              ? "Add details about a place or activity you want to include in your trip."
-              : "Update the details of your note."}
-          </DialogDescription>
-        </DialogHeader>
+const remainingChars = MAX_CONTENT_LENGTH - formData.content.length;
+const isFormValid = formData.content.trim() && formData.priority;
+
+return (
+<Dialog open={isOpen} onOpenChange={onClose}>
+<DialogContent className="sm:max-w-[525px]">
+<DialogHeader>
+<DialogTitle>{mode === "create" ? "Create New Note" : "Edit Note"}</DialogTitle>
+<DialogDescription>
+{mode === "create"
+? "Add details about a place or activity you want to include in your trip."
+: "Update the details of your note."}
+</DialogDescription>
+</DialogHeader>
 
         <form onSubmit={handleSubmit}>
           <div className="space-y-4 py-4">
@@ -2745,7 +2766,7 @@ export function NoteModal({ isOpen, mode, note, onSubmit, onClose, isLoading = f
                     ))}
                   </div>
                 )}
-                
+
                 {/* Tag Selection Grid */}
                 <div className="grid grid-cols-2 gap-2 p-3 border rounded-md max-h-48 overflow-y-auto">
                   {NOTE_TAGS.map((tag) => (
@@ -2780,10 +2801,9 @@ export function NoteModal({ isOpen, mode, note, onSubmit, onClose, isLoading = f
         </form>
       </DialogContent>
     </Dialog>
-  );
+
+);
 }
-
-
 
 ================================================
 FILE: src/components/PaginationControls.tsx
@@ -2793,32 +2813,32 @@ import { Button } from "./ui/button";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 interface PaginationControlsProps {
-  meta: PaginationMetaDto;
-  onPageChange: (newPage: number) => void;
+meta: PaginationMetaDto;
+onPageChange: (newPage: number) => void;
 }
 
-/**
- * Component to render pagination controls
- */
-export function PaginationControls({ meta, onPageChange }: PaginationControlsProps) {
+/\*\*
+
+- Component to render pagination controls
+  \*/
+  export function PaginationControls({ meta, onPageChange }: PaginationControlsProps) {
   const { page, size, total } = meta;
   const totalPages = Math.ceil(total / size);
 
-  const isFirstPage = page === 1;
-  const isLastPage = page >= totalPages;
+const isFirstPage = page === 1;
+const isLastPage = page >= totalPages;
 
-  return (
-    <div className="flex items-center justify-center gap-4">
-      <Button
-        variant="outline"
-        size="default"
-        onClick={() => onPageChange(page - 1)}
-        disabled={isFirstPage}
-        aria-label="Previous page"
-      >
-        <ChevronLeftIcon />
-        Previous
-      </Button>
+return (
+<div className="flex items-center justify-center gap-4">
+<Button
+variant="outline"
+size="default"
+onClick={() => onPageChange(page - 1)}
+disabled={isFirstPage}
+aria-label="Previous page" >
+<ChevronLeftIcon />
+Previous
+</Button>
 
       <div className="text-muted-foreground text-sm">
         Page <span className="font-semibold text-foreground">{page}</span> of{" "}
@@ -2837,10 +2857,9 @@ export function PaginationControls({ meta, onPageChange }: PaginationControlsPro
         <ChevronRightIcon />
       </Button>
     </div>
-  );
+
+);
 }
-
-
 
 ================================================
 FILE: src/components/ProjectFormModal.tsx
@@ -2854,56 +2873,57 @@ import { Label } from "./ui/label";
 import { Loader2Icon } from "lucide-react";
 
 interface ProjectFormModalProps {
-  isOpen: boolean;
-  mode: "create" | "edit";
-  initialData?: ProjectDto;
-  isLoading: boolean;
-  onSubmit: (formData: CreateProjectCommand) => void;
-  onClose: () => void;
+isOpen: boolean;
+mode: "create" | "edit";
+initialData?: ProjectDto;
+isLoading: boolean;
+onSubmit: (formData: CreateProjectCommand) => void;
+onClose: () => void;
 }
 
 interface FormErrors {
-  name?: string;
-  duration_days?: string;
-  planned_date?: string;
+name?: string;
+duration_days?: string;
+planned_date?: string;
 }
 
-/**
- * Modal dialog for creating or editing a project
- */
-export function ProjectFormModal({ isOpen, mode, initialData, isLoading, onSubmit, onClose }: ProjectFormModalProps) {
+/\*\*
+
+- Modal dialog for creating or editing a project
+  \*/
+  export function ProjectFormModal({ isOpen, mode, initialData, isLoading, onSubmit, onClose }: ProjectFormModalProps) {
   // Form state
   const [formData, setFormData] = useState<ProjectFormViewModel>({
-    name: "",
-    duration_days: "",
-    planned_date: null,
+  name: "",
+  duration_days: "",
+  planned_date: null,
   });
 
-  const [errors, setErrors] = useState<FormErrors>({});
+const [errors, setErrors] = useState<FormErrors>({});
 
-  // Initialize form data when modal opens or initialData changes
-  useEffect(() => {
-    if (isOpen) {
-      if (mode === "edit" && initialData) {
-        setFormData({
-          name: initialData.name,
-          duration_days: initialData.duration_days.toString(),
-          planned_date: initialData.planned_date ? new Date(initialData.planned_date) : null,
-        });
-      } else {
-        setFormData({
-          name: "",
-          duration_days: "",
-          planned_date: null,
-        });
-      }
-      setErrors({});
-    }
-  }, [isOpen, mode, initialData]);
+// Initialize form data when modal opens or initialData changes
+useEffect(() => {
+if (isOpen) {
+if (mode === "edit" && initialData) {
+setFormData({
+name: initialData.name,
+duration_days: initialData.duration_days.toString(),
+planned_date: initialData.planned_date ? new Date(initialData.planned_date) : null,
+});
+} else {
+setFormData({
+name: "",
+duration_days: "",
+planned_date: null,
+});
+}
+setErrors({});
+}
+}, [isOpen, mode, initialData]);
 
-  // Validation function
-  const validateForm = (): boolean => {
-    const newErrors: FormErrors = {};
+// Validation function
+const validateForm = (): boolean => {
+const newErrors: FormErrors = {};
 
     // Validate name
     if (!formData.name.trim()) {
@@ -2925,11 +2945,12 @@ export function ProjectFormModal({ isOpen, mode, initialData, isLoading, onSubmi
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };
 
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+};
+
+// Handle form submission
+const handleSubmit = (e: React.FormEvent) => {
+e.preventDefault();
 
     if (!validateForm()) {
       return;
@@ -2945,45 +2966,46 @@ export function ProjectFormModal({ isOpen, mode, initialData, isLoading, onSubmi
     };
 
     onSubmit(command);
-  };
 
-  // Handle input changes
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, name: e.target.value });
-    if (errors.name) {
-      setErrors({ ...errors, name: undefined });
-    }
-  };
+};
 
-  const handleDurationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, duration_days: e.target.value });
-    if (errors.duration_days) {
-      setErrors({ ...errors, duration_days: undefined });
-    }
-  };
+// Handle input changes
+const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+setFormData({ ...formData, name: e.target.value });
+if (errors.name) {
+setErrors({ ...errors, name: undefined });
+}
+};
 
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const dateValue = e.target.value;
-    setFormData({
-      ...formData,
-      planned_date: dateValue ? new Date(dateValue) : null,
-    });
-    if (errors.planned_date) {
-      setErrors({ ...errors, planned_date: undefined });
-    }
-  };
+const handleDurationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+setFormData({ ...formData, duration_days: e.target.value });
+if (errors.duration_days) {
+setErrors({ ...errors, duration_days: undefined });
+}
+};
 
-  return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent showCloseButton={!isLoading}>
-        <DialogHeader>
-          <DialogTitle>{mode === "create" ? "Create New Project" : "Edit Project"}</DialogTitle>
-          <DialogDescription>
-            {mode === "create"
-              ? "Add a new travel project to start planning your trip."
-              : "Update the details of your travel project."}
-          </DialogDescription>
-        </DialogHeader>
+const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+const dateValue = e.target.value;
+setFormData({
+...formData,
+planned_date: dateValue ? new Date(dateValue) : null,
+});
+if (errors.planned_date) {
+setErrors({ ...errors, planned_date: undefined });
+}
+};
+
+return (
+<Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+<DialogContent showCloseButton={!isLoading}>
+<DialogHeader>
+<DialogTitle>{mode === "create" ? "Create New Project" : "Edit Project"}</DialogTitle>
+<DialogDescription>
+{mode === "create"
+? "Add a new travel project to start planning your trip."
+: "Update the details of your travel project."}
+</DialogDescription>
+</DialogHeader>
 
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
@@ -3051,10 +3073,9 @@ export function ProjectFormModal({ isOpen, mode, initialData, isLoading, onSubmi
         </form>
       </DialogContent>
     </Dialog>
-  );
+
+);
 }
-
-
 
 ================================================
 FILE: src/components/ProjectListItem.tsx
@@ -3064,28 +3085,29 @@ import { Button } from "./ui/button";
 import { EditIcon, TrashIcon, CalendarIcon, ClockIcon, StickyNoteIcon } from "lucide-react";
 
 interface ProjectListItemProps {
-  project: ProjectDto;
-  onEdit: (project: ProjectDto) => void;
-  onDelete: (project: ProjectDto) => void;
+project: ProjectDto;
+onEdit: (project: ProjectDto) => void;
+onDelete: (project: ProjectDto) => void;
 }
 
-/**
- * Component to display a single project item
- */
-export function ProjectListItem({ project, onEdit, onDelete }: ProjectListItemProps) {
-  const formattedDate = project.planned_date
-    ? new Date(project.planned_date).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      })
-    : "No date set";
+/\*\*
 
-  return (
-    <div className="border-border hover:border-primary/50 group relative rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md">
-      <div className="mb-4">
-        <h3 className="text-xl font-semibold">{project.name}</h3>
-      </div>
+- Component to display a single project item
+  \*/
+  export function ProjectListItem({ project, onEdit, onDelete }: ProjectListItemProps) {
+  const formattedDate = project.planned_date
+  ? new Date(project.planned_date).toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+  })
+  : "No date set";
+
+return (
+<div className="border-border hover:border-primary/50 group relative rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md">
+<div className="mb-4">
+<h3 className="text-xl font-semibold">{project.name}</h3>
+</div>
 
       <div className="mb-4 flex flex-wrap gap-4 text-sm text-muted-foreground">
         <div className="flex items-center gap-2">
@@ -3117,10 +3139,9 @@ export function ProjectListItem({ project, onEdit, onDelete }: ProjectListItemPr
         </Button>
       </div>
     </div>
-  );
+
+);
 }
-
-
 
 ================================================
 FILE: src/components/ProjectsList.tsx
@@ -3130,77 +3151,78 @@ import { ProjectListItem } from "./ProjectListItem";
 import { FolderOpenIcon } from "lucide-react";
 
 interface ProjectsListProps {
-  projects: ProjectDto[];
-  isLoading: boolean;
-  onEdit: (project: ProjectDto) => void;
-  onDelete: (project: ProjectDto) => void;
+projects: ProjectDto[];
+isLoading: boolean;
+onEdit: (project: ProjectDto) => void;
+onDelete: (project: ProjectDto) => void;
 }
 
-/**
- * Skeleton loader for project list items
- */
-function ProjectListItemSkeleton() {
+/\*\*
+
+- Skeleton loader for project list items
+  \*/
+  function ProjectListItemSkeleton() {
   return (
-    <div className="animate-pulse rounded-lg border border-border bg-card p-6 shadow-sm">
-      <div className="mb-4 h-6 w-3/4 rounded bg-muted"></div>
-      <div className="mb-4 flex gap-4">
-        <div className="h-4 w-24 rounded bg-muted"></div>
-        <div className="h-4 w-32 rounded bg-muted"></div>
-      </div>
-      <div className="flex gap-2">
-        <div className="h-8 w-20 rounded bg-muted"></div>
-        <div className="h-8 w-24 rounded bg-muted"></div>
-      </div>
-    </div>
+  <div className="animate-pulse rounded-lg border border-border bg-card p-6 shadow-sm">
+  <div className="mb-4 h-6 w-3/4 rounded bg-muted"></div>
+  <div className="mb-4 flex gap-4">
+  <div className="h-4 w-24 rounded bg-muted"></div>
+  <div className="h-4 w-32 rounded bg-muted"></div>
+  </div>
+  <div className="flex gap-2">
+  <div className="h-8 w-20 rounded bg-muted"></div>
+  <div className="h-8 w-24 rounded bg-muted"></div>
+  </div>
+  </div>
   );
-}
+  }
 
-/**
- * Empty state component
- */
-function EmptyStateView() {
+/\*\*
+
+- Empty state component
+  \*/
+  function EmptyStateView() {
   return (
-    <div className="flex min-h-[400px] flex-col items-center justify-center rounded-lg border border-dashed border-border bg-muted/20 p-12 text-center">
-      <FolderOpenIcon className="text-muted-foreground mb-4 size-16" />
-      <h3 className="mb-2 text-xl font-semibold">No projects yet</h3>
-      <p className="text-muted-foreground mb-6 max-w-sm">
-        Get started by creating your first travel project. Click the "New Project" button above.
-      </p>
-    </div>
+  <div className="flex min-h-[400px] flex-col items-center justify-center rounded-lg border border-dashed border-border bg-muted/20 p-12 text-center">
+  <FolderOpenIcon className="text-muted-foreground mb-4 size-16" />
+  <h3 className="mb-2 text-xl font-semibold">No projects yet</h3>
+  <p className="text-muted-foreground mb-6 max-w-sm">
+  Get started by creating your first travel project. Click the "New Project" button above.
+  </p>
+  </div>
   );
-}
+  }
 
-/**
- * Component to display the list of projects
- */
-export function ProjectsList({ projects, isLoading, onEdit, onDelete }: ProjectsListProps) {
+/\*\*
+
+- Component to display the list of projects
+  \*/
+  export function ProjectsList({ projects, isLoading, onEdit, onDelete }: ProjectsListProps) {
   // Loading state
   if (isLoading) {
-    return (
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {[...Array(6)].map((_, index) => (
-          <ProjectListItemSkeleton key={index} />
-        ))}
-      </div>
-    );
-  }
-
-  // Empty state
-  if (projects.length === 0) {
-    return <EmptyStateView />;
-  }
-
-  // Projects list
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {projects.map((project) => (
-        <ProjectListItem key={project.id} project={project} onEdit={onEdit} onDelete={onDelete} />
-      ))}
-    </div>
+  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+  {[...Array(6)].map((\_, index) => (
+  <ProjectListItemSkeleton key={index} />
+  ))}
+  </div>
   );
+  }
+
+// Empty state
+if (projects.length === 0) {
+return <EmptyStateView />;
 }
 
-
+// Projects list
+return (
+<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+{projects.map((project) => (
+<ProjectListItem key={project.id} project={project} onEdit={onEdit} onDelete={onDelete} />
+))}
+</div>
+);
+}
 
 ================================================
 FILE: src/components/ProjectsPage.tsx
@@ -3216,64 +3238,65 @@ import { PlusIcon } from "lucide-react";
 
 // Create a client instance
 const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      retry: 1,
-    },
-  },
+defaultOptions: {
+queries: {
+refetchOnWindowFocus: false,
+retry: 1,
+},
+},
 });
 
-/**
- * Internal component that uses the hook
- */
-function ProjectsPageContent() {
+/\*\*
+
+- Internal component that uses the hook
+  \*/
+  function ProjectsPageContent() {
   const {
-    projects,
-    meta,
-    isLoading,
-    isError,
-    error,
-    isCreating,
-    isUpdating,
-    isDeleting,
-    modalState,
-    handlePageChange,
-    handleCreateProject,
-    handleEditProject,
-    handleDeleteProject,
-    handleCloseModal,
-    handleConfirmDelete,
-    createProject,
-    updateProject,
+  projects,
+  meta,
+  isLoading,
+  isError,
+  error,
+  isCreating,
+  isUpdating,
+  isDeleting,
+  modalState,
+  handlePageChange,
+  handleCreateProject,
+  handleEditProject,
+  handleDeleteProject,
+  handleCloseModal,
+  handleConfirmDelete,
+  createProject,
+  updateProject,
   } = useProjectsPage();
 
-  // Full-page error state
-  if (isError) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-destructive mb-4 text-2xl font-bold">Error Loading Projects</h2>
-          <p className="text-muted-foreground mb-6">{error?.message || "An unexpected error occurred"}</p>
-          <Button onClick={() => window.location.reload()}>Retry</Button>
-        </div>
-      </div>
-    );
-  }
+// Full-page error state
+if (isError) {
+return (
+<div className="flex min-h-screen items-center justify-center">
+<div className="text-center">
+<h2 className="text-destructive mb-4 text-2xl font-bold">Error Loading Projects</h2>
+<p className="text-muted-foreground mb-6">{error?.message || "An unexpected error occurred"}</p>
+<Button onClick={() => window.location.reload()}>Retry</Button>
+</div>
+</div>
+);
+}
 
-  return (
-    <div className="container mx-auto py-8 px-4">
-      {/* Header */}
-      <div className="mb-8 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Projects</h1>
-          <p className="text-muted-foreground mt-1">Manage your travel projects</p>
-        </div>
-        <Button onClick={handleCreateProject} size="default">
-          <PlusIcon />
-          New Project
-        </Button>
-      </div>
+return (
+<div className="container mx-auto py-8 px-4">
+{/_ Header _/}
+<div className="mb-8 flex items-center justify-between">
+<div>
+<h1 className="text-3xl font-bold">Projects</h1>
+<p className="text-muted-foreground mt-1">Manage your travel projects</p>
+</div>
+<Button onClick={handleCreateProject} size="default">
+<PlusIcon />
+New Project
+</Button>
+</div>
 
       {/* Projects List */}
       <ProjectsList
@@ -3315,21 +3338,21 @@ function ProjectsPageContent() {
         onCancel={handleCloseModal}
       />
     </div>
-  );
+
+);
 }
 
-/**
- * Main ProjectsPage component wrapped with QueryClientProvider
- */
-export function ProjectsPage() {
+/\*\*
+
+- Main ProjectsPage component wrapped with QueryClientProvider
+  \*/
+  export function ProjectsPage() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ProjectsPageContent />
-    </QueryClientProvider>
+  <QueryClientProvider client={queryClient}>
+  <ProjectsPageContent />
+  </QueryClientProvider>
   );
-}
-
-
+  }
 
 ================================================
 FILE: src/components/ProjectView.tsx
@@ -3352,130 +3375,131 @@ import { toast } from "sonner";
 
 // Create a client instance
 const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      retry: 1,
-    },
-  },
+defaultOptions: {
+queries: {
+refetchOnWindowFocus: false,
+retry: 1,
+},
+},
 });
 
 interface ProjectViewContentProps {
-  projectId: string;
-  projectName: string;
-  durationDays: number;
+projectId: string;
+projectName: string;
+durationDays: number;
 }
 
-/**
- * Internal component that uses the hooks
- */
-function ProjectViewContent({ projectId, projectName, durationDays }: ProjectViewContentProps) {
+/\*\*
+
+- Internal component that uses the hooks
+  \*/
+  function ProjectViewContent({ projectId, projectName, durationDays }: ProjectViewContentProps) {
   const {
-    notes,
-    hasNextPage,
-    isLoading,
-    isError,
-    error,
-    isFetchingNextPage,
-    isCreating,
-    isUpdating,
-    isDeleting,
-    filters,
-    setFilters,
-    fetchNextPage,
-    createNote,
-    updateNote,
-    deleteNote,
+  notes,
+  hasNextPage,
+  isLoading,
+  isError,
+  error,
+  isFetchingNextPage,
+  isCreating,
+  isUpdating,
+  isDeleting,
+  filters,
+  setFilters,
+  fetchNextPage,
+  createNote,
+  updateNote,
+  deleteNote,
   } = useProjectNotes(projectId);
 
-  const { plan, isLoading: isPlanLoading, isGenerating, error: planError, fetchPlan, generatePlan } = usePlan(projectId);
+const { plan, isLoading: isPlanLoading, isGenerating, error: planError, fetchPlan, generatePlan } = usePlan(projectId);
 
-  const [modalState, setModalState] = useState<NoteModalState>({ type: "closed" });
-  const [noteToDelete, setNoteToDelete] = useState<NoteDto | null>(null);
-  const [activeTab, setActiveTab] = useState<string>("notes");
+const [modalState, setModalState] = useState<NoteModalState>({ type: "closed" });
+const [noteToDelete, setNoteToDelete] = useState<NoteDto | null>(null);
+const [activeTab, setActiveTab] = useState<string>("notes");
 
-  // Fetch plan on mount
-  useEffect(() => {
-    fetchPlan();
-  }, [fetchPlan]);
+// Fetch plan on mount
+useEffect(() => {
+fetchPlan();
+}, [fetchPlan]);
 
-  // Modal handlers
-  const handleCreateNote = useCallback(() => {
-    setModalState({ type: "create_note" });
-  }, []);
+// Modal handlers
+const handleCreateNote = useCallback(() => {
+setModalState({ type: "create_note" });
+}, []);
 
-  const handleEditNote = useCallback((note: NoteDto) => {
-    setModalState({ type: "edit_note", note });
-  }, []);
+const handleEditNote = useCallback((note: NoteDto) => {
+setModalState({ type: "edit_note", note });
+}, []);
 
-  const handleDeleteNote = useCallback((note: NoteDto) => {
-    setNoteToDelete(note);
-  }, []);
+const handleDeleteNote = useCallback((note: NoteDto) => {
+setNoteToDelete(note);
+}, []);
 
-  const handleCloseModal = useCallback(() => {
-    setModalState({ type: "closed" });
-  }, []);
+const handleCloseModal = useCallback(() => {
+setModalState({ type: "closed" });
+}, []);
 
-  const handleCloseDeleteDialog = useCallback(() => {
-    setNoteToDelete(null);
-  }, []);
+const handleCloseDeleteDialog = useCallback(() => {
+setNoteToDelete(null);
+}, []);
 
-  const handleSubmitNote = useCallback(
-    (data: CreateNoteCommand | UpdateNoteCommand) => {
-      if (modalState.type === "edit_note") {
-        updateNote(
-          { noteId: modalState.note.id, command: data as UpdateNoteCommand },
-          {
-            onSuccess: () => {
-              setModalState({ type: "closed" });
-            },
-          }
-        );
-      } else {
-        createNote(data as CreateNoteCommand, {
-          onSuccess: () => {
-            setModalState({ type: "closed" });
-          },
-        });
-      }
-    },
-    [modalState, createNote, updateNote]
-  );
+const handleSubmitNote = useCallback(
+(data: CreateNoteCommand | UpdateNoteCommand) => {
+if (modalState.type === "edit_note") {
+updateNote(
+{ noteId: modalState.note.id, command: data as UpdateNoteCommand },
+{
+onSuccess: () => {
+setModalState({ type: "closed" });
+},
+}
+);
+} else {
+createNote(data as CreateNoteCommand, {
+onSuccess: () => {
+setModalState({ type: "closed" });
+},
+});
+}
+},
+[modalState, createNote, updateNote]
+);
 
-  const handleConfirmDelete = useCallback(() => {
-    if (noteToDelete) {
-      deleteNote(noteToDelete.id, {
-        onSuccess: () => {
-          setNoteToDelete(null);
-        },
-      });
-    }
-  }, [noteToDelete, deleteNote]);
+const handleConfirmDelete = useCallback(() => {
+if (noteToDelete) {
+deleteNote(noteToDelete.id, {
+onSuccess: () => {
+setNoteToDelete(null);
+},
+});
+}
+}, [noteToDelete, deleteNote]);
 
-  // Handle plan generation
-  const handleGeneratePlan = useCallback(async () => {
-    try {
-      await generatePlan(notes, projectName, durationDays);
-      toast.success("Travel plan generated successfully!", {
-        description: "Your personalized itinerary is ready.",
-        duration: 4000,
-      });
-      // Refresh the plan data
-      await fetchPlan();
-      // Switch to plan tab
-      setActiveTab("plan");
-    } catch (err) {
-      toast.error("Failed to generate plan", {
-        description: err instanceof Error ? err.message : "Please try again later",
-        duration: 4000,
-      });
-    }
-  }, [notes, projectName, durationDays, generatePlan, fetchPlan]);
+// Handle plan generation
+const handleGeneratePlan = useCallback(async () => {
+try {
+await generatePlan(notes, projectName, durationDays);
+toast.success("Travel plan generated successfully!", {
+description: "Your personalized itinerary is ready.",
+duration: 4000,
+});
+// Refresh the plan data
+await fetchPlan();
+// Switch to plan tab
+setActiveTab("plan");
+} catch (err) {
+toast.error("Failed to generate plan", {
+description: err instanceof Error ? err.message : "Please try again later",
+duration: 4000,
+});
+}
+}, [notes, projectName, durationDays, generatePlan, fetchPlan]);
 
-  return (
-    <div className="container mx-auto py-8 px-4">
-      {/* Loading overlay for plan generation */}
-      <LoadingOverlay isLoading={isGenerating} />
+return (
+<div className="container mx-auto py-8 px-4">
+{/_ Loading overlay for plan generation _/}
+<LoadingOverlay isLoading={isGenerating} />
 
       {/* Back Button */}
       <div className="mb-6">
@@ -3614,29 +3638,28 @@ function ProjectViewContent({ projectId, projectName, durationDays }: ProjectVie
         onCancel={handleCloseDeleteDialog}
       />
     </div>
-  );
+
+);
 }
 
 interface ProjectViewProps {
-  projectId: string;
-  projectName: string;
-  durationDays: number;
+projectId: string;
+projectName: string;
+durationDays: number;
 }
 
-/**
- * ProjectView component is the main container for project details with notes and plan tabs.
- * Wrapped with QueryClientProvider for React Query functionality.
- */
-export function ProjectView({ projectId, projectName, durationDays }: ProjectViewProps) {
+/\*\*
+
+- ProjectView component is the main container for project details with notes and plan tabs.
+- Wrapped with QueryClientProvider for React Query functionality.
+  \*/
+  export function ProjectView({ projectId, projectName, durationDays }: ProjectViewProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ProjectViewContent projectId={projectId} projectName={projectName} durationDays={durationDays} />
-    </QueryClientProvider>
+  <QueryClientProvider client={queryClient}>
+  <ProjectViewContent projectId={projectId} projectName={projectName} durationDays={durationDays} />
+  </QueryClientProvider>
   );
-}
-
-
-
+  }
 
 ================================================
 FILE: src/components/ScheduleDisplay.tsx
@@ -3644,22 +3667,22 @@ FILE: src/components/ScheduleDisplay.tsx
 import type { ScheduleItemDto } from "../types";
 
 interface ScheduleDisplayProps {
-  schedule: ScheduleItemDto[];
+schedule: ScheduleItemDto[];
 }
 
 export function ScheduleDisplay({ schedule }: ScheduleDisplayProps) {
-  // Handle empty or malformed schedule
-  if (!schedule || schedule.length === 0) {
-    return (
-      <div className="text-center py-8 text-muted-foreground">
-        <p>No schedule generated. Please try again.</p>
-      </div>
-    );
-  }
+// Handle empty or malformed schedule
+if (!schedule || schedule.length === 0) {
+return (
+<div className="text-center py-8 text-muted-foreground">
+<p>No schedule generated. Please try again.</p>
+</div>
+);
+}
 
-  return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold mb-4">Your Travel Itinerary</h2>
+return (
+<div className="space-y-6">
+<h2 className="text-2xl font-bold mb-4">Your Travel Itinerary</h2>
 
       <div className="space-y-6">
         {schedule.map((scheduleItem) => (
@@ -3687,10 +3710,9 @@ export function ScheduleDisplay({ schedule }: ScheduleDisplayProps) {
         ))}
       </div>
     </div>
-  );
+
+);
 }
-
-
 
 ================================================
 FILE: src/components/ThemeToggle.tsx
@@ -3700,22 +3722,22 @@ import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-  const [mounted, setMounted] = useState(false);
+const [theme, setTheme] = useState<"light" | "dark">("light");
+const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-    // Get initial theme from localStorage or system preference
-    const storedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
-    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-    const initialTheme = storedTheme || systemTheme;
-    setTheme(initialTheme);
-  }, []);
+useEffect(() => {
+setMounted(true);
+// Get initial theme from localStorage or system preference
+const storedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
+const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+? "dark"
+: "light";
+const initialTheme = storedTheme || systemTheme;
+setTheme(initialTheme);
+}, []);
 
-  useEffect(() => {
-    if (!mounted) return;
+useEffect(() => {
+if (!mounted) return;
 
     const root = document.documentElement;
     if (theme === "dark") {
@@ -3724,45 +3746,42 @@ export function ThemeToggle() {
       root.classList.remove("dark");
     }
     localStorage.setItem("theme", theme);
-  }, [theme, mounted]);
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
+}, [theme, mounted]);
 
-  // Avoid hydration mismatch by not rendering until mounted
-  if (!mounted) {
-    return (
-      <Button
+const toggleTheme = () => {
+setTheme((prev) => (prev === "light" ? "dark" : "light"));
+};
+
+// Avoid hydration mismatch by not rendering until mounted
+if (!mounted) {
+return (
+<Button
         variant="outline"
         size="icon"
         className="h-9 w-9"
         aria-label="Toggle theme"
       >
-        <Sun className="h-4 w-4" />
-      </Button>
-    );
-  }
-
-  return (
-    <Button
-      variant="outline"
-      size="icon"
-      onClick={toggleTheme}
-      className="h-9 w-9"
-      aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
-    >
-      {theme === "light" ? (
-        <Moon className="h-4 w-4" />
-      ) : (
-        <Sun className="h-4 w-4" />
-      )}
-    </Button>
-  );
+<Sun className="h-4 w-4" />
+</Button>
+);
 }
 
-
-
+return (
+<Button
+variant="outline"
+size="icon"
+onClick={toggleTheme}
+className="h-9 w-9"
+aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`} >
+{theme === "light" ? (
+<Moon className="h-4 w-4" />
+) : (
+<Sun className="h-4 w-4" />
+)}
+</Button>
+);
+}
 
 ================================================
 FILE: src/components/UserMenu.tsx
@@ -3771,25 +3790,25 @@ import { useState } from "react";
 import { LogOutIcon, UserIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+DropdownMenu,
+DropdownMenuContent,
+DropdownMenuItem,
+DropdownMenuLabel,
+DropdownMenuSeparator,
+DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { toast } from "sonner";
 
 interface UserMenuProps {
-  userEmail: string;
+userEmail: string;
 }
 
 export function UserMenu({ userEmail }: UserMenuProps) {
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
+const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-  const handleLogout = async () => {
-    setIsLoggingOut(true);
-    
+const handleLogout = async () => {
+setIsLoggingOut(true);
+
     try {
       const response = await fetch("/api/auth/logout", {
         method: "POST",
@@ -3797,11 +3816,11 @@ export function UserMenu({ userEmail }: UserMenuProps) {
           "Content-Type": "application/json",
         },
       });
-      
+
       if (!response.ok) {
         throw new Error("Logout failed");
       }
-      
+
       // Redirect to home page
       window.location.href = "/";
     } catch (error) {
@@ -3811,54 +3830,53 @@ export function UserMenu({ userEmail }: UserMenuProps) {
       });
       setIsLoggingOut(false);
     }
-  };
 
-  // Get first letter of email for avatar
-  const initial = userEmail.charAt(0).toUpperCase();
+};
 
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button 
+// Get first letter of email for avatar
+const initial = userEmail.charAt(0).toUpperCase();
+
+return (
+<DropdownMenu>
+<DropdownMenuTrigger asChild>
+<Button 
           variant="ghost" 
           size="icon" 
           className="rounded-full h-9 w-9"
           aria-label="User menu"
         >
-          <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center">
-            <span className="text-sm font-semibold text-primary">{initial}</span>
-          </div>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel>
-          <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">Account</p>
-            <p className="text-xs leading-none text-muted-foreground">
-              {userEmail}
-            </p>
-          </div>
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem 
+<div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center">
+<span className="text-sm font-semibold text-primary">{initial}</span>
+</div>
+</Button>
+</DropdownMenuTrigger>
+<DropdownMenuContent align="end" className="w-56">
+<DropdownMenuLabel>
+<div className="flex flex-col space-y-1">
+<p className="text-sm font-medium leading-none">Account</p>
+<p className="text-xs leading-none text-muted-foreground">
+{userEmail}
+</p>
+</div>
+</DropdownMenuLabel>
+<DropdownMenuSeparator />
+<DropdownMenuItem 
           onClick={handleLogout}
           disabled={isLoggingOut}
           className="cursor-pointer"
         >
-          <LogOutIcon className="mr-2 h-4 w-4" />
-          <span>{isLoggingOut ? "Logging out..." : "Logout"}</span>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
+<LogOutIcon className="mr-2 h-4 w-4" />
+<span>{isLoggingOut ? "Logging out..." : "Logout"}</span>
+</DropdownMenuItem>
+</DropdownMenuContent>
+</DropdownMenu>
+);
 }
-
-
-
 
 ================================================
 FILE: src/components/Welcome.astro
 ================================================
+
 <div
   class="relative w-full mx-auto min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 p-4 sm:p-8"
 >
@@ -3948,10 +3966,9 @@ FILE: src/components/Welcome.astro
         >
       </p>
     </div>
+
   </div>
 </div>
-
-
 
 ================================================
 FILE: src/components/auth/LoginForm.tsx
@@ -3964,93 +3981,95 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { toast } from "sonner";
 
 interface LoginFormData {
-  email: string;
-  password: string;
+email: string;
+password: string;
 }
 
 interface FormErrors {
-  email?: string;
-  password?: string;
-  general?: string;
+email?: string;
+password?: string;
+general?: string;
 }
 
 export function LoginForm() {
-  const [formData, setFormData] = useState<LoginFormData>({
-    email: "",
-    password: "",
-  });
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [touchedFields, setTouchedFields] = useState<Set<keyof LoginFormData>>(new Set());
+const [formData, setFormData] = useState<LoginFormData>({
+email: "",
+password: "",
+});
+const [errors, setErrors] = useState<FormErrors>({});
+const [isLoading, setIsLoading] = useState(false);
+const [touchedFields, setTouchedFields] = useState<Set<keyof LoginFormData>>(new Set());
 
-  // Validate individual field
-  const validateField = useCallback((field: keyof LoginFormData, value: string): string | undefined => {
-    switch (field) {
-      case "email":
-        if (!value.trim()) {
-          return "Email is required";
-        }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          return "Invalid email format";
-        }
-        return undefined;
-      case "password":
-        if (!value) {
-          return "Password is required";
-        }
-        if (value.length < 6) {
-          return "Password must be at least 6 characters";
-        }
-        return undefined;
-      default:
-        return undefined;
-    }
-  }, []);
+// Validate individual field
+const validateField = useCallback((field: keyof LoginFormData, value: string): string | undefined => {
+switch (field) {
+case "email":
+if (!value.trim()) {
+return "Email is required";
+}
+if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+return "Invalid email format";
+}
+return undefined;
+case "password":
+if (!value) {
+return "Password is required";
+}
+if (value.length < 6) {
+return "Password must be at least 6 characters";
+}
+return undefined;
+default:
+return undefined;
+}
+}, []);
 
-  // Validate all fields
-  const validateForm = useCallback((): boolean => {
-    const newErrors: FormErrors = {};
-    
+// Validate all fields
+const validateForm = useCallback((): boolean => {
+const newErrors: FormErrors = {};
+
     const emailError = validateField("email", formData.email);
     if (emailError) newErrors.email = emailError;
-    
+
     const passwordError = validateField("password", formData.password);
     if (passwordError) newErrors.password = passwordError;
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  }, [formData, validateField]);
 
-  // Handle input change
-  const handleChange = useCallback((field: keyof LoginFormData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    
+}, [formData, validateField]);
+
+// Handle input change
+const handleChange = useCallback((field: keyof LoginFormData, value: string) => {
+setFormData((prev) => ({ ...prev, [field]: value }));
+
     // Clear general error when user types
     if (errors.general) {
       setErrors((prev) => ({ ...prev, general: undefined }));
     }
-    
+
     // Validate on change if field was previously touched
     if (touchedFields.has(field)) {
       const error = validateField(field, value);
       setErrors((prev) => ({ ...prev, [field]: error }));
     }
-  }, [errors.general, touchedFields, validateField]);
 
-  // Handle field blur
-  const handleBlur = useCallback((field: keyof LoginFormData) => {
-    setTouchedFields((prev) => new Set(prev).add(field));
-    const error = validateField(field, formData[field]);
-    setErrors((prev) => ({ ...prev, [field]: error }));
-  }, [formData, validateField]);
+}, [errors.general, touchedFields, validateField]);
 
-  // Handle form submission
-  const handleSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    
+// Handle field blur
+const handleBlur = useCallback((field: keyof LoginFormData) => {
+setTouchedFields((prev) => new Set(prev).add(field));
+const error = validateField(field, formData[field]);
+setErrors((prev) => ({ ...prev, [field]: error }));
+}, [formData, validateField]);
+
+// Handle form submission
+const handleSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
+e.preventDefault();
+
     // Mark all fields as touched
     setTouchedFields(new Set(["email", "password"]));
-    
+
     // Validate form
     if (!validateForm()) {
       // Focus first invalid field
@@ -4061,10 +4080,10 @@ export function LoginForm() {
       }
       return;
     }
-    
+
     setIsLoading(true);
     setErrors({});
-    
+
     try {
       // TODO: This will be implemented in the backend phase
       const response = await fetch("/api/auth/login", {
@@ -4074,10 +4093,10 @@ export function LoginForm() {
         },
         body: JSON.stringify(formData),
       });
-      
+
       if (!response.ok) {
         const data = await response.json();
-        
+
         if (response.status === 400) {
           setErrors({ general: "Invalid email or password format" });
         } else if (response.status === 401) {
@@ -4089,41 +4108,42 @@ export function LoginForm() {
         }
         return;
       }
-      
+
       // Success - redirect to projects
       toast.success("Login successful!");
       window.location.href = "/projects";
     } catch (error) {
       console.error("Login error:", error);
-      setErrors({ 
-        general: "Unable to connect. Please check your internet connection." 
+      setErrors({
+        general: "Unable to connect. Please check your internet connection."
       });
     } finally {
       setIsLoading(false);
     }
-  }, [formData, validateForm, errors]);
 
-  return (
-    <Card className="w-full max-w-md">
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
-        <CardDescription>
-          Enter your credentials to access your vacation plans
-        </CardDescription>
-      </CardHeader>
-      <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-4">
-          {/* General error message */}
-          {errors.general && (
-            <div 
+}, [formData, validateForm, errors]);
+
+return (
+<Card className="w-full max-w-md">
+<CardHeader className="space-y-1">
+<CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
+<CardDescription>
+Enter your credentials to access your vacation plans
+</CardDescription>
+</CardHeader>
+<form onSubmit={handleSubmit}>
+<CardContent className="space-y-4">
+{/_ General error message _/}
+{errors.general && (
+<div 
               className="p-3 bg-destructive/10 border border-destructive rounded-md"
               role="alert"
               aria-live="polite"
             >
-              <p className="text-sm text-destructive">{errors.general}</p>
-            </div>
-          )}
-          
+<p className="text-sm text-destructive">{errors.general}</p>
+</div>
+)}
+
           {/* Email field */}
           <div className="space-y-2">
             <Label htmlFor="email">
@@ -4142,8 +4162,8 @@ export function LoginForm() {
               className={errors.email ? "border-destructive" : ""}
             />
             {errors.email && (
-              <p 
-                id="email-error" 
+              <p
+                id="email-error"
                 className="text-sm text-destructive"
                 role="alert"
               >
@@ -4151,7 +4171,7 @@ export function LoginForm() {
               </p>
             )}
           </div>
-          
+
           {/* Password field */}
           <div className="space-y-2">
             <Label htmlFor="password">
@@ -4170,8 +4190,8 @@ export function LoginForm() {
               className={errors.password ? "border-destructive" : ""}
             />
             {errors.password && (
-              <p 
-                id="password-error" 
+              <p
+                id="password-error"
                 className="text-sm text-destructive"
                 role="alert"
               >
@@ -4181,8 +4201,8 @@ export function LoginForm() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button 
-            type="submit" 
+          <Button
+            type="submit"
             className="w-full"
             disabled={isLoading}
             aria-busy={isLoading}
@@ -4192,11 +4212,9 @@ export function LoginForm() {
         </CardFooter>
       </form>
     </Card>
-  );
+
+);
 }
-
-
-
 
 ================================================
 FILE: src/components/hooks/usePlan.ts
@@ -4205,32 +4223,34 @@ import { useState, useCallback } from "react";
 import type { ScheduleItemDto, NoteDto } from "../../types";
 
 interface PlanData {
-  schedule: ScheduleItemDto[];
-  version: number;
-  createdOn: string;
+schedule: ScheduleItemDto[];
+version: number;
+createdOn: string;
 }
 
 interface UsePlanReturn {
-  plan: PlanData | null;
-  isLoading: boolean;
-  isGenerating: boolean;
-  error: string | null;
-  fetchPlan: () => Promise<void>;
-  generatePlan: (notes: NoteDto[], projectName: string, durationDays: number) => Promise<void>;
+plan: PlanData | null;
+isLoading: boolean;
+isGenerating: boolean;
+error: string | null;
+fetchPlan: () => Promise<void>;
+generatePlan: (notes: NoteDto[], projectName: string, durationDays: number) => Promise<void>;
 }
 
 export function usePlan(projectId: string): UsePlanReturn {
-  const [plan, setPlan] = useState<PlanData | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+const [plan, setPlan] = useState<PlanData | null>(null);
+const [isLoading, setIsLoading] = useState(false);
+const [isGenerating, setIsGenerating] = useState(false);
+const [error, setError] = useState<string | null>(null);
 
-  /**
-   * Fetch existing plan for the project
-   */
+/\*\*
+
+- Fetch existing plan for the project
+  \*/
   const fetchPlan = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
+  setIsLoading(true);
+  setError(null);
+
 
     try {
       const response = await fetch(`/api/projects/${projectId}/plan`);
@@ -4252,17 +4272,19 @@ export function usePlan(projectId: string): UsePlanReturn {
     } finally {
       setIsLoading(false);
     }
-  }, [projectId]);
 
-  /**
-   * Generate a new plan using AI
-   */
+}, [projectId]);
+
+/\*\*
+
+- Generate a new plan using AI
+  \*/
   const generatePlan = useCallback(
-    async (notes: NoteDto[], projectName: string, durationDays: number) => {
-      if (notes.length === 0) {
-        setError("Please add notes to your project before generating a plan");
-        return;
-      }
+  async (notes: NoteDto[], projectName: string, durationDays: number) => {
+  if (notes.length === 0) {
+  setError("Please add notes to your project before generating a plan");
+  return;
+  }
 
       setIsGenerating(true);
       setError(null);
@@ -4313,22 +4335,20 @@ export function usePlan(projectId: string): UsePlanReturn {
       } finally {
         setIsGenerating(false);
       }
-    },
-    [projectId, plan?.version]
+
+  },
+  [projectId, plan?.version]
   );
 
-  return {
-    plan,
-    isLoading,
-    isGenerating,
-    error,
-    fetchPlan,
-    generatePlan,
-  };
+return {
+plan,
+isLoading,
+isGenerating,
+error,
+fetchPlan,
+generatePlan,
+};
 }
-
-
-
 
 ================================================
 FILE: src/components/hooks/useProjectNotes.ts
@@ -4339,87 +4359,88 @@ import { toast } from "sonner";
 import type { NoteDto, CreateNoteCommand, UpdateNoteCommand, NotesFilterViewModel } from "../../types";
 import { fetchNotes, createNote, updateNote, deleteNote } from "../../lib/api/notes.api";
 
-/**
- * Custom hook to manage Notes List state and API interactions
- */
-export function useProjectNotes(projectId: string) {
+/\*\*
+
+- Custom hook to manage Notes List state and API interactions
+  \*/
+  export function useProjectNotes(projectId: string) {
   const queryClient = useQueryClient();
   const [filters, setFilters] = useState<NotesFilterViewModel>({
-    priority: null,
-    place_tag: "",
+  priority: null,
+  place_tag: "",
   });
 
-  // Infinite query for fetching notes with pagination
-  const { data, isLoading, isError, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: ["notes", projectId, filters],
-    queryFn: ({ pageParam = 1 }) => fetchNotes(projectId, pageParam, 20, filters.priority, filters.place_tag),
-    getNextPageParam: (lastPage) => {
-      const nextPage = lastPage.meta.page + 1;
-      const totalPages = Math.ceil(lastPage.meta.total / lastPage.meta.size);
-      return nextPage <= totalPages ? nextPage : undefined;
-    },
-    initialPageParam: 1,
-  });
+// Infinite query for fetching notes with pagination
+const { data, isLoading, isError, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
+queryKey: ["notes", projectId, filters],
+queryFn: ({ pageParam = 1 }) => fetchNotes(projectId, pageParam, 20, filters.priority, filters.place_tag),
+getNextPageParam: (lastPage) => {
+const nextPage = lastPage.meta.page + 1;
+const totalPages = Math.ceil(lastPage.meta.total / lastPage.meta.size);
+return nextPage <= totalPages ? nextPage : undefined;
+},
+initialPageParam: 1,
+});
 
-  // Flatten all pages of notes into a single array
-  const notes = data?.pages.flatMap((page) => page.data) || [];
+// Flatten all pages of notes into a single array
+const notes = data?.pages.flatMap((page) => page.data) || [];
 
-  // Mutation for creating a note
-  const createNoteMutation = useMutation({
-    mutationFn: (command: CreateNoteCommand) => createNote(projectId, command),
-    onSuccess: () => {
-      // Invalidate and refetch notes list
-      queryClient.invalidateQueries({ queryKey: ["notes", projectId] });
-      toast.success("Note created successfully");
-    },
-    onError: (error: Error) => {
-      toast.error(error.message || "Failed to create note");
-    },
-  });
+// Mutation for creating a note
+const createNoteMutation = useMutation({
+mutationFn: (command: CreateNoteCommand) => createNote(projectId, command),
+onSuccess: () => {
+// Invalidate and refetch notes list
+queryClient.invalidateQueries({ queryKey: ["notes", projectId] });
+toast.success("Note created successfully");
+},
+onError: (error: Error) => {
+toast.error(error.message || "Failed to create note");
+},
+});
 
-  // Mutation for updating a note
-  const updateNoteMutation = useMutation({
-    mutationFn: ({ noteId, command }: { noteId: string; command: UpdateNoteCommand }) =>
-      updateNote(projectId, noteId, command),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notes", projectId] });
-      toast.success("Note updated successfully");
-    },
-    onError: (error: Error) => {
-      toast.error(error.message || "Failed to update note");
-    },
-  });
+// Mutation for updating a note
+const updateNoteMutation = useMutation({
+mutationFn: ({ noteId, command }: { noteId: string; command: UpdateNoteCommand }) =>
+updateNote(projectId, noteId, command),
+onSuccess: () => {
+queryClient.invalidateQueries({ queryKey: ["notes", projectId] });
+toast.success("Note updated successfully");
+},
+onError: (error: Error) => {
+toast.error(error.message || "Failed to update note");
+},
+});
 
-  // Mutation for deleting a note
-  const deleteNoteMutation = useMutation({
-    mutationFn: (noteId: string) => deleteNote(projectId, noteId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notes", projectId] });
-      toast.success("Note deleted successfully");
-    },
-    onError: (error: Error) => {
-      toast.error(error.message || "Failed to delete note");
-    },
-  });
+// Mutation for deleting a note
+const deleteNoteMutation = useMutation({
+mutationFn: (noteId: string) => deleteNote(projectId, noteId),
+onSuccess: () => {
+queryClient.invalidateQueries({ queryKey: ["notes", projectId] });
+toast.success("Note deleted successfully");
+},
+onError: (error: Error) => {
+toast.error(error.message || "Failed to delete note");
+},
+});
 
-  // Handler for filter changes - resets the query
-  const handleSetFilters = useCallback((newFilters: NotesFilterViewModel) => {
-    setFilters(newFilters);
-  }, []);
+// Handler for filter changes - resets the query
+const handleSetFilters = useCallback((newFilters: NotesFilterViewModel) => {
+setFilters(newFilters);
+}, []);
 
-  // Handler for fetching next page with error toast for infinite scroll failures
-  const handleFetchNextPage = useCallback(() => {
-    if (hasNextPage && !isFetchingNextPage) {
-      fetchNextPage().catch((err) => {
-        toast.error(err?.message || "Failed to load more notes");
-      });
-    }
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+// Handler for fetching next page with error toast for infinite scroll failures
+const handleFetchNextPage = useCallback(() => {
+if (hasNextPage && !isFetchingNextPage) {
+fetchNextPage().catch((err) => {
+toast.error(err?.message || "Failed to load more notes");
+});
+}
+}, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  return {
-    // Data
-    notes,
-    hasNextPage: hasNextPage ?? false,
+return {
+// Data
+notes,
+hasNextPage: hasNextPage ?? false,
 
     // Loading states
     isLoading,
@@ -4439,10 +4460,9 @@ export function useProjectNotes(projectId: string) {
     createNote: createNoteMutation.mutate,
     updateNote: updateNoteMutation.mutate,
     deleteNote: deleteNoteMutation.mutate,
-  };
+
+};
 }
-
-
 
 ================================================
 FILE: src/components/hooks/useProjectsPage.ts
@@ -4453,97 +4473,98 @@ import { toast } from "sonner";
 import type { ModalState, ProjectDto, CreateProjectCommand, UpdateProjectCommand } from "../../types";
 import { fetchProjects, createProject, updateProject, deleteProject } from "../../lib/api/projects.api";
 
-/**
- * Custom hook to manage Projects Page state and API interactions
- */
-export function useProjectsPage() {
+/\*\*
+
+- Custom hook to manage Projects Page state and API interactions
+  \*/
+  export function useProjectsPage() {
   const queryClient = useQueryClient();
   const [currentPage, setCurrentPage] = useState(1);
   const [modalState, setModalState] = useState<ModalState>({ type: "closed" });
 
-  // Query for fetching projects
-  const {
-    data: projectsData,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["projects", { page: currentPage, size: 20 }],
-    queryFn: () => fetchProjects(currentPage, 20),
-  });
+// Query for fetching projects
+const {
+data: projectsData,
+isLoading,
+isError,
+error,
+} = useQuery({
+queryKey: ["projects", { page: currentPage, size: 20 }],
+queryFn: () => fetchProjects(currentPage, 20),
+});
 
-  // Mutation for creating a project
-  const createProjectMutation = useMutation({
-    mutationFn: (command: CreateProjectCommand) => createProject(command),
-    onSuccess: () => {
-      // Invalidate and refetch projects list
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
-      toast.success("Project created successfully");
-      setModalState({ type: "closed" });
-    },
-    onError: (error: Error) => {
-      toast.error(error.message || "Failed to create project");
-    },
-  });
+// Mutation for creating a project
+const createProjectMutation = useMutation({
+mutationFn: (command: CreateProjectCommand) => createProject(command),
+onSuccess: () => {
+// Invalidate and refetch projects list
+queryClient.invalidateQueries({ queryKey: ["projects"] });
+toast.success("Project created successfully");
+setModalState({ type: "closed" });
+},
+onError: (error: Error) => {
+toast.error(error.message || "Failed to create project");
+},
+});
 
-  // Mutation for updating a project
-  const updateProjectMutation = useMutation({
-    mutationFn: ({ projectId, command }: { projectId: string; command: UpdateProjectCommand }) =>
-      updateProject(projectId, command),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
-      toast.success("Project updated successfully");
-      setModalState({ type: "closed" });
-    },
-    onError: (error: Error) => {
-      toast.error(error.message || "Failed to update project");
-    },
-  });
+// Mutation for updating a project
+const updateProjectMutation = useMutation({
+mutationFn: ({ projectId, command }: { projectId: string; command: UpdateProjectCommand }) =>
+updateProject(projectId, command),
+onSuccess: () => {
+queryClient.invalidateQueries({ queryKey: ["projects"] });
+toast.success("Project updated successfully");
+setModalState({ type: "closed" });
+},
+onError: (error: Error) => {
+toast.error(error.message || "Failed to update project");
+},
+});
 
-  // Mutation for deleting a project
-  const deleteProjectMutation = useMutation({
-    mutationFn: (projectId: string) => deleteProject(projectId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
-      toast.success("Project deleted successfully");
-      setModalState({ type: "closed" });
-    },
-    onError: (error: Error) => {
-      toast.error(error.message || "Failed to delete project");
-    },
-  });
+// Mutation for deleting a project
+const deleteProjectMutation = useMutation({
+mutationFn: (projectId: string) => deleteProject(projectId),
+onSuccess: () => {
+queryClient.invalidateQueries({ queryKey: ["projects"] });
+toast.success("Project deleted successfully");
+setModalState({ type: "closed" });
+},
+onError: (error: Error) => {
+toast.error(error.message || "Failed to delete project");
+},
+});
 
-  // Event handlers
-  const handlePageChange = (newPage: number) => {
-    setCurrentPage(newPage);
-  };
+// Event handlers
+const handlePageChange = (newPage: number) => {
+setCurrentPage(newPage);
+};
 
-  const handleCreateProject = () => {
-    setModalState({ type: "create_project" });
-  };
+const handleCreateProject = () => {
+setModalState({ type: "create_project" });
+};
 
-  const handleEditProject = (project: ProjectDto) => {
-    setModalState({ type: "edit_project", project });
-  };
+const handleEditProject = (project: ProjectDto) => {
+setModalState({ type: "edit_project", project });
+};
 
-  const handleDeleteProject = (project: ProjectDto) => {
-    setModalState({ type: "delete_project", project });
-  };
+const handleDeleteProject = (project: ProjectDto) => {
+setModalState({ type: "delete_project", project });
+};
 
-  const handleCloseModal = () => {
-    setModalState({ type: "closed" });
-  };
+const handleCloseModal = () => {
+setModalState({ type: "closed" });
+};
 
-  const handleConfirmDelete = () => {
-    if (modalState.type === "delete_project") {
-      deleteProjectMutation.mutate(modalState.project.id);
-    }
-  };
+const handleConfirmDelete = () => {
+if (modalState.type === "delete_project") {
+deleteProjectMutation.mutate(modalState.project.id);
+}
+};
 
-  return {
-    // Data
-    projects: projectsData?.data || [],
-    meta: projectsData?.meta || { page: 1, size: 20, total: 0 },
+return {
+// Data
+projects: projectsData?.data || [],
+meta: projectsData?.meta || { page: 1, size: 20, total: 0 },
 
     // Loading states
     isLoading,
@@ -4567,371 +4588,365 @@ export function useProjectsPage() {
     // Mutation functions
     createProject: createProjectMutation.mutate,
     updateProject: updateProjectMutation.mutate,
-  };
+
+};
 }
-
-
 
 ================================================
 FILE: src/components/ui/alert-dialog.tsx
 ================================================
-import * as React from "react";
-import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
+import _ as React from "react";
+import _ as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
 function AlertDialog({ ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Root>) {
-  return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />;
+return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />;
 }
 
 function AlertDialogTrigger({ ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Trigger>) {
-  return <AlertDialogPrimitive.Trigger data-slot="alert-dialog-trigger" {...props} />;
+return <AlertDialogPrimitive.Trigger data-slot="alert-dialog-trigger" {...props} />;
 }
 
 function AlertDialogPortal({ ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Portal>) {
-  return <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />;
+return <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />;
 }
 
 function AlertDialogOverlay({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Overlay>) {
-  return (
-    <AlertDialogPrimitive.Overlay
-      data-slot="alert-dialog-overlay"
-      className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
-        className
-      )}
-      {...props}
-    />
-  );
+return (
+<AlertDialogPrimitive.Overlay
+data-slot="alert-dialog-overlay"
+className={cn(
+"data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
+className
+)}
+{...props}
+/>
+);
 }
 
 function AlertDialogContent({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Content>) {
-  return (
-    <AlertDialogPortal data-slot="alert-dialog-portal">
-      <AlertDialogOverlay />
-      <AlertDialogPrimitive.Content
-        data-slot="alert-dialog-content"
-        className={cn(
-          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200 sm:max-w-lg",
-          className
-        )}
-        {...props}
-      />
-    </AlertDialogPortal>
-  );
+return (
+<AlertDialogPortal data-slot="alert-dialog-portal">
+<AlertDialogOverlay />
+<AlertDialogPrimitive.Content
+data-slot="alert-dialog-content"
+className={cn(
+"bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200 sm:max-w-lg",
+className
+)}
+{...props}
+/>
+</AlertDialogPortal>
+);
 }
 
 function AlertDialogHeader({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="alert-dialog-header"
-      className={cn("flex flex-col gap-2 text-center sm:text-left", className)}
-      {...props}
-    />
-  );
+return (
+<div
+data-slot="alert-dialog-header"
+className={cn("flex flex-col gap-2 text-center sm:text-left", className)}
+{...props}
+/>
+);
 }
 
 function AlertDialogFooter({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="alert-dialog-footer"
-      className={cn("flex flex-col-reverse gap-2 sm:flex-row sm:justify-end", className)}
-      {...props}
-    />
-  );
+return (
+<div
+data-slot="alert-dialog-footer"
+className={cn("flex flex-col-reverse gap-2 sm:flex-row sm:justify-end", className)}
+{...props}
+/>
+);
 }
 
 function AlertDialogTitle({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Title>) {
-  return (
-    <AlertDialogPrimitive.Title
-      data-slot="alert-dialog-title"
-      className={cn("text-lg leading-none font-semibold", className)}
-      {...props}
-    />
-  );
+return (
+<AlertDialogPrimitive.Title
+data-slot="alert-dialog-title"
+className={cn("text-lg leading-none font-semibold", className)}
+{...props}
+/>
+);
 }
 
 function AlertDialogDescription({
-  className,
-  ...props
+className,
+...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Description>) {
-  return (
-    <AlertDialogPrimitive.Description
-      data-slot="alert-dialog-description"
-      className={cn("text-muted-foreground text-sm", className)}
-      {...props}
-    />
-  );
+return (
+<AlertDialogPrimitive.Description
+data-slot="alert-dialog-description"
+className={cn("text-muted-foreground text-sm", className)}
+{...props}
+/>
+);
 }
 
 function AlertDialogAction({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Action>) {
-  return (
-    <AlertDialogPrimitive.Action
-      data-slot="alert-dialog-action"
-      className={cn(buttonVariants(), className)}
-      {...props}
-    />
-  );
+return (
+<AlertDialogPrimitive.Action
+data-slot="alert-dialog-action"
+className={cn(buttonVariants(), className)}
+{...props}
+/>
+);
 }
 
 function AlertDialogCancel({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Cancel>) {
-  return (
-    <AlertDialogPrimitive.Cancel
-      data-slot="alert-dialog-cancel"
-      className={cn(buttonVariants({ variant: "outline" }), "mt-2 sm:mt-0", className)}
-      {...props}
-    />
-  );
+return (
+<AlertDialogPrimitive.Cancel
+data-slot="alert-dialog-cancel"
+className={cn(buttonVariants({ variant: "outline" }), "mt-2 sm:mt-0", className)}
+{...props}
+/>
+);
 }
 
 export {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  AlertDialogPortal,
-  AlertDialogTitle,
-  AlertDialogTrigger,
+AlertDialog,
+AlertDialogAction,
+AlertDialogCancel,
+AlertDialogContent,
+AlertDialogDescription,
+AlertDialogFooter,
+AlertDialogHeader,
+AlertDialogOverlay,
+AlertDialogPortal,
+AlertDialogTitle,
+AlertDialogTrigger,
 };
-
-
 
 ================================================
 FILE: src/components/ui/button.tsx
 ================================================
-import * as React from "react";
+import \* as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
-  {
-    variants: {
-      variant: {
-        default: "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-        outline:
-          "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
-        secondary: "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-        link: "text-primary underline-offset-4 hover:underline",
-      },
-      size: {
-        default: "h-9 px-4 py-2 has-[>svg]:px-3",
-        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
-        icon: "size-9",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
+"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&\_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+{
+variants: {
+variant: {
+default: "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
+destructive:
+"bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+outline:
+"border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
+secondary: "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
+ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+link: "text-primary underline-offset-4 hover:underline",
+},
+size: {
+default: "h-9 px-4 py-2 has-[>svg]:px-3",
+sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
+lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
+icon: "size-9",
+},
+},
+defaultVariants: {
+variant: "default",
+size: "default",
+},
+}
 );
 
 function Button({
-  className,
-  variant,
-  size,
-  asChild = false,
-  ...props
+className,
+variant,
+size,
+asChild = false,
+...props
 }: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean;
-  }) {
-  const Comp = asChild ? Slot : "button";
+VariantProps<typeof buttonVariants> & {
+asChild?: boolean;
+}) {
+const Comp = asChild ? Slot : "button";
 
-  return <Comp data-slot="button" className={cn(buttonVariants({ variant, size, className }))} {...props} />;
+return <Comp data-slot="button" className={cn(buttonVariants({ variant, size, className }))} {...props} />;
 }
 
 export { Button, buttonVariants };
 
-
-
 ================================================
 FILE: src/components/ui/card.tsx
 ================================================
-import * as React from "react";
+import \* as React from "react";
 
 import { cn } from "@/lib/utils";
 
 const Card = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(({ className, ...props }, ref) => (
+
   <div ref={ref} className={cn("rounded-xl border bg-card text-card-foreground shadow-sm", className)} {...props} />
 ));
 Card.displayName = "Card";
 
 const CardHeader = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(({ className, ...props }, ref) => (
+
   <div ref={ref} className={cn("flex flex-col gap-y-1.5 p-6", className)} {...props} />
 ));
 CardHeader.displayName = "CardHeader";
 
 const CardTitle = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(({ className, ...props }, ref) => (
+
   <div ref={ref} className={cn("font-semibold leading-none tracking-tight", className)} {...props} />
 ));
 CardTitle.displayName = "CardTitle";
 
 const CardDescription = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("text-sm text-muted-foreground", className)} {...props} />
-  )
+({ className, ...props }, ref) => (
+<div ref={ref} className={cn("text-sm text-muted-foreground", className)} {...props} />
+)
 );
 CardDescription.displayName = "CardDescription";
 
 const CardContent = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(({ className, ...props }, ref) => (
+
   <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
 ));
 CardContent.displayName = "CardContent";
 
 const CardFooter = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(({ className, ...props }, ref) => (
+
   <div ref={ref} className={cn("flex items-center p-6 pt-0", className)} {...props} />
 ));
 CardFooter.displayName = "CardFooter";
 
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent };
 
-
-
 ================================================
 FILE: src/components/ui/dialog.tsx
 ================================================
-import * as React from "react";
-import * as DialogPrimitive from "@radix-ui/react-dialog";
+import _ as React from "react";
+import _ as DialogPrimitive from "@radix-ui/react-dialog";
 import { XIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
 function Dialog({ ...props }: React.ComponentProps<typeof DialogPrimitive.Root>) {
-  return <DialogPrimitive.Root data-slot="dialog" {...props} />;
+return <DialogPrimitive.Root data-slot="dialog" {...props} />;
 }
 
 function DialogTrigger({ ...props }: React.ComponentProps<typeof DialogPrimitive.Trigger>) {
-  return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />;
+return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />;
 }
 
 function DialogPortal({ ...props }: React.ComponentProps<typeof DialogPrimitive.Portal>) {
-  return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />;
+return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />;
 }
 
 function DialogClose({ ...props }: React.ComponentProps<typeof DialogPrimitive.Close>) {
-  return <DialogPrimitive.Close data-slot="dialog-close" {...props} />;
+return <DialogPrimitive.Close data-slot="dialog-close" {...props} />;
 }
 
 function DialogOverlay({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Overlay>) {
-  return (
-    <DialogPrimitive.Overlay
-      data-slot="dialog-overlay"
-      className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
-        className
-      )}
-      {...props}
-    />
-  );
+return (
+<DialogPrimitive.Overlay
+data-slot="dialog-overlay"
+className={cn(
+"data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
+className
+)}
+{...props}
+/>
+);
 }
 
 function DialogContent({
-  className,
-  children,
-  showCloseButton = true,
-  ...props
+className,
+children,
+showCloseButton = true,
+...props
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
-  showCloseButton?: boolean;
+showCloseButton?: boolean;
 }) {
-  return (
-    <DialogPortal data-slot="dialog-portal">
-      <DialogOverlay />
-      <DialogPrimitive.Content
-        data-slot="dialog-content"
-        className={cn(
-          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200 sm:max-w-lg",
-          className
-        )}
-        {...props}
-      >
-        {children}
-        {showCloseButton && (
-          <DialogPrimitive.Close
-            data-slot="dialog-close"
-            className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
-          >
-            <XIcon />
-            <span className="sr-only">Close</span>
-          </DialogPrimitive.Close>
-        )}
-      </DialogPrimitive.Content>
-    </DialogPortal>
-  );
+return (
+<DialogPortal data-slot="dialog-portal">
+<DialogOverlay />
+<DialogPrimitive.Content
+data-slot="dialog-content"
+className={cn(
+"bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200 sm:max-w-lg",
+className
+)}
+{...props} >
+{children}
+{showCloseButton && (
+<DialogPrimitive.Close
+data-slot="dialog-close"
+className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&\_svg:not([class*='size-'])]:size-4" >
+<XIcon />
+<span className="sr-only">Close</span>
+</DialogPrimitive.Close>
+)}
+</DialogPrimitive.Content>
+</DialogPortal>
+);
 }
 
 function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="dialog-header"
-      className={cn("flex flex-col gap-2 text-center sm:text-left", className)}
-      {...props}
-    />
-  );
+return (
+<div
+data-slot="dialog-header"
+className={cn("flex flex-col gap-2 text-center sm:text-left", className)}
+{...props}
+/>
+);
 }
 
 function DialogFooter({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="dialog-footer"
-      className={cn("flex flex-col-reverse gap-2 sm:flex-row sm:justify-end", className)}
-      {...props}
-    />
-  );
+return (
+<div
+data-slot="dialog-footer"
+className={cn("flex flex-col-reverse gap-2 sm:flex-row sm:justify-end", className)}
+{...props}
+/>
+);
 }
 
 function DialogTitle({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Title>) {
-  return (
-    <DialogPrimitive.Title
-      data-slot="dialog-title"
-      className={cn("text-lg leading-none font-semibold", className)}
-      {...props}
-    />
-  );
+return (
+<DialogPrimitive.Title
+data-slot="dialog-title"
+className={cn("text-lg leading-none font-semibold", className)}
+{...props}
+/>
+);
 }
 
 function DialogDescription({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Description>) {
-  return (
-    <DialogPrimitive.Description
-      data-slot="dialog-description"
-      className={cn("text-muted-foreground text-sm", className)}
-      {...props}
-    />
-  );
+return (
+<DialogPrimitive.Description
+data-slot="dialog-description"
+className={cn("text-muted-foreground text-sm", className)}
+{...props}
+/>
+);
 }
 
 export {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogOverlay,
-  DialogPortal,
-  DialogTitle,
-  DialogTrigger,
+Dialog,
+DialogClose,
+DialogContent,
+DialogDescription,
+DialogFooter,
+DialogHeader,
+DialogOverlay,
+DialogPortal,
+DialogTitle,
+DialogTrigger,
 };
-
-
 
 ================================================
 FILE: src/components/ui/dropdown-menu.tsx
 ================================================
-import * as React from "react";
-import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
+import _ as React from "react";
+import _ as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import { Check, ChevronRight, Circle } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -4949,12 +4964,14 @@ const DropdownMenuSub = DropdownMenuPrimitive.Sub;
 const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
 
 const DropdownMenuSubTrigger = React.forwardRef<
-  React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
-    inset?: boolean;
-  }
->(({ className, inset, children, ...props }, ref) => (
-  <DropdownMenuPrimitive.SubTrigger
+React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,
+React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
+inset?: boolean;
+}
+
+> (({ className, inset, children, ...props }, ref) => (
+> <DropdownMenuPrimitive.SubTrigger
+
     ref={ref}
     className={cn(
       "flex cursor-default gap-2 select-none items-center rounded-md px-2 py-1.5 text-sm outline-none focus:bg-accent data-[state=open]:bg-accent [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0",
@@ -4962,33 +4979,41 @@ const DropdownMenuSubTrigger = React.forwardRef<
       className
     )}
     {...props}
-  >
+
+>
+
     {children}
     <ChevronRight className="ml-auto" />
-  </DropdownMenuPrimitive.SubTrigger>
+
+</DropdownMenuPrimitive.SubTrigger>
 ));
 DropdownMenuSubTrigger.displayName = DropdownMenuPrimitive.SubTrigger.displayName;
 
 const DropdownMenuSubContent = React.forwardRef<
-  React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>
->(({ className, ...props }, ref) => (
-  <DropdownMenuPrimitive.SubContent
+React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
+React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>
+
+> (({ className, ...props }, ref) => (
+> <DropdownMenuPrimitive.SubContent
+
     ref={ref}
     className={cn(
       "z-50 min-w-32 overflow-hidden rounded-lg border bg-popover p-1 text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
       className
     )}
     {...props}
-  />
+
+/>
 ));
 DropdownMenuSubContent.displayName = DropdownMenuPrimitive.SubContent.displayName;
 
 const DropdownMenuContent = React.forwardRef<
-  React.ElementRef<typeof DropdownMenuPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
->(({ className, sideOffset = 4, ...props }, ref) => (
-  <DropdownMenuPrimitive.Portal>
+React.ElementRef<typeof DropdownMenuPrimitive.Content>,
+React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
+
+> (({ className, sideOffset = 4, ...props }, ref) => (
+> <DropdownMenuPrimitive.Portal>
+
     <DropdownMenuPrimitive.Content
       ref={ref}
       sideOffset={sideOffset}
@@ -4998,17 +5023,20 @@ const DropdownMenuContent = React.forwardRef<
       )}
       {...props}
     />
-  </DropdownMenuPrimitive.Portal>
+
+</DropdownMenuPrimitive.Portal>
 ));
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
 
 const DropdownMenuItem = React.forwardRef<
-  React.ElementRef<typeof DropdownMenuPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
-    inset?: boolean;
-  }
->(({ className, inset, ...props }, ref) => (
-  <DropdownMenuPrimitive.Item
+React.ElementRef<typeof DropdownMenuPrimitive.Item>,
+React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
+inset?: boolean;
+}
+
+> (({ className, inset, ...props }, ref) => (
+> <DropdownMenuPrimitive.Item
+
     ref={ref}
     className={cn(
       "relative flex cursor-default select-none items-center gap-2 rounded-md px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0",
@@ -5016,15 +5044,18 @@ const DropdownMenuItem = React.forwardRef<
       className
     )}
     {...props}
-  />
+
+/>
 ));
 DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;
 
 const DropdownMenuCheckboxItem = React.forwardRef<
-  React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>
->(({ className, children, checked, ...props }, ref) => (
-  <DropdownMenuPrimitive.CheckboxItem
+React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
+React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>
+
+> (({ className, children, checked, ...props }, ref) => (
+> <DropdownMenuPrimitive.CheckboxItem
+
     ref={ref}
     className={cn(
       "relative flex cursor-default select-none items-center rounded-md py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
@@ -5032,143 +5063,149 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     )}
     checked={checked}
     {...props}
-  >
+
+>
+
     <span className="absolute left-2 flex size-3.5 items-center justify-center">
       <DropdownMenuPrimitive.ItemIndicator>
         <Check />
       </DropdownMenuPrimitive.ItemIndicator>
     </span>
     {children}
-  </DropdownMenuPrimitive.CheckboxItem>
+
+</DropdownMenuPrimitive.CheckboxItem>
 ));
 DropdownMenuCheckboxItem.displayName = DropdownMenuPrimitive.CheckboxItem.displayName;
 
 const DropdownMenuRadioItem = React.forwardRef<
-  React.ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>
->(({ className, children, ...props }, ref) => (
-  <DropdownMenuPrimitive.RadioItem
+React.ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
+React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>
+
+> (({ className, children, ...props }, ref) => (
+> <DropdownMenuPrimitive.RadioItem
+
     ref={ref}
     className={cn(
       "relative flex cursor-default select-none items-center rounded-md py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className
     )}
     {...props}
-  >
+
+>
+
     <span className="absolute left-2 flex size-3.5 items-center justify-center">
       <DropdownMenuPrimitive.ItemIndicator>
         <Circle className="size-2 fill-current" />
       </DropdownMenuPrimitive.ItemIndicator>
     </span>
     {children}
-  </DropdownMenuPrimitive.RadioItem>
+
+</DropdownMenuPrimitive.RadioItem>
 ));
 DropdownMenuRadioItem.displayName = DropdownMenuPrimitive.RadioItem.displayName;
 
 const DropdownMenuLabel = React.forwardRef<
-  React.ElementRef<typeof DropdownMenuPrimitive.Label>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label> & {
-    inset?: boolean;
-  }
->(({ className, inset, ...props }, ref) => (
-  <DropdownMenuPrimitive.Label
+React.ElementRef<typeof DropdownMenuPrimitive.Label>,
+React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label> & {
+inset?: boolean;
+}
+
+> (({ className, inset, ...props }, ref) => (
+> <DropdownMenuPrimitive.Label
+
     ref={ref}
     className={cn("px-2 py-1.5 text-sm font-semibold", inset && "pl-8", className)}
     {...props}
-  />
+
+/>
 ));
 DropdownMenuLabel.displayName = DropdownMenuPrimitive.Label.displayName;
 
 const DropdownMenuSeparator = React.forwardRef<
-  React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>
->(({ className, ...props }, ref) => (
-  <DropdownMenuPrimitive.Separator ref={ref} className={cn("-mx-1 my-1 h-px bg-muted", className)} {...props} />
-));
-DropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName;
+React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
+React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>
+
+> (({ className, ...props }, ref) => (
+> <DropdownMenuPrimitive.Separator ref={ref} className={cn("-mx-1 my-1 h-px bg-muted", className)} {...props} />
+> ));
+> DropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName;
 
 const DropdownMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
-  return <span className={cn("ml-auto text-xs tracking-widest opacity-60", className)} {...props} />;
+return <span className={cn("ml-auto text-xs tracking-widest opacity-60", className)} {...props} />;
 };
 DropdownMenuShortcut.displayName = "DropdownMenuShortcut";
 
 export {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuCheckboxItem,
-  DropdownMenuRadioItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuGroup,
-  DropdownMenuPortal,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuRadioGroup,
+DropdownMenu,
+DropdownMenuTrigger,
+DropdownMenuContent,
+DropdownMenuItem,
+DropdownMenuCheckboxItem,
+DropdownMenuRadioItem,
+DropdownMenuLabel,
+DropdownMenuSeparator,
+DropdownMenuShortcut,
+DropdownMenuGroup,
+DropdownMenuPortal,
+DropdownMenuSub,
+DropdownMenuSubContent,
+DropdownMenuSubTrigger,
+DropdownMenuRadioGroup,
 };
-
-
 
 ================================================
 FILE: src/components/ui/input.tsx
 ================================================
-import * as React from "react";
+import \* as React from "react";
 
 import { cn } from "@/lib/utils";
 
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
-  return (
-    <input
-      type={type}
-      data-slot="input"
-      className={cn(
-        "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-        "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
-        "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
-        className
-      )}
-      {...props}
-    />
-  );
+return (
+<input
+type={type}
+data-slot="input"
+className={cn(
+"file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+"focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+"aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+className
+)}
+{...props}
+/>
+);
 }
 
 export { Input };
 
-
-
 ================================================
 FILE: src/components/ui/label.tsx
 ================================================
-import * as React from "react";
-import * as LabelPrimitive from "@radix-ui/react-label";
+import _ as React from "react";
+import _ as LabelPrimitive from "@radix-ui/react-label";
 
 import { cn } from "@/lib/utils";
 
 function Label({ className, ...props }: React.ComponentProps<typeof LabelPrimitive.Root>) {
-  return (
-    <LabelPrimitive.Root
-      data-slot="label"
-      className={cn(
-        "flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
-        className
-      )}
-      {...props}
-    />
-  );
+return (
+<LabelPrimitive.Root
+data-slot="label"
+className={cn(
+"flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
+className
+)}
+{...props}
+/>
+);
 }
 
 export { Label };
 
-
-
 ================================================
 FILE: src/components/ui/select.tsx
 ================================================
-import * as React from "react";
-import * as SelectPrimitive from "@radix-ui/react-select";
+import _ as React from "react";
+import _ as SelectPrimitive from "@radix-ui/react-select";
 import { ChevronDown, ChevronUp, Check } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -5180,58 +5217,75 @@ const SelectGroup = SelectPrimitive.Group;
 const SelectValue = SelectPrimitive.Value;
 
 const SelectTrigger = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Trigger
+React.ElementRef<typeof SelectPrimitive.Trigger>,
+React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
+
+> (({ className, children, ...props }, ref) => (
+> <SelectPrimitive.Trigger
+
     ref={ref}
     className={cn(
       "flex h-9 w-full items-center justify-between gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs outline-none placeholder:text-muted-foreground focus:border-ring focus:ring-ring/50 focus:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0",
       className
     )}
     {...props}
-  >
+
+>
+
     {children}
     <SelectPrimitive.Icon asChild>
       <ChevronDown className="opacity-50" />
     </SelectPrimitive.Icon>
-  </SelectPrimitive.Trigger>
+
+</SelectPrimitive.Trigger>
 ));
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
 const SelectScrollUpButton = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.ScrollUpButton
+React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
+React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
+
+> (({ className, ...props }, ref) => (
+> <SelectPrimitive.ScrollUpButton
+
     ref={ref}
     className={cn("flex cursor-default items-center justify-center py-1", className)}
     {...props}
-  >
+
+>
+
     <ChevronUp />
-  </SelectPrimitive.ScrollUpButton>
+
+</SelectPrimitive.ScrollUpButton>
 ));
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
 
 const SelectScrollDownButton = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.ScrollDownButton
+React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
+React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
+
+> (({ className, ...props }, ref) => (
+> <SelectPrimitive.ScrollDownButton
+
     ref={ref}
     className={cn("flex cursor-default items-center justify-center py-1", className)}
     {...props}
-  >
+
+>
+
     <ChevronDown />
-  </SelectPrimitive.ScrollDownButton>
+
+</SelectPrimitive.ScrollDownButton>
 ));
 SelectScrollDownButton.displayName = SelectPrimitive.ScrollDownButton.displayName;
 
 const SelectContent = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
->(({ className, children, position = "popper", ...props }, ref) => (
-  <SelectPrimitive.Portal>
+React.ElementRef<typeof SelectPrimitive.Content>,
+React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
+
+> (({ className, children, position = "popper", ...props }, ref) => (
+> <SelectPrimitive.Portal>
+
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
@@ -5255,62 +5309,68 @@ const SelectContent = React.forwardRef<
       </SelectPrimitive.Viewport>
       <SelectScrollDownButton />
     </SelectPrimitive.Content>
-  </SelectPrimitive.Portal>
+
+</SelectPrimitive.Portal>
 ));
 SelectContent.displayName = SelectPrimitive.Content.displayName;
 
 const SelectLabel = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Label>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.Label ref={ref} className={cn("px-2 py-1.5 text-sm font-semibold", className)} {...props} />
-));
-SelectLabel.displayName = SelectPrimitive.Label.displayName;
+React.ElementRef<typeof SelectPrimitive.Label>,
+React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
+
+> (({ className, ...props }, ref) => (
+> <SelectPrimitive.Label ref={ref} className={cn("px-2 py-1.5 text-sm font-semibold", className)} {...props} />
+> ));
+> SelectLabel.displayName = SelectPrimitive.Label.displayName;
 
 const SelectItem = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Item
+React.ElementRef<typeof SelectPrimitive.Item>,
+React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
+
+> (({ className, children, ...props }, ref) => (
+> <SelectPrimitive.Item
+
     ref={ref}
     className={cn(
       "relative flex w-full cursor-default select-none items-center gap-2 rounded-md py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0",
       className
     )}
     {...props}
-  >
+
+>
+
     <span className="absolute right-2 flex size-3.5 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
         <Check />
       </SelectPrimitive.ItemIndicator>
     </span>
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-  </SelectPrimitive.Item>
+
+</SelectPrimitive.Item>
 ));
 SelectItem.displayName = SelectPrimitive.Item.displayName;
 
 const SelectSeparator = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Separator>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.Separator ref={ref} className={cn("-mx-1 my-1 h-px bg-muted", className)} {...props} />
-));
-SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
+React.ElementRef<typeof SelectPrimitive.Separator>,
+React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
+
+> (({ className, ...props }, ref) => (
+> <SelectPrimitive.Separator ref={ref} className={cn("-mx-1 my-1 h-px bg-muted", className)} {...props} />
+> ));
+> SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
 export {
-  Select,
-  SelectGroup,
-  SelectValue,
-  SelectTrigger,
-  SelectContent,
-  SelectLabel,
-  SelectItem,
-  SelectSeparator,
-  SelectScrollUpButton,
-  SelectScrollDownButton,
+Select,
+SelectGroup,
+SelectValue,
+SelectTrigger,
+SelectContent,
+SelectLabel,
+SelectItem,
+SelectSeparator,
+SelectScrollUpButton,
+SelectScrollDownButton,
 };
-
-
 
 ================================================
 FILE: src/components/ui/sonner.tsx
@@ -5320,128 +5380,129 @@ import { useTheme } from "next-themes";
 import { Toaster as Sonner, type ToasterProps } from "sonner";
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme();
+const { theme = "system" } = useTheme();
 
-  return (
-    <Sonner
-      theme={theme as ToasterProps["theme"]}
-      className="toaster group"
-      icons={{
+return (
+<Sonner
+theme={theme as ToasterProps["theme"]}
+className="toaster group"
+icons={{
         success: <CircleCheckIcon className="size-4" />,
         info: <InfoIcon className="size-4" />,
         warning: <TriangleAlertIcon className="size-4" />,
         error: <OctagonXIcon className="size-4" />,
         loading: <Loader2Icon className="size-4 animate-spin" />,
       }}
-      style={
-        {
-          "--normal-bg": "var(--popover)",
-          "--normal-text": "var(--popover-foreground)",
-          "--normal-border": "var(--border)",
-          "--border-radius": "var(--radius)",
-        } as React.CSSProperties
-      }
-      {...props}
-    />
-  );
+style={
+{
+"--normal-bg": "var(--popover)",
+"--normal-text": "var(--popover-foreground)",
+"--normal-border": "var(--border)",
+"--border-radius": "var(--radius)",
+} as React.CSSProperties
+}
+{...props}
+/>
+);
 };
 
 export { Toaster };
 
-
-
 ================================================
 FILE: src/components/ui/tabs.tsx
 ================================================
-import * as React from "react";
-import * as TabsPrimitive from "@radix-ui/react-tabs";
+import _ as React from "react";
+import _ as TabsPrimitive from "@radix-ui/react-tabs";
 
 import { cn } from "../../lib/utils";
 
 const Tabs = TabsPrimitive.Root;
 
 const TabsList = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.List
+React.ElementRef<typeof TabsPrimitive.List>,
+React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
+
+> (({ className, ...props }, ref) => (
+> <TabsPrimitive.List
+
     ref={ref}
     className={cn(
       "inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground",
       className
     )}
     {...props}
-  />
+
+/>
 ));
 TabsList.displayName = TabsPrimitive.List.displayName;
 
 const TabsTrigger = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.Trigger
+React.ElementRef<typeof TabsPrimitive.Trigger>,
+React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
+
+> (({ className, ...props }, ref) => (
+> <TabsPrimitive.Trigger
+
     ref={ref}
     className={cn(
       "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm",
       className
     )}
     {...props}
-  />
+
+/>
 ));
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 
 const TabsContent = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.Content
+React.ElementRef<typeof TabsPrimitive.Content>,
+React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
+
+> (({ className, ...props }, ref) => (
+> <TabsPrimitive.Content
+
     ref={ref}
     className={cn(
       "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
       className
     )}
     {...props}
-  />
+
+/>
 ));
 TabsContent.displayName = TabsPrimitive.Content.displayName;
 
 export { Tabs, TabsList, TabsTrigger, TabsContent };
 
-
-
-
 ================================================
 FILE: src/components/ui/textarea.tsx
 ================================================
-import * as React from "react";
+import \* as React from "react";
 
 import { cn } from "@/lib/utils";
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<"textarea">>(
-  ({ className, ...props }, ref) => {
-    return (
-      <textarea
-        className={cn(
-          "flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs outline-none placeholder:text-muted-foreground focus:border-ring focus:ring-ring/50 focus:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
-          className
-        )}
-        ref={ref}
-        {...props}
-      />
-    );
-  }
+({ className, ...props }, ref) => {
+return (
+<textarea
+className={cn(
+"flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs outline-none placeholder:text-muted-foreground focus:border-ring focus:ring-ring/50 focus:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+className
+)}
+ref={ref}
+{...props}
+/>
+);
+}
 );
 Textarea.displayName = "Textarea";
 
 export { Textarea };
 
-
-
 ================================================
 FILE: src/db/database.types.ts
 ================================================
 [Binary file]
-
 
 ================================================
 FILE: src/db/supabase.client.ts
@@ -5453,84 +5514,86 @@ import type { Database } from "./database.types.ts";
 // Export SupabaseClient type for use in other files
 export type { SupabaseClient } from "@supabase/supabase-js";
 
-/**
- * Cookie configuration for Supabase Auth
- * These settings ensure secure, HTTP-only cookie-based authentication
- */
-export const cookieOptions: CookieOptionsWithName = {
+/\*\*
+
+- Cookie configuration for Supabase Auth
+- These settings ensure secure, HTTP-only cookie-based authentication
+  \*/
+  export const cookieOptions: CookieOptionsWithName = {
   path: "/",
   secure: true,
   httpOnly: true,
   sameSite: "lax",
-};
+  };
 
-/**
- * Parse cookie header string into array of cookie objects
- * Required by Supabase SSR getAll() implementation
- */
-function parseCookieHeader(cookieHeader: string): { name: string; value: string }[] {
+/\*\*
+
+- Parse cookie header string into array of cookie objects
+- Required by Supabase SSR getAll() implementation
+  \*/
+  function parseCookieHeader(cookieHeader: string): { name: string; value: string }[] {
   return cookieHeader.split(";").map((cookie) => {
-    const [name, ...rest] = cookie.trim().split("=");
-    return { name, value: rest.join("=") };
+  const [name, ...rest] = cookie.trim().split("=");
+  return { name, value: rest.join("=") };
   });
-}
+  }
 
-/**
- * Create Supabase Server Client for SSR
- * 
- * CRITICAL: This client uses the @supabase/ssr pattern with:
- * - getAll() and setAll() for cookie management (NEVER use get/set/remove individually)
- * - Server-side authentication with proper cookie handling
- * 
- * Usage:
- *   In middleware: const supabase = createSupabaseServerInstance({ headers, cookies })
- *   In API routes: const supabase = createSupabaseServerInstance({ headers: request.headers, cookies })
- *   In Astro pages: const supabase = createSupabaseServerInstance({ headers: Astro.request.headers, cookies: Astro.cookies })
- * 
- * @param context - Object containing headers and cookies from Astro context
- * @returns Configured Supabase client for server-side operations
- */
-export const createSupabaseServerInstance = (context: {
+/\*\*
+
+- Create Supabase Server Client for SSR
+-
+- CRITICAL: This client uses the @supabase/ssr pattern with:
+- - getAll() and setAll() for cookie management (NEVER use get/set/remove individually)
+- - Server-side authentication with proper cookie handling
+-
+- Usage:
+- In middleware: const supabase = createSupabaseServerInstance({ headers, cookies })
+- In API routes: const supabase = createSupabaseServerInstance({ headers: request.headers, cookies })
+- In Astro pages: const supabase = createSupabaseServerInstance({ headers: Astro.request.headers, cookies: Astro.cookies })
+-
+- @param context - Object containing headers and cookies from Astro context
+- @returns Configured Supabase client for server-side operations
+  \*/
+  export const createSupabaseServerInstance = (context: {
   headers: Headers;
   cookies: AstroCookies;
-}) => {
+  }) => {
   const supabase = createServerClient<Database>(
-    import.meta.env.SUPABASE_URL,
-    import.meta.env.SUPABASE_KEY,
-    {
-      cookieOptions,
-      cookies: {
-        getAll() {
-          return parseCookieHeader(context.headers.get("Cookie") ?? "");
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            context.cookies.set(name, value, options)
-          );
-        },
-      },
-    }
+  import.meta.env.SUPABASE_URL,
+  import.meta.env.SUPABASE_KEY,
+  {
+  cookieOptions,
+  cookies: {
+  getAll() {
+  return parseCookieHeader(context.headers.get("Cookie") ?? "");
+  },
+  setAll(cookiesToSet) {
+  cookiesToSet.forEach(({ name, value, options }) =>
+  context.cookies.set(name, value, options)
+  );
+  },
+  },
+  }
   );
 
-  return supabase;
+return supabase;
 };
-
-
 
 ================================================
 FILE: src/layouts/AuthLayout.astro
 ================================================
+
 ---
+
 import "../styles/global.css";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { Toaster } from "../components/ui/sonner";
 
 interface Props {
-  title: string;
+title: string;
 }
 
-const { title } = Astro.props;
----
+## const { title } = Astro.props;
 
 <!doctype html>
 <html lang="en">
@@ -5551,26 +5614,26 @@ const { title } = Astro.props;
   </body>
 </html>
 
-
-
-
 ================================================
 FILE: src/layouts/Layout.astro
 ================================================
+
 ---
+
 import "../styles/global.css";
 import { Toaster } from "../components/ui/sonner";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { UserMenu } from "../components/UserMenu";
 
 interface Props {
-  title?: string;
+title?: string;
 }
 
 const { title = "VacationPlanner" } = Astro.props;
 
 // Get authenticated user from middleware
 const user = Astro.locals.user;
+
 ---
 
 <!doctype html>
@@ -5628,8 +5691,9 @@ const user = Astro.locals.user;
 
     <!-- Main Content -->
     <slot />
-    
+
     <Toaster client:load />
+
   </body>
 </html>
 
@@ -5642,158 +5706,166 @@ const user = Astro.locals.user;
   }
 </style>
 
-
-
 ================================================
 FILE: src/lib/api-utils.ts
 ================================================
 import type { APIContext } from "astro";
 import { z } from "zod";
 
-/**
- * Standardowa struktura odpowiedzi błędu API
- */
-export interface ApiErrorResponse {
+/\*\*
+
+- Standardowa struktura odpowiedzi błędu API
+  \*/
+  export interface ApiErrorResponse {
   error: string;
   message: string;
   details?: unknown;
-}
-
-/**
- * Class representing an API error with appropriate status code
- */
-export class ApiError extends Error {
-  constructor(
-    public statusCode: number,
-    message: string,
-    public details?: unknown
-  ) {
-    super(message);
-    this.name = "ApiError";
   }
-}
 
-/**
- * Tworzy odpowiedź JSON z błędem
- */
-export function createErrorResponse(statusCode: number, error: string, message: string, details?: unknown): Response {
+/\*\*
+
+- Class representing an API error with appropriate status code
+  \*/
+  export class ApiError extends Error {
+  constructor(
+  public statusCode: number,
+  message: string,
+  public details?: unknown
+  ) {
+  super(message);
+  this.name = "ApiError";
+  }
+  }
+
+/\*\*
+
+- Tworzy odpowiedź JSON z błędem
+  \*/
+  export function createErrorResponse(statusCode: number, error: string, message: string, details?: unknown): Response {
   const body: ApiErrorResponse = { error, message, details };
   return new Response(JSON.stringify(body), {
-    status: statusCode,
-    headers: { "Content-Type": "application/json" },
+  status: statusCode,
+  headers: { "Content-Type": "application/json" },
   });
-}
+  }
 
-/**
- * Tworzy odpowiedź JSON z sukcesem
- */
-export function createSuccessResponse<T>(data: T, statusCode = 200): Response {
+/\*\*
+
+- Tworzy odpowiedź JSON z sukcesem
+  \*/
+  export function createSuccessResponse<T>(data: T, statusCode = 200): Response {
   return new Response(JSON.stringify(data), {
-    status: statusCode,
-    headers: { "Content-Type": "application/json" },
+  status: statusCode,
+  headers: { "Content-Type": "application/json" },
   });
-}
+  }
 
-/**
- * Obsługuje błędy Zod i tworzy odpowiednią odpowiedź API
- */
-export function handleZodError(error: z.ZodError): Response {
+/\*\*
+
+- Obsługuje błędy Zod i tworzy odpowiednią odpowiedź API
+  \*/
+  export function handleZodError(error: z.ZodError): Response {
   return createErrorResponse(400, "Validation Error", "Invalid input data", error.errors);
-}
+  }
 
-/**
- * Główna funkcja obsługi błędów API
- */
-export function handleApiError(error: unknown): Response {
+/\*\*
+
+- Główna funkcja obsługi błędów API
+  \*/
+  export function handleApiError(error: unknown): Response {
   console.error("API Error:", error);
 
-  if (error instanceof ApiError) {
-    return createErrorResponse(error.statusCode, "API Error", error.message, error.details);
-  }
-
-  if (error instanceof z.ZodError) {
-    return handleZodError(error);
-  }
-
-  // Unexpected server error
-  return createErrorResponse(500, "Internal Server Error", "An unexpected server error occurred");
+if (error instanceof ApiError) {
+return createErrorResponse(error.statusCode, "API Error", error.message, error.details);
 }
 
-/**
- * Pobiera i weryfikuje token JWT z nagłówka Authorization
- */
-export function getAuthToken(context: APIContext): string {
+if (error instanceof z.ZodError) {
+return handleZodError(error);
+}
+
+// Unexpected server error
+return createErrorResponse(500, "Internal Server Error", "An unexpected server error occurred");
+}
+
+/\*\*
+
+- Pobiera i weryfikuje token JWT z nagłówka Authorization
+  \*/
+  export function getAuthToken(context: APIContext): string {
   const authHeader = context.request.headers.get("Authorization");
 
-  if (!authHeader) {
-    throw new ApiError(401, "Missing authorization token");
-  }
-
-  const parts = authHeader.split(" ");
-  if (parts.length !== 2 || parts[0] !== "Bearer") {
-    throw new ApiError(401, "Invalid authorization token format");
-  }
-
-  return parts[1];
+if (!authHeader) {
+throw new ApiError(401, "Missing authorization token");
 }
 
-/**
- * Weryfikuje użytkownika i zwraca user_id
- */
-export async function verifyUser(context: APIContext): Promise<string> {
+const parts = authHeader.split(" ");
+if (parts.length !== 2 || parts[0] !== "Bearer") {
+throw new ApiError(401, "Invalid authorization token format");
+}
+
+return parts[1];
+}
+
+/\*\*
+
+- Weryfikuje użytkownika i zwraca user_id
+  \*/
+  export async function verifyUser(context: APIContext): Promise<string> {
   const token = getAuthToken(context);
   const supabase = context.locals.supabase;
 
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser(token);
+const {
+data: { user },
+error,
+} = await supabase.auth.getUser(token);
 
-  if (error || !user) {
-    throw new ApiError(401, "Invalid or expired authorization token");
-  }
-
-  return user.id;
+if (error || !user) {
+throw new ApiError(401, "Invalid or expired authorization token");
 }
 
-
+return user.id;
+}
 
 ================================================
 FILE: src/lib/constants.ts
 ================================================
-/**
- * Application-wide constants
- */
+/\*\*
 
-/**
- * Available tags for categorizing notes
- * These tags help organize travel notes beyond just places
- */
-export const NOTE_TAGS = [
-  "place",          // Location, destination, attraction
-  "activity",       // Things to do, experiences
-  "food",           // Restaurants, cafes, cuisine
-  "accommodation",  // Hotels, hostels, lodging
+- Application-wide constants
+  \*/
+
+/\*\*
+
+- Available tags for categorizing notes
+- These tags help organize travel notes beyond just places
+  \*/
+  export const NOTE_TAGS = [
+  "place", // Location, destination, attraction
+  "activity", // Things to do, experiences
+  "food", // Restaurants, cafes, cuisine
+  "accommodation", // Hotels, hostels, lodging
   "transportation", // How to get around, travel logistics
-  "budget",         // Cost-related information
-  "for_who",        // Suitable for (kids, couples, solo, etc.)
-  "timing",         // Best time to visit, opening hours
-  "booking",        // Reservations, tickets to book
-  "culture",        // Museums, history, local customs
-  "nature",         // Parks, beaches, outdoor activities
-  "nightlife",      // Bars, clubs, evening entertainment
-  "shopping",       // Markets, stores, souvenirs
-] as const;
+  "budget", // Cost-related information
+  "for_who", // Suitable for (kids, couples, solo, etc.)
+  "timing", // Best time to visit, opening hours
+  "booking", // Reservations, tickets to book
+  "culture", // Museums, history, local customs
+  "nature", // Parks, beaches, outdoor activities
+  "nightlife", // Bars, clubs, evening entertainment
+  "shopping", // Markets, stores, souvenirs
+  ] as const;
 
-/**
- * Type for note tags
- */
-export type NoteTag = (typeof NOTE_TAGS)[number];
+/\*\*
 
-/**
- * Human-readable labels for tags
- */
-export const NOTE_TAG_LABELS: Record<NoteTag, string> = {
+- Type for note tags
+  \*/
+  export type NoteTag = (typeof NOTE_TAGS)[number];
+
+/\*\*
+
+- Human-readable labels for tags
+  \*/
+  export const NOTE_TAG_LABELS: Record<NoteTag, string> = {
   place: "Place",
   activity: "Activity",
   food: "Food & Dining",
@@ -5807,192 +5879,201 @@ export const NOTE_TAG_LABELS: Record<NoteTag, string> = {
   nature: "Nature",
   nightlife: "Nightlife",
   shopping: "Shopping",
-};
-
-
-
+  };
 
 ================================================
 FILE: src/lib/errors.ts
 ================================================
-/**
- * Custom Error Classes for Service Layer
- *
- * This file contains custom error classes for handling various
- * error scenarios across the application services.
- */
+/\*\*
 
-/**
- * Base error class for all service errors
- */
-export class ServiceError extends Error {
+- Custom Error Classes for Service Layer
+-
+- This file contains custom error classes for handling various
+- error scenarios across the application services.
+  \*/
+
+/\*\*
+
+- Base error class for all service errors
+  \*/
+  export class ServiceError extends Error {
   constructor(
-    message: string,
-    public readonly code: string,
-    public readonly statusCode?: number,
-    public readonly details?: unknown
+  message: string,
+  public readonly code: string,
+  public readonly statusCode?: number,
+  public readonly details?: unknown
   ) {
-    super(message);
-    this.name = this.constructor.name;
-    Error.captureStackTrace(this, this.constructor);
+  super(message);
+  this.name = this.constructor.name;
+  Error.captureStackTrace(this, this.constructor);
   }
-}
+  }
 
-/**
- * Network-related errors (timeouts, connection failures)
- */
-export class NetworkError extends ServiceError {
+/\*\*
+
+- Network-related errors (timeouts, connection failures)
+  \*/
+  export class NetworkError extends ServiceError {
   constructor(message: string, details?: unknown) {
-    super(message, "NETWORK_ERROR", undefined, details);
+  super(message, "NETWORK_ERROR", undefined, details);
   }
-}
+  }
 
-/**
- * Authentication and authorization errors (401, 403)
- */
-export class AuthenticationError extends ServiceError {
+/\*\*
+
+- Authentication and authorization errors (401, 403)
+  \*/
+  export class AuthenticationError extends ServiceError {
   constructor(message: string, statusCode = 401, details?: unknown) {
-    super(message, "AUTHENTICATION_ERROR", statusCode, details);
+  super(message, "AUTHENTICATION_ERROR", statusCode, details);
   }
-}
+  }
 
-/**
- * Rate limiting errors (429)
- */
-export class RateLimitError extends ServiceError {
+/\*\*
+
+- Rate limiting errors (429)
+  \*/
+  export class RateLimitError extends ServiceError {
   constructor(
-    message: string,
-    public readonly retryAfter?: number,
-    details?: unknown
+  message: string,
+  public readonly retryAfter?: number,
+  details?: unknown
   ) {
-    super(message, "RATE_LIMIT_ERROR", 429, details);
+  super(message, "RATE_LIMIT_ERROR", 429, details);
   }
-}
+  }
 
-/**
- * Validation errors (schema validation, input validation)
- */
-export class ValidationError extends ServiceError {
+/\*\*
+
+- Validation errors (schema validation, input validation)
+  \*/
+  export class ValidationError extends ServiceError {
   constructor(
-    message: string,
-    public readonly validationErrors?: unknown[],
-    details?: unknown
+  message: string,
+  public readonly validationErrors?: unknown[],
+  details?: unknown
   ) {
-    super(message, "VALIDATION_ERROR", 400, details);
+  super(message, "VALIDATION_ERROR", 400, details);
   }
-}
+  }
 
-/**
- * Generic API errors (4xx, 5xx)
- */
-export class ApiError extends ServiceError {
+/\*\*
+
+- Generic API errors (4xx, 5xx)
+  \*/
+  export class ApiError extends ServiceError {
   constructor(
-    message: string,
-    statusCode: number,
-    public readonly responseBody?: unknown,
-    details?: unknown
+  message: string,
+  statusCode: number,
+  public readonly responseBody?: unknown,
+  details?: unknown
   ) {
-    super(message, "API_ERROR", statusCode, details);
+  super(message, "API_ERROR", statusCode, details);
   }
-}
+  }
 
-/**
- * Configuration errors (missing required config, invalid config)
- */
-export class ConfigurationError extends ServiceError {
+/\*\*
+
+- Configuration errors (missing required config, invalid config)
+  \*/
+  export class ConfigurationError extends ServiceError {
   constructor(message: string, details?: unknown) {
-    super(message, "CONFIGURATION_ERROR", undefined, details);
+  super(message, "CONFIGURATION_ERROR", undefined, details);
   }
-}
+  }
 
-/**
- * Timeout errors for long-running operations
- */
-export class TimeoutError extends ServiceError {
+/\*\*
+
+- Timeout errors for long-running operations
+  \*/
+  export class TimeoutError extends ServiceError {
   constructor(
-    message: string,
-    public readonly timeoutMs: number,
-    details?: unknown
+  message: string,
+  public readonly timeoutMs: number,
+  details?: unknown
   ) {
-    super(message, "TIMEOUT_ERROR", undefined, details);
+  super(message, "TIMEOUT_ERROR", undefined, details);
   }
-}
+  }
 
-/**
- * Error handler utility to determine if an error is retryable
- */
-export function isRetryableError(error: unknown): boolean {
+/\*\*
+
+- Error handler utility to determine if an error is retryable
+  \*/
+  export function isRetryableError(error: unknown): boolean {
   if (error instanceof NetworkError) return true;
   if (error instanceof TimeoutError) return true;
   if (error instanceof RateLimitError) return true;
   if (error instanceof ApiError && error.statusCode && error.statusCode >= 500) {
-    return true;
+  return true;
   }
   return false;
-}
+  }
 
-/**
- * Extract retry-after value from error
- */
-export function getRetryAfter(error: unknown): number | undefined {
+/\*\*
+
+- Extract retry-after value from error
+  \*/
+  export function getRetryAfter(error: unknown): number | undefined {
   if (error instanceof RateLimitError) {
-    return error.retryAfter;
+  return error.retryAfter;
   }
   return undefined;
-}
-
-
+  }
 
 ================================================
 FILE: src/lib/groq.service.ts
 ================================================
-/**
- * GROQ Service
- *
- * Service class for interfacing with the GROQ API to perform
- * LLM-based chat operations with structured JSON response validation.
- */
+/\*\*
+
+- GROQ Service
+-
+- Service class for interfacing with the GROQ API to perform
+- LLM-based chat operations with structured JSON response validation.
+  \*/
 
 import Ajv, { type ValidateFunction } from "ajv";
 import type {
-  ChatRequest,
-  ChatResponse,
-  GroqPayload,
-  GroqServiceConfig,
-  GroqApiResponse,
-  ChatMessage,
-  ResponseFormat,
-  JSONSchema,
+ChatRequest,
+ChatResponse,
+GroqPayload,
+GroqServiceConfig,
+GroqApiResponse,
+ChatMessage,
+ResponseFormat,
+JSONSchema,
 } from "./groq.types";
 import {
-  NetworkError,
-  AuthenticationError,
-  RateLimitError,
-  ValidationError,
-  ApiError,
-  ConfigurationError,
-  TimeoutError,
-  isRetryableError,
-  getRetryAfter,
+NetworkError,
+AuthenticationError,
+RateLimitError,
+ValidationError,
+ApiError,
+ConfigurationError,
+TimeoutError,
+isRetryableError,
+getRetryAfter,
 } from "./errors";
 
-/**
- * Default configuration values
- */
-const DEFAULT_BASE_URL = "https://api.groq.com/openai/v1";
-const DEFAULT_MODEL = "gpt-4";
-const DEFAULT_PARAMS = {
+/\*\*
+
+- Default configuration values
+  \*/
+  const DEFAULT_BASE_URL = "https://api.groq.com/openai/v1";
+  const DEFAULT_MODEL = "gpt-4";
+  const DEFAULT_PARAMS = {
   temperature: 0.8,
   max_tokens: 1500,
-};
-const DEFAULT_TIMEOUT_MS = 30000;
-const MAX_RETRIES = 3;
-const INITIAL_RETRY_DELAY_MS = 1000;
+  };
+  const DEFAULT_TIMEOUT_MS = 30000;
+  const MAX_RETRIES = 3;
+  const INITIAL_RETRY_DELAY_MS = 1000;
 
-/**
- * GROQService class for managing GROQ API interactions
- */
-export class GROQService {
+/\*\*
+
+- GROQService class for managing GROQ API interactions
+  \*/
+  export class GROQService {
   private apiKey: string;
   private baseUrl: string;
   private defaultModel: string;
@@ -6000,14 +6081,16 @@ export class GROQService {
   private ajv: Ajv;
   private timeoutMs: number;
 
-  /**
-   * Initialize GROQ service with configuration
-   */
+/\*\*
+
+- Initialize GROQ service with configuration
+  \*/
   constructor(config: GroqServiceConfig) {
-    // Validate required configuration
-    if (!config.apiKey || config.apiKey.trim() === "") {
-      throw new ConfigurationError("API key is required and cannot be empty");
-    }
+  // Validate required configuration
+  if (!config.apiKey || config.apiKey.trim() === "") {
+  throw new ConfigurationError("API key is required and cannot be empty");
+  }
+
 
     this.apiKey = config.apiKey;
     this.baseUrl = config.baseUrl || DEFAULT_BASE_URL;
@@ -6021,16 +6104,19 @@ export class GROQService {
       validateFormats: false,
       allErrors: true,
     });
+
+}
+
+/\*\*
+
+- Send a chat request and receive a structured response
+  \*/
+  async sendChat<T = unknown>(request: ChatRequest): Promise<ChatResponse<T>> {
+  // Validate request
+  if (!request.userMessage && (!request.messages || request.messages.length === 0)) {
+  throw new ValidationError("Either userMessage or messages array must be provided");
   }
 
-  /**
-   * Send a chat request and receive a structured response
-   */
-  async sendChat<T = unknown>(request: ChatRequest): Promise<ChatResponse<T>> {
-    // Validate request
-    if (!request.userMessage && (!request.messages || request.messages.length === 0)) {
-      throw new ValidationError("Either userMessage or messages array must be provided");
-    }
 
     if (!request.responseSchema) {
       throw new ValidationError("Response schema is required for structured output");
@@ -6046,51 +6132,58 @@ export class GROQService {
     const validatedResponse = this._validateResponse<T>(rawResponse, request.responseSchema);
 
     return validatedResponse;
-  }
 
-  /**
-   * Update the API key at runtime
-   */
+}
+
+/\*\*
+
+- Update the API key at runtime
+  \*/
   setApiKey(key: string): void {
-    if (!key || key.trim() === "") {
-      throw new ConfigurationError("API key cannot be empty");
-    }
-    this.apiKey = key;
+  if (!key || key.trim() === "") {
+  throw new ConfigurationError("API key cannot be empty");
+  }
+  this.apiKey = key;
   }
 
-  /**
-   * Override the default model
-   */
+/\*\*
+
+- Override the default model
+  \*/
   setDefaultModel(modelName: string): void {
-    if (!modelName || modelName.trim() === "") {
-      throw new ConfigurationError("Model name cannot be empty");
-    }
-    this.defaultModel = modelName;
+  if (!modelName || modelName.trim() === "") {
+  throw new ConfigurationError("Model name cannot be empty");
+  }
+  this.defaultModel = modelName;
   }
 
-  /**
-   * Override the default parameters
-   */
+/\*\*
+
+- Override the default parameters
+  \*/
   setDefaultParams(params: Record<string, unknown>): void {
-    this.defaultParams = { ...params };
+  this.defaultParams = { ...params };
   }
 
-  /**
-   * Set request timeout in milliseconds
-   */
+/\*\*
+
+- Set request timeout in milliseconds
+  \*/
   setTimeoutMs(timeoutMs: number): void {
-    if (timeoutMs <= 0) {
-      throw new ConfigurationError("Timeout must be greater than 0");
-    }
-    this.timeoutMs = timeoutMs;
+  if (timeoutMs <= 0) {
+  throw new ConfigurationError("Timeout must be greater than 0");
+  }
+  this.timeoutMs = timeoutMs;
   }
 
-  /**
-   * Build the request payload for GROQ API
-   */
-  private _buildPayload(request: ChatRequest): GroqPayload {
-    // Determine which model to use
-    const model = request.model || this.defaultModel;
+/\*\*
+
+- Build the request payload for GROQ API
+  \*/
+  private \_buildPayload(request: ChatRequest): GroqPayload {
+  // Determine which model to use
+  const model = request.model || this.defaultModel;
+
 
     // Build messages array
     let messages: ChatMessage[];
@@ -6137,16 +6230,19 @@ export class GROQService {
     };
 
     return payload;
+
+}
+
+/\*\*
+
+- Validate API response against the provided JSON schema
+  \*/
+  private \_validateResponse<T>(raw: unknown, schema: JSONSchema): ChatResponse<T> {
+  // First, validate that we received a valid API response structure
+  if (!raw || typeof raw !== "object") {
+  throw new ValidationError("Invalid API response: expected an object", [], raw);
   }
 
-  /**
-   * Validate API response against the provided JSON schema
-   */
-  private _validateResponse<T>(raw: unknown, schema: JSONSchema): ChatResponse<T> {
-    // First, validate that we received a valid API response structure
-    if (!raw || typeof raw !== "object") {
-      throw new ValidationError("Invalid API response: expected an object", [], raw);
-    }
 
     const apiResponse = raw as GroqApiResponse;
 
@@ -6188,19 +6284,21 @@ export class GROQService {
       raw: apiResponse,
       usage: apiResponse.usage,
     };
-  }
 
-  /**
-   * Send HTTP request to GROQ API with retry logic
-   */
-  private async _requestWithRetry(payload: GroqPayload, attempt = 1): Promise<unknown> {
-    try {
-      return await this._request(payload);
-    } catch (error) {
-      // Check if error is retryable and we haven't exceeded max retries
-      if (attempt >= MAX_RETRIES || !isRetryableError(error)) {
-        throw error;
-      }
+}
+
+/\*\*
+
+- Send HTTP request to GROQ API with retry logic
+  \*/
+  private async \_requestWithRetry(payload: GroqPayload, attempt = 1): Promise<unknown> {
+  try {
+  return await this.\_request(payload);
+  } catch (error) {
+  // Check if error is retryable and we haven't exceeded max retries
+  if (attempt >= MAX_RETRIES || !isRetryableError(error)) {
+  throw error;
+  }
 
       // Calculate delay with exponential backoff
       const retryAfter = getRetryAfter(error);
@@ -6211,14 +6309,17 @@ export class GROQService {
 
       // Retry the request
       return this._requestWithRetry(payload, attempt + 1);
-    }
+
+  }
   }
 
-  /**
-   * Send HTTP POST request to GROQ API
-   */
-  private async _request(payload: GroqPayload): Promise<unknown> {
-    const url = `${this.baseUrl}/chat/completions`;
+/\*\*
+
+- Send HTTP POST request to GROQ API
+  \*/
+  private async \_request(payload: GroqPayload): Promise<unknown> {
+  const url = `${this.baseUrl}/chat/completions`;
+
 
     // Create abort controller for timeout
     const controller = new AbortController();
@@ -6273,18 +6374,21 @@ export class GROQService {
         originalError: error,
       });
     }
+
+}
+
+/\*\*
+
+- Handle HTTP error responses
+  \*/
+  private async \_handleHttpError(response: Response): Promise<never> {
+  let errorBody: unknown;
+  try {
+  errorBody = await response.json();
+  } catch {
+  errorBody = await response.text();
   }
 
-  /**
-   * Handle HTTP error responses
-   */
-  private async _handleHttpError(response: Response): Promise<never> {
-    let errorBody: unknown;
-    try {
-      errorBody = await response.json();
-    } catch {
-      errorBody = await response.text();
-    }
 
     const errorMessage = this._extractErrorMessage(errorBody);
 
@@ -6316,15 +6420,18 @@ export class GROQService {
           errorBody
         );
     }
+
+}
+
+/\*\*
+
+- Extract error message from error response body
+  \*/
+  private \_extractErrorMessage(errorBody: unknown): string | undefined {
+  if (!errorBody || typeof errorBody !== "object") {
+  return undefined;
   }
 
-  /**
-   * Extract error message from error response body
-   */
-  private _extractErrorMessage(errorBody: unknown): string | undefined {
-    if (!errorBody || typeof errorBody !== "object") {
-      return undefined;
-    }
 
     const body = errorBody as Record<string, unknown>;
 
@@ -6347,81 +6454,90 @@ export class GROQService {
     }
 
     return undefined;
+
+}
+
+/\*\*
+
+- Extract retry-after value from response headers
+  \*/
+  private \_extractRetryAfter(response: Response): number | undefined {
+  const retryAfterHeader = response.headers.get("Retry-After");
+  if (!retryAfterHeader) {
+  return undefined;
   }
 
-  /**
-   * Extract retry-after value from response headers
-   */
-  private _extractRetryAfter(response: Response): number | undefined {
-    const retryAfterHeader = response.headers.get("Retry-After");
-    if (!retryAfterHeader) {
-      return undefined;
-    }
 
     const retryAfter = parseInt(retryAfterHeader, 10);
     return isNaN(retryAfter) ? undefined : retryAfter;
-  }
 
-  /**
-   * Sleep utility for retry delays
-   */
-  private _sleep(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
 }
 
+/\*\*
 
+- Sleep utility for retry delays
+  \*/
+  private \_sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+  }
 
 ================================================
 FILE: src/lib/groq.types.ts
 ================================================
-/**
- * GROQ Service Type Definitions
- *
- * This file contains all type definitions for the GROQ service,
- * including request/response types, payloads, and JSON schema definitions.
- */
+/\*\*
 
-/**
- * JSON Schema definition for structured response validation
- */
-export interface JSONSchema {
+- GROQ Service Type Definitions
+-
+- This file contains all type definitions for the GROQ service,
+- including request/response types, payloads, and JSON schema definitions.
+  \*/
+
+/\*\*
+
+- JSON Schema definition for structured response validation
+  \*/
+  export interface JSONSchema {
   type: string;
   properties?: Record<string, unknown>;
   required?: string[];
   items?: unknown;
   [key: string]: unknown;
-}
+  }
 
-/**
- * Response format configuration for GROQ API
- */
-export interface ResponseFormat {
+/\*\*
+
+- Response format configuration for GROQ API
+  \*/
+  export interface ResponseFormat {
   type: "json_schema";
   json_schema: {
-    name: string;
-    strict: boolean;
-    schema: JSONSchema;
+  name: string;
+  strict: boolean;
+  schema: JSONSchema;
   };
-}
+  }
 
-/**
- * Message role types for chat conversations
- */
-export type MessageRole = "system" | "user" | "assistant";
+/\*\*
 
-/**
- * Individual chat message
- */
-export interface ChatMessage {
+- Message role types for chat conversations
+  \*/
+  export type MessageRole = "system" | "user" | "assistant";
+
+/\*\*
+
+- Individual chat message
+  \*/
+  export interface ChatMessage {
   role: MessageRole;
   content: string;
-}
+  }
 
-/**
- * Request object for chat completion
- */
-export interface ChatRequest {
+/\*\*
+
+- Request object for chat completion
+  \*/
+  export interface ChatRequest {
   systemMessage?: string;
   userMessage: string;
   messages?: ChatMessage[];
@@ -6429,25 +6545,27 @@ export interface ChatRequest {
   parameters?: Record<string, unknown>;
   responseSchema: JSONSchema;
   schemaName?: string;
-}
+  }
 
-/**
- * Response object from chat completion
- */
-export interface ChatResponse<T = unknown> {
+/\*\*
+
+- Response object from chat completion
+  \*/
+  export interface ChatResponse<T = unknown> {
   data: T;
   raw: unknown;
   usage?: {
-    prompt_tokens?: number;
-    completion_tokens?: number;
-    total_tokens?: number;
+  prompt_tokens?: number;
+  completion_tokens?: number;
+  total_tokens?: number;
   };
-}
+  }
 
-/**
- * Internal payload structure for GROQ API requests
- */
-export interface GroqPayload {
+/\*\*
+
+- Internal payload structure for GROQ API requests
+  \*/
+  export interface GroqPayload {
   model: string;
   messages: ChatMessage[];
   temperature?: number;
@@ -6457,42 +6575,42 @@ export interface GroqPayload {
   stop?: string | string[];
   response_format: ResponseFormat;
   [key: string]: unknown;
-}
+  }
 
-/**
- * Configuration options for GROQService
- */
-export interface GroqServiceConfig {
+/\*\*
+
+- Configuration options for GROQService
+  \*/
+  export interface GroqServiceConfig {
   apiKey: string;
   baseUrl?: string;
   defaultModel?: string;
   defaultParams?: Record<string, unknown>;
-}
+  }
 
-/**
- * Raw API response structure from GROQ
- */
-export interface GroqApiResponse {
+/\*\*
+
+- Raw API response structure from GROQ
+  \*/
+  export interface GroqApiResponse {
   id?: string;
   object?: string;
   created?: number;
   model?: string;
   choices?: {
-    index?: number;
-    message?: {
-      role?: string;
-      content?: string;
-    };
-    finish_reason?: string;
+  index?: number;
+  message?: {
+  role?: string;
+  content?: string;
+  };
+  finish_reason?: string;
   }[];
   usage?: {
-    prompt_tokens?: number;
-    completion_tokens?: number;
-    total_tokens?: number;
+  prompt_tokens?: number;
+  completion_tokens?: number;
+  total_tokens?: number;
   };
-}
-
-
+  }
 
 ================================================
 FILE: src/lib/utils.ts
@@ -6501,439 +6619,457 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+return twMerge(clsx(inputs));
 }
-
-
 
 ================================================
 FILE: src/lib/api/notes.api.ts
 ================================================
 import type { CreateNoteCommand, NoteDto, NotesListResponseDto, UpdateNoteCommand } from "../../types";
 
-/**
- * API utility functions for notes endpoints
- */
+/\*\*
 
-/**
- * Fetch paginated list of notes for a project
- */
-export async function fetchNotes(
+- API utility functions for notes endpoints
+  \*/
+
+/\*\*
+
+- Fetch paginated list of notes for a project
+  \*/
+  export async function fetchNotes(
   projectId: string,
   page = 1,
   size = 20,
   priority?: number | null,
   place_tag?: string
-): Promise<NotesListResponseDto> {
+  ): Promise<NotesListResponseDto> {
   const params = new URLSearchParams({
-    page: page.toString(),
-    size: size.toString(),
+  page: page.toString(),
+  size: size.toString(),
   });
 
-  if (priority !== null && priority !== undefined) {
-    params.append("priority", priority.toString());
-  }
-
-  if (place_tag && place_tag.trim()) {
-    params.append("place_tag", place_tag.trim());
-  }
-
-  const response = await fetch(`/api/projects/${projectId}/notes?${params.toString()}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({ message: "Failed to fetch notes" }));
-    throw new Error(errorData.message || "Failed to fetch notes");
-  }
-
-  return response.json();
+if (priority !== null && priority !== undefined) {
+params.append("priority", priority.toString());
 }
 
-/**
- * Create a new note for a project
- */
-export async function createNote(projectId: string, command: CreateNoteCommand): Promise<NoteDto> {
+if (place_tag && place_tag.trim()) {
+params.append("place_tag", place_tag.trim());
+}
+
+const response = await fetch(`/api/projects/${projectId}/notes?${params.toString()}`, {
+method: "GET",
+headers: {
+"Content-Type": "application/json",
+},
+});
+
+if (!response.ok) {
+const errorData = await response.json().catch(() => ({ message: "Failed to fetch notes" }));
+throw new Error(errorData.message || "Failed to fetch notes");
+}
+
+return response.json();
+}
+
+/\*\*
+
+- Create a new note for a project
+  \*/
+  export async function createNote(projectId: string, command: CreateNoteCommand): Promise<NoteDto> {
   const response = await fetch(`/api/projects/${projectId}/notes`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(command),
+  method: "POST",
+  headers: {
+  "Content-Type": "application/json",
+  },
+  body: JSON.stringify(command),
   });
 
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({ message: "Failed to create note" }));
-    throw new Error(errorData.message || "Failed to create note");
-  }
-
-  return response.json();
+if (!response.ok) {
+const errorData = await response.json().catch(() => ({ message: "Failed to create note" }));
+throw new Error(errorData.message || "Failed to create note");
 }
 
-/**
- * Update an existing note
- */
-export async function updateNote(projectId: string, noteId: string, command: UpdateNoteCommand): Promise<NoteDto> {
+return response.json();
+}
+
+/\*\*
+
+- Update an existing note
+  \*/
+  export async function updateNote(projectId: string, noteId: string, command: UpdateNoteCommand): Promise<NoteDto> {
   const response = await fetch(`/api/projects/${projectId}/notes/${noteId}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(command),
+  method: "PATCH",
+  headers: {
+  "Content-Type": "application/json",
+  },
+  body: JSON.stringify(command),
   });
 
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({ message: "Failed to update note" }));
-    throw new Error(errorData.message || "Failed to update note");
-  }
-
-  return response.json();
+if (!response.ok) {
+const errorData = await response.json().catch(() => ({ message: "Failed to update note" }));
+throw new Error(errorData.message || "Failed to update note");
 }
 
-/**
- * Delete a note
- */
-export async function deleteNote(projectId: string, noteId: string): Promise<void> {
+return response.json();
+}
+
+/\*\*
+
+- Delete a note
+  \*/
+  export async function deleteNote(projectId: string, noteId: string): Promise<void> {
   const response = await fetch(`/api/projects/${projectId}/notes/${noteId}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
+  method: "DELETE",
+  headers: {
+  "Content-Type": "application/json",
+  },
   });
 
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({ message: "Failed to delete note" }));
-    throw new Error(errorData.message || "Failed to delete note");
-  }
+if (!response.ok) {
+const errorData = await response.json().catch(() => ({ message: "Failed to delete note" }));
+throw new Error(errorData.message || "Failed to delete note");
 }
-
-
+}
 
 ================================================
 FILE: src/lib/api/projects.api.ts
 ================================================
 import type { CreateProjectCommand, ProjectDto, ProjectsListResponseDto, UpdateProjectCommand } from "../../types";
 
-/**
- * API utility functions for projects endpoints
- */
+/\*\*
 
-/**
- * Fetch paginated list of projects
- */
-export async function fetchProjects(page = 1, size = 20): Promise<ProjectsListResponseDto> {
+- API utility functions for projects endpoints
+  \*/
+
+/\*\*
+
+- Fetch paginated list of projects
+  \*/
+  export async function fetchProjects(page = 1, size = 20): Promise<ProjectsListResponseDto> {
   const params = new URLSearchParams({
-    page: page.toString(),
-    size: size.toString(),
+  page: page.toString(),
+  size: size.toString(),
   });
 
-  const response = await fetch(`/api/projects?${params.toString()}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+const response = await fetch(`/api/projects?${params.toString()}`, {
+method: "GET",
+headers: {
+"Content-Type": "application/json",
+},
+});
 
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({ message: "Failed to fetch projects" }));
-    throw new Error(errorData.message || "Failed to fetch projects");
-  }
-
-  return response.json();
+if (!response.ok) {
+const errorData = await response.json().catch(() => ({ message: "Failed to fetch projects" }));
+throw new Error(errorData.message || "Failed to fetch projects");
 }
 
-/**
- * Create a new project
- */
-export async function createProject(command: CreateProjectCommand): Promise<ProjectDto> {
+return response.json();
+}
+
+/\*\*
+
+- Create a new project
+  \*/
+  export async function createProject(command: CreateProjectCommand): Promise<ProjectDto> {
   const response = await fetch("/api/projects", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(command),
+  method: "POST",
+  headers: {
+  "Content-Type": "application/json",
+  },
+  body: JSON.stringify(command),
   });
 
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({ message: "Failed to create project" }));
-    throw new Error(errorData.message || "Failed to create project");
-  }
-
-  return response.json();
+if (!response.ok) {
+const errorData = await response.json().catch(() => ({ message: "Failed to create project" }));
+throw new Error(errorData.message || "Failed to create project");
 }
 
-/**
- * Update an existing project
- */
-export async function updateProject(projectId: string, command: UpdateProjectCommand): Promise<ProjectDto> {
+return response.json();
+}
+
+/\*\*
+
+- Update an existing project
+  \*/
+  export async function updateProject(projectId: string, command: UpdateProjectCommand): Promise<ProjectDto> {
   const response = await fetch(`/api/projects/${projectId}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(command),
+  method: "PATCH",
+  headers: {
+  "Content-Type": "application/json",
+  },
+  body: JSON.stringify(command),
   });
 
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({ message: "Failed to update project" }));
-    throw new Error(errorData.message || "Failed to update project");
-  }
-
-  return response.json();
+if (!response.ok) {
+const errorData = await response.json().catch(() => ({ message: "Failed to update project" }));
+throw new Error(errorData.message || "Failed to update project");
 }
 
-/**
- * Delete a project
- */
-export async function deleteProject(projectId: string): Promise<void> {
+return response.json();
+}
+
+/\*\*
+
+- Delete a project
+  \*/
+  export async function deleteProject(projectId: string): Promise<void> {
   const response = await fetch(`/api/projects/${projectId}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
+  method: "DELETE",
+  headers: {
+  "Content-Type": "application/json",
+  },
   });
 
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({ message: "Failed to delete project" }));
-    throw new Error(errorData.message || "Failed to delete project");
-  }
+if (!response.ok) {
+const errorData = await response.json().catch(() => ({ message: "Failed to delete project" }));
+throw new Error(errorData.message || "Failed to delete project");
 }
-
-
+}
 
 ================================================
 FILE: src/lib/schemas/auth.schema.ts
 ================================================
 import { z } from "zod";
 
-/**
- * Login validation schema
- * 
- * Validates user login credentials:
- * - Email: Must be valid email format
- * - Password: Required, minimum 1 character (backend validates with Supabase)
- */
-export const loginSchema = z.object({
-  email: z
+/\*\*
+
+- Login validation schema
+-
+- Validates user login credentials:
+- - Email: Must be valid email format
+- - Password: Required, minimum 1 character (backend validates with Supabase)
+    \*/
+    export const loginSchema = z.object({
+    email: z
     .string({ required_error: "Email is required" })
     .email("Invalid email format")
     .trim()
     .toLowerCase(),
-  password: z
+    password: z
     .string({ required_error: "Password is required" })
     .min(1, "Password is required"),
-});
+    });
 
-/**
- * Type inference for login data
- */
-export type LoginInput = z.infer<typeof loginSchema>;
+/\*\*
 
-
-
+- Type inference for login data
+  \*/
+  export type LoginInput = z.infer<typeof loginSchema>;
 
 ================================================
 FILE: src/lib/schemas/note.schema.ts
 ================================================
 import { z } from "zod";
 
-/**
- * Schemat walidacji parametru projectId w URL
- */
-export const projectIdParamSchema = z.string().uuid("Project ID must be a valid UUID");
+/\*\*
 
-/**
- * Schemat walidacji parametru noteId w URL
- */
-export const noteIdParamSchema = z.string().uuid("Note ID must be a valid UUID");
+- Schemat walidacji parametru projectId w URL
+  \*/
+  export const projectIdParamSchema = z.string().uuid("Project ID must be a valid UUID");
 
-/**
- * Schemat walidacji dla tworzenia notatki
- */
-export const createNoteCommandSchema = z.object({
+/\*\*
+
+- Schemat walidacji parametru noteId w URL
+  \*/
+  export const noteIdParamSchema = z.string().uuid("Note ID must be a valid UUID");
+
+/\*\*
+
+- Schemat walidacji dla tworzenia notatki
+  \*/
+  export const createNoteCommandSchema = z.object({
   content: z.string().min(1, "Content cannot be empty"),
   priority: z.number().int().min(1).max(3, "Priority must be between 1 and 3"),
   place_tags: z.array(z.string()).nullable().optional(),
-});
+  });
 
-/**
- * Typ wynikowy z walidacji schematu
- */
-export type ValidatedCreateNoteCommand = z.infer<typeof createNoteCommandSchema>;
+/\*\*
 
-/**
- * Schemat walidacji dla aktualizacji notatki (wszystkie pola opcjonalne)
- */
-export const updateNoteCommandSchema = z.object({
+- Typ wynikowy z walidacji schematu
+  \*/
+  export type ValidatedCreateNoteCommand = z.infer<typeof createNoteCommandSchema>;
+
+/\*\*
+
+- Schemat walidacji dla aktualizacji notatki (wszystkie pola opcjonalne)
+  \*/
+  export const updateNoteCommandSchema = z.object({
   content: z.string().min(1, "Content cannot be empty").optional(),
   priority: z.number().int().min(1).max(3, "Priority must be between 1 and 3").optional(),
   place_tags: z.array(z.string()).nullable().optional(),
-});
+  });
 
-/**
- * Typ wynikowy z walidacji schematu aktualizacji
- */
-export type ValidatedUpdateNoteCommand = z.infer<typeof updateNoteCommandSchema>;
+/\*\*
 
-/**
- * Schemat walidacji dla parametrów zapytania listy notatek
- */
-export const listNotesQuerySchema = z
+- Typ wynikowy z walidacji schematu aktualizacji
+  \*/
+  export type ValidatedUpdateNoteCommand = z.infer<typeof updateNoteCommandSchema>;
+
+/\*\*
+
+- Schemat walidacji dla parametrów zapytania listy notatek
+  \*/
+  export const listNotesQuerySchema = z
   .object({
-    page: z.string().nullable().optional(),
-    size: z.string().nullable().optional(),
-    priority: z.string().nullable().optional(),
-    place_tag: z.string().nullable().optional(),
+  page: z.string().nullable().optional(),
+  size: z.string().nullable().optional(),
+  priority: z.string().nullable().optional(),
+  place_tag: z.string().nullable().optional(),
   })
   .transform((data) => {
-    const priority = data.priority ? parseInt(data.priority, 10) : undefined;
-    return {
-      page: data.page ? parseInt(data.page, 10) : 1,
-      size: data.size ? Math.min(parseInt(data.size, 10), 100) : 20,
-      priority: priority !== undefined && priority >= 1 && priority <= 3 ? priority : undefined,
-      place_tag: data.place_tag || undefined,
-    };
+  const priority = data.priority ? parseInt(data.priority, 10) : undefined;
+  return {
+  page: data.page ? parseInt(data.page, 10) : 1,
+  size: data.size ? Math.min(parseInt(data.size, 10), 100) : 20,
+  priority: priority !== undefined && priority >= 1 && priority <= 3 ? priority : undefined,
+  place_tag: data.place_tag || undefined,
+  };
   })
   .refine((data) => data.page >= 1, { message: "Page must be at least 1", path: ["page"] })
   .refine((data) => data.size >= 1, { message: "Size must be at least 1", path: ["size"] });
 
-/**
- * Typ wynikowy z walidacji parametrów zapytania listy notatek
- */
-export type ValidatedListNotesQuery = z.infer<typeof listNotesQuerySchema>;
+/\*\*
 
-
+- Typ wynikowy z walidacji parametrów zapytania listy notatek
+  \*/
+  export type ValidatedListNotesQuery = z.infer<typeof listNotesQuerySchema>;
 
 ================================================
 FILE: src/lib/schemas/plan.schema.ts
 ================================================
 import { z } from "zod";
 
-/**
- * Schemat walidacji dla notatki w komendzie generowania planu
- */
-const noteSchema = z.object({
+/\*\*
+
+- Schemat walidacji dla notatki w komendzie generowania planu
+  \*/
+  const noteSchema = z.object({
   id: z.string().uuid("Note ID must be a valid UUID"),
   content: z.string().min(1, "Note content cannot be empty"),
   priority: z.number().int().min(1).max(3, "Priority must be a number between 1 and 3"),
   place_tags: z.array(z.string()).nullable(),
-});
+  });
 
-/**
- * Schemat walidacji dla preferencji użytkownika (opcjonalny)
- */
-const preferencesSchema = z
+/\*\*
+
+- Schemat walidacji dla preferencji użytkownika (opcjonalny)
+  \*/
+  const preferencesSchema = z
   .object({
-    categories: z.array(z.string().min(1)),
+  categories: z.array(z.string().min(1)),
   })
   .optional();
 
-/**
- * Whitelist dozwolonych modeli AI
- */
-const ALLOWED_AI_MODELS = ["gpt-4", "gpt-4o-mini", "gpt-5", "claude-3-opus", "claude-3.5-sonnet", "openai/gpt-oss-20b"] as const;
+/\*\*
 
-/**
- * Schemat walidacji dla komendy generowania planu
- */
-export const generatePlanCommandSchema = z.object({
+- Whitelist dozwolonych modeli AI
+  \*/
+  const ALLOWED_AI_MODELS = ["gpt-4", "gpt-4o-mini", "gpt-5", "claude-3-opus", "claude-3.5-sonnet", "openai/gpt-oss-20b"] as const;
+
+/\*\*
+
+- Schemat walidacji dla komendy generowania planu
+  \*/
+  export const generatePlanCommandSchema = z.object({
   model: z.enum(ALLOWED_AI_MODELS, {
-    errorMap: () => ({ message: `Model must be one of: ${ALLOWED_AI_MODELS.join(", ")}` }),
+  errorMap: () => ({ message: `Model must be one of: ${ALLOWED_AI_MODELS.join(", ")}` }),
   }),
   project_name: z.string().min(1, "Project name cannot be empty").max(200, "Project name too long"),
   duration_days: z.number().int().min(1, "Duration must be at least 1 day").max(365, "Duration cannot exceed 365 days"),
   notes: z.array(noteSchema).min(1, "At least one note must be provided").max(100, "Maximum 100 notes allowed"),
   preferences: preferencesSchema,
-});
+  });
 
-/**
- * Typ wynikowy z walidacji schematu
- */
-export type ValidatedGeneratePlanCommand = z.infer<typeof generatePlanCommandSchema>;
+/\*\*
 
-/**
- * Schemat walidacji parametru projectId w URL
- */
-export const projectIdParamSchema = z.string().uuid("Project ID must be a valid UUID");
+- Typ wynikowy z walidacji schematu
+  \*/
+  export type ValidatedGeneratePlanCommand = z.infer<typeof generatePlanCommandSchema>;
 
+/\*\*
 
+- Schemat walidacji parametru projectId w URL
+  \*/
+  export const projectIdParamSchema = z.string().uuid("Project ID must be a valid UUID");
 
 ================================================
 FILE: src/lib/schemas/project.schema.ts
 ================================================
 import { z } from "zod";
 
-/**
- * Schemat walidacji dla tworzenia projektu podróży
- */
-export const createProjectCommandSchema = z.object({
+/\*\*
+
+- Schemat walidacji dla tworzenia projektu podróży
+  \*/
+  export const createProjectCommandSchema = z.object({
   name: z.string().min(1, "Name cannot be empty"),
   duration_days: z.number().int().min(1, "Duration must be at least 1"),
   planned_date: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (YYYY-MM-DD)")
-    .nullable()
-    .optional(),
-});
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (YYYY-MM-DD)")
+  .nullable()
+  .optional(),
+  });
 
-/**
- * Typ wynikowy z walidacji schematu
- */
-export type ValidatedCreateProjectCommand = z.infer<typeof createProjectCommandSchema>;
+/\*\*
 
-/**
- * Schemat walidacji dla parametrów zapytania paginacji
- */
-export const listProjectsQuerySchema = z
+- Typ wynikowy z walidacji schematu
+  \*/
+  export type ValidatedCreateProjectCommand = z.infer<typeof createProjectCommandSchema>;
+
+/\*\*
+
+- Schemat walidacji dla parametrów zapytania paginacji
+  \*/
+  export const listProjectsQuerySchema = z
   .object({
-    page: z.string().nullable().optional(),
-    size: z.string().nullable().optional(),
-    sort: z.string().nullable().optional(),
-    order: z.string().nullable().optional(),
+  page: z.string().nullable().optional(),
+  size: z.string().nullable().optional(),
+  sort: z.string().nullable().optional(),
+  order: z.string().nullable().optional(),
   })
   .transform((data) => ({
-    page: data.page ? parseInt(data.page, 10) : 1,
-    size: data.size ? Math.min(parseInt(data.size, 10), 100) : 20,
-    sort: (["created_on", "name", "duration_days", "planned_date"] as const).includes(data.sort as any)
-      ? (data.sort as "created_on" | "name" | "duration_days" | "planned_date")
-      : "created_on",
-    order: data.order === "asc" || data.order === "desc" ? data.order : "desc",
+  page: data.page ? parseInt(data.page, 10) : 1,
+  size: data.size ? Math.min(parseInt(data.size, 10), 100) : 20,
+  sort: (["created_on", "name", "duration_days", "planned_date"] as const).includes(data.sort as any)
+  ? (data.sort as "created_on" | "name" | "duration_days" | "planned_date")
+  : "created_on",
+  order: data.order === "asc" || data.order === "desc" ? data.order : "desc",
   }))
   .refine((data) => data.page >= 1, { message: "Page must be at least 1", path: ["page"] })
   .refine((data) => data.size >= 1, { message: "Size must be at least 1", path: ["size"] });
 
-/**
- * Typ wynikowy z walidacji parametrów zapytania
- */
-export type ValidatedListProjectsQuery = z.infer<typeof listProjectsQuerySchema>;
+/\*\*
 
-/**
- * Schemat walidacji parametru projectId w URL
- */
-export const projectIdParamSchema = z.string().uuid("Project ID must be a valid UUID");
+- Typ wynikowy z walidacji parametrów zapytania
+  \*/
+  export type ValidatedListProjectsQuery = z.infer<typeof listProjectsQuerySchema>;
 
-/**
- * Schemat walidacji dla aktualizacji projektu (wszystkie pola opcjonalne)
- */
-export const updateProjectCommandSchema = z.object({
+/\*\*
+
+- Schemat walidacji parametru projectId w URL
+  \*/
+  export const projectIdParamSchema = z.string().uuid("Project ID must be a valid UUID");
+
+/\*\*
+
+- Schemat walidacji dla aktualizacji projektu (wszystkie pola opcjonalne)
+  \*/
+  export const updateProjectCommandSchema = z.object({
   name: z.string().min(1, "Name cannot be empty").optional(),
   duration_days: z.number().int().min(1, "Duration must be at least 1").optional(),
   planned_date: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (YYYY-MM-DD)")
-    .nullable()
-    .optional(),
-});
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (YYYY-MM-DD)")
+  .nullable()
+  .optional(),
+  });
 
-/**
- * Typ wynikowy z walidacji schematu aktualizacji
- */
-export type ValidatedUpdateProjectCommand = z.infer<typeof updateProjectCommandSchema>;
+/\*\*
 
-
+- Typ wynikowy z walidacji schematu aktualizacji
+  \*/
+  export type ValidatedUpdateProjectCommand = z.infer<typeof updateProjectCommandSchema>;
 
 ================================================
 FILE: src/middleware/index.ts
@@ -6941,11 +7077,12 @@ FILE: src/middleware/index.ts
 import { defineMiddleware } from "astro:middleware";
 import { createSupabaseServerInstance } from "../db/supabase.client.ts";
 
-/**
- * Public paths that don't require authentication
- * Includes both server-rendered pages and API endpoints
- */
-const PUBLIC_PATHS = [
+/\*\*
+
+- Public paths that don't require authentication
+- Includes both server-rendered pages and API endpoints
+  \*/
+  const PUBLIC_PATHS = [
   // Landing page
   "/",
   // Auth pages
@@ -6953,73 +7090,74 @@ const PUBLIC_PATHS = [
   // Auth API endpoints
   "/api/auth/login",
   "/api/auth/logout",
-];
+  ];
 
-/**
- * Authentication middleware
- * 
- * Responsibilities:
- * 1. Create Supabase server client for each request
- * 2. Verify user session from cookies
- * 3. Attach user to context.locals if authenticated
- * 4. Redirect unauthenticated users from protected routes
- * 5. Redirect authenticated users from auth pages
- */
-export const onRequest = defineMiddleware(async (context, next) => {
-  const { cookies, request, url, redirect } = context;
+/\*\*
 
-  // Create Supabase server client with proper SSR cookie handling
-  const supabase = createSupabaseServerInstance({
-    headers: request.headers,
-    cookies,
-  });
+- Authentication middleware
+-
+- Responsibilities:
+- 1.  Create Supabase server client for each request
+- 2.  Verify user session from cookies
+- 3.  Attach user to context.locals if authenticated
+- 4.  Redirect unauthenticated users from protected routes
+- 5.  Redirect authenticated users from auth pages
+      \*/
+      export const onRequest = defineMiddleware(async (context, next) => {
+      const { cookies, request, url, redirect } = context;
 
-  // Attach Supabase client to context for use in routes
-  context.locals.supabase = supabase;
-
-  // IMPORTANT: Always get user session first before any other operations
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  // Attach user to context if authenticated
-  if (user) {
-    context.locals.user = user;
-  }
-
-  // Check if current path is public
-  const pathname = url.pathname;
-  const isPublicPath = PUBLIC_PATHS.includes(pathname);
-
-  // Define protected routes (routes that require authentication)
-  const protectedRoutes = ["/projects"];
-  const isProtectedRoute = protectedRoutes.some((route) =>
-    pathname.startsWith(route)
-  );
-
-  // Define auth routes (login, register, etc.)
-  const authRoutes = ["/auth/login"];
-  const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route));
-
-  // Redirect unauthenticated users from protected routes to login
-  if (isProtectedRoute && !user) {
-    return redirect(`/auth/login?redirect=${encodeURIComponent(pathname)}`);
-  }
-
-  // Redirect authenticated users from auth pages to projects
-  if (isAuthRoute && user) {
-    return redirect("/projects");
-  }
-
-  return next();
+// Create Supabase server client with proper SSR cookie handling
+const supabase = createSupabaseServerInstance({
+headers: request.headers,
+cookies,
 });
 
+// Attach Supabase client to context for use in routes
+context.locals.supabase = supabase;
 
+// IMPORTANT: Always get user session first before any other operations
+const {
+data: { user },
+} = await supabase.auth.getUser();
+
+// Attach user to context if authenticated
+if (user) {
+context.locals.user = user;
+}
+
+// Check if current path is public
+const pathname = url.pathname;
+const isPublicPath = PUBLIC_PATHS.includes(pathname);
+
+// Define protected routes (routes that require authentication)
+const protectedRoutes = ["/projects"];
+const isProtectedRoute = protectedRoutes.some((route) =>
+pathname.startsWith(route)
+);
+
+// Define auth routes (login, register, etc.)
+const authRoutes = ["/auth/login"];
+const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route));
+
+// Redirect unauthenticated users from protected routes to login
+if (isProtectedRoute && !user) {
+return redirect(`/auth/login?redirect=${encodeURIComponent(pathname)}`);
+}
+
+// Redirect authenticated users from auth pages to projects
+if (isAuthRoute && user) {
+return redirect("/projects");
+}
+
+return next();
+});
 
 ================================================
 FILE: src/pages/index.astro
 ================================================
+
 ---
+
 import LandingPage from "../components/LandingPage.astro";
 import Layout from "../layouts/Layout.astro";
 
@@ -7030,15 +7168,14 @@ const user = Astro.locals.user;
 
 // If authenticated, redirect to projects page
 if (user) {
-  return Astro.redirect("/projects");
+return Astro.redirect("/projects");
 }
+
 ---
 
 <Layout title="VacationPlanner - Plan Your Dream Vacation">
   <LandingPage />
 </Layout>
-
-
 
 ================================================
 FILE: src/pages/api/auth/login.ts
@@ -7050,86 +7187,85 @@ import { createSupabaseServerInstance } from "../../../db/supabase.client.ts";
 
 export const prerender = false;
 
-/**
- * POST /api/auth/login
- * 
- * Authenticate user with email and password
- * 
- * Request Body:
- * {
- *   "email": "user@example.com",
- *   "password": "password123"
- * }
- * 
- * Success Response (200):
- * {
- *   "user": {
- *     "id": "uuid",
- *     "email": "user@example.com"
- *   }
- * }
- * 
- * Error Responses:
- * - 400: Validation error (invalid email format, missing fields)
- * - 401: Invalid credentials
- * - 500: Server error
- */
-export const POST: APIRoute = async ({ request, cookies }) => {
-  try {
+/\*\*
+
+- POST /api/auth/login
+-
+- Authenticate user with email and password
+-
+- Request Body:
+- {
+- "email": "user@example.com",
+- "password": "password123"
+- }
+-
+- Success Response (200):
+- {
+- "user": {
+-     "id": "uuid",
+-     "email": "user@example.com"
+- }
+- }
+-
+- Error Responses:
+- - 400: Validation error (invalid email format, missing fields)
+- - 401: Invalid credentials
+- - 500: Server error
+    \*/
+    export const POST: APIRoute = async ({ request, cookies }) => {
+    try {
     // Parse request body
     const body = await request.json();
 
-    // Validate input with Zod schema
-    const validatedData = loginSchema.parse(body);
+        // Validate input with Zod schema
+        const validatedData = loginSchema.parse(body);
 
-    // Create Supabase server instance with cookie handling
-    const supabase = createSupabaseServerInstance({
-      headers: request.headers,
-      cookies,
-    });
+        // Create Supabase server instance with cookie handling
+        const supabase = createSupabaseServerInstance({
+          headers: request.headers,
+          cookies,
+        });
 
-    // Attempt to sign in with Supabase Auth
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: validatedData.email,
-      password: validatedData.password,
-    });
+        // Attempt to sign in with Supabase Auth
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: validatedData.email,
+          password: validatedData.password,
+        });
 
-    // Handle authentication errors
-    if (error) {
-      console.error("Login error:", error);
+        // Handle authentication errors
+        if (error) {
+          console.error("Login error:", error);
 
-      // Map Supabase errors to appropriate HTTP status codes
-      if (error.message.includes("Invalid login credentials")) {
-        throw new ApiError(401, "Invalid credentials. Please try again.");
-      }
+          // Map Supabase errors to appropriate HTTP status codes
+          if (error.message.includes("Invalid login credentials")) {
+            throw new ApiError(401, "Invalid credentials. Please try again.");
+          }
 
-      if (error.message.includes("Email not confirmed")) {
-        throw new ApiError(401, "Please confirm your email before logging in.");
-      }
+          if (error.message.includes("Email not confirmed")) {
+            throw new ApiError(401, "Please confirm your email before logging in.");
+          }
 
-      // Generic authentication error
-      throw new ApiError(401, "Authentication failed. Please check your credentials.");
-    }
+          // Generic authentication error
+          throw new ApiError(401, "Authentication failed. Please check your credentials.");
+        }
 
-    // Check if user data exists
-    if (!data.user) {
-      throw new ApiError(401, "Authentication failed. Please try again.");
-    }
+        // Check if user data exists
+        if (!data.user) {
+          throw new ApiError(401, "Authentication failed. Please try again.");
+        }
 
-    // Return success response with user data
-    return createSuccessResponse({
-      user: {
-        id: data.user.id,
-        email: data.user.email,
-      },
-    });
-  } catch (error) {
+        // Return success response with user data
+        return createSuccessResponse({
+          user: {
+            id: data.user.id,
+            email: data.user.email,
+          },
+        });
+
+    } catch (error) {
     return handleApiError(error);
-  }
-};
-
-
-
+    }
+    };
 
 ================================================
 FILE: src/pages/api/auth/logout.ts
@@ -7140,51 +7276,50 @@ import { createSupabaseServerInstance } from "../../../db/supabase.client.ts";
 
 export const prerender = false;
 
-/**
- * POST /api/auth/logout
- * 
- * Sign out user and clear authentication cookies
- * 
- * Request Body: None (reads cookies automatically)
- * 
- * Success Response (200):
- * {
- *   "message": "Logout successful"
- * }
- * 
- * Error Responses:
- * - 500: Server error
- * 
- * Note: This endpoint succeeds even if user is not logged in (idempotent)
- */
-export const POST: APIRoute = async ({ request, cookies }) => {
+/\*\*
+
+- POST /api/auth/logout
+-
+- Sign out user and clear authentication cookies
+-
+- Request Body: None (reads cookies automatically)
+-
+- Success Response (200):
+- {
+- "message": "Logout successful"
+- }
+-
+- Error Responses:
+- - 500: Server error
+-
+- Note: This endpoint succeeds even if user is not logged in (idempotent)
+  \*/
+  export const POST: APIRoute = async ({ request, cookies }) => {
   try {
-    // Create Supabase server instance with cookie handling
-    const supabase = createSupabaseServerInstance({
-      headers: request.headers,
-      cookies,
-    });
+  // Create Supabase server instance with cookie handling
+  const supabase = createSupabaseServerInstance({
+  headers: request.headers,
+  cookies,
+  });
 
-    // Sign out user (this invalidates the session and clears cookies)
-    const { error } = await supabase.auth.signOut();
+      // Sign out user (this invalidates the session and clears cookies)
+      const { error } = await supabase.auth.signOut();
 
-    // Log error but don't fail the request
-    // Logout should be idempotent - always succeed even if session is invalid
-    if (error) {
-      console.warn("Logout warning (non-critical):", error);
-    }
+      // Log error but don't fail the request
+      // Logout should be idempotent - always succeed even if session is invalid
+      if (error) {
+        console.warn("Logout warning (non-critical):", error);
+      }
 
-    // Return success response
-    return createSuccessResponse({
-      message: "Logout successful",
-    });
+      // Return success response
+      return createSuccessResponse({
+        message: "Logout successful",
+      });
+
   } catch (error) {
-    return handleApiError(error);
+  return handleApiError(error);
   }
-};
-
-
-
+  };
 
 ================================================
 FILE: src/pages/api/projects/index.ts
@@ -7194,113 +7329,115 @@ import { handleApiError, createSuccessResponse, ApiError } from "../../../lib/ap
 import { createProjectCommandSchema, listProjectsQuerySchema } from "../../../lib/schemas/project.schema";
 import { projectService } from "../../../services/project.service";
 
-/**
- * GET /api/projects
- *
- * Endpoint do pobierania listy projektów użytkownika z paginacją.
- *
- * Query Parameters:
- * - page (integer, optional, default: 1)
- * - size (integer, optional, default: 20)
- * - sort (string, optional, default: "created_on")
- * - order (string, optional, default: "desc")
- *
- * Response 200:
- * {
- *   "data": [{ "id": "uuid", "name": "string", "duration_days": 5, "planned_date": "2026-03-15" }],
- *   "meta": { "page": 1, "size": 20, "total": 1 }
- * }
- *
- * Error Codes:
- * - 400: Invalid query parameters
- * - 401: User not authenticated
- * - 500: Server error or database error
- */
-export const GET: APIRoute = async (context) => {
-  try {
-    // Get authenticated user from middleware
-    const user = context.locals.user;
-    if (!user) {
-      throw new ApiError(401, "Unauthorized");
-    }
-    const userId = user.id;
+/\*\*
 
-    // Parsowanie i walidacja parametrów zapytania
-    const query = listProjectsQuerySchema.parse({
-      page: context.url.searchParams.get("page"),
-      size: context.url.searchParams.get("size"),
-      sort: context.url.searchParams.get("sort"),
-      order: context.url.searchParams.get("order"),
-    });
-
-    // Wywołanie serwisu do pobrania listy projektów
-    const result = await projectService.listProjects(userId, query, context.locals.supabase);
-
-    return createSuccessResponse(result, 200);
-  } catch (error) {
-    return handleApiError(error);
-  }
-};
-
-/**
- * POST /api/projects
- *
- * Endpoint do tworzenia nowego projektu podróży dla użytkownika.
- *
- * Request Body:
- * {
- *   "name": "Trip to Paris",
- *   "duration_days": 5,
- *   "planned_date": "2026-03-15"  // opcjonalne
- * }
- *
- * Response 201:
- * {
- *   "id": "uuid",
- *   "name": "Trip to Paris",
- *   "duration_days": 5,
- *   "planned_date": "2026-03-15"
- * }
- *
- * Error Codes:
- * - 400: Invalid input data validation
- * - 401: User not authenticated
- * - 500: Server error or database error
- */
-export const POST: APIRoute = async (context) => {
-  try {
-    // Get authenticated user from middleware
-    const user = context.locals.user;
-    if (!user) {
-      throw new ApiError(401, "Unauthorized");
-    }
-    const userId = user.id;
-
-    // Krok 2: Parsowanie i walidacja JSON body
-    let body: unknown;
+- GET /api/projects
+-
+- Endpoint do pobierania listy projektów użytkownika z paginacją.
+-
+- Query Parameters:
+- - page (integer, optional, default: 1)
+- - size (integer, optional, default: 20)
+- - sort (string, optional, default: "created_on")
+- - order (string, optional, default: "desc")
+-
+- Response 200:
+- {
+- "data": [{ "id": "uuid", "name": "string", "duration_days": 5, "planned_date": "2026-03-15" }],
+- "meta": { "page": 1, "size": 20, "total": 1 }
+- }
+-
+- Error Codes:
+- - 400: Invalid query parameters
+- - 401: User not authenticated
+- - 500: Server error or database error
+    \*/
+    export const GET: APIRoute = async (context) => {
     try {
-      body = await context.request.json();
-    } catch {
-      throw new ApiError(400, "Invalid JSON format in request body");
+    // Get authenticated user from middleware
+    const user = context.locals.user;
+    if (!user) {
+    throw new ApiError(401, "Unauthorized");
     }
+    const userId = user.id;
 
-    // Krok 3: Walidacja danych wejściowych za pomocą Zod
-    const command = createProjectCommandSchema.parse(body);
+        // Parsowanie i walidacja parametrów zapytania
+        const query = listProjectsQuerySchema.parse({
+          page: context.url.searchParams.get("page"),
+          size: context.url.searchParams.get("size"),
+          sort: context.url.searchParams.get("sort"),
+          order: context.url.searchParams.get("order"),
+        });
 
-    // Krok 4: Wywołanie serwisu do utworzenia projektu
-    const project = await projectService.createProject(userId, command, context.locals.supabase);
+        // Wywołanie serwisu do pobrania listy projektów
+        const result = await projectService.listProjects(userId, query, context.locals.supabase);
 
-    // Krok 5: Zwrócenie odpowiedzi 201 Created
-    return createSuccessResponse(project, 201);
-  } catch (error) {
+        return createSuccessResponse(result, 200);
+
+    } catch (error) {
+    return handleApiError(error);
+    }
+    };
+
+/\*\*
+
+- POST /api/projects
+-
+- Endpoint do tworzenia nowego projektu podróży dla użytkownika.
+-
+- Request Body:
+- {
+- "name": "Trip to Paris",
+- "duration_days": 5,
+- "planned_date": "2026-03-15" // opcjonalne
+- }
+-
+- Response 201:
+- {
+- "id": "uuid",
+- "name": "Trip to Paris",
+- "duration_days": 5,
+- "planned_date": "2026-03-15"
+- }
+-
+- Error Codes:
+- - 400: Invalid input data validation
+- - 401: User not authenticated
+- - 500: Server error or database error
+    \*/
+    export const POST: APIRoute = async (context) => {
+    try {
+    // Get authenticated user from middleware
+    const user = context.locals.user;
+    if (!user) {
+    throw new ApiError(401, "Unauthorized");
+    }
+    const userId = user.id;
+
+        // Krok 2: Parsowanie i walidacja JSON body
+        let body: unknown;
+        try {
+          body = await context.request.json();
+        } catch {
+          throw new ApiError(400, "Invalid JSON format in request body");
+        }
+
+        // Krok 3: Walidacja danych wejściowych za pomocą Zod
+        const command = createProjectCommandSchema.parse(body);
+
+        // Krok 4: Wywołanie serwisu do utworzenia projektu
+        const project = await projectService.createProject(userId, command, context.locals.supabase);
+
+        // Krok 5: Zwrócenie odpowiedzi 201 Created
+        return createSuccessResponse(project, 201);
+
+    } catch (error) {
     // Obsługa wszystkich błędów przez centralny handler
     return handleApiError(error);
-  }
-};
+    }
+    };
 
 export const prerender = false;
-
-
 
 ================================================
 FILE: src/pages/api/projects/[projectId]/index.ts
@@ -7310,112 +7447,114 @@ import { handleApiError, createSuccessResponse, ApiError } from "../../../../lib
 import { projectIdParamSchema, updateProjectCommandSchema } from "../../../../lib/schemas/project.schema";
 import { projectService } from "../../../../services/project.service";
 
-/**
- * GET /api/projects/{projectId}
- *
- * Endpoint do pobierania pojedynczego projektu.
- *
- * Response 200:
- * {
- *   "id": "uuid",
- *   "name": "Trip to Paris",
- *   "duration_days": 5,
- *   "planned_date": "2026-03-15"
- * }
- *
- * Error Codes:
- * - 400: Invalid projectId UUID format
- * - 401: User not authenticated
- * - 404: Project not found or not owned by user
- * - 500: Server error or database error
- */
-export const GET: APIRoute = async (context) => {
-  try {
+/\*\*
+
+- GET /api/projects/{projectId}
+-
+- Endpoint do pobierania pojedynczego projektu.
+-
+- Response 200:
+- {
+- "id": "uuid",
+- "name": "Trip to Paris",
+- "duration_days": 5,
+- "planned_date": "2026-03-15"
+- }
+-
+- Error Codes:
+- - 400: Invalid projectId UUID format
+- - 401: User not authenticated
+- - 404: Project not found or not owned by user
+- - 500: Server error or database error
+    \*/
+    export const GET: APIRoute = async (context) => {
+    try {
     const user = context.locals.user;
     if (!user) {
-      throw new ApiError(401, "Unauthorized");
+    throw new ApiError(401, "Unauthorized");
     }
     const projectId = projectIdParamSchema.parse(context.params.projectId);
     const project = await projectService.getProject(projectId, user.id, context.locals.supabase);
     return createSuccessResponse(project, 200);
-  } catch (error) {
+    } catch (error) {
     return handleApiError(error);
-  }
-};
+    }
+    };
 
-/**
- * PATCH /api/projects/{projectId}
- *
- * Endpoint do aktualizacji projektu (wszystkie pola opcjonalne).
- *
- * Request Body:
- * {
- *   "name": "Updated Trip Name",
- *   "duration_days": 7,
- *   "planned_date": "2026-04-01"
- * }
- *
- * Response 200: Updated project
- *
- * Error Codes:
- * - 400: Invalid input
- * - 401: User not authenticated
- * - 404: Project not found
- * - 500: Server error
- */
-export const PATCH: APIRoute = async (context) => {
-  try {
+/\*\*
+
+- PATCH /api/projects/{projectId}
+-
+- Endpoint do aktualizacji projektu (wszystkie pola opcjonalne).
+-
+- Request Body:
+- {
+- "name": "Updated Trip Name",
+- "duration_days": 7,
+- "planned_date": "2026-04-01"
+- }
+-
+- Response 200: Updated project
+-
+- Error Codes:
+- - 400: Invalid input
+- - 401: User not authenticated
+- - 404: Project not found
+- - 500: Server error
+    \*/
+    export const PATCH: APIRoute = async (context) => {
+    try {
     const user = context.locals.user;
     if (!user) {
-      throw new ApiError(401, "Unauthorized");
+    throw new ApiError(401, "Unauthorized");
     }
     const projectId = projectIdParamSchema.parse(context.params.projectId);
 
-    let body: unknown;
-    try {
-      body = await context.request.json();
-    } catch {
-      throw new ApiError(400, "Invalid JSON format in request body");
-    }
+        let body: unknown;
+        try {
+          body = await context.request.json();
+        } catch {
+          throw new ApiError(400, "Invalid JSON format in request body");
+        }
 
-    const command = updateProjectCommandSchema.parse(body);
-    const project = await projectService.updateProject(projectId, user.id, command, context.locals.supabase);
-    return createSuccessResponse(project, 200);
-  } catch (error) {
+        const command = updateProjectCommandSchema.parse(body);
+        const project = await projectService.updateProject(projectId, user.id, command, context.locals.supabase);
+        return createSuccessResponse(project, 200);
+
+    } catch (error) {
     return handleApiError(error);
-  }
-};
+    }
+    };
 
-/**
- * DELETE /api/projects/{projectId}
- *
- * Endpoint do usuwania projektu.
- *
- * Response 204: No content
- *
- * Error Codes:
- * - 400: Invalid projectId
- * - 401: User not authenticated
- * - 404: Project not found
- * - 500: Server error
- */
-export const DELETE: APIRoute = async (context) => {
-  try {
+/\*\*
+
+- DELETE /api/projects/{projectId}
+-
+- Endpoint do usuwania projektu.
+-
+- Response 204: No content
+-
+- Error Codes:
+- - 400: Invalid projectId
+- - 401: User not authenticated
+- - 404: Project not found
+- - 500: Server error
+    \*/
+    export const DELETE: APIRoute = async (context) => {
+    try {
     const user = context.locals.user;
     if (!user) {
-      throw new ApiError(401, "Unauthorized");
+    throw new ApiError(401, "Unauthorized");
     }
     const projectId = projectIdParamSchema.parse(context.params.projectId);
     await projectService.deleteProject(projectId, user.id, context.locals.supabase);
     return new Response(null, { status: 204 });
-  } catch (error) {
+    } catch (error) {
     return handleApiError(error);
-  }
-};
+    }
+    };
 
 export const prerender = false;
-
-
 
 ================================================
 FILE: src/pages/api/projects/[projectId]/plan.ts
@@ -7430,103 +7569,106 @@ import type { Json } from "../../../../db/database.types";
 
 export const prerender = false;
 
-/**
- * GET /api/projects/{projectId}/plan
- *
- * Fetches the latest successfully generated plan for a project
- */
-export const GET: APIRoute = async (context) => {
+/\*\*
+
+- GET /api/projects/{projectId}/plan
+-
+- Fetches the latest successfully generated plan for a project
+  \*/
+  export const GET: APIRoute = async (context) => {
   try {
-    const user = context.locals.user;
-    if (!user) {
-      return createErrorResponse(401, "Unauthorized", "User not authenticated");
-    }
-
-    const projectId = context.params.projectId;
-
-    if (!projectId) {
-      return createErrorResponse(400, "Bad Request", "Project ID is required");
-    }
-
-    // Fetch the latest successful plan from ai_logs (most recent by created_on)
-    // RLS will automatically filter by user_id
-    const { data: aiLog, error } = await context.locals.supabase
-      .from("ai_logs")
-      .select("response, version, created_on")
-      .eq("project_id", projectId)
-      .eq("status", "success")
-      .order("created_on", { ascending: false })
-      .limit(1)
-      .single();
-
-    if (error || !aiLog) {
-      return createErrorResponse(404, "Not Found", "No plan found for this project");
-    }
-
-    // Extract schedule from response
-    const response = aiLog.response as { schedule?: unknown };
-
-    return createSuccessResponse(
-      {
-        schedule: response.schedule || [],
-        version: aiLog.version,
-        createdOn: aiLog.created_on,
-      },
-      200
-    );
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    return createErrorResponse(500, "Server Error", message);
-  }
-};
-
-/**
- * POST /api/projects/{projectId}/plan
- *
- * Endpoint do synchronicznego generowania planu podróży dla projektu.
- *
- * Request Body:
- * {
- *   "model": "gpt-4o-mini",  // User-facing model name (mapped to GROQ model internally)
- *   "project_name": "Summer Trip to Paris",  // Name of the travel project
- *   "duration_days": 5,                      // Number of days for the itinerary
- *   "notes": [{ "id": "uuid", "content": "string", "priority": 1, "place_tags": ["string"] }],
- *   "preferences": { "categories": ["string"] }  // opcjonalne
- * }
- *
- * Response 200:
- * {
- *   "schedule": [{ "day": 1, "activities": ["..."] }]
- * }
- *
- * Error Codes:
- * - 400: Invalid input data validation
- * - 401: User not authenticated
- * - 404: Project does not exist or does not belong to user
- * - 500: Server error or AI service error
- */
-export const POST: APIRoute = async (context) => {
   const user = context.locals.user;
   if (!user) {
-    return createErrorResponse(401, "Unauthorized", "User not authenticated");
+  return createErrorResponse(401, "Unauthorized", "User not authenticated");
   }
 
-  const startTime = Date.now();
-  let logId: string | null = null;
-  let prompt = "";
-  let requestBody: unknown = null;
-  let responseCode = 500; // Default to server error
+      const projectId = context.params.projectId;
 
-  try {
-    // Capture raw request body first for logging (even if invalid JSON)
-    const rawBody = await context.request.text();
-    try {
-      requestBody = JSON.parse(rawBody);
-    } catch {
-      requestBody = { raw: rawBody }; // Store invalid JSON as raw text
-      responseCode = 400;
-      throw new Error("Invalid JSON format in request body");
+      if (!projectId) {
+        return createErrorResponse(400, "Bad Request", "Project ID is required");
+      }
+
+      // Fetch the latest successful plan from ai_logs (most recent by created_on)
+      // RLS will automatically filter by user_id
+      const { data: aiLog, error } = await context.locals.supabase
+        .from("ai_logs")
+        .select("response, version, created_on")
+        .eq("project_id", projectId)
+        .eq("status", "success")
+        .order("created_on", { ascending: false })
+        .limit(1)
+        .single();
+
+      if (error || !aiLog) {
+        return createErrorResponse(404, "Not Found", "No plan found for this project");
+      }
+
+      // Extract schedule from response
+      const response = aiLog.response as { schedule?: unknown };
+
+      return createSuccessResponse(
+        {
+          schedule: response.schedule || [],
+          version: aiLog.version,
+          createdOn: aiLog.created_on,
+        },
+        200
+      );
+
+  } catch (error) {
+  const message = error instanceof Error ? error.message : String(error);
+  return createErrorResponse(500, "Server Error", message);
+  }
+  };
+
+/\*\*
+
+- POST /api/projects/{projectId}/plan
+-
+- Endpoint do synchronicznego generowania planu podróży dla projektu.
+-
+- Request Body:
+- {
+- "model": "gpt-4o-mini", // User-facing model name (mapped to GROQ model internally)
+- "project_name": "Summer Trip to Paris", // Name of the travel project
+- "duration_days": 5, // Number of days for the itinerary
+- "notes": [{ "id": "uuid", "content": "string", "priority": 1, "place_tags": ["string"] }],
+- "preferences": { "categories": ["string"] } // opcjonalne
+- }
+-
+- Response 200:
+- {
+- "schedule": [{ "day": 1, "activities": ["..."] }]
+- }
+-
+- Error Codes:
+- - 400: Invalid input data validation
+- - 401: User not authenticated
+- - 404: Project does not exist or does not belong to user
+- - 500: Server error or AI service error
+    \*/
+    export const POST: APIRoute = async (context) => {
+    const user = context.locals.user;
+    if (!user) {
+    return createErrorResponse(401, "Unauthorized", "User not authenticated");
     }
+
+const startTime = Date.now();
+let logId: string | null = null;
+let prompt = "";
+let requestBody: unknown = null;
+let responseCode = 500; // Default to server error
+
+try {
+// Capture raw request body first for logging (even if invalid JSON)
+const rawBody = await context.request.text();
+try {
+requestBody = JSON.parse(rawBody);
+} catch {
+requestBody = { raw: rawBody }; // Store invalid JSON as raw text
+responseCode = 400;
+throw new Error("Invalid JSON format in request body");
+}
 
     // Krok 1: Validate URL params and request body
     const projectId = projectIdParamSchema.parse(context.params.projectId);
@@ -7572,11 +7714,12 @@ export const POST: APIRoute = async (context) => {
         .eq("id", logId);
     }
     return createSuccessResponse(plan, 200);
-  } catch (error) {
-    // Determine response code based on error type
-    const duration = Date.now() - startTime;
-    const message = error instanceof Error ? error.message : String(error);
-    let details: unknown = undefined;
+
+} catch (error) {
+// Determine response code based on error type
+const duration = Date.now() - startTime;
+const message = error instanceof Error ? error.message : String(error);
+let details: unknown = undefined;
 
     // Determine appropriate response code if not already set
     if (responseCode === 500) {
@@ -7616,10 +7759,9 @@ export const POST: APIRoute = async (context) => {
     // Return error response with the same status code logged to database
     const errorType = responseCode === 400 ? "Validation Error" : responseCode === 404 ? "Not Found" : "Server Error";
     return createErrorResponse(responseCode, errorType, message, details);
-  }
+
+}
 };
-
-
 
 ================================================
 FILE: src/pages/api/projects/[projectId]/notes/[noteId].ts
@@ -7627,84 +7769,86 @@ FILE: src/pages/api/projects/[projectId]/notes/[noteId].ts
 import type { APIRoute } from "astro";
 import { handleApiError, createSuccessResponse, ApiError } from "../../../../../lib/api-utils";
 import {
-  projectIdParamSchema,
-  noteIdParamSchema,
-  updateNoteCommandSchema,
+projectIdParamSchema,
+noteIdParamSchema,
+updateNoteCommandSchema,
 } from "../../../../../lib/schemas/note.schema";
 import { noteService } from "../../../../../services/note.service";
 
-/**
- * GET /api/projects/{projectId}/notes/{noteId}
- *
- * Endpoint do pobierania pojedynczej notatki.
- */
-export const GET: APIRoute = async (context) => {
+/\*\*
+
+- GET /api/projects/{projectId}/notes/{noteId}
+-
+- Endpoint do pobierania pojedynczej notatki.
+  \*/
+  export const GET: APIRoute = async (context) => {
   try {
-    const user = context.locals.user;
-    if (!user) {
-      throw new ApiError(401, "Unauthorized");
-    }
-    const projectId = projectIdParamSchema.parse(context.params.projectId);
-    const noteId = noteIdParamSchema.parse(context.params.noteId);
-    const note = await noteService.getNote(noteId, projectId, user.id, context.locals.supabase);
-    return createSuccessResponse(note, 200);
-  } catch (error) {
-    return handleApiError(error);
+  const user = context.locals.user;
+  if (!user) {
+  throw new ApiError(401, "Unauthorized");
   }
-};
+  const projectId = projectIdParamSchema.parse(context.params.projectId);
+  const noteId = noteIdParamSchema.parse(context.params.noteId);
+  const note = await noteService.getNote(noteId, projectId, user.id, context.locals.supabase);
+  return createSuccessResponse(note, 200);
+  } catch (error) {
+  return handleApiError(error);
+  }
+  };
 
-/**
- * PATCH /api/projects/{projectId}/notes/{noteId}
- *
- * Endpoint do aktualizacji notatki (wszystkie pola opcjonalne).
- */
-export const PATCH: APIRoute = async (context) => {
+/\*\*
+
+- PATCH /api/projects/{projectId}/notes/{noteId}
+-
+- Endpoint do aktualizacji notatki (wszystkie pola opcjonalne).
+  \*/
+  export const PATCH: APIRoute = async (context) => {
   try {
-    const user = context.locals.user;
-    if (!user) {
-      throw new ApiError(401, "Unauthorized");
-    }
-    const projectId = projectIdParamSchema.parse(context.params.projectId);
-    const noteId = noteIdParamSchema.parse(context.params.noteId);
-
-    let body: unknown;
-    try {
-      body = await context.request.json();
-    } catch {
-      throw new ApiError(400, "Invalid JSON format in request body");
-    }
-
-    const command = updateNoteCommandSchema.parse(body);
-    const note = await noteService.updateNote(noteId, projectId, user.id, command, context.locals.supabase);
-    return createSuccessResponse(note, 200);
-  } catch (error) {
-    return handleApiError(error);
+  const user = context.locals.user;
+  if (!user) {
+  throw new ApiError(401, "Unauthorized");
   }
-};
+  const projectId = projectIdParamSchema.parse(context.params.projectId);
+  const noteId = noteIdParamSchema.parse(context.params.noteId);
 
-/**
- * DELETE /api/projects/{projectId}/notes/{noteId}
- *
- * Endpoint do usuwania notatki.
- */
-export const DELETE: APIRoute = async (context) => {
+      let body: unknown;
+      try {
+        body = await context.request.json();
+      } catch {
+        throw new ApiError(400, "Invalid JSON format in request body");
+      }
+
+      const command = updateNoteCommandSchema.parse(body);
+      const note = await noteService.updateNote(noteId, projectId, user.id, command, context.locals.supabase);
+      return createSuccessResponse(note, 200);
+
+  } catch (error) {
+  return handleApiError(error);
+  }
+  };
+
+/\*\*
+
+- DELETE /api/projects/{projectId}/notes/{noteId}
+-
+- Endpoint do usuwania notatki.
+  \*/
+  export const DELETE: APIRoute = async (context) => {
   try {
-    const user = context.locals.user;
-    if (!user) {
-      throw new ApiError(401, "Unauthorized");
-    }
-    const projectId = projectIdParamSchema.parse(context.params.projectId);
-    const noteId = noteIdParamSchema.parse(context.params.noteId);
-    await noteService.deleteNote(noteId, projectId, user.id, context.locals.supabase);
-    return new Response(null, { status: 204 });
-  } catch (error) {
-    return handleApiError(error);
+  const user = context.locals.user;
+  if (!user) {
+  throw new ApiError(401, "Unauthorized");
   }
-};
+  const projectId = projectIdParamSchema.parse(context.params.projectId);
+  const noteId = noteIdParamSchema.parse(context.params.noteId);
+  await noteService.deleteNote(noteId, projectId, user.id, context.locals.supabase);
+  return new Response(null, { status: 204 });
+  } catch (error) {
+  return handleApiError(error);
+  }
+  };
 
 export const prerender = false;
-
-
 
 ================================================
 FILE: src/pages/api/projects/[projectId]/notes/index.ts
@@ -7712,129 +7856,133 @@ FILE: src/pages/api/projects/[projectId]/notes/index.ts
 import type { APIRoute } from "astro";
 import { handleApiError, createSuccessResponse, ApiError } from "../../../../../lib/api-utils";
 import {
-  projectIdParamSchema,
-  createNoteCommandSchema,
-  listNotesQuerySchema,
+projectIdParamSchema,
+createNoteCommandSchema,
+listNotesQuerySchema,
 } from "../../../../../lib/schemas/note.schema";
 import { noteService } from "../../../../../services/note.service";
 
-/**
- * GET /api/projects/{projectId}/notes
- *
- * Endpoint do pobierania listy notatek projektu z paginacją i filtrami.
- *
- * Query Parameters:
- * - page (integer, optional, default: 1)
- * - size (integer, optional, default: 20)
- * - priority (integer, optional) - Filter by priority (1-3)
- * - place_tag (string, optional) - Filter by place tag
- *
- * Response 200:
- * {
- *   "data": [{ "id": "uuid", "project_id": "uuid", "content": "string", "priority": 1, "place_tags": [...], "updated_on": "..." }],
- *   "meta": { "page": 1, "size": 20, "total": 1 }
- * }
- *
- * Error Codes:
- * - 401: User not authenticated
- */
-export const GET: APIRoute = async (context) => {
-  try {
+/\*\*
+
+- GET /api/projects/{projectId}/notes
+-
+- Endpoint do pobierania listy notatek projektu z paginacją i filtrami.
+-
+- Query Parameters:
+- - page (integer, optional, default: 1)
+- - size (integer, optional, default: 20)
+- - priority (integer, optional) - Filter by priority (1-3)
+- - place_tag (string, optional) - Filter by place tag
+-
+- Response 200:
+- {
+- "data": [{ "id": "uuid", "project_id": "uuid", "content": "string", "priority": 1, "place_tags": [...], "updated_on": "..." }],
+- "meta": { "page": 1, "size": 20, "total": 1 }
+- }
+-
+- Error Codes:
+- - 401: User not authenticated
+    \*/
+    export const GET: APIRoute = async (context) => {
+    try {
     const user = context.locals.user;
     if (!user) {
-      throw new ApiError(401, "Unauthorized");
+    throw new ApiError(401, "Unauthorized");
     }
     const projectId = projectIdParamSchema.parse(context.params.projectId);
 
-    const query = listNotesQuerySchema.parse({
-      page: context.url.searchParams.get("page"),
-      size: context.url.searchParams.get("size"),
-      priority: context.url.searchParams.get("priority"),
-      place_tag: context.url.searchParams.get("place_tag"),
-    });
+        const query = listNotesQuerySchema.parse({
+          page: context.url.searchParams.get("page"),
+          size: context.url.searchParams.get("size"),
+          priority: context.url.searchParams.get("priority"),
+          place_tag: context.url.searchParams.get("place_tag"),
+        });
 
-    const result = await noteService.listNotes(projectId, user.id, query, context.locals.supabase);
-    return createSuccessResponse(result, 200);
-  } catch (error) {
+        const result = await noteService.listNotes(projectId, user.id, query, context.locals.supabase);
+        return createSuccessResponse(result, 200);
+
+    } catch (error) {
     return handleApiError(error);
-  }
-};
+    }
+    };
 
-/**
- * POST /api/projects/{projectId}/notes
- *
- * Endpoint do tworzenia nowej notatki dla projektu podróży.
- *
- * URL Parameters:
- * - projectId: UUID projektu
- *
- * Request Body:
- * {
- *   "content": "Visit Eiffel Tower at sunset",
- *   "priority": 1,
- *   "place_tags": ["Paris", "Monuments"]  // opcjonalne
- * }
- *
- * Response 201:
- * {
- *   "id": "uuid",
- *   "project_id": "uuid",
- *   "content": "Visit Eiffel Tower at sunset",
- *   "priority": 1,
- *   "place_tags": ["Paris", "Monuments"],
- *   "updated_on": "2025-10-21T12:00:00Z"
- * }
- *
- * Error Codes:
- * - 400: Invalid projectId UUID or input data validation failure
- * - 401: User not authenticated
- * - 404: Project not found or does not belong to user
- * - 500: Server error or database error
- */
-export const POST: APIRoute = async (context) => {
-  try {
+/\*\*
+
+- POST /api/projects/{projectId}/notes
+-
+- Endpoint do tworzenia nowej notatki dla projektu podróży.
+-
+- URL Parameters:
+- - projectId: UUID projektu
+-
+- Request Body:
+- {
+- "content": "Visit Eiffel Tower at sunset",
+- "priority": 1,
+- "place_tags": ["Paris", "Monuments"] // opcjonalne
+- }
+-
+- Response 201:
+- {
+- "id": "uuid",
+- "project_id": "uuid",
+- "content": "Visit Eiffel Tower at sunset",
+- "priority": 1,
+- "place_tags": ["Paris", "Monuments"],
+- "updated_on": "2025-10-21T12:00:00Z"
+- }
+-
+- Error Codes:
+- - 400: Invalid projectId UUID or input data validation failure
+- - 401: User not authenticated
+- - 404: Project not found or does not belong to user
+- - 500: Server error or database error
+    \*/
+    export const POST: APIRoute = async (context) => {
+    try {
     // Get authenticated user
     const user = context.locals.user;
     if (!user) {
-      throw new ApiError(401, "Unauthorized");
+    throw new ApiError(401, "Unauthorized");
     }
 
-    // Krok 1: Walidacja projectId z URL
-    const projectId = projectIdParamSchema.parse(context.params.projectId);
+        // Krok 1: Walidacja projectId z URL
+        const projectId = projectIdParamSchema.parse(context.params.projectId);
 
-    // Krok 2: Weryfikacja własności projektu
-    await noteService.verifyProjectOwnership(projectId, user.id, context.locals.supabase);
+        // Krok 2: Weryfikacja własności projektu
+        await noteService.verifyProjectOwnership(projectId, user.id, context.locals.supabase);
 
-    // Krok 3: Parsowanie i walidacja JSON body
-    let body: unknown;
-    try {
-      body = await context.request.json();
-    } catch {
-      throw new ApiError(400, "Invalid JSON format in request body");
-    }
+        // Krok 3: Parsowanie i walidacja JSON body
+        let body: unknown;
+        try {
+          body = await context.request.json();
+        } catch {
+          throw new ApiError(400, "Invalid JSON format in request body");
+        }
 
-    // Krok 4: Walidacja danych wejściowych za pomocą Zod
-    const command = createNoteCommandSchema.parse(body);
+        // Krok 4: Walidacja danych wejściowych za pomocą Zod
+        const command = createNoteCommandSchema.parse(body);
 
-    // Krok 5: Wywołanie serwisu do utworzenia notatki
-    const note = await noteService.createNote(projectId, command, context.locals.supabase);
+        // Krok 5: Wywołanie serwisu do utworzenia notatki
+        const note = await noteService.createNote(projectId, command, context.locals.supabase);
 
-    // Krok 6: Zwrócenie odpowiedzi 201 Created
-    return createSuccessResponse(note, 201);
-  } catch (error) {
+        // Krok 6: Zwrócenie odpowiedzi 201 Created
+        return createSuccessResponse(note, 201);
+
+    } catch (error) {
     // Obsługa wszystkich błędów przez centralny handler
     return handleApiError(error);
-  }
-};
+    }
+    };
 
 export const prerender = false;
-
-
 
 ================================================
 FILE: src/pages/auth/login.astro
 ================================================
+
 ---
+
 import AuthLayout from "../../layouts/AuthLayout.astro";
 import { LoginForm } from "../../components/auth/LoginForm";
 
@@ -7842,84 +7990,87 @@ export const prerender = false;
 
 // Middleware handles redirect for authenticated users
 // If user is already logged in, they'll be redirected to /projects automatically
+
 ---
 
 <AuthLayout title="Login | VacationPlanner">
   <LoginForm client:load />
 </AuthLayout>
 
-
-
-
 ================================================
 FILE: src/pages/projects/index.astro
 ================================================
+
 ---
+
 import Layout from "../../layouts/Layout.astro";
 import { ProjectsPage } from "../../components/ProjectsPage";
+
 ---
 
 <Layout title="Projects | 10x Vacation Planner">
   <ProjectsPage client:load />
 </Layout>
 
-
-
 ================================================
 FILE: src/pages/projects/[projectId]/notes.astro
 ================================================
+
 ---
+
 import Layout from "../../../layouts/Layout.astro";
 import { ProjectView } from "../../../components/ProjectView";
 
 const { projectId } = Astro.params;
 
 if (!projectId) {
-  return Astro.redirect("/projects");
+return Astro.redirect("/projects");
 }
 
 // Fetch project data to get duration_days
 const { data: project, error } = await Astro.locals.supabase
-  .from("travel_projects")
-  .select("id, name, duration_days")
-  .eq("id", projectId)
-  .single();
+.from("travel_projects")
+.select("id, name, duration_days")
+.eq("id", projectId)
+.single();
 
 if (error || !project) {
-  return Astro.redirect("/projects");
+return Astro.redirect("/projects");
 }
+
 ---
 
 <Layout title={`${project.name} | 10x Vacation Planner`}>
-  <ProjectView client:load projectId={projectId} projectName={project.name} durationDays={project.duration_days} />
+<ProjectView client:load projectId={projectId} projectName={project.name} durationDays={project.duration_days} />
 </Layout>
-
-
 
 ================================================
 FILE: src/services/ai.service.mock.ts
 ================================================
 import type { GeneratePlanCommand, PlanResponseDto, ScheduleItemDto } from "../types";
 
-/**
- * Mock AI Service dla celów developmentu
- * Symuluje wywołanie API AI i zwraca przykładowy plan podróży
- */
-export class MockAIService {
-  /**
-   * Symuluje opóźnienie API (200-1000ms)
-   */
-  private async simulateDelay(): Promise<void> {
-    const delay = Math.random() * 800 + 200;
-    await new Promise((resolve) => setTimeout(resolve, delay));
-  }
+/\*\*
 
-  /**
-   * Generuje przykładowe aktywności na podstawie notatek i preferencji
-   */
+- Mock AI Service dla celów developmentu
+- Symuluje wywołanie API AI i zwraca przykładowy plan podróży
+  \*/
+  export class MockAIService {
+  /\*\*
+  - Symuluje opóźnienie API (200-1000ms)
+    _/
+    private async simulateDelay(): Promise<void> {
+    const delay = Math.random() _ 800 + 200;
+    await new Promise((resolve) => setTimeout(resolve, delay));
+    }
+
+/\*\*
+
+- Generuje przykładowe aktywności na podstawie notatek i preferencji
+  \*/
   private generateActivities(command: GeneratePlanCommand, day: number): string[] {
-    const activities: string[] = [];
-    const notes = command.notes.filter((n) => n.priority >= 2); // Priorytetowe notatki
+  const activities: string[] = [];
+  const notes = command.notes.filter((n) => n.priority >= 2); // Priorytetowe notatki
+
 
     // Dodaj aktywności z notatek
     notes.slice(0, 3).forEach((note) => {
@@ -7943,16 +8094,19 @@ export class MockAIService {
     activities.push("Obiad w lokalnej restauracji");
 
     return activities.slice(0, 5); // Max 5 aktywności dziennie
-  }
 
-  /**
-   * Generuje plan podróży na podstawie komendy
-   * @param command - Komenda z parametrami generowania planu
-   * @returns Plan podróży z harmonogramem
-   */
+}
+
+/\*\*
+
+- Generuje plan podróży na podstawie komendy
+- @param command - Komenda z parametrami generowania planu
+- @returns Plan podróży z harmonogramem
+  \*/
   async generatePlan(command: GeneratePlanCommand): Promise<PlanResponseDto> {
-    // Symuluj opóźnienie API
-    await this.simulateDelay();
+  // Symuluj opóźnienie API
+  await this.simulateDelay();
+
 
     // Symulacja błędu w 5% przypadków (do testowania obsługi błędów)
     if (Math.random() < 0.05) {
@@ -7974,40 +8128,42 @@ export class MockAIService {
     return {
       schedule,
     };
-  }
 
-  /**
-   * Generuje opis promptu dla logowania
-   */
-  generatePrompt(command: GeneratePlanCommand): string {
-    return JSON.stringify(
-      {
-        model: command.model,
-        notes_count: command.notes.length,
-        preferences: command.preferences || null,
-        high_priority_notes: command.notes.filter((n) => n.priority === 3).length,
-      },
-      null,
-      2
-    );
-  }
 }
 
-/**
- * Singleton instance AI service
- */
-export const aiService = new MockAIService();
+/\*\*
 
+- Generuje opis promptu dla logowania
+  \*/
+  generatePrompt(command: GeneratePlanCommand): string {
+  return JSON.stringify(
+  {
+  model: command.model,
+  notes_count: command.notes.length,
+  preferences: command.preferences || null,
+  high_priority_notes: command.notes.filter((n) => n.priority === 3).length,
+  },
+  null,
+  2
+  );
+  }
+  }
 
+/\*\*
+
+- Singleton instance AI service
+  \*/
+  export const aiService = new MockAIService();
 
 ================================================
 FILE: src/services/ai.service.ts
 ================================================
-/**
- * AI Service - Real Implementation using GROQ
- *
- * Service for generating travel plans using LLM through GROQ API
- */
+/\*\*
+
+- AI Service - Real Implementation using GROQ
+-
+- Service for generating travel plans using LLM through GROQ API
+  \*/
 
 import type { GeneratePlanCommand, PlanResponseDto, ScheduleItemDto } from "../types";
 import { GROQService } from "../lib/groq.service";
@@ -8015,51 +8171,53 @@ import type { JSONSchema } from "../lib/groq.types";
 import { ValidationError, ApiError as GroqApiError } from "../lib/errors";
 import { ApiError } from "../lib/api-utils";
 
-/**
- * JSON Schema for the plan response
- * This ensures the LLM returns structured data matching PlanResponseDto
- */
-const PLAN_RESPONSE_SCHEMA: JSONSchema = {
+/\*\*
+
+- JSON Schema for the plan response
+- This ensures the LLM returns structured data matching PlanResponseDto
+  \*/
+  const PLAN_RESPONSE_SCHEMA: JSONSchema = {
   type: "object",
   properties: {
-    schedule: {
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          day: {
-            type: "number",
-            description: "Day number (1, 2, 3, etc.). MUST include ALL days from 1 to the total number of days requested.",
-          },
-          activities: {
-            type: "array",
-            items: {
-              type: "string",
-              description: "Activity description",
-            },
-            description: "List of 3-5 activities for the day",
-          },
-        },
-        required: ["day", "activities"],
-        additionalProperties: false,
-      },
-      description: "Complete daily schedule for ALL days of the trip. Must include every single day from day 1 to the last day.",
-    },
+  schedule: {
+  type: "array",
+  items: {
+  type: "object",
+  properties: {
+  day: {
+  type: "number",
+  description: "Day number (1, 2, 3, etc.). MUST include ALL days from 1 to the total number of days requested.",
+  },
+  activities: {
+  type: "array",
+  items: {
+  type: "string",
+  description: "Activity description",
+  },
+  description: "List of 3-5 activities for the day",
+  },
+  },
+  required: ["day", "activities"],
+  additionalProperties: false,
+  },
+  description: "Complete daily schedule for ALL days of the trip. Must include every single day from day 1 to the last day.",
+  },
   },
   required: ["schedule"],
   additionalProperties: false,
-};
+  };
 
-/**
- * Real AI Service for generating travel plans
- */
-export class AIService {
+/\*\*
+
+- Real AI Service for generating travel plans
+  \*/
+  export class AIService {
   private groqService: GROQService;
 
-  constructor(apiKey: string) {
-    if (!apiKey || apiKey.trim() === "") {
-      throw new Error("GROQ API key is required");
-    }
+constructor(apiKey: string) {
+if (!apiKey || apiKey.trim() === "") {
+throw new Error("GROQ API key is required");
+}
 
     this.groqService = new GROQService({
       apiKey,
@@ -8069,15 +8227,17 @@ export class AIService {
         max_tokens: 4096,
       },
     });
-  }
 
-  /**
-   * Generate a travel plan using GROQ LLM
-   */
+}
+
+/\*\*
+
+- Generate a travel plan using GROQ LLM
+  \*/
   async generatePlan(command: GeneratePlanCommand): Promise<PlanResponseDto> {
-    try {
-      const systemPrompt = this.buildSystemPrompt();
-      const userPrompt = this.buildUserPrompt(command);
+  try {
+  const systemPrompt = this.buildSystemPrompt();
+  const userPrompt = this.buildUserPrompt(command);
 
       const response = await this.groqService.sendChat<PlanResponseDto>({
         systemMessage: systemPrompt,
@@ -8112,11 +8272,12 @@ export class AIService {
       }
 
       return response.data;
-    } catch (error) {
-      // Handle GROQ-specific errors
-      if (error instanceof ValidationError) {
-        throw new ApiError(500, `AI response validation failed: ${error.message}`);
-      }
+
+  } catch (error) {
+  // Handle GROQ-specific errors
+  if (error instanceof ValidationError) {
+  throw new ApiError(500, `AI response validation failed: ${error.message}`);
+  }
 
       if (error instanceof GroqApiError) {
         throw new ApiError(502, `AI service error: ${error.message}`);
@@ -8130,24 +8291,28 @@ export class AIService {
       // Handle unknown errors
       console.error("Unexpected error in AI service:", error);
       throw new ApiError(500, "Failed to generate travel plan");
-    }
+
+  }
   }
 
-  /**
-   * Generate the user prompt for logging purposes
-   * Note: System prompt is not included as it's static and stored in code
-   */
+/\*\*
+
+- Generate the user prompt for logging purposes
+- Note: System prompt is not included as it's static and stored in code
+  \*/
   generatePrompt(command: GeneratePlanCommand): string {
-    return this.buildUserPrompt(command);
+  return this.buildUserPrompt(command);
   }
 
-  /**
-   * Build the system prompt that defines the AI's role and behavior
-   */
+/\*\*
+
+- Build the system prompt that defines the AI's role and behavior
+  \*/
   private buildSystemPrompt(): string {
-    return `You are an expert travel planner AI assistant. Your task is to create detailed, personalized travel itineraries based on user notes and preferences.
+  return `You are an expert travel planner AI assistant. Your task is to create detailed, personalized travel itineraries based on user notes and preferences.
 
 RESPONSIBILITIES:
+
 - Analyze user notes about places, activities, and attractions
 - Prioritize activities based on user-assigned priority levels (1=low, 2=medium, 3=high)
 - Create a day-by-day schedule that is logical and feasible
@@ -8156,6 +8321,7 @@ RESPONSIBILITIES:
 - Include high-priority items early in the trip when possible
 
 OUTPUT REQUIREMENTS:
+
 - CRITICAL: Generate a COMPLETE schedule for ALL days from day 1 to the last day
 - DO NOT skip any days - every single day must be included in the response
 - Each day should have 3-5 activities
@@ -8165,110 +8331,116 @@ OUTPUT REQUIREMENTS:
 - Days must be numbered sequentially: 1, 2, 3, etc.
 
 FORMATTING:
+
 - Be concise but informative in activity descriptions
 - Use natural language that is easy to understand
 - Ensure the schedule is realistic and achievable`;
   }
 
-  /**
-   * Build the user prompt with specific trip details
-   */
-  private buildUserPrompt(command: GeneratePlanCommand): string {
+  /\*\*
+  - Build the user prompt with specific trip details
+    \*/
+    private buildUserPrompt(command: GeneratePlanCommand): string {
     // Sort notes by priority (low to high: 1=high, 2=medium, 3=low)
     const sortedNotes = [...command.notes].sort((a, b) => a.priority - b.priority);
 
-    // Group notes by priority (1=high, 2=medium, 3=low)
-    const highPriorityNotes = sortedNotes.filter((n) => n.priority === 1);
-    const mediumPriorityNotes = sortedNotes.filter((n) => n.priority === 2);
-    const lowPriorityNotes = sortedNotes.filter((n) => n.priority === 3);
 
-    let prompt = `Please create a detailed travel itinerary based on the following information:\n\n`;
+      // Group notes by priority (1=high, 2=medium, 3=low)
+      const highPriorityNotes = sortedNotes.filter((n) => n.priority === 1);
+      const mediumPriorityNotes = sortedNotes.filter((n) => n.priority === 2);
+      const lowPriorityNotes = sortedNotes.filter((n) => n.priority === 3);
 
-    // Add project name/destination
-    prompt += `DESTINATION: ${command.project_name}\n`;
-    
-    // Add trip duration
-    prompt += `TRIP DURATION: ${command.duration_days} day${command.duration_days !== 1 ? 's' : ''}\n\n`;
+      let prompt = `Please create a detailed travel itinerary based on the following information:\n\n`;
 
-    // Add high priority notes
-    if (highPriorityNotes.length > 0) {
-      prompt += `HIGH PRIORITY (Must Include):\n`;
-      highPriorityNotes.forEach((note, idx) => {
-        const tags = note.place_tags && note.place_tags.length > 0 ? ` [${note.place_tags.join(", ")}]` : "";
-        prompt += `${idx + 1}. ${note.content}${tags}\n`;
-      });
-      prompt += `\n`;
-    }
+      // Add project name/destination
+      prompt += `DESTINATION: ${command.project_name}\n`;
 
-    // Add medium priority notes
-    if (mediumPriorityNotes.length > 0) {
-      prompt += `MEDIUM PRIORITY (Should Include):\n`;
-      mediumPriorityNotes.forEach((note, idx) => {
-        const tags = note.place_tags && note.place_tags.length > 0 ? ` [${note.place_tags.join(", ")}]` : "";
-        prompt += `${idx + 1}. ${note.content}${tags}\n`;
-      });
-      prompt += `\n`;
-    }
+      // Add trip duration
+      prompt += `TRIP DURATION: ${command.duration_days} day${command.duration_days !== 1 ? 's' : ''}\n\n`;
 
-    // Add low priority notes
-    if (lowPriorityNotes.length > 0) {
-      prompt += `LOW PRIORITY (Include if time permits):\n`;
-      lowPriorityNotes.forEach((note, idx) => {
-        const tags = note.place_tags && note.place_tags.length > 0 ? ` [${note.place_tags.join(", ")}]` : "";
-        prompt += `${idx + 1}. ${note.content}${tags}\n`;
-      });
-      prompt += `\n`;
-    }
+      // Add high priority notes
+      if (highPriorityNotes.length > 0) {
+        prompt += `HIGH PRIORITY (Must Include):\n`;
+        highPriorityNotes.forEach((note, idx) => {
+          const tags = note.place_tags && note.place_tags.length > 0 ? ` [${note.place_tags.join(", ")}]` : "";
+          prompt += `${idx + 1}. ${note.content}${tags}\n`;
+        });
+        prompt += `\n`;
+      }
 
-    // Add preferences if provided
-    if (command.preferences && command.preferences.categories.length > 0) {
-      prompt += `USER PREFERENCES:\n`;
-      prompt += `Interested in: ${command.preferences.categories.join(", ")}\n\n`;
-    }
+      // Add medium priority notes
+      if (mediumPriorityNotes.length > 0) {
+        prompt += `MEDIUM PRIORITY (Should Include):\n`;
+        mediumPriorityNotes.forEach((note, idx) => {
+          const tags = note.place_tags && note.place_tags.length > 0 ? ` [${note.place_tags.join(", ")}]` : "";
+          prompt += `${idx + 1}. ${note.content}${tags}\n`;
+        });
+        prompt += `\n`;
+      }
 
-    // Add final instructions
-    prompt += `INSTRUCTIONS:\n`;
-    prompt += `- IMPORTANT: Create a COMPLETE day-by-day itinerary for ALL ${command.duration_days} day${command.duration_days !== 1 ? 's' : ''}\n`;
-    prompt += `- You MUST include every single day from Day 1 to Day ${command.duration_days}\n`;
-    prompt += `- DO NOT skip any days - the response must contain exactly ${command.duration_days} days\n`;
-    prompt += `- Each day should have 3-5 activities\n`;
-    prompt += `- Prioritize high-priority items and include them early in the schedule\n`;
-    prompt += `- Ensure activities are geographically logical\n`;
-    prompt += `- Include practical activities like meals, breaks, and travel time\n`;
-    prompt += `- Make the schedule realistic and enjoyable\n`;
+      // Add low priority notes
+      if (lowPriorityNotes.length > 0) {
+        prompt += `LOW PRIORITY (Include if time permits):\n`;
+        lowPriorityNotes.forEach((note, idx) => {
+          const tags = note.place_tags && note.place_tags.length > 0 ? ` [${note.place_tags.join(", ")}]` : "";
+          prompt += `${idx + 1}. ${note.content}${tags}\n`;
+        });
+        prompt += `\n`;
+      }
 
-    return prompt;
+      // Add preferences if provided
+      if (command.preferences && command.preferences.categories.length > 0) {
+        prompt += `USER PREFERENCES:\n`;
+        prompt += `Interested in: ${command.preferences.categories.join(", ")}\n\n`;
+      }
+
+      // Add final instructions
+      prompt += `INSTRUCTIONS:\n`;
+      prompt += `- IMPORTANT: Create a COMPLETE day-by-day itinerary for ALL ${command.duration_days} day${command.duration_days !== 1 ? 's' : ''}\n`;
+      prompt += `- You MUST include every single day from Day 1 to Day ${command.duration_days}\n`;
+      prompt += `- DO NOT skip any days - the response must contain exactly ${command.duration_days} days\n`;
+      prompt += `- Each day should have 3-5 activities\n`;
+      prompt += `- Prioritize high-priority items and include them early in the schedule\n`;
+      prompt += `- Ensure activities are geographically logical\n`;
+      prompt += `- Include practical activities like meals, breaks, and travel time\n`;
+      prompt += `- Make the schedule realistic and enjoyable\n`;
+
+      return prompt;
+
   }
 
-  /**
-   * Map user-facing model names to GROQ model names
-   * Note: Only models that support json_schema response format are used
-   * See: https://console.groq.com/docs/structured-outputs#supported-models
-   */
-  private mapModelName(requestedModel: string): string {
+  /\*\*
+  - Map user-facing model names to GROQ model names
+  - Note: Only models that support json_schema response format are used
+  - See: https://console.groq.com/docs/structured-outputs#supported-models
+    \*/
+    private mapModelName(requestedModel: string): string {
     const modelMap: Record<string, string> = {
-      "gpt-4": "openai/gpt-oss-20b",
-      "gpt-4o-mini": "openai/gpt-oss-20b",
-      "gpt-5": "openai/gpt-oss-20b",
-      "claude-3-opus": "openai/gpt-oss-20b",
-      "claude-3.5-sonnet": "openai/gpt-oss-20b",
+    "gpt-4": "openai/gpt-oss-20b",
+    "gpt-4o-mini": "openai/gpt-oss-20b",
+    "gpt-5": "openai/gpt-oss-20b",
+    "claude-3-opus": "openai/gpt-oss-20b",
+    "claude-3.5-sonnet": "openai/gpt-oss-20b",
     };
 
-    return modelMap[requestedModel] || "openai/gpt-oss-20b";
-  }
-}
 
-/**
- * Create singleton instance of AI service
- * The API key will be read from environment variables at runtime
- */
-let aiServiceInstance: AIService | null = null;
+      return modelMap[requestedModel] || "openai/gpt-oss-20b";
+
+  }
+  }
+
+/\*\*
+
+- Create singleton instance of AI service
+- The API key will be read from environment variables at runtime
+  \*/
+  let aiServiceInstance: AIService | null = null;
 
 export function getAIService(): AIService {
-  if (!aiServiceInstance) {
-    // Try GROQ_API_KEY first, fallback to OPENROUTER_API_KEY for backwards compatibility
-    let apiKey = import.meta.env.GROQ_API_KEY || import.meta.env.OPENROUTER_API_KEY;
-    
+if (!aiServiceInstance) {
+// Try GROQ_API_KEY first, fallback to OPENROUTER_API_KEY for backwards compatibility
+let apiKey = import.meta.env.GROQ_API_KEY || import.meta.env.OPENROUTER_API_KEY;
+
     // Fallback for development/debugging
     if (!apiKey) {
       console.error("⚠️ GROQ_API_KEY not found in environment variables");
@@ -8278,7 +8450,7 @@ export function getAIService(): AIService {
         "Please add GROQ_API_KEY=your_key_here to your .env file and restart the dev server."
       );
     }
-    
+
     // Log which key is being used (for debugging)
     if (import.meta.env.DEV) {
       console.log(
@@ -8286,23 +8458,23 @@ export function getAIService(): AIService {
         import.meta.env.GROQ_API_KEY ? "GROQ_API_KEY" : "OPENROUTER_API_KEY (fallback)"
       );
     }
-    
+
     aiServiceInstance = new AIService(apiKey);
-  }
-  return aiServiceInstance;
+
+}
+return aiServiceInstance;
 }
 
-/**
- * DEPRECATED: Use getAIService() instead
- * This export is kept for backwards compatibility but may cause issues
- * if imported at module level before environment variables are loaded
- */
-export const aiService = {
+/\*\*
+
+- DEPRECATED: Use getAIService() instead
+- This export is kept for backwards compatibility but may cause issues
+- if imported at module level before environment variables are loaded
+  \*/
+  export const aiService = {
   generatePlan: (command: GeneratePlanCommand) => getAIService().generatePlan(command),
   generatePrompt: (command: GeneratePlanCommand) => getAIService().generatePrompt(command),
-};
-
-
+  };
 
 ================================================
 FILE: src/services/note.service.ts
@@ -8315,63 +8487,69 @@ import type { ValidatedListNotesQuery } from "../lib/schemas/note.schema";
 
 type DbClient = SupabaseClient<Database>;
 
-/**
- * Typ dla komendy tworzenia notatki (bez project_id, który pochodzi z URL)
- */
-interface CreateNoteInput {
+/\*\*
+
+- Typ dla komendy tworzenia notatki (bez project_id, który pochodzi z URL)
+  \*/
+  interface CreateNoteInput {
   content: string;
   priority: number;
   place_tags?: string[] | null;
-}
-
-/**
- * Service odpowiedzialny za zarządzanie notatkami
- */
-export class NoteService {
-  /**
-   * Weryfikuje istnienie projektu i własność
-   *
-   * @param projectId - ID projektu
-   * @param userId - ID użytkownika
-   * @param db - Klient Supabase
-   * @throws ApiError(404) jeśli projekt nie istnieje lub nie należy do użytkownika
-   */
-  async verifyProjectOwnership(projectId: string, userId: string, db: DbClient): Promise<void> {
-    const { data: project, error } = await db
-      .from("travel_projects")
-      .select("id, user_id")
-      .eq("id", projectId)
-      .single();
-
-    if (error || !project) {
-      console.error("Project not found or Supabase error:", error);
-      throw new ApiError(404, "Project not found");
-    }
-
-    if (project.user_id !== userId) {
-      console.error(`User ID mismatch - Project user_id: ${project.user_id}, Expected user_id: ${userId}`);
-      throw new ApiError(404, "Project not found"); // Don't reveal that the project exists
-    }
   }
 
-  /**
-   * Pobiera listę notatek projektu z paginacją i filtrami
-   *
-   * @param projectId - ID projektu
-   * @param userId - ID użytkownika
-   * @param query - Parametry zapytania (page, size, priority, place_tag)
-   * @param db - Klient Supabase
-   * @returns Lista notatek z metadanymi paginacji
-   * @throws ApiError w przypadku błędów
-   */
+/\*\*
+
+- Service odpowiedzialny za zarządzanie notatkami
+  \*/
+  export class NoteService {
+  /\*\*
+  - Weryfikuje istnienie projektu i własność
+  -
+  - @param projectId - ID projektu
+  - @param userId - ID użytkownika
+  - @param db - Klient Supabase
+  - @throws ApiError(404) jeśli projekt nie istnieje lub nie należy do użytkownika
+    \*/
+    async verifyProjectOwnership(projectId: string, userId: string, db: DbClient): Promise<void> {
+    const { data: project, error } = await db
+    .from("travel_projects")
+    .select("id, user_id")
+    .eq("id", projectId)
+    .single();
+
+
+      if (error || !project) {
+        console.error("Project not found or Supabase error:", error);
+        throw new ApiError(404, "Project not found");
+      }
+
+      if (project.user_id !== userId) {
+        console.error(`User ID mismatch - Project user_id: ${project.user_id}, Expected user_id: ${userId}`);
+        throw new ApiError(404, "Project not found"); // Don't reveal that the project exists
+      }
+
+  }
+
+/\*\*
+
+- Pobiera listę notatek projektu z paginacją i filtrami
+-
+- @param projectId - ID projektu
+- @param userId - ID użytkownika
+- @param query - Parametry zapytania (page, size, priority, place_tag)
+- @param db - Klient Supabase
+- @returns Lista notatek z metadanymi paginacji
+- @throws ApiError w przypadku błędów
+  \*/
   async listNotes(
-    projectId: string,
-    userId: string,
-    query: ValidatedListNotesQuery,
-    db: DbClient
+  projectId: string,
+  userId: string,
+  query: ValidatedListNotesQuery,
+  db: DbClient
   ): Promise<NotesListResponseDto> {
-    // Najpierw zweryfikuj własność projektu
-    await this.verifyProjectOwnership(projectId, userId, db);
+  // Najpierw zweryfikuj własność projektu
+  await this.verifyProjectOwnership(projectId, userId, db);
+
 
     const { page, size, priority, place_tag } = query;
     const offset = (page - 1) * size;
@@ -8419,21 +8597,24 @@ export class NoteService {
         total: count || 0,
       },
     };
-  }
 
-  /**
-   * Pobiera pojedynczą notatkę po ID
-   *
-   * @param noteId - ID notatki
-   * @param projectId - ID projektu
-   * @param userId - ID użytkownika
-   * @param db - Klient Supabase
-   * @returns Notatka
-   * @throws ApiError(404) jeśli notatka nie istnieje lub projekt nie należy do użytkownika
-   */
+}
+
+/\*\*
+
+- Pobiera pojedynczą notatkę po ID
+-
+- @param noteId - ID notatki
+- @param projectId - ID projektu
+- @param userId - ID użytkownika
+- @param db - Klient Supabase
+- @returns Notatka
+- @throws ApiError(404) jeśli notatka nie istnieje lub projekt nie należy do użytkownika
+  \*/
   async getNote(noteId: string, projectId: string, userId: string, db: DbClient): Promise<NoteDto> {
-    // Najpierw zweryfikuj własność projektu
-    await this.verifyProjectOwnership(projectId, userId, db);
+  // Najpierw zweryfikuj własność projektu
+  await this.verifyProjectOwnership(projectId, userId, db);
+
 
     const { data, error } = await db
       .from("notes")
@@ -8448,28 +8629,31 @@ export class NoteService {
     }
 
     return data as NoteDto;
-  }
 
-  /**
-   * Aktualizuje notatkę
-   *
-   * @param noteId - ID notatki
-   * @param projectId - ID projektu
-   * @param userId - ID użytkownika
-   * @param command - Komenda z danymi do aktualizacji
-   * @param db - Klient Supabase
-   * @returns Zaktualizowana notatka
-   * @throws ApiError(404) jeśli notatka nie istnieje
-   */
+}
+
+/\*\*
+
+- Aktualizuje notatkę
+-
+- @param noteId - ID notatki
+- @param projectId - ID projektu
+- @param userId - ID użytkownika
+- @param command - Komenda z danymi do aktualizacji
+- @param db - Klient Supabase
+- @returns Zaktualizowana notatka
+- @throws ApiError(404) jeśli notatka nie istnieje
+  \*/
   async updateNote(
-    noteId: string,
-    projectId: string,
-    userId: string,
-    command: UpdateNoteCommand,
-    db: DbClient
+  noteId: string,
+  projectId: string,
+  userId: string,
+  command: UpdateNoteCommand,
+  db: DbClient
   ): Promise<NoteDto> {
-    // Najpierw sprawdź czy notatka istnieje i należy do projektu użytkownika
-    await this.getNote(noteId, projectId, userId, db);
+  // Najpierw sprawdź czy notatka istnieje i należy do projektu użytkownika
+  await this.getNote(noteId, projectId, userId, db);
+
 
     const { data, error } = await db
       .from("notes")
@@ -8489,20 +8673,23 @@ export class NoteService {
     }
 
     return data as NoteDto;
-  }
 
-  /**
-   * Usuwa notatkę
-   *
-   * @param noteId - ID notatki
-   * @param projectId - ID projektu
-   * @param userId - ID użytkownika
-   * @param db - Klient Supabase
-   * @throws ApiError(404) jeśli notatka nie istnieje
-   */
+}
+
+/\*\*
+
+- Usuwa notatkę
+-
+- @param noteId - ID notatki
+- @param projectId - ID projektu
+- @param userId - ID użytkownika
+- @param db - Klient Supabase
+- @throws ApiError(404) jeśli notatka nie istnieje
+  \*/
   async deleteNote(noteId: string, projectId: string, userId: string, db: DbClient): Promise<void> {
-    // Najpierw sprawdź czy notatka istnieje i należy do projektu użytkownika
-    await this.getNote(noteId, projectId, userId, db);
+  // Najpierw sprawdź czy notatka istnieje i należy do projektu użytkownika
+  await this.getNote(noteId, projectId, userId, db);
+
 
     const { error } = await db.from("notes").delete().eq("id", noteId).eq("project_id", projectId);
 
@@ -8510,28 +8697,31 @@ export class NoteService {
       console.error("Error deleting note:", error);
       throw new ApiError(500, "Failed to delete note");
     }
-  }
 
-  /**
-   * Tworzy nową notatkę dla projektu
-   *
-   * @param projectId - ID projektu
-   * @param command - Komenda z danymi nowej notatki
-   * @param db - Klient Supabase
-   * @returns Utworzona notatka
-   * @throws ApiError w przypadku błędów bazy danych
-   */
+}
+
+/\*\*
+
+- Tworzy nową notatkę dla projektu
+-
+- @param projectId - ID projektu
+- @param command - Komenda z danymi nowej notatki
+- @param db - Klient Supabase
+- @returns Utworzona notatka
+- @throws ApiError w przypadku błędów bazy danych
+  \*/
   async createNote(projectId: string, command: CreateNoteInput, db: DbClient): Promise<NoteDto> {
-    const { data, error } = await db
-      .from("notes")
-      .insert({
-        project_id: projectId,
-        content: command.content,
-        priority: command.priority,
-        place_tags: command.place_tags ?? null,
-      })
-      .select("id, project_id, content, priority, place_tags, updated_on")
-      .single();
+  const { data, error } = await db
+  .from("notes")
+  .insert({
+  project_id: projectId,
+  content: command.content,
+  priority: command.priority,
+  place_tags: command.place_tags ?? null,
+  })
+  .select("id, project_id, content, priority, place_tags, updated_on")
+  .single();
+
 
     if (error || !data) {
       console.error("Error creating note:", error);
@@ -8539,15 +8729,15 @@ export class NoteService {
     }
 
     return data as NoteDto;
-  }
+
+}
 }
 
-/**
- * Singleton instance note service
- */
-export const noteService = new NoteService();
+/\*\*
 
-
+- Singleton instance note service
+  \*/
+  export const noteService = new NoteService();
 
 ================================================
 FILE: src/services/plan.service.ts
@@ -8560,49 +8750,54 @@ import type { SupabaseClient } from "../db/supabase.client";
 
 type DbClient = SupabaseClient<Database>;
 
-/**
- * Service odpowiedzialny za generowanie planu podróży
- */
-export class PlanService {
-  /**
-   * Generuje plan podróży dla projektu
-   *
-   * @param projectId - ID projektu
-   * @param userId - ID użytkownika (dla weryfikacji własności)
-   * @param command - Komenda z parametrami generowania
-   * @param supabase - Klient Supabase
-   * @returns Plan podróży z metadanymi projektu
-   * @throws ApiError w przypadku błędów
-   */
-  async generatePlan(projectId: string, userId: string, command: GeneratePlanCommand, supabase: DbClient): Promise<{ plan: PlanResponseDto; durationDays: number }> {
+/\*\*
+
+- Service odpowiedzialny za generowanie planu podróży
+  \*/
+  export class PlanService {
+  /\*\*
+  - Generuje plan podróży dla projektu
+  -
+  - @param projectId - ID projektu
+  - @param userId - ID użytkownika (dla weryfikacji własności)
+  - @param command - Komenda z parametrami generowania
+  - @param supabase - Klient Supabase
+  - @returns Plan podróży z metadanymi projektu
+  - @throws ApiError w przypadku błędów
+    \*/
+    async generatePlan(projectId: string, userId: string, command: GeneratePlanCommand, supabase: DbClient): Promise<{ plan: PlanResponseDto; durationDays: number }> {
     // Krok 1: Weryfikacja istnienia projektu i własności
     const project = await this.fetchAndVerifyProject(projectId, userId, supabase);
 
-    // Krok 2: Pobranie notatek projektu
-    const notes = await this.fetchProjectNotes(projectId, supabase);
 
-    // Krok 3: Walidacja zgodności notatek
-    this.validateNotes(command.notes, notes);
+      // Krok 2: Pobranie notatek projektu
+      const notes = await this.fetchProjectNotes(projectId, supabase);
 
-    // Krok 4: Wywołanie AI service (logowanie przeniesione do trasy API)
-    const aiService = getAIService();
-    const plan = await aiService.generatePlan(command);
-    
-    return {
-      plan,
-      durationDays: project.duration_days,
-    };
+      // Krok 3: Walidacja zgodności notatek
+      this.validateNotes(command.notes, notes);
+
+      // Krok 4: Wywołanie AI service (logowanie przeniesione do trasy API)
+      const aiService = getAIService();
+      const plan = await aiService.generatePlan(command);
+
+      return {
+        plan,
+        durationDays: project.duration_days,
+      };
+
   }
 
-  /**
-   * Pobiera projekt i weryfikuje własność
-   */
+/\*\*
+
+- Pobiera projekt i weryfikuje własność
+  \*/
   private async fetchAndVerifyProject(projectId: string, userId: string, supabase: DbClient) {
-    const { data: project, error } = await supabase
-      .from("travel_projects")
-      .select("id, name, user_id, duration_days")
-      .eq("id", projectId)
-      .single();
+  const { data: project, error } = await supabase
+  .from("travel_projects")
+  .select("id, name, user_id, duration_days")
+  .eq("id", projectId)
+  .single();
+
 
     if (error || !project) {
       console.error("Project not found or Supabase error:", error);
@@ -8615,53 +8810,62 @@ export class PlanService {
     }
 
     return project;
-  }
 
-  /**
-   * Pobiera notatki przypisane do projektu
-   */
+}
+
+/\*\*
+
+- Pobiera notatki przypisane do projektu
+  \*/
   private async fetchProjectNotes(projectId: string, supabase: DbClient) {
-    const { data: notes, error } = await supabase
-      .from("notes")
-      .select("id, content, priority, place_tags")
-      .eq("project_id", projectId)
-      .order("priority", { ascending: true });
+  const { data: notes, error } = await supabase
+  .from("notes")
+  .select("id, content, priority, place_tags")
+  .eq("project_id", projectId)
+  .order("priority", { ascending: true });
+
 
     if (error) {
       throw new ApiError(500, "Error fetching project notes");
     }
 
     return notes || [];
-  }
 
-  /**
-   * Waliduje zgodność notatek z bazy danych z notatkami w komendzie
-   */
+}
+
+/\*\*
+
+- Waliduje zgodność notatek z bazy danych z notatkami w komendzie
+  \*/
   private validateNotes(
-    commandNotes: GeneratePlanCommand["notes"],
-    dbNotes: { id: string; content: string; priority: number; place_tags: string[] | null }[]
+  commandNotes: GeneratePlanCommand["notes"],
+  dbNotes: { id: string; content: string; priority: number; place_tags: string[] | null }[]
   ) {
-    const dbNoteIds = new Set(dbNotes.map((n) => n.id));
+  const dbNoteIds = new Set(dbNotes.map((n) => n.id));
+
 
     for (const note of commandNotes) {
       if (!dbNoteIds.has(note.id)) {
         throw new ApiError(400, `Note with ID ${note.id} does not belong to this project`);
       }
     }
-  }
 
-  /**
-   * Tworzy wpis w ai_logs ze statusem 'pending'
-   * @returns ID utworzonego logu
-   */
+}
+
+/\*\*
+
+- Tworzy wpis w ai_logs ze statusem 'pending'
+- @returns ID utworzonego logu
+  \*/
   private async createPendingLog(
-    projectId: string,
-    userId: string,
-    command: GeneratePlanCommand,
-    supabase: DbClient
+  projectId: string,
+  userId: string,
+  command: GeneratePlanCommand,
+  supabase: DbClient
   ): Promise<string> {
-    const aiService = getAIService();
-    const prompt = aiService.generatePrompt(command);
+  const aiService = getAIService();
+  const prompt = aiService.generatePrompt(command);
+
 
     const { data, error } = await supabase
       .from("ai_logs")
@@ -8682,23 +8886,26 @@ export class PlanService {
     }
 
     return data.id;
-  }
 
-  /**
-   * Aktualizuje status wpisu w ai_logs
-   */
+}
+
+/\*\*
+
+- Aktualizuje status wpisu w ai_logs
+  \*/
   private async updateLogStatus(
-    logId: string,
-    status: Database["public"]["Enums"]["ai_status"],
-    response: PlanResponseDto | null,
-    durationMs: number,
-    errorMessage: string | null,
-    supabase: DbClient
+  logId: string,
+  status: Database["public"]["Enums"]["ai_status"],
+  response: PlanResponseDto | null,
+  durationMs: number,
+  errorMessage: string | null,
+  supabase: DbClient
   ) {
-    const responseData =
-      status === "success" && response
-        ? (response as unknown as Database["public"]["Tables"]["ai_logs"]["Update"]["response"])
-        : ({ error: errorMessage } as unknown as Database["public"]["Tables"]["ai_logs"]["Update"]["response"]);
+  const responseData =
+  status === "success" && response
+  ? (response as unknown as Database["public"]["Tables"]["ai_logs"]["Update"]["response"])
+  : ({ error: errorMessage } as unknown as Database["public"]["Tables"]["ai_logs"]["Update"]["response"]);
+
 
     const { error } = await supabase
       .from("ai_logs")
@@ -8713,15 +8920,15 @@ export class PlanService {
       console.error("Error updating AI log:", error);
       // Don't throw error - this is a logging operation, shouldn't block the main flow
     }
-  }
+
+}
 }
 
-/**
- * Singleton instance plan service
- */
-export const planService = new PlanService();
+/\*\*
 
-
+- Singleton instance plan service
+  \*/
+  export const planService = new PlanService();
 
 ================================================
 FILE: src/services/project.service.ts
@@ -8734,77 +8941,82 @@ import type { ValidatedListProjectsQuery } from "../lib/schemas/project.schema";
 
 type DbClient = SupabaseClient<Database>;
 
-/**
- * Service odpowiedzialny za zarządzanie projektami podróży
- */
-export class ProjectService {
-  /**
-   * Pobiera listę projektów użytkownika z paginacją
-   *
-   * @param userId - ID użytkownika
-   * @param query - Parametry zapytania (page, size, sort, order)
-   * @param db - Klient Supabase
-   * @returns Lista projektów z metadanymi paginacji
-   * @throws ApiError w przypadku błędów bazy danych
-   */
-  async listProjects(
+/\*\*
+
+- Service odpowiedzialny za zarządzanie projektami podróży
+  \*/
+  export class ProjectService {
+  /\*\*
+  - Pobiera listę projektów użytkownika z paginacją
+  -
+  - @param userId - ID użytkownika
+  - @param query - Parametry zapytania (page, size, sort, order)
+  - @param db - Klient Supabase
+  - @returns Lista projektów z metadanymi paginacji
+  - @throws ApiError w przypadku błędów bazy danych
+    _/
+    async listProjects(
     userId: string,
     query: ValidatedListProjectsQuery,
     db: DbClient
-  ): Promise<ProjectsListResponseDto> {
+    ): Promise<ProjectsListResponseDto> {
     const { page, size, sort, order } = query;
-    const offset = (page - 1) * size;
+    const offset = (page - 1) _ size;
 
-    // Pobierz całkowitą liczbę projektów
-    const { count, error: countError } = await db
-      .from("travel_projects")
-      .select("*", { count: "exact", head: true })
-      .eq("user_id", userId);
 
-    if (countError) {
-      console.error("Error counting projects:", countError);
-      throw new ApiError(500, "Failed to count projects");
-    }
+      // Pobierz całkowitą liczbę projektów
+      const { count, error: countError } = await db
+        .from("travel_projects")
+        .select("*", { count: "exact", head: true })
+        .eq("user_id", userId);
 
-    // Pobierz projekty z paginacją i sortowaniem
-    const { data, error } = await db
-      .from("travel_projects")
-      .select("id, name, duration_days, planned_date")
-      .eq("user_id", userId)
-      .order(sort, { ascending: order === "asc" })
-      .range(offset, offset + size - 1);
+      if (countError) {
+        console.error("Error counting projects:", countError);
+        throw new ApiError(500, "Failed to count projects");
+      }
 
-    if (error) {
-      console.error("Error listing projects:", error);
-      throw new ApiError(500, "Failed to list projects");
-    }
+      // Pobierz projekty z paginacją i sortowaniem
+      const { data, error } = await db
+        .from("travel_projects")
+        .select("id, name, duration_days, planned_date")
+        .eq("user_id", userId)
+        .order(sort, { ascending: order === "asc" })
+        .range(offset, offset + size - 1);
 
-    return {
-      data: (data || []) as ProjectDto[],
-      meta: {
-        page,
-        size,
-        total: count || 0,
-      },
-    };
+      if (error) {
+        console.error("Error listing projects:", error);
+        throw new ApiError(500, "Failed to list projects");
+      }
+
+      return {
+        data: (data || []) as ProjectDto[],
+        meta: {
+          page,
+          size,
+          total: count || 0,
+        },
+      };
+
   }
 
-  /**
-   * Pobiera pojedynczy projekt po ID
-   *
-   * @param projectId - ID projektu
-   * @param userId - ID użytkownika
-   * @param db - Klient Supabase
-   * @returns Projekt
-   * @throws ApiError(404) jeśli projekt nie istnieje lub nie należy do użytkownika
-   */
+/\*\*
+
+- Pobiera pojedynczy projekt po ID
+-
+- @param projectId - ID projektu
+- @param userId - ID użytkownika
+- @param db - Klient Supabase
+- @returns Projekt
+- @throws ApiError(404) jeśli projekt nie istnieje lub nie należy do użytkownika
+  \*/
   async getProject(projectId: string, userId: string, db: DbClient): Promise<ProjectDto> {
-    const { data, error } = await db
-      .from("travel_projects")
-      .select("id, name, duration_days, planned_date")
-      .eq("id", projectId)
-      .eq("user_id", userId)
-      .single();
+  const { data, error } = await db
+  .from("travel_projects")
+  .select("id, name, duration_days, planned_date")
+  .eq("id", projectId)
+  .eq("user_id", userId)
+  .single();
+
 
     if (error || !data) {
       console.error("Project not found or Supabase error:", error);
@@ -8812,26 +9024,29 @@ export class ProjectService {
     }
 
     return data as ProjectDto;
-  }
 
-  /**
-   * Aktualizuje projekt
-   *
-   * @param projectId - ID projektu
-   * @param userId - ID użytkownika
-   * @param command - Komenda z danymi do aktualizacji
-   * @param db - Klient Supabase
-   * @returns Zaktualizowany projekt
-   * @throws ApiError(404) jeśli projekt nie istnieje lub nie należy do użytkownika
-   */
+}
+
+/\*\*
+
+- Aktualizuje projekt
+-
+- @param projectId - ID projektu
+- @param userId - ID użytkownika
+- @param command - Komenda z danymi do aktualizacji
+- @param db - Klient Supabase
+- @returns Zaktualizowany projekt
+- @throws ApiError(404) jeśli projekt nie istnieje lub nie należy do użytkownika
+  \*/
   async updateProject(
-    projectId: string,
-    userId: string,
-    command: UpdateProjectCommand,
-    db: DbClient
+  projectId: string,
+  userId: string,
+  command: UpdateProjectCommand,
+  db: DbClient
   ): Promise<ProjectDto> {
-    // Najpierw sprawdź czy projekt istnieje i należy do użytkownika
-    await this.getProject(projectId, userId, db);
+  // Najpierw sprawdź czy projekt istnieje i należy do użytkownika
+  await this.getProject(projectId, userId, db);
+
 
     const { data, error } = await db
       .from("travel_projects")
@@ -8851,19 +9066,22 @@ export class ProjectService {
     }
 
     return data as ProjectDto;
-  }
 
-  /**
-   * Usuwa projekt
-   *
-   * @param projectId - ID projektu
-   * @param userId - ID użytkownika
-   * @param db - Klient Supabase
-   * @throws ApiError(404) jeśli projekt nie istnieje lub nie należy do użytkownika
-   */
+}
+
+/\*\*
+
+- Usuwa projekt
+-
+- @param projectId - ID projektu
+- @param userId - ID użytkownika
+- @param db - Klient Supabase
+- @throws ApiError(404) jeśli projekt nie istnieje lub nie należy do użytkownika
+  \*/
   async deleteProject(projectId: string, userId: string, db: DbClient): Promise<void> {
-    // Najpierw sprawdź czy projekt istnieje i należy do użytkownika
-    await this.getProject(projectId, userId, db);
+  // Najpierw sprawdź czy projekt istnieje i należy do użytkownika
+  await this.getProject(projectId, userId, db);
+
 
     const { error } = await db.from("travel_projects").delete().eq("id", projectId).eq("user_id", userId);
 
@@ -8871,28 +9089,31 @@ export class ProjectService {
       console.error("Error deleting project:", error);
       throw new ApiError(500, "Failed to delete project");
     }
-  }
 
-  /**
-   * Tworzy nowy projekt podróży dla użytkownika
-   *
-   * @param userId - ID użytkownika tworzącego projekt
-   * @param command - Komenda z danymi nowego projektu
-   * @param db - Klient Supabase
-   * @returns Utworzony projekt
-   * @throws ApiError w przypadku błędów bazy danych
-   */
+}
+
+/\*\*
+
+- Tworzy nowy projekt podróży dla użytkownika
+-
+- @param userId - ID użytkownika tworzącego projekt
+- @param command - Komenda z danymi nowego projektu
+- @param db - Klient Supabase
+- @returns Utworzony projekt
+- @throws ApiError w przypadku błędów bazy danych
+  \*/
   async createProject(userId: string, command: CreateProjectCommand, db: DbClient): Promise<ProjectDto> {
-    const { data, error } = await db
-      .from("travel_projects")
-      .insert({
-        user_id: userId,
-        name: command.name,
-        duration_days: command.duration_days,
-        planned_date: command.planned_date ?? null,
-      })
-      .select("id, name, duration_days, planned_date")
-      .single();
+  const { data, error } = await db
+  .from("travel_projects")
+  .insert({
+  user_id: userId,
+  name: command.name,
+  duration_days: command.duration_days,
+  planned_date: command.planned_date ?? null,
+  })
+  .select("id, name, duration_days, planned_date")
+  .single();
+
 
     if (error || !data) {
       console.error("Error creating project:", error);
@@ -8900,15 +9121,15 @@ export class ProjectService {
     }
 
     return data as ProjectDto;
-  }
+
+}
 }
 
-/**
- * Singleton instance project service
- */
-export const projectService = new ProjectService();
+/\*\*
 
-
+- Singleton instance project service
+  \*/
+  export const projectService = new ProjectService();
 
 ================================================
 FILE: src/styles/global.css
@@ -8916,433 +9137,613 @@ FILE: src/styles/global.css
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is(.dark \*));
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.1450 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.1450 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.1450 0 0);
-  --primary: oklch(0.2050 0 0);
-  --primary-foreground: oklch(0.9850 0 0);
-  --secondary: oklch(0.9700 0 0);
-  --secondary-foreground: oklch(0.2050 0 0);
-  --muted: oklch(0.9700 0 0);
-  --muted-foreground: oklch(0.5560 0 0);
-  --accent: oklch(0.9700 0 0);
-  --accent-foreground: oklch(0.2050 0 0);
-  --destructive: oklch(0.5770 0.2450 27.3250);
-  --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.9220 0 0);
-  --input: oklch(0.9220 0 0);
-  --ring: oklch(0.7080 0 0);
-  --chart-1: oklch(0.8100 0.1000 252);
-  --chart-2: oklch(0.6200 0.1900 260);
-  --chart-3: oklch(0.5500 0.2200 263);
-  --chart-4: oklch(0.4900 0.2200 264);
-  --chart-5: oklch(0.4200 0.1800 266);
-  --sidebar: oklch(0.9850 0 0);
-  --sidebar-foreground: oklch(0.1450 0 0);
-  --sidebar-primary: oklch(0.2050 0 0);
-  --sidebar-primary-foreground: oklch(0.9850 0 0);
-  --sidebar-accent: oklch(0.9700 0 0);
-  --sidebar-accent-foreground: oklch(0.2050 0 0);
-  --sidebar-border: oklch(0.9220 0 0);
-  --sidebar-ring: oklch(0.7080 0 0);
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --radius: 0.625rem;
-  --shadow-x: 0;
-  --shadow-y: 1px;
-  --shadow-blur: 3px;
-  --shadow-spread: 0px;
-  --shadow-opacity: 0.1;
-  --shadow-color: oklch(0 0 0);
-  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
-  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
-  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
-  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
-  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
-  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
-  --tracking-normal: 0em;
-  --spacing: 0.25rem;
+--background: oklch(1 0 0);
+--foreground: oklch(0.1450 0 0);
+--card: oklch(1 0 0);
+--card-foreground: oklch(0.1450 0 0);
+--popover: oklch(1 0 0);
+--popover-foreground: oklch(0.1450 0 0);
+--primary: oklch(0.2050 0 0);
+--primary-foreground: oklch(0.9850 0 0);
+--secondary: oklch(0.9700 0 0);
+--secondary-foreground: oklch(0.2050 0 0);
+--muted: oklch(0.9700 0 0);
+--muted-foreground: oklch(0.5560 0 0);
+--accent: oklch(0.9700 0 0);
+--accent-foreground: oklch(0.2050 0 0);
+--destructive: oklch(0.5770 0.2450 27.3250);
+--destructive-foreground: oklch(1 0 0);
+--border: oklch(0.9220 0 0);
+--input: oklch(0.9220 0 0);
+--ring: oklch(0.7080 0 0);
+--chart-1: oklch(0.8100 0.1000 252);
+--chart-2: oklch(0.6200 0.1900 260);
+--chart-3: oklch(0.5500 0.2200 263);
+--chart-4: oklch(0.4900 0.2200 264);
+--chart-5: oklch(0.4200 0.1800 266);
+--sidebar: oklch(0.9850 0 0);
+--sidebar-foreground: oklch(0.1450 0 0);
+--sidebar-primary: oklch(0.2050 0 0);
+--sidebar-primary-foreground: oklch(0.9850 0 0);
+--sidebar-accent: oklch(0.9700 0 0);
+--sidebar-accent-foreground: oklch(0.2050 0 0);
+--sidebar-border: oklch(0.9220 0 0);
+--sidebar-ring: oklch(0.7080 0 0);
+--font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+--font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+--font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+--radius: 0.625rem;
+--shadow-x: 0;
+--shadow-y: 1px;
+--shadow-blur: 3px;
+--shadow-spread: 0px;
+--shadow-opacity: 0.1;
+--shadow-color: oklch(0 0 0);
+--shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+--shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+--shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+--shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+--shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
+--shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
+--shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
+--shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+--tracking-normal: 0em;
+--spacing: 0.25rem;
 }
 
 .dark {
-  --background: oklch(0.1773 0.0253 209.3678);
-  --foreground: oklch(0.9850 0 0);
-  --card: oklch(0.2538 0.0102 207.0469);
-  --card-foreground: oklch(0.9850 0 0);
-  --popover: oklch(0.2690 0 0);
-  --popover-foreground: oklch(0.9850 0 0);
-  --primary: oklch(0.6859 0.1152 193.3408);
-  --primary-foreground: oklch(0.2404 0.0355 207.5502);
-  --secondary: oklch(0.3245 0.0498 207.3673);
-  --secondary-foreground: oklch(0.9850 0 0);
-  --muted: oklch(0.2690 0 0);
-  --muted-foreground: oklch(0.7080 0 0);
-  --accent: oklch(0.3710 0 0);
-  --accent-foreground: oklch(0.9850 0 0);
-  --destructive: oklch(0.7040 0.1910 22.2160);
-  --destructive-foreground: oklch(0.9850 0 0);
-  --border: oklch(0.2750 0 0);
-  --input: oklch(0.3250 0 0);
-  --ring: oklch(0.5560 0 0);
-  --chart-1: oklch(0.8100 0.1000 252);
-  --chart-2: oklch(0.6200 0.1900 260);
-  --chart-3: oklch(0.5500 0.2200 263);
-  --chart-4: oklch(0.4900 0.2200 264);
-  --chart-5: oklch(0.4200 0.1800 266);
-  --sidebar: oklch(0.2050 0 0);
-  --sidebar-foreground: oklch(0.9850 0 0);
-  --sidebar-primary: oklch(0.4880 0.2430 264.3760);
-  --sidebar-primary-foreground: oklch(0.9850 0 0);
-  --sidebar-accent: oklch(0.2690 0 0);
-  --sidebar-accent-foreground: oklch(0.9850 0 0);
-  --sidebar-border: oklch(0.2750 0 0);
-  --sidebar-ring: oklch(0.4390 0 0);
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --radius: 0.625rem;
-  --shadow-x: 0;
-  --shadow-y: 1px;
-  --shadow-blur: 3px;
-  --shadow-spread: 0px;
-  --shadow-opacity: 0.1;
-  --shadow-color: oklch(0 0 0);
-  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
-  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
-  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
-  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
-  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
-  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+--background: oklch(0.1773 0.0253 209.3678);
+--foreground: oklch(0.9850 0 0);
+--card: oklch(0.2538 0.0102 207.0469);
+--card-foreground: oklch(0.9850 0 0);
+--popover: oklch(0.2690 0 0);
+--popover-foreground: oklch(0.9850 0 0);
+--primary: oklch(0.6859 0.1152 193.3408);
+--primary-foreground: oklch(0.2404 0.0355 207.5502);
+--secondary: oklch(0.3245 0.0498 207.3673);
+--secondary-foreground: oklch(0.9850 0 0);
+--muted: oklch(0.2690 0 0);
+--muted-foreground: oklch(0.7080 0 0);
+--accent: oklch(0.3710 0 0);
+--accent-foreground: oklch(0.9850 0 0);
+--destructive: oklch(0.7040 0.1910 22.2160);
+--destructive-foreground: oklch(0.9850 0 0);
+--border: oklch(0.2750 0 0);
+--input: oklch(0.3250 0 0);
+--ring: oklch(0.5560 0 0);
+--chart-1: oklch(0.8100 0.1000 252);
+--chart-2: oklch(0.6200 0.1900 260);
+--chart-3: oklch(0.5500 0.2200 263);
+--chart-4: oklch(0.4900 0.2200 264);
+--chart-5: oklch(0.4200 0.1800 266);
+--sidebar: oklch(0.2050 0 0);
+--sidebar-foreground: oklch(0.9850 0 0);
+--sidebar-primary: oklch(0.4880 0.2430 264.3760);
+--sidebar-primary-foreground: oklch(0.9850 0 0);
+--sidebar-accent: oklch(0.2690 0 0);
+--sidebar-accent-foreground: oklch(0.9850 0 0);
+--sidebar-border: oklch(0.2750 0 0);
+--sidebar-ring: oklch(0.4390 0 0);
+--font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+--font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+--font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+--radius: 0.625rem;
+--shadow-x: 0;
+--shadow-y: 1px;
+--shadow-blur: 3px;
+--shadow-spread: 0px;
+--shadow-opacity: 0.1;
+--shadow-color: oklch(0 0 0);
+--shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+--shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+--shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+--shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+--shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
+--shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
+--shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
+--shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+--color-background: var(--background);
+--color-foreground: var(--foreground);
+--color-card: var(--card);
+--color-card-foreground: var(--card-foreground);
+--color-popover: var(--popover);
+--color-popover-foreground: var(--popover-foreground);
+--color-primary: var(--primary);
+--color-primary-foreground: var(--primary-foreground);
+--color-secondary: var(--secondary);
+--color-secondary-foreground: var(--secondary-foreground);
+--color-muted: var(--muted);
+--color-muted-foreground: var(--muted-foreground);
+--color-accent: var(--accent);
+--color-accent-foreground: var(--accent-foreground);
+--color-destructive: var(--destructive);
+--color-destructive-foreground: var(--destructive-foreground);
+--color-border: var(--border);
+--color-input: var(--input);
+--color-ring: var(--ring);
+--color-chart-1: var(--chart-1);
+--color-chart-2: var(--chart-2);
+--color-chart-3: var(--chart-3);
+--color-chart-4: var(--chart-4);
+--color-chart-5: var(--chart-5);
+--color-sidebar: var(--sidebar);
+--color-sidebar-foreground: var(--sidebar-foreground);
+--color-sidebar-primary: var(--sidebar-primary);
+--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+--color-sidebar-accent: var(--sidebar-accent);
+--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+--color-sidebar-border: var(--sidebar-border);
+--color-sidebar-ring: var(--sidebar-ring);
 
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
-  --font-serif: var(--font-serif);
+--font-sans: var(--font-sans);
+--font-mono: var(--font-mono);
+--font-serif: var(--font-serif);
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+--radius-sm: calc(var(--radius) - 4px);
+--radius-md: calc(var(--radius) - 2px);
+--radius-lg: var(--radius);
+--radius-xl: calc(var(--radius) + 4px);
 
-  --shadow-2xs: var(--shadow-2xs);
-  --shadow-xs: var(--shadow-xs);
-  --shadow-sm: var(--shadow-sm);
-  --shadow: var(--shadow);
-  --shadow-md: var(--shadow-md);
-  --shadow-lg: var(--shadow-lg);
-  --shadow-xl: var(--shadow-xl);
-  --shadow-2xl: var(--shadow-2xl);
+--shadow-2xs: var(--shadow-2xs);
+--shadow-xs: var(--shadow-xs);
+--shadow-sm: var(--shadow-sm);
+--shadow: var(--shadow);
+--shadow-md: var(--shadow-md);
+--shadow-lg: var(--shadow-lg);
+--shadow-xl: var(--shadow-xl);
+--shadow-2xl: var(--shadow-2xl);
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+
+- {
+  @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+  @apply bg-background text-foreground;
   }
-}
-
-
+  }
 
 ================================================
 FILE: supabase/config.toml
 ================================================
+
 # For detailed configuration reference documentation, visit:
+
 # https://supabase.com/docs/guides/local-development/cli/config
+
 # A string used to distinguish different Supabase projects on the same host. Defaults to the
+
 # working directory name when running `supabase init`.
+
 project_id = "10x-vacation-planner"
 
 [api]
 enabled = true
+
 # Port to use for the API URL.
+
 port = 54321
+
 # Schemas to expose in your API. Tables, views and stored procedures in this schema will get API
+
 # endpoints. `public` and `graphql_public` schemas are included by default.
+
 schemas = ["public", "graphql_public"]
+
 # Extra schemas to add to the search_path of every request.
+
 extra_search_path = ["public", "extensions"]
+
 # The maximum number of rows returns from a view, table, or stored procedure. Limits payload size
+
 # for accidental or malicious requests.
+
 max_rows = 1000
 
 [api.tls]
+
 # Enable HTTPS endpoints locally using a self-signed certificate.
+
 enabled = false
+
 # Paths to self-signed certificate pair.
+
 # cert_path = "../certs/my-cert.pem"
+
 # key_path = "../certs/my-key.pem"
 
 [db]
+
 # Port to use for the local database URL.
+
 port = 54322
+
 # Port used by db diff command to initialize the shadow database.
+
 shadow_port = 54320
+
 # The database major version to use. This has to be the same as your remote database's. Run `SHOW
+
 # server_version;` on the remote database to check.
+
 major_version = 17
 
 [db.pooler]
 enabled = false
+
 # Port to use for the local connection pooler.
+
 port = 54329
+
 # Specifies when a server connection can be reused by other clients.
+
 # Configure one of the supported pooler modes: `transaction`, `session`.
+
 pool_mode = "transaction"
+
 # How many server connections to allow per user/database pair.
+
 default_pool_size = 20
+
 # Maximum number of client connections allowed.
+
 max_client_conn = 100
 
 # [db.vault]
+
 # secret_key = "env(SECRET_VALUE)"
 
 [db.migrations]
+
 # If disabled, migrations will be skipped during a db push or reset.
+
 enabled = true
+
 # Specifies an ordered list of schema files that describe your database.
-# Supports glob patterns relative to supabase directory: "./schemas/*.sql"
+
+# Supports glob patterns relative to supabase directory: "./schemas/\*.sql"
+
 schema_paths = []
 
 [db.seed]
+
 # If enabled, seeds the database after migrations during a db reset.
+
 enabled = true
+
 # Specifies an ordered list of seed files to load during db reset.
-# Supports glob patterns relative to supabase directory: "./seeds/*.sql"
+
+# Supports glob patterns relative to supabase directory: "./seeds/\*.sql"
+
 sql_paths = ["./seed.sql"]
 
 [db.network_restrictions]
+
 # Enable management of network restrictions.
+
 enabled = false
+
 # List of IPv4 CIDR blocks allowed to connect to the database.
+
 # Defaults to allow all IPv4 connections. Set empty array to block all IPs.
+
 allowed_cidrs = ["0.0.0.0/0"]
+
 # List of IPv6 CIDR blocks allowed to connect to the database.
+
 # Defaults to allow all IPv6 connections. Set empty array to block all IPs.
+
 allowed_cidrs_v6 = ["::/0"]
 
 [realtime]
 enabled = true
+
 # Bind realtime via either IPv4 or IPv6. (default: IPv4)
+
 # ip_version = "IPv6"
+
 # The maximum length in bytes of HTTP request headers. (default: 4096)
+
 # max_header_length = 4096
 
 [studio]
 enabled = true
+
 # Port to use for Supabase Studio.
+
 port = 54323
+
 # External URL of the API server that frontend connects to.
+
 api_url = "http://127.0.0.1"
+
 # OpenAI API Key to use for Supabase AI in the Supabase Studio.
+
 openai_api_key = "env(OPENAI_API_KEY)"
 
 # Email testing server. Emails sent with the local dev setup are not actually sent - rather, they
+
 # are monitored, and you can view the emails that would have been sent from the web interface.
+
 [inbucket]
 enabled = true
+
 # Port to use for the email testing server web interface.
+
 port = 54324
+
 # Uncomment to expose additional ports for testing user applications that send emails.
+
 # smtp_port = 54325
+
 # pop3_port = 54326
+
 # admin_email = "admin@email.com"
+
 # sender_name = "Admin"
 
 [storage]
 enabled = true
+
 # The maximum file size allowed (e.g. "5MB", "500KB").
+
 file_size_limit = "50MiB"
 
 # Image transformation API is available to Supabase Pro plan.
+
 # [storage.image_transformation]
+
 # enabled = true
 
 # Uncomment to configure local storage buckets
+
 # [storage.buckets.images]
+
 # public = false
+
 # file_size_limit = "50MiB"
+
 # allowed_mime_types = ["image/png", "image/jpeg"]
+
 # objects_path = "./images"
 
 [auth]
 enabled = true
+
 # The base URL of your website. Used as an allow-list for redirects and for constructing URLs used
+
 # in emails.
+
 site_url = "http://127.0.0.1:3000"
-# A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
+
+# A list of _exact_ URLs that auth providers are permitted to redirect to post authentication.
+
 additional_redirect_urls = ["https://127.0.0.1:3000"]
+
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
+
 jwt_expiry = 3600
+
 # Path to JWT signing key. DO NOT commit your signing keys file to git.
+
 # signing_keys_path = "./signing_keys.json"
+
 # If disabled, the refresh token will never expire.
+
 enable_refresh_token_rotation = true
+
 # Allows refresh tokens to be reused after expiry, up to the specified interval in seconds.
+
 # Requires enable_refresh_token_rotation = true.
+
 refresh_token_reuse_interval = 10
+
 # Allow/disallow new user signups to your project.
+
 enable_signup = true
+
 # Allow/disallow anonymous sign-ins to your project.
+
 enable_anonymous_sign_ins = false
+
 # Allow/disallow testing manual linking of accounts
+
 enable_manual_linking = false
+
 # Passwords shorter than this value will be rejected as weak. Minimum 6, recommended 8 or more.
+
 minimum_password_length = 6
+
 # Passwords that do not meet the following requirements will be rejected as weak. Supported values
+
 # are: `letters_digits`, `lower_upper_letters_digits`, `lower_upper_letters_digits_symbols`
+
 password_requirements = ""
 
 [auth.rate_limit]
+
 # Number of emails that can be sent per hour. Requires auth.email.smtp to be enabled.
+
 email_sent = 2
+
 # Number of SMS messages that can be sent per hour. Requires auth.sms to be enabled.
+
 sms_sent = 30
+
 # Number of anonymous sign-ins that can be made per hour per IP address. Requires enable_anonymous_sign_ins = true.
+
 anonymous_users = 30
+
 # Number of sessions that can be refreshed in a 5 minute interval per IP address.
+
 token_refresh = 150
+
 # Number of sign up and sign-in requests that can be made in a 5 minute interval per IP address (excludes anonymous users).
+
 sign_in_sign_ups = 30
+
 # Number of OTP / Magic link verifications that can be made in a 5 minute interval per IP address.
+
 token_verifications = 30
+
 # Number of Web3 logins that can be made in a 5 minute interval per IP address.
+
 web3 = 30
 
 # Configure one of the supported captcha providers: `hcaptcha`, `turnstile`.
+
 # [auth.captcha]
+
 # enabled = true
+
 # provider = "hcaptcha"
+
 # secret = ""
 
 [auth.email]
+
 # Allow/disallow new user signups via email to your project.
+
 enable_signup = true
+
 # If enabled, a user will be required to confirm any email change on both the old, and new email
+
 # addresses. If disabled, only the new email is required to confirm.
+
 double_confirm_changes = true
+
 # If enabled, users need to confirm their email address before signing in.
+
 enable_confirmations = false
+
 # If enabled, users will need to reauthenticate or have logged in recently to change their password.
+
 secure_password_change = false
+
 # Controls the minimum amount of time that must pass before sending another signup confirmation or password reset email.
+
 max_frequency = "1s"
+
 # Number of characters used in the email OTP.
+
 otp_length = 6
+
 # Number of seconds before the email OTP expires (defaults to 1 hour).
+
 otp_expiry = 3600
 
 # Use a production-ready SMTP server
+
 # [auth.email.smtp]
+
 # enabled = true
+
 # host = "smtp.sendgrid.net"
+
 # port = 587
+
 # user = "apikey"
+
 # pass = "env(SENDGRID_API_KEY)"
+
 # admin_email = "admin@email.com"
+
 # sender_name = "Admin"
 
 # Uncomment to customize email template
+
 # [auth.email.template.invite]
+
 # subject = "You have been invited"
+
 # content_path = "./supabase/templates/invite.html"
 
 [auth.sms]
+
 # Allow/disallow new user signups via SMS to your project.
+
 enable_signup = false
+
 # If enabled, users need to confirm their phone number before signing in.
+
 enable_confirmations = false
+
 # Template for sending OTP to users
+
 template = "Your code is {{ .Code }}"
+
 # Controls the minimum amount of time that must pass before sending another sms otp.
+
 max_frequency = "5s"
 
 # Use pre-defined map of phone number to OTP for testing.
+
 # [auth.sms.test_otp]
+
 # 4152127777 = "123456"
 
 # Configure logged in session timeouts.
+
 # [auth.sessions]
+
 # Force log out after the specified duration.
+
 # timebox = "24h"
+
 # Force log out if the user has been inactive longer than the specified duration.
+
 # inactivity_timeout = "8h"
 
 # This hook runs before a new user is created and allows developers to reject the request based on the incoming user object.
+
 # [auth.hook.before_user_created]
+
 # enabled = true
+
 # uri = "pg-functions://postgres/auth/before-user-created-hook"
 
 # This hook runs before a token is issued and allows you to add additional claims based on the authentication method used.
+
 # [auth.hook.custom_access_token]
+
 # enabled = true
+
 # uri = "pg-functions://<database>/<schema>/<hook_name>"
 
 # Configure one of the supported SMS providers: `twilio`, `twilio_verify`, `messagebird`, `textlocal`, `vonage`.
+
 [auth.sms.twilio]
 enabled = false
 account_sid = ""
 message_service_sid = ""
+
 # DO NOT commit your Twilio auth token to git. Use environment variable substitution instead:
+
 auth_token = "env(SUPABASE_AUTH_SMS_TWILIO_AUTH_TOKEN)"
 
 # Multi-factor-authentication is available to Supabase Pro plan.
+
 [auth.mfa]
+
 # Control how many MFA factors can be enrolled at once per user.
+
 max_enrolled_factors = 10
 
 # Control MFA via App Authenticator (TOTP)
+
 [auth.mfa.totp]
 enroll_enabled = false
 verify_enabled = false
 
 # Configure MFA via Phone Messaging
+
 [auth.mfa.phone]
 enroll_enabled = false
 verify_enabled = false
@@ -9351,97 +9752,152 @@ template = "Your code is {{ .Code }}"
 max_frequency = "5s"
 
 # Configure MFA via WebAuthn
+
 # [auth.mfa.web_authn]
+
 # enroll_enabled = true
+
 # verify_enabled = true
 
 # Use an external OAuth provider. The full list of providers are: `apple`, `azure`, `bitbucket`,
+
 # `discord`, `facebook`, `github`, `gitlab`, `google`, `keycloak`, `linkedin_oidc`, `notion`, `twitch`,
+
 # `twitter`, `slack`, `spotify`, `workos`, `zoom`.
+
 [auth.external.apple]
 enabled = false
 client_id = ""
+
 # DO NOT commit your OAuth provider secret to git. Use environment variable substitution instead:
+
 secret = "env(SUPABASE_AUTH_EXTERNAL_APPLE_SECRET)"
+
 # Overrides the default auth redirectUrl.
+
 redirect_uri = ""
+
 # Overrides the default auth provider URL. Used to support self-hosted gitlab, single-tenant Azure,
+
 # or any other third-party OIDC providers.
+
 url = ""
+
 # If enabled, the nonce check will be skipped. Required for local sign in with Google auth.
+
 skip_nonce_check = false
 
 # Allow Solana wallet holders to sign in to your project via the Sign in with Solana (SIWS, EIP-4361) standard.
+
 # You can configure "web3" rate limit in the [auth.rate_limit] section and set up [auth.captcha] if self-hosting.
+
 [auth.web3.solana]
 enabled = false
 
 # Use Firebase Auth as a third-party provider alongside Supabase Auth.
+
 [auth.third_party.firebase]
 enabled = false
+
 # project_id = "my-firebase-project"
 
 # Use Auth0 as a third-party provider alongside Supabase Auth.
+
 [auth.third_party.auth0]
 enabled = false
+
 # tenant = "my-auth0-tenant"
+
 # tenant_region = "us"
 
 # Use AWS Cognito (Amplify) as a third-party provider alongside Supabase Auth.
+
 [auth.third_party.aws_cognito]
 enabled = false
+
 # user_pool_id = "my-user-pool-id"
+
 # user_pool_region = "us-east-1"
 
 # Use Clerk as a third-party provider alongside Supabase Auth.
+
 [auth.third_party.clerk]
 enabled = false
+
 # Obtain from https://clerk.com/setup/supabase
+
 # domain = "example.clerk.accounts.dev"
 
 # OAuth server configuration
+
 [auth.oauth_server]
+
 # Enable OAuth server functionality
+
 enabled = false
+
 # Path for OAuth consent flow UI
+
 authorization_url_path = "/oauth/consent"
+
 # Allow dynamic client registration
+
 allow_dynamic_registration = false
 
 [edge_runtime]
 enabled = true
+
 # Supported request policies: `oneshot`, `per_worker`.
+
 # `per_worker` (default) — enables hot reload during local development.
+
 # `oneshot` — fallback mode if hot reload causes issues (e.g. in large repos or with symlinks).
+
 policy = "per_worker"
+
 # Port to attach the Chrome inspector for debugging edge functions.
+
 inspector_port = 8083
+
 # The Deno major version to use.
+
 deno_version = 2
 
 # [edge_runtime.secrets]
+
 # secret_key = "env(SECRET_VALUE)"
 
 [analytics]
 enabled = true
 port = 54327
+
 # Configure one of the supported backends: `postgres`, `bigquery`.
+
 backend = "postgres"
 
 # Experimental features may be deprecated any time
+
 [experimental]
+
 # Configures Postgres storage engine to use OrioleDB (S3)
+
 orioledb_version = ""
+
 # Configures S3 bucket URL, eg. <bucket_name>.s3-<region>.amazonaws.com
+
 s3_host = "env(S3_HOST)"
+
 # Configures S3 bucket region, eg. us-east-1
+
 s3_region = "env(S3_REGION)"
+
 # Configures AWS_ACCESS_KEY_ID for S3 bucket
+
 s3_access_key = "env(S3_ACCESS_KEY)"
+
 # Configures AWS_SECRET_ACCESS_KEY for S3 bucket
+
 s3_secret_key = "env(S3_SECRET_KEY)"
-
-
 
 ================================================
 FILE: supabase/migrations/20251012120000_initial_schema.sql
@@ -9450,21 +9906,21 @@ FILE: supabase/migrations/20251012120000_initial_schema.sql
 -- Migration: Initial Schema Setup
 -- Description: Creates the core database schema for VacationPlanner application
 -- Date: 2025-10-12
--- 
+--
 -- Tables Created:
---   - travel_projects: User's travel planning projects
---   - notes: Free-form notes for attractions/activities
---   - ai_logs: Audit log for AI-generated itineraries
+-- - travel_projects: User's travel planning projects
+-- - notes: Free-form notes for attractions/activities
+-- - ai_logs: Audit log for AI-generated itineraries
 --
 -- Additional Objects:
---   - ai_status enum type
---   - Indexes for query optimization
---   - Trigger for automatic updated_on timestamps
---   - Row-Level Security policies for data isolation
+-- - ai_status enum type
+-- - Indexes for query optimization
+-- - Trigger for automatic updated_on timestamps
+-- - Row-Level Security policies for data isolation
 --
 -- Prerequisites:
---   - Supabase Auth configured (provides auth.users table and auth.uid() function)
---   - pgcrypto extension for UUID generation
+-- - Supabase Auth configured (provides auth.users table and auth.uid() function)
+-- - pgcrypto extension for UUID generation
 -- =====================================================
 
 -- Enable required extensions
@@ -9477,32 +9933,35 @@ create extension if not exists pgcrypto;
 
 -- ai_status: Tracks the lifecycle of AI generation requests
 -- Values:
---   - pending: AI generation request initiated but not completed
---   - success: AI successfully generated itinerary
---   - failure: AI generation failed (used for debugging and retry logic)
+-- - pending: AI generation request initiated but not completed
+-- - success: AI successfully generated itinerary
+-- - failure: AI generation failed (used for debugging and retry logic)
 create type ai_status as enum ('pending', 'success', 'failure');
 
 -- =====================================================
 -- TABLES
 -- =====================================================
 
--- -----------------------------------------------------
+---
+
 -- Table: travel_projects
 -- Purpose: Stores user's vacation planning projects
 -- Security: User-owned, RLS enabled
--- -----------------------------------------------------
+
+---
+
 create table travel_projects (
-  id uuid primary key default gen_random_uuid(),
-  -- Foreign key to Supabase Auth users table
-  user_id uuid not null references auth.users(id) on delete cascade,
-  -- Project name (e.g., "Summer Trip to Italy")
-  name text not null,
-  -- Total duration of the trip in days
-  duration_days integer not null,
-  -- When the project was created
-  created_on timestamptz not null default now(),
-  -- Optional: the actual planned start date of the trip
-  planned_date date null
+id uuid primary key default gen_random_uuid(),
+-- Foreign key to Supabase Auth users table
+user_id uuid not null references auth.users(id) on delete cascade,
+-- Project name (e.g., "Summer Trip to Italy")
+name text not null,
+-- Total duration of the trip in days
+duration_days integer not null,
+-- When the project was created
+created_on timestamptz not null default now(),
+-- Optional: the actual planned start date of the trip
+planned_date date null
 );
 
 -- Add comment for table documentation
@@ -9510,23 +9969,26 @@ comment on table travel_projects is 'User-owned travel planning projects contain
 comment on column travel_projects.duration_days is 'Total number of days for the trip, used for itinerary generation';
 comment on column travel_projects.planned_date is 'Actual planned start date of the trip (optional)';
 
--- -----------------------------------------------------
+---
+
 -- Table: notes
 -- Purpose: Free-form notes about attractions, activities, and preferences
 -- Security: Inherited from parent travel_projects, RLS enabled
--- -----------------------------------------------------
+
+---
+
 create table notes (
-  id uuid primary key default gen_random_uuid(),
-  -- Reference to parent travel project
-  project_id uuid not null references travel_projects(id) on delete cascade,
-  -- Free-form text content (e.g., "Visit Colosseum, opens at 9am")
-  content text not null,
-  -- Priority level for AI scheduling: 1 = high, 2 = medium, 3 = low
-  priority smallint not null default 2 check (priority between 1 and 3),
-  -- Optional tags for location/place names (array for future filtering)
-  place_tags text[] null,
-  -- Auto-updated timestamp of last modification
-  updated_on timestamptz not null default now()
+id uuid primary key default gen_random_uuid(),
+-- Reference to parent travel project
+project_id uuid not null references travel_projects(id) on delete cascade,
+-- Free-form text content (e.g., "Visit Colosseum, opens at 9am")
+content text not null,
+-- Priority level for AI scheduling: 1 = high, 2 = medium, 3 = low
+priority smallint not null default 2 check (priority between 1 and 3),
+-- Optional tags for location/place names (array for future filtering)
+place_tags text[] null,
+-- Auto-updated timestamp of last modification
+updated_on timestamptz not null default now()
 );
 
 -- Add comment for table documentation
@@ -9534,30 +9996,33 @@ comment on table notes is 'Free-form notes about attractions and activities for 
 comment on column notes.priority is 'Priority level for AI itinerary generation: 1 = must-see (high), 2 = should-see (medium), 3 = optional (low)';
 comment on column notes.place_tags is 'Array of location/place tags for future filtering and grouping';
 
--- -----------------------------------------------------
+---
+
 -- Table: ai_logs
 -- Purpose: Audit trail of AI-generated itineraries
 -- Security: User-owned, RLS enabled
 -- Note: Supports versioning - each regeneration increments version
--- -----------------------------------------------------
+
+---
+
 create table ai_logs (
-  id uuid primary key default gen_random_uuid(),
-  -- Foreign key to user (denormalized for direct access control)
-  user_id uuid not null references auth.users(id) on delete cascade,
-  -- Foreign key to the project this generation is for
-  project_id uuid not null references travel_projects(id) on delete cascade,
-  -- The full prompt sent to the AI (stored for debugging and audit)
-  prompt text not null,
-  -- The AI response in JSON format (structured itinerary data)
-  response jsonb not null,
-  -- Current status of the AI generation request
-  status ai_status not null,
-  -- Time taken for AI to respond in milliseconds (null if pending)
-  duration_ms integer null,
-  -- Timestamp when the AI generation was initiated
-  created_on timestamptz not null default now(),
-  -- Version number for tracking regenerations (higher = more recent)
-  version integer not null default 1
+id uuid primary key default gen_random_uuid(),
+-- Foreign key to user (denormalized for direct access control)
+user_id uuid not null references auth.users(id) on delete cascade,
+-- Foreign key to the project this generation is for
+project_id uuid not null references travel_projects(id) on delete cascade,
+-- The full prompt sent to the AI (stored for debugging and audit)
+prompt text not null,
+-- The AI response in JSON format (structured itinerary data)
+response jsonb not null,
+-- Current status of the AI generation request
+status ai_status not null,
+-- Time taken for AI to respond in milliseconds (null if pending)
+duration_ms integer null,
+-- Timestamp when the AI generation was initiated
+created_on timestamptz not null default now(),
+-- Version number for tracking regenerations (higher = more recent)
+version integer not null default 1
 );
 
 -- Add comment for table documentation
@@ -9591,10 +10056,12 @@ create index idx_ai_logs_project_version on ai_logs(project_id, version desc);
 create or replace function update_updated_on_column()
 returns trigger as $$
 begin
-  new.updated_on = now();
-  return new;
+new.updated_on = now();
+return new;
 end;
-$$ language plpgsql;
+
+$$
+language plpgsql;
 
 -- Attach trigger to notes table
 -- Fires before any UPDATE operation to refresh the updated_on timestamp
@@ -9772,7 +10239,7 @@ FILE: supabase/migrations/20251016143000_add_request_metadata_to_ai_logs.sql
 -- Migration: Add Request Metadata to ai_logs
 -- Description: Adds request_body and response_code columns to ai_logs table
 -- Date: 2025-10-16
--- 
+--
 -- Purpose:
 --   Enhance ai_logs table to capture complete API request/response metadata
 --   for better debugging, auditing, and monitoring of AI generation requests.
@@ -9788,13 +10255,13 @@ FILE: supabase/migrations/20251016143000_add_request_metadata_to_ai_logs.sql
 -- Add request_body column to store the complete API request payload
 -- This captures all parameters sent to the AI service (e.g., temperature, model, etc.)
 -- JSONB format allows flexible storage and efficient querying of request parameters
-alter table ai_logs 
+alter table ai_logs
   add column request_body jsonb null;
 
 -- Add response_code column to store HTTP status code from AI service
 -- Used for monitoring API health and debugging failed requests
 -- Examples: 200 (success), 500 (server error), 429 (rate limit)
-alter table ai_logs 
+alter table ai_logs
   add column response_code integer null;
 
 -- Add column comments for documentation
@@ -9819,14 +10286,14 @@ comment on index idx_ai_logs_project_created_on is 'Optimizes queries for retrie
 -- =====================================================
 -- DATA MIGRATION NOTES
 -- =====================================================
--- 
+--
 -- Existing rows will have NULL values for these columns.
 -- Consider running a data migration script if historical records
 -- need to be populated with default or reconstructed values.
--- 
+--
 -- Example: Set default response_code for successful historical records:
--- update ai_logs 
---   set response_code = 200 
+-- update ai_logs
+--   set response_code = 200
 --   where status = 'success' and response_code is null;
 -- =====================================================
 
@@ -9844,7 +10311,7 @@ FILE: supabase/migrations/20251105_enable_rls_policies.sql
 -- Migration: Enable Row-Level Security (RLS) Policies
 -- Description: Enables RLS on all tables and creates policies for user data isolation
 -- Date: 2025-11-05
--- 
+--
 -- Purpose:
 --   This migration enables authentication-based access control by:
 --   1. Enabling RLS on travel_projects, notes, and ai_logs tables
@@ -10019,11 +10486,11 @@ CREATE POLICY ai_logs_delete_policy
 -- =====================================================
 
 -- To test RLS policies after migration, run these queries as different users:
--- 
+--
 -- 1. Check if RLS is enabled:
---    SELECT tablename, rowsecurity 
---    FROM pg_tables 
---    WHERE schemaname = 'public' 
+--    SELECT tablename, rowsecurity
+--    FROM pg_tables
+--    WHERE schemaname = 'public'
 --    AND tablename IN ('travel_projects', 'notes', 'ai_logs');
 --
 -- 2. List all policies:
@@ -10520,9 +10987,9 @@ FILE: .ai/auth-spec.md
 
 ## Document Information
 
-**Version:** 1.0  
-**Date:** November 3, 2025  
-**Requirements:** US-001, US-002, US-003, US-004 from PRD  
+**Version:** 1.0
+**Date:** November 3, 2025
+**Requirements:** US-001, US-002, US-003, US-004 from PRD
 **Tech Stack:** Astro 5, React 19, TypeScript 5, Supabase Auth, Tailwind 4
 
 ---
@@ -10564,7 +11031,7 @@ All authentication pages will be Astro pages (`.astro`) that render forms using 
 - **New Behavior**:
   - If **unauthenticated**: Show landing page with login button
   - If **authenticated**: Redirect to `/projects`
-- **Components**: 
+- **Components**:
   - LandingPage (new Astro component replacing Welcome)
   - Includes hero section, feature highlights, CTA button to login
 - **Server Logic**: Check authentication status in Astro frontmatter; redirect authenticated users
@@ -10731,7 +11198,7 @@ All forms are interactive React components using controlled inputs with client-s
 
 #### 1.5.3 Success Messages
 
-**Display Strategy:** 
+**Display Strategy:**
 - Toast notifications (using Sonner) for non-critical actions
 - In-page success messages for critical flows (registration, password reset)
 - Success messages include:
@@ -10875,8 +11342,8 @@ export class AuthService {
    * Authenticate user and return session
    */
   async login(
-    email: string, 
-    password: string, 
+    email: string,
+    password: string,
     db: DbClient
   ): Promise<LoginResult>
 
@@ -10884,7 +11351,7 @@ export class AuthService {
    * Sign out user (invalidate session)
    */
   async logout(
-    accessToken: string, 
+    accessToken: string,
     db: DbClient
   ): Promise<void>
 
@@ -10892,7 +11359,7 @@ export class AuthService {
    * Verify user session (used by middleware)
    */
   async verifySession(
-    accessToken: string, 
+    accessToken: string,
     db: DbClient
   ): Promise<User | null>
 }
@@ -10974,8 +11441,8 @@ DROP POLICY IF EXISTS notes_delete_policy ON notes;
 CREATE POLICY notes_select_policy ON notes
   FOR SELECT USING (
     EXISTS (
-      SELECT 1 FROM travel_projects 
-      WHERE travel_projects.id = notes.project_id 
+      SELECT 1 FROM travel_projects
+      WHERE travel_projects.id = notes.project_id
       AND travel_projects.user_id = auth.uid()
     )
   );
@@ -10984,8 +11451,8 @@ CREATE POLICY notes_select_policy ON notes
 CREATE POLICY notes_insert_policy ON notes
   FOR INSERT WITH CHECK (
     EXISTS (
-      SELECT 1 FROM travel_projects 
-      WHERE travel_projects.id = notes.project_id 
+      SELECT 1 FROM travel_projects
+      WHERE travel_projects.id = notes.project_id
       AND travel_projects.user_id = auth.uid()
     )
   );
@@ -10994,8 +11461,8 @@ CREATE POLICY notes_insert_policy ON notes
 CREATE POLICY notes_update_policy ON notes
   FOR UPDATE USING (
     EXISTS (
-      SELECT 1 FROM travel_projects 
-      WHERE travel_projects.id = notes.project_id 
+      SELECT 1 FROM travel_projects
+      WHERE travel_projects.id = notes.project_id
       AND travel_projects.user_id = auth.uid()
     )
   );
@@ -11004,8 +11471,8 @@ CREATE POLICY notes_update_policy ON notes
 CREATE POLICY notes_delete_policy ON notes
   FOR DELETE USING (
     EXISTS (
-      SELECT 1 FROM travel_projects 
-      WHERE travel_projects.id = notes.project_id 
+      SELECT 1 FROM travel_projects
+      WHERE travel_projects.id = notes.project_id
       AND travel_projects.user_id = auth.uid()
     )
   );
@@ -11029,8 +11496,8 @@ DROP POLICY IF EXISTS ai_logs_insert_policy ON ai_logs;
 CREATE POLICY ai_logs_select_policy ON ai_logs
   FOR SELECT USING (
     EXISTS (
-      SELECT 1 FROM travel_projects 
-      WHERE travel_projects.id = ai_logs.project_id 
+      SELECT 1 FROM travel_projects
+      WHERE travel_projects.id = ai_logs.project_id
       AND travel_projects.user_id = auth.uid()
     )
   );
@@ -11039,8 +11506,8 @@ CREATE POLICY ai_logs_select_policy ON ai_logs
 CREATE POLICY ai_logs_insert_policy ON ai_logs
   FOR INSERT WITH CHECK (
     EXISTS (
-      SELECT 1 FROM travel_projects 
-      WHERE travel_projects.id = ai_logs.project_id 
+      SELECT 1 FROM travel_projects
+      WHERE travel_projects.id = ai_logs.project_id
       AND travel_projects.user_id = auth.uid()
     )
   );
@@ -11150,7 +11617,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   // If access token exists, verify session
   if (accessToken) {
     const { data: { user }, error } = await supabaseClient.auth.getUser(accessToken);
-    
+
     if (!error && user) {
       context.locals.user = user;
     }
@@ -11223,7 +11690,7 @@ export const GET: APIRoute = async (context) => {
   try {
     // Extract user from context (set by middleware)
     const user = context.locals.user;
-    
+
     if (!user) {
       throw new ApiError(401, "Unauthorized");
     }
@@ -11510,7 +11977,7 @@ export function checkRateLimit(key: string, maxAttempts: number, windowMs: numbe
 ```typescript
 export const POST: APIRoute = async (context) => {
   const ip = context.clientAddress;
-  
+
   if (!checkRateLimit(`login:${ip}`, 10, 60 * 60 * 1000)) {
     throw new ApiError(429, "Too many login attempts. Please try again later.");
   }
@@ -12055,9 +12522,9 @@ After running the migration, verify that RLS is enabled:
 
 ```sql
 -- Run this query in Supabase SQL Editor
-SELECT tablename, rowsecurity 
-FROM pg_tables 
-WHERE schemaname = 'public' 
+SELECT tablename, rowsecurity
+FROM pg_tables
+WHERE schemaname = 'public'
 AND tablename IN ('travel_projects', 'notes', 'ai_logs');
 ```
 
@@ -12177,7 +12644,7 @@ The server should start on `http://localhost:4321` (or your configured port).
 
 ### Problem: "Migration failed" or "Policy already exists"
 
-**Solution**: 
+**Solution**:
 ```sql
 -- Drop existing policies first (if migration fails)
 DROP POLICY IF EXISTS travel_projects_select_policy ON travel_projects;
@@ -12218,7 +12685,7 @@ DROP POLICY IF EXISTS ai_logs_delete_policy ON ai_logs;
 **Solution**:
 1. Verify RLS is enabled:
 ```sql
-SELECT tablename, rowsecurity FROM pg_tables 
+SELECT tablename, rowsecurity FROM pg_tables
 WHERE tablename = 'travel_projects';
 ```
 2. Check if policies exist:
@@ -12772,7 +13239,7 @@ Punkt końcowy umożliwia synchroniczne wygenerowanie planu podróży dla konkre
 | Brak/nieprawidłowy token         | 401  | Unauthorized                                               |
 | Projekt nie istnieje lub nie należy do usera | 404  | Not Found                                                  |
 | Błąd DB (SELECT/INSERT) , Błąd AI service (timeout, błąd)         | 500  | Internal Server Error                                     |
-Każdy z błędów powoduje aktualizacje `ai_logs`.`status` = `failure`, log error 
+Każdy z błędów powoduje aktualizacje `ai_logs`.`status` = `failure`, log error
 
 ## 8. Rozważania dotyczące wydajności
 - Żądanie jest synchroniczne – zadbać o timeout 60s.
@@ -12898,7 +13365,7 @@ Approach:
      ```typescript
      const response = await fetch(`${this.baseUrl}/chat/completions`, {
        method: 'POST',
-       headers: { 
+       headers: {
          'Authorization': `Bearer ${this.apiKey}`,
          'Content-Type': 'application/json'
        },
@@ -12955,7 +13422,7 @@ FILE: .ai/implementation-summary.md
 
 ### 1. Walidacja danych (Zod)
 **Plik:** `src/lib/schemas/plan.schema.ts`
-- ✅ Walidacja `GeneratePlanCommand` 
+- ✅ Walidacja `GeneratePlanCommand`
 - ✅ Preferencje opcjonalne (`preferences?`)
 - ✅ Whitelist modeli AI: `gpt-4`, `gpt-5`, `claude-3-opus`, `claude-3.5-sonnet`
 - ✅ Walidacja UUID dla `projectId` i notatek
@@ -13024,13 +13491,13 @@ FILE: .ai/implementation-summary.md
    ```bash
    # Pobierz dane dostępowe Supabase
    npx supabase status
-   
+
    # Utwórz plik .env w głównym katalogu:
    SUPABASE_URL=http://127.0.0.1:54321
    SUPABASE_KEY=<skopiuj "Publishable key" z supabase status>
    OPENROUTER_API_KEY=your-openrouter-api-key-here
    ```
-   
+
    **Zobacz:** `.ai/env-setup-guide.md` dla szczegółów
 
 1. **Uruchom serwer dev:**
@@ -13148,16 +13615,16 @@ src/
 
 ## ❓ FAQ
 
-**Q: Dlaczego preferencje są opcjonalne?**  
+**Q: Dlaczego preferencje są opcjonalne?**
 A: Użytkownik może chcieć wygenerować plan bez określania preferencji kategorii.
 
-**Q: Jak zmienić procent symulowanych błędów?**  
+**Q: Jak zmienić procent symulowanych błędów?**
 A: Edytuj wartość w `ai.service.mock.ts`, linia ~51: `if (Math.random() < 0.05)`
 
-**Q: Gdzie są logowane błędy?**  
+**Q: Gdzie są logowane błędy?**
 A: W konsoli serwera oraz w tabeli `ai_logs` w bazie danych.
 
-**Q: Jak sprawdzić logi AI w bazie?**  
+**Q: Jak sprawdzić logi AI w bazie?**
 A: ```sql
 SELECT * FROM ai_logs ORDER BY created_on DESC LIMIT 10;
 ```
@@ -14281,7 +14748,7 @@ VALUES (
 #### c) Utwórz notatki testowe dla projektu w tabeli `notes`:
 ```sql
 INSERT INTO notes (id, project_id, content, priority, place_tags)
-VALUES 
+VALUES
   (
     'note-0001-0000-0000-000000000001',
     'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
@@ -14539,7 +15006,7 @@ Kliknij przycisk **Send**
 Po każdym żądaniu sprawdź tabelę `ai_logs`:
 
 ```sql
-SELECT 
+SELECT
   id,
   project_id,
   status,
@@ -14568,7 +15035,7 @@ LIMIT 5;
 ## Priorytety notatek
 
 - `1` - niski priorytet
-- `2` - średni priorytet  
+- `2` - średni priorytet
 - `3` - wysoki priorytet
 
 Notatki z priorytetem >= 2 będą uwzględniane w generowaniu aktywności.
@@ -14869,63 +15336,63 @@ FILE: .ai/PRD_summary.md
 <conversation_summary>
 
 <decisions>
-1. Notatki wprowadzane jako swobodny tekst z dwoma typami tagów: „miejsce” (autouzupełnianie przez API) i „przybliżony czas” (predefiniowana lista wartości).  
-2. Raporty miesięczne dostępne w zakładce „Moje raporty” w aplikacji.  
-3. Model notatki zawiera pola: priorytet atrakcji oraz planowana data wyjazdu (miesiąc/pora roku).  
-4. Generowanie planu AI odbywa się synchronicznie w jednym żądaniu; UI wyświetla spinner „Trwa generowanie planu…” i po 1 minucie lub w razie błędu pokazuje powiadomienie z opcją „Spróbuj ponownie”.  
-5. Retencja logów AI nie jest wymagana w MVP.  
-6. W razie błędu AI użytkownik otrzymuje informację o przyczynie niepowodzenia, bez dodatkowych limitacji prób.  
-7. Backend hostowany w Supabase (PostgreSQL) na DigitalOcean; CI/CD przez GitHub Actions.  
-8. Brak panelu administratora w MVP.  
-9. Autoryzacja: email/hasło z weryfikacją mailową, wygasające linki, możliwość ponownej generacji i resetu hasła.  
-10. Tech stack: Astro + React + TypeScript + Tailwind CSS + Shadcn/ui; interfejs w języku angielskim.  
+1. Notatki wprowadzane jako swobodny tekst z dwoma typami tagów: „miejsce” (autouzupełnianie przez API) i „przybliżony czas” (predefiniowana lista wartości).
+2. Raporty miesięczne dostępne w zakładce „Moje raporty” w aplikacji.
+3. Model notatki zawiera pola: priorytet atrakcji oraz planowana data wyjazdu (miesiąc/pora roku).
+4. Generowanie planu AI odbywa się synchronicznie w jednym żądaniu; UI wyświetla spinner „Trwa generowanie planu…” i po 1 minucie lub w razie błędu pokazuje powiadomienie z opcją „Spróbuj ponownie”.
+5. Retencja logów AI nie jest wymagana w MVP.
+6. W razie błędu AI użytkownik otrzymuje informację o przyczynie niepowodzenia, bez dodatkowych limitacji prób.
+7. Backend hostowany w Supabase (PostgreSQL) na DigitalOcean; CI/CD przez GitHub Actions.
+8. Brak panelu administratora w MVP.
+9. Autoryzacja: email/hasło z weryfikacją mailową, wygasające linki, możliwość ponownej generacji i resetu hasła.
+10. Tech stack: Astro + React + TypeScript + Tailwind CSS + Shadcn/ui; interfejs w języku angielskim.
 11. Użytkownik może tworzyć wiele „projektów podróży” z metadanymi (przybliżona długość i data), i w ramach każdego projektu dodawać, edytować lub usuwać notatki. Projekty widoczne w głównym menu i przełączalne przed generowaniem planu.
 </decisions>
 
 <matched_recommendations>
-1. Zdefiniowanie słownika tagów i integracja z API autouzupełniania miejsc.  
-2. Dodanie spinnera i obsługa timeout/error z opcją „Spróbuj ponownie”.  
-3. Rozbudowa modelu notatki o priorytet i planowaną datę wyjazdu.  
-4. Logowanie zapytań i odpowiedzi AI w osobnej tabeli.  
-5. Prostota logowania email/hasło z weryfikacją i obsługą resetu.  
-6. Wdrożenie HTTPS i przechowywanie sekretów w env vars.  
-7. Hostowanie backendu na Supabase + DigitalOcean i CI/CD przez GitHub Actions.  
-8. Ograniczenie interfejsu do jednego języka (angielskiego) na start.  
+1. Zdefiniowanie słownika tagów i integracja z API autouzupełniania miejsc.
+2. Dodanie spinnera i obsługa timeout/error z opcją „Spróbuj ponownie”.
+3. Rozbudowa modelu notatki o priorytet i planowaną datę wyjazdu.
+4. Logowanie zapytań i odpowiedzi AI w osobnej tabeli.
+5. Prostota logowania email/hasło z weryfikacją i obsługą resetu.
+6. Wdrożenie HTTPS i przechowywanie sekretów w env vars.
+7. Hostowanie backendu na Supabase + DigitalOcean i CI/CD przez GitHub Actions.
+8. Ograniczenie interfejsu do jednego języka (angielskiego) na start.
 9. Wprowadzenie koncepcji projektów podróży grupujących notatki (nowa rekomendacja wynikająca z doprecyzowania historii).
 </matched_recommendations>
 
 <prd_planning_summary>
 a. Główne wymagania funkcjonalne:
-- Rejestracja i logowanie: email/hasło, weryfikacja mailowa, wygasające linki, reset hasła.  
-- Zarządzanie projektami podróży: CRUD projektów z metadanymi (przybliżona długość i data).  
-- Zarządzanie notatkami w projekcie: CRUD notatek z tagami miejsca i czasu, priorytetem i datą wyjazdu.  
-- Generowanie planu AI: synchroniczne wywołanie uwzględniające wszystkie notatki projektu, zwracające dzienny harmonogram.  
-- UI: spinner „Trwa generowanie planu…”, powiadomienia o błędach z opcją „Spróbuj ponownie”.  
+- Rejestracja i logowanie: email/hasło, weryfikacja mailowa, wygasające linki, reset hasła.
+- Zarządzanie projektami podróży: CRUD projektów z metadanymi (przybliżona długość i data).
+- Zarządzanie notatkami w projekcie: CRUD notatek z tagami miejsca i czasu, priorytetem i datą wyjazdu.
+- Generowanie planu AI: synchroniczne wywołanie uwzględniające wszystkie notatki projektu, zwracające dzienny harmonogram.
+- UI: spinner „Trwa generowanie planu…”, powiadomienia o błędach z opcją „Spróbuj ponownie”.
 - Logowanie AI: osobna tabela przechowująca prompt, odpowiedź, status i czas wykonania.
 
 b. Kluczowe historie użytkownika:
-1. Tworzę projekt podróży z przybliżoną długością i datą, by grupować notatki.  
-2. Dodaję w projekcie dowolną liczbę notatek (miejsce lub preferencje czasu), by zebrać inspiracje.  
-3. Przełączam się między projektami z głównego menu, by edytować lub usuwać notatki.  
-4. W widoku projektu przeglądam szczegóły (data, długość, notatki) przed generowaniem.  
-5. Generuję plan: system uwzględnia wszystkie notatki projektu i zwraca harmonogram.  
-6. Widzę spinner i w razie błędu otrzymuję opis przyczyny z opcją ponowienia.  
+1. Tworzę projekt podróży z przybliżoną długością i datą, by grupować notatki.
+2. Dodaję w projekcie dowolną liczbę notatek (miejsce lub preferencje czasu), by zebrać inspiracje.
+3. Przełączam się między projektami z głównego menu, by edytować lub usuwać notatki.
+4. W widoku projektu przeglądam szczegóły (data, długość, notatki) przed generowaniem.
+5. Generuję plan: system uwzględnia wszystkie notatki projektu i zwraca harmonogram.
+6. Widzę spinner i w razie błędu otrzymuję opis przyczyny z opcją ponowienia.
 
-c. Kryteria sukcesu i metryki: 
-- 75% użytkowników generuje ≥3 plany rocznie.  
-- Czas odpowiedzi AI ≤60 s.  
+c. Kryteria sukcesu i metryki:
+- 75% użytkowników generuje ≥3 plany rocznie.
+- Czas odpowiedzi AI ≤60 s.
 - Zapis i monitorowanie statusów prób generowania planów.
 
 d. Obszary wymagające dalszego doprecyzowania:
-- Wybór konkretnego API do autouzupełniania miejsc (koszty, limity).  
-- Lista wartości do tagów czasu i sposób prezentacji.  
+- Wybór konkretnego API do autouzupełniania miejsc (koszty, limity).
+- Lista wartości do tagów czasu i sposób prezentacji.
 - Detale harmonogramu generacji i wyzwalania raportów miesięcznych.
 </prd_planning_summary>
 
 <unresolved_issues>
-- Dokładna lista wartości tagów czasu i ich UI.  
-- Mechanizm wysyłki maili weryfikacyjnych i resetu.  
-- Monitorowanie i alertowanie awarii usługi AI.  
+- Dokładna lista wartości tagów czasu i ich UI.
+- Mechanizm wysyłki maili weryfikacyjnych i resetu.
+- Monitorowanie i alertowanie awarii usługi AI.
 - Strategia wersjonowania po MVP.
 </unresolved_issues>
 
@@ -15987,8 +16454,8 @@ VALUES (
 
 -- Notatki testowe
 INSERT INTO notes (id, project_id, content, priority, place_tags)
-VALUES 
-  ('note-0001-0000-0000-000000000001', 'a1b2c3d4-e5f6-7890-abcd-ef1234567890', 
+VALUES
+  ('note-0001-0000-0000-000000000001', 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
    'Zwiedzić Koloseum', 3, ARRAY['architektura', 'historia']),
   ('note-0001-0000-0000-000000000002', 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
    'Odwiedzić Fontannę di Trevi', 3, ARRAY['zabytki']),
@@ -16071,9 +16538,9 @@ ON CONFLICT (id) DO NOTHING;
 Sprawdź w Supabase Studio, że wpis został dodany do `ai_logs`:
 
 ```sql
-SELECT id, status, duration_ms, created_on 
-FROM ai_logs 
-ORDER BY created_on DESC 
+SELECT id, status, duration_ms, created_on
+FROM ai_logs
+ORDER BY created_on DESC
 LIMIT 1;
 ```
 
@@ -16145,28 +16612,28 @@ FILE: .ai/session-notes.md
 ================================================
 <conversation_summary>
 <decisions>
-1. Isolate authentication screens in dedicated full-screen routes (`/auth/login`, `/auth/register`, `/auth/reset`) separated from the main layout.  
-2. Implement global navigation with “Projects” and “Profile”; within a project, use tabs for “Notes”, “Plan” and “Logs”.  
-3. In the Notes tab, display each note card truncated to 300 characters with “…” and allow click-to-expand and edit.  
-4. Use a card grid with infinite scroll in the Notes tab and provide a priority filter control.  
-5. Target only desktop web for MVP; mobile layouts are out of scope.  
-6. Ensure WCAG AA compliance across all interactive components.  
-7. Manage state initially with React hooks and context (optionally add Zustand later).  
-8. Handle validation errors inline, show overlay spinners for loading, and use toast messages for non-critical success/info feedback.  
-9. On “Generate Plan”, show an overlay spinner, disable the button, and allow retry on failure.  
-10. Defer JWT-based token storage and refresh flows to a later stage; protect routes via an AuthGuard.  
-11. Omit the AI logs view from the MVP (to be implemented later in an admin panel).  
+1. Isolate authentication screens in dedicated full-screen routes (`/auth/login`, `/auth/register`, `/auth/reset`) separated from the main layout.
+2. Implement global navigation with “Projects” and “Profile”; within a project, use tabs for “Notes”, “Plan” and “Logs”.
+3. In the Notes tab, display each note card truncated to 300 characters with “…” and allow click-to-expand and edit.
+4. Use a card grid with infinite scroll in the Notes tab and provide a priority filter control.
+5. Target only desktop web for MVP; mobile layouts are out of scope.
+6. Ensure WCAG AA compliance across all interactive components.
+7. Manage state initially with React hooks and context (optionally add Zustand later).
+8. Handle validation errors inline, show overlay spinners for loading, and use toast messages for non-critical success/info feedback.
+9. On “Generate Plan”, show an overlay spinner, disable the button, and allow retry on failure.
+10. Defer JWT-based token storage and refresh flows to a later stage; protect routes via an AuthGuard.
+11. Omit the AI logs view from the MVP (to be implemented later in an admin panel).
 </decisions>
 
 <matched_recommendations>
-1. Dedicated full-screen auth routes (Recommendation #1).  
-2. Global nav + project-detail tabs for Notes/Plan/Logs (Recommendation #2).  
-3. Infinite scroll card grid with filter controls (Recommendation #3).  
-4. WCAG AA via accessible primitives (Recommendation #5).  
-5. Inline validation + overlay spinners (Recommendation #7).  
-6. Plan generation overlay spinner and retry (Recommendation #8).  
-7. Protected routes with JWT/AuthGuard (Recommendation #9).  
-8. Astro scaffolding + React hydration boundaries (Recommendation #10).  
+1. Dedicated full-screen auth routes (Recommendation #1).
+2. Global nav + project-detail tabs for Notes/Plan/Logs (Recommendation #2).
+3. Infinite scroll card grid with filter controls (Recommendation #3).
+4. WCAG AA via accessible primitives (Recommendation #5).
+5. Inline validation + overlay spinners (Recommendation #7).
+6. Plan generation overlay spinner and retry (Recommendation #8).
+7. Protected routes with JWT/AuthGuard (Recommendation #9).
+8. Astro scaffolding + React hydration boundaries (Recommendation #10).
 </matched_recommendations>
 
 <ui_architecture_planning_summary>
@@ -16174,11 +16641,11 @@ We agreed on a clear hierarchy: isolated auth screens → main layout with top n
 </ui_architecture_planning_summary>
 
 <unresolved_issues>
-- Choose and integrate an accessible date picker for project creation/edit forms.  
-- Define the ProfilePreferences component UI and autocomplete data flow.  
-- Specify toast library/configuration (position, style, timeout).  
-- Detail client-side token storage, refresh strategy, and AuthGuard implementation.  
-- Confirm caching or background-refetch strategy since React Query was not adopted initially.  
+- Choose and integrate an accessible date picker for project creation/edit forms.
+- Define the ProfilePreferences component UI and autocomplete data flow.
+- Specify toast library/configuration (position, style, timeout).
+- Detail client-side token storage, refresh strategy, and AuthGuard implementation.
+- Confirm caching or background-refetch strategy since React Query was not adopted initially.
 </unresolved_issues>
 </conversation_summary>
 
@@ -16227,7 +16694,7 @@ ON CONFLICT (id) DO NOTHING;
 
 -- 2. Utwórz notatki testowe dla projektu
 INSERT INTO notes (id, project_id, content, priority, place_tags)
-VALUES 
+VALUES
   (
     'note-0001-0000-0000-000000000001',
     'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
@@ -16273,22 +16740,22 @@ VALUES
 ON CONFLICT (id) DO NOTHING;
 
 -- Weryfikacja utworzonych danych
-SELECT 
+SELECT
   'Utworzono projekt:' as info,
-  id, 
-  name, 
-  duration_days, 
+  id,
+  name,
+  duration_days,
   planned_date
 FROM travel_projects
 WHERE id = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890';
 
-SELECT 
+SELECT
   'Utworzono notatek:' as info,
   COUNT(*) as count
 FROM notes
 WHERE project_id = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890';
 
-SELECT 
+SELECT
   id,
   content,
   priority,
@@ -16362,36 +16829,36 @@ VacationPlanner is structured around isolated authentication routes, a global la
 
 ## 3. User Journey Map
 
-1. User lands on `/auth/login`.  
-2. Registers or logs in.  
-3. Upon success, redirected to `/projects`.  
-4. (Optional) Navigates to `/profile` to set preferences.  
-5. Back at `/projects`, clicks "New Project" → fills and submits form → project appears.  
-6. Clicks project card → lands in Notes tab.  
-7. Adds multiple notes via modal.  
-8. Switches to Plan tab, clicks "Generate Plan" → sees spinner, then schedule or error toast.  
+1. User lands on `/auth/login`.
+2. Registers or logs in.
+3. Upon success, redirected to `/projects`.
+4. (Optional) Navigates to `/profile` to set preferences.
+5. Back at `/projects`, clicks "New Project" → fills and submits form → project appears.
+6. Clicks project card → lands in Notes tab.
+7. Adds multiple notes via modal.
+8. Switches to Plan tab, clicks "Generate Plan" → sees spinner, then schedule or error toast.
 9. Views schedule, navigates back to Projects or Profile.
 
 ## 4. Layout and Navigation Structure
 
-- **Global Layout**: Top nav bar with links to Projects and Profile, user menu for logout.  
-- **Auth Layout**: Full-screen routes for login, register, reset, without global nav.  
-- **Project Detail**: Breadcrumbs (Projects > Project Name), tablist for Notes and Plan.  
+- **Global Layout**: Top nav bar with links to Projects and Profile, user menu for logout.
+- **Auth Layout**: Full-screen routes for login, register, reset, without global nav.
+- **Project Detail**: Breadcrumbs (Projects > Project Name), tablist for Notes and Plan.
 - **Modals**: Create/edit forms open as overlays with focus trap and escape handling.
 
 ## 5. Key Components
 
-- **NavBar**: Accessible navigation links, user menu.  
-- **AuthGuard**: Redirects unauthenticated users to login.  
-- **FormField**: Label, input, error message wrapper for inline validation.  
-- **DatePicker**: Accessible date selection with aria attributes.  
-- **AutocompleteInput**: For place tags and profile categories, aria-combobox.  
-- **InfiniteScrollGrid**: Loads paginated data lazily with aria-live.  
-- **NoteCard**: Displays truncated note, clickable region for modal.  
-- **Modal**: Generic overlay with focus trap.  
-- **SpinnerOverlay**: Full-screen spinner with aria-busy.  
-- **Toast**: Non-blocking notifications, aria-live polite.  
-- **Tabs**: Semantic tablist/tab elements with role attributes.  
+- **NavBar**: Accessible navigation links, user menu.
+- **AuthGuard**: Redirects unauthenticated users to login.
+- **FormField**: Label, input, error message wrapper for inline validation.
+- **DatePicker**: Accessible date selection with aria attributes.
+- **AutocompleteInput**: For place tags and profile categories, aria-combobox.
+- **InfiniteScrollGrid**: Loads paginated data lazily with aria-live.
+- **NoteCard**: Displays truncated note, clickable region for modal.
+- **Modal**: Generic overlay with focus trap.
+- **SpinnerOverlay**: Full-screen spinner with aria-busy.
+- **Toast**: Non-blocking notifications, aria-live polite.
+- **Tabs**: Semantic tablist/tab elements with role attributes.
 - **Button**: Primary/secondary with disabled states and aria-disabled.
 
 
@@ -16774,8 +17241,8 @@ FILE: .ai/implementation-plans/get-project.md
 ## 1. Endpoint Overview
 Retrieve a single travel project by ID.
 
-- **HTTP Method:** GET  
-- **URL:** `/api/projects/{projectId}`  
+- **HTTP Method:** GET
+- **URL:** `/api/projects/{projectId}`
 - **Purpose:** Get detailed information about a specific project.
 
 ## 2. Request Details
@@ -16880,8 +17347,8 @@ FILE: .ai/implementation-plans/list-projects.md
 ## 1. Endpoint Overview
 Retrieve a paginated list of travel projects for the authenticated user.
 
-- **HTTP Method:** GET  
-- **URL:** `/api/projects`  
+- **HTTP Method:** GET
+- **URL:** `/api/projects`
 - **Purpose:** Allow users to view all their travel projects with pagination and sorting options.
 
 ## 2. Request Details
@@ -16967,8 +17434,8 @@ FILE: .ai/implementation-plans/note-creation-implementation-plan.md
 ## 1. Endpoint Overview
 Create a new note for a specific travel project.
 
-- **HTTP Method:** POST  
-- **URL:** `/api/projects/{projectId}/notes`  
+- **HTTP Method:** POST
+- **URL:** `/api/projects/{projectId}/notes`
 - **Purpose:** Allow a user to add a new note to their existing travel project, specifying content, priority, and optional place tags.
 
 ## 2. Request Details
@@ -17012,7 +17479,7 @@ Create a new note for a specific travel project.
   ```
 
 ## 4. Response Details
-- **201 Created:**  
+- **201 Created:**
   - Body: the newly created `NoteDto`, e.g.:
     ```json
     {
@@ -17024,30 +17491,30 @@ Create a new note for a specific travel project.
       "updated_on": "2025-10-21T12:00:00Z"
     }
     ```
-- **400 Bad Request:** malformed JSON, invalid UUID, or validation failure  
-- **404 Not Found:** project does not exist or does not belong to user  
-- **500 Internal Server Error:** database failures or unexpected errors  
+- **400 Bad Request:** malformed JSON, invalid UUID, or validation failure
+- **404 Not Found:** project does not exist or does not belong to user
+- **500 Internal Server Error:** database failures or unexpected errors
 
 ## 5. Data Flow
-1. **Validate projectId parameter:**  
+1. **Validate projectId parameter:**
    - Parse `projectId` from URL and validate it's a valid UUID.
-2. **Verify project ownership:**  
+2. **Verify project ownership:**
    - Check that the project with `projectId` exists and belongs to `DEFAULT_USER_ID`.
    - Return 404 if project doesn't exist or doesn't belong to the user.
-3. **Parse & validate input:**  
+3. **Parse & validate input:**
    - `await context.request.json()` → handle JSON parse errors.
    - Validate against a Zod schema (`createNoteCommandSchema`).
-4. **Business logic in service:**  
+4. **Business logic in service:**
    - `NoteService.createNote(projectId, command, supabase)`
    - Inserts into `notes`:
      - `project_id = projectId`
      - `content`, `priority`, `place_tags`
-   - Returns inserted row mapped to `NoteDto`.  
-5. **Return response:**  
-   - `createSuccessResponse<NoteDto>(note, 201)`.  
-6. **Error handling:**  
-   - Catch Zod errors → `handleZodError` (400)  
-   - Catch `ApiError` → `createErrorResponse` with its status  
+   - Returns inserted row mapped to `NoteDto`.
+5. **Return response:**
+   - `createSuccessResponse<NoteDto>(note, 201)`.
+6. **Error handling:**
+   - Catch Zod errors → `handleZodError` (400)
+   - Catch `ApiError` → `createErrorResponse` with its status
    - Unexpected → 500 via `handleApiError`
 
 ## 6. Security Considerations
@@ -17072,7 +17539,7 @@ Create a new note for a specific travel project.
 - Response payload is minimal.
 
 ## 9. Implementation Steps
-1. **Define Zod schema**  
+1. **Define Zod schema**
    - Create `src/lib/schemas/note.schema.ts`:
      ```ts
      import { z } from 'zod';
@@ -17097,8 +17564,8 @@ Create a new note for a specific travel project.
      export type ValidatedCreateNoteCommand = z.infer<typeof createNoteCommandSchema>;
      ```
 
-2. **Create NoteService**  
-   - File: `src/services/note.service.ts`  
+2. **Create NoteService**
+   - File: `src/services/note.service.ts`
    - Methods:
      ```ts
      import type { CreateNoteCommand, NoteDto } from '../types';
@@ -17164,8 +17631,8 @@ Create a new note for a specific travel project.
      export const noteService = new NoteService();
      ```
 
-3. **Implement API route**  
-   - File: `src/pages/api/projects/[projectId]/notes/index.ts`  
+3. **Implement API route**
+   - File: `src/pages/api/projects/[projectId]/notes/index.ts`
    - Handler:
      ```ts
      import type { APIRoute } from 'astro';
@@ -17206,11 +17673,11 @@ Create a new note for a specific travel project.
      export const prerender = false;
      ```
 
-4. **Authentication**  
+4. **Authentication**
    - Currently using `DEFAULT_USER_ID` - JWT authentication will be implemented later.
    - Middleware already provides `context.locals.supabase`.
 
-5. **Testing**  
+5. **Testing**
    - Write curl-based tests for Postman import:
      - Invalid projectId format → 400
      - Project not found → 404
@@ -17257,13 +17724,13 @@ FILE: .ai/implementation-plans/project-creation-implementation-plan.md
 ## 1. Endpoint Overview
 Create a new travel project for the authenticated user.
 
-- **HTTP Method:** POST  
-- **URL:** `/api/projects`  
+- **HTTP Method:** POST
+- **URL:** `/api/projects`
 - **Purpose:** Allow a signed-in user to create a new travel project by specifying its name, duration, and optional planned date.
 
 ## 2. Request Details
-- **Headers:**  
-  - `Authorization: Bearer <JWT>`  
+- **Headers:**
+  - `Authorization: Bearer <JWT>`
 - **Request Body (JSON):**
   ```json
   {
@@ -17299,7 +17766,7 @@ Create a new travel project for the authenticated user.
   ```
 
 ## 4. Response Details
-- **201 Created:**  
+- **201 Created:**
   - Body: the newly created `ProjectDto`, e.g.:
     ```json
     {
@@ -17309,34 +17776,34 @@ Create a new travel project for the authenticated user.
       "planned_date": "2026-03-15"
     }
     ```
-- **400 Bad Request:** malformed JSON or validation failure  
-- **401 Unauthorized:** missing or invalid JWT  
-- **500 Internal Server Error:** database failures or unexpected errors  
+- **400 Bad Request:** malformed JSON or validation failure
+- **401 Unauthorized:** missing or invalid JWT
+- **500 Internal Server Error:** database failures or unexpected errors
 
 ## 5. Data Flow
-1. **Authenticate user:**  
-   - Call `verifyUser(context)` → returns `userId` or throws `ApiError(401)`.  
-2. **Parse & validate input:**  
-   - `await context.request.json()` → handle JSON parse errors.  
-   - Validate against a Zod schema (`createProjectCommandSchema`).  
-3. **Business logic in service:**  
-   - `ProjectService.createProject(userId, command, supabase)`  
+1. **Authenticate user:**
+   - Call `verifyUser(context)` → returns `userId` or throws `ApiError(401)`.
+2. **Parse & validate input:**
+   - `await context.request.json()` → handle JSON parse errors.
+   - Validate against a Zod schema (`createProjectCommandSchema`).
+3. **Business logic in service:**
+   - `ProjectService.createProject(userId, command, supabase)`
    - Inserts into `travel_projects`:
      - `user_id = userId`
      - `name`, `duration_days`, `planned_date`
-   - Returns inserted row mapped to `ProjectDto`.  
-4. **Return response:**  
-   - `createSuccessResponse<ProjectDto>(project, 201)`.  
-5. **Error handling:**  
-   - Catch Zod errors → `handleZodError` (400)  
-   - Catch `ApiError` → `createErrorResponse` with its status  
+   - Returns inserted row mapped to `ProjectDto`.
+4. **Return response:**
+   - `createSuccessResponse<ProjectDto>(project, 201)`.
+5. **Error handling:**
+   - Catch Zod errors → `handleZodError` (400)
+   - Catch `ApiError` → `createErrorResponse` with its status
    - Unexpected → 500 via `handleApiError`
 
 ## 6. Security Considerations
-- **Authentication:** require and validate Bearer JWT using Supabase auth.  
-- **Row ownership:** `service.createProject` uses only the verified `userId` (no ability to set arbitrary `user_id`).  
-- **Input sanitization:** Zod schema enforces correct types and formats.  
-- **SQL injection:** Supabase client is parameterized.  
+- **Authentication:** require and validate Bearer JWT using Supabase auth.
+- **Row ownership:** `service.createProject` uses only the verified `userId` (no ability to set arbitrary `user_id`).
+- **Input sanitization:** Zod schema enforces correct types and formats.
+- **SQL injection:** Supabase client is parameterized.
 
 ## 7. Error Handling
 | Scenario                                    | Status Code | Handling                                  |
@@ -17353,7 +17820,7 @@ Create a new travel project for the authenticated user.
 - Response payload is minimal.
 
 ## 9. Implementation Steps
-1. **Define Zod schema**  
+1. **Define Zod schema**
    - Create `src/lib/schemas/project.schema.ts`:
      ```ts
      import { z } from 'zod';
@@ -17368,8 +17835,8 @@ Create a new travel project for the authenticated user.
      });
      export type ValidatedCreateProjectCommand = z.infer<typeof createProjectCommandSchema>;
      ```
-2. **Create ProjectService**  
-   - File: `src/services/project.service.ts`  
+2. **Create ProjectService**
+   - File: `src/services/project.service.ts`
    - Method:
      ```ts
      import type { CreateProjectCommand, ProjectDto } from '../types';
@@ -17400,8 +17867,8 @@ Create a new travel project for the authenticated user.
 
      export const projectService = new ProjectService();
      ```
-3. **Implement API route**  
-   - File: `src/pages/api/projects/index.ts`  
+3. **Implement API route**
+   - File: `src/pages/api/projects/index.ts`
    - Handler:
      ```ts
      import type { APIRoute } from 'astro';
@@ -17426,14 +17893,14 @@ Create a new travel project for the authenticated user.
        }
      };
      ```
-4. **Wire up authentication**  
-   - Ensure `src/middleware/index.ts` applies Supabase client and that `verifyUser` is available.  
-   - Confirm `context.locals.supabase` is the Supabase client.  
-5. **Testing**  
-   - Write minimal integration tests for happy path and error cases:  
-     - Missing token → 401  
-     - Invalid payload → 400  
-     - Successful creation → 201 + returned object  
+4. **Wire up authentication**
+   - Ensure `src/middleware/index.ts` applies Supabase client and that `verifyUser` is available.
+   - Confirm `context.locals.supabase` is the Supabase client.
+5. **Testing**
+   - Write minimal integration tests for happy path and error cases:
+     - Missing token → 401
+     - Invalid payload → 400
+     - Successful creation → 201 + returned object
 
 
 
@@ -17445,8 +17912,8 @@ FILE: .ai/implementation-plans/update-project.md
 ## 1. Endpoint Overview
 Update an existing travel project.
 
-- **HTTP Method:** PATCH  
-- **URL:** `/api/projects/{projectId}`  
+- **HTTP Method:** PATCH
+- **URL:** `/api/projects/{projectId}`
 - **Purpose:** Update project fields (all optional).
 
 ## 2. Request Details
@@ -17478,8 +17945,8 @@ Update an existing travel project.
 FILE: .cursor/rules/api-supabase-astro-init.mdc
 ================================================
 ---
-description: 
-globs: 
+description:
+globs:
 alwaysApply: false
 ---
 # Supabase Astro Initialization
@@ -17569,7 +18036,7 @@ This file augments the global types to include the Supabase client on the Astro 
 FILE: .cursor/rules/astro.mdc
 ================================================
 ---
-description: 
+description:
 globs: *.astro
 alwaysApply: false
 ---
@@ -17594,7 +18061,7 @@ alwaysApply: false
 FILE: .cursor/rules/backend.mdc
 ================================================
 ---
-description: 
+description:
 globs: src/db/*.ts,src/middleware/*.ts,src/lib/*.ts
 alwaysApply: false
 ---
@@ -17611,8 +18078,8 @@ alwaysApply: false
 FILE: .cursor/rules/db-supabase-migrations.mdc
 ================================================
 ---
-description: 
-globs: 
+description:
+globs:
 alwaysApply: false
 ---
 # Database: Create migration
@@ -17667,7 +18134,7 @@ The generated SQL code should be production-ready, well-documented, and aligned 
 FILE: .cursor/rules/frontend.mdc
 ================================================
 ---
-description: 
+description:
 globs: *.tsx,*.astro
 alwaysApply: false
 ---
@@ -17709,7 +18176,7 @@ alwaysApply: false
 FILE: .cursor/rules/react.mdc
 ================================================
 ---
-description: 
+description:
 globs: *.tsx
 alwaysApply: false
 ---
@@ -17731,8 +18198,8 @@ alwaysApply: false
 FILE: .cursor/rules/shared.mdc
 ================================================
 ---
-description: 
-globs: 
+description:
+globs:
 alwaysApply: true
 ---
 # AI Rules for {app-name}
@@ -17760,7 +18227,7 @@ When introducing changes to the project, always follow the directory structure b
 - `./src/types.ts` - Shared types for backend and frontend (Entities, DTOs)
 - `./src/components` - Client-side components written in Astro (static) and React (dynamic)
 - `./src/components/ui` - Client-side components from Shadcn/ui
-- `./src/lib` - Services and helpers 
+- `./src/lib` - Services and helpers
 - `./src/assets` - static internal assets
 - `./public` - public assets
 
@@ -18050,8 +18517,8 @@ Verify whether auth pages are rendered server-side, either by `export const prer
 FILE: .cursor/rules/ui-shadcn-helper.mdc
 ================================================
 ---
-description: 
-globs: 
+description:
+globs:
 alwaysApply: false
 ---
 # Shadcn UI Components
@@ -18483,3 +18950,4 @@ Pamiętaj, aby plan testów był:
 Rozpocznij od analizy, a następnie przejdź do tworzenia planu testów. Twój końcowy wynik powinien składać się tylko z planu testów i nie powinien powielać ani streszczać żadnej pracy wykonanej w bloku analizy projektu.
 
 Przedstaw ten plan w formacie Markdown.
+$$

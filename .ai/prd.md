@@ -1,11 +1,15 @@
 # Dokument wymagań produktu (PRD) - VacationPlanner
+
 ## 1. Przegląd produktu
+
 VacationPlanner to aplikacja webowa umożliwiająca użytkownikom zapisywanie i zarządzanie swobodnymi notatkami o planowanych podróżach, grupowanie ich w projekty podróży oraz generowanie szczegółowych planów wycieczek wykorzystujących AI. Użytkownicy definiują priorytet atrakcji i planowaną datę, a system automatycznie tworzy harmonogram dzienny zgodnie z preferencjami.
 
 ## 2. Problem użytkownika
+
 Planowanie angażujących i interesujących wycieczek jest czasochłonne, wymaga wiedzy o miejscach i organizacji czasu. Użytkownicy potrzebują narzędzia, które przekształci luźne notatki o miejscach i czasie w gotowe plany uwzględniające priorytety, liczbę osób i preferencje turystyczne.
 
 ## 3. Wymagania funkcjonalne
+
 - Rejestracja i logowanie (email/hasło) z weryfikacją mailową, wygasającymi linkami oraz możliwością resetowania hasła
 - Strona profilu z zapisem preferencji turystycznych użytkownika
 - CRUD projektów podróży z metadanymi: nazwa, przybliżona długość, planowana data
@@ -15,6 +19,7 @@ Planowanie angażujących i interesujących wycieczek jest czasochłonne, wymaga
 - Logowanie interakcji z AI w osobnej tabeli (prompt, odpowiedź, status, czas wykonania)
 
 ## 4. Granice produktu
+
 - Brak udostępniania planów między kontami
 - Brak zaawansowanej obsługi multimediów (np. zdjęć)
 - Brak rozbudowanego planowania logistyki i czasu
@@ -24,6 +29,7 @@ Planowanie angażujących i interesujących wycieczek jest czasochłonne, wymaga
 - Brak raportu miesięcznego podsumowującego wygenerowane plany w zakładce "Moje raporty"
 
 ## 5. Historyjki użytkowników
+
 - ID: US-001
   Tytuł: Rejestracja konta
   Opis: Jako nowy użytkownik chcę zarejestrować konto podając email i hasło, aby uzyskać dostęp do aplikacji
@@ -120,6 +126,7 @@ Planowanie angażujących i interesujących wycieczek jest czasochłonne, wymaga
   - W przypadku błędu wyświetlany jest komunikat z opcją "Spróbuj ponownie"
 
 ## 6. Metryki sukcesu
+
 - 75% użytkowników generuje co najmniej 3 plany rocznie
 - 90% użytkowników wypełnia preferencje turystyczne w profilu
 - Czas odpowiedzi AI ≤60 sekund

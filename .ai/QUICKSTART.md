@@ -15,6 +15,7 @@ npx supabase status
 ```
 
 Zawartość `.env`:
+
 ```
 SUPABASE_URL=http://127.0.0.1:54321
 SUPABASE_KEY=<skopiuj "Publishable key" z supabase status>
@@ -22,6 +23,7 @@ OPENROUTER_API_KEY=your-openrouter-api-key-here
 ```
 
 **Przykład:**
+
 ```
 SUPABASE_URL=http://127.0.0.1:54321
 SUPABASE_KEY=sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH
@@ -57,8 +59,8 @@ VALUES (
 
 -- Notatki testowe
 INSERT INTO notes (id, project_id, content, priority, place_tags)
-VALUES 
-  ('note-0001-0000-0000-000000000001', 'a1b2c3d4-e5f6-7890-abcd-ef1234567890', 
+VALUES
+  ('note-0001-0000-0000-000000000001', 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
    'Zwiedzić Koloseum', 3, ARRAY['architektura', 'historia']),
   ('note-0001-0000-0000-000000000002', 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
    'Odwiedzić Fontannę di Trevi', 3, ARRAY['zabytki']),
@@ -70,6 +72,7 @@ ON CONFLICT (id) DO NOTHING;
 ## Krok 3: Test w Postmanie (1 minuta)
 
 ### Konfiguracja:
+
 - **Metoda:** `POST`
 - **URL:** `http://localhost:4321/api/projects/a1b2c3d4-e5f6-7890-abcd-ef1234567890/plan`
 - **Headers:**
@@ -115,6 +118,7 @@ ON CONFLICT (id) DO NOTHING;
 **Status:** `200 OK`
 
 **Response:**
+
 ```json
 {
   "schedule": [
@@ -141,9 +145,9 @@ ON CONFLICT (id) DO NOTHING;
 Sprawdź w Supabase Studio, że wpis został dodany do `ai_logs`:
 
 ```sql
-SELECT id, status, duration_ms, created_on 
-FROM ai_logs 
-ORDER BY created_on DESC 
+SELECT id, status, duration_ms, created_on
+FROM ai_logs
+ORDER BY created_on DESC
 LIMIT 1;
 ```
 
@@ -196,14 +200,13 @@ Powinien mieć `status = 'success'` i `duration_ms` między 200-1000.
 
 ## 🐛 Troubleshooting:
 
-| Problem | Rozwiązanie |
-|---------|-------------|
-| `ECONNREFUSED` | Sprawdź czy serwer działa: `npm run dev` |
-| `404 Not Found` | Sprawdź URL - port to `4321` |
-| `500 Server Error` | Sprawdź logi w konsoli serwera |
-| Projekt nie istnieje | Uruchom ponownie SQL z danymi testowymi |
+| Problem              | Rozwiązanie                              |
+| -------------------- | ---------------------------------------- |
+| `ECONNREFUSED`       | Sprawdź czy serwer działa: `npm run dev` |
+| `404 Not Found`      | Sprawdź URL - port to `4321`             |
+| `500 Server Error`   | Sprawdź logi w konsoli serwera           |
+| Projekt nie istnieje | Uruchom ponownie SQL z danymi testowymi  |
 
 ---
 
 **Gotowe!** 🎉 Endpoint działa i jest gotowy do testowania.
-

@@ -122,9 +122,7 @@ export function NoteModal({ isOpen, mode, note, onSubmit, onClose, isLoading = f
   };
 
   const handleTagToggle = (tag: string) => {
-    setSelectedTags((prev) => 
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-    );
+    setSelectedTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
   };
 
   const handleRemoveTag = (tagToRemove: string) => {
@@ -228,7 +226,7 @@ export function NoteModal({ isOpen, mode, note, onSubmit, onClose, isLoading = f
                     ))}
                   </div>
                 )}
-                
+
                 {/* Tag Selection Grid */}
                 <div className="grid grid-cols-2 gap-2 p-3 border rounded-md max-h-48 overflow-y-auto">
                   {NOTE_TAGS.map((tag) => (

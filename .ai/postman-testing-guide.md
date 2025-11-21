@@ -3,7 +3,9 @@
 ## Przygotowanie środowiska
 
 ### 1. Uruchomienie serwera deweloperskiego
+
 Najpierw uruchom serwer Astro w trybie deweloperskim:
+
 ```bash
 npm run dev
 ```
@@ -15,11 +17,13 @@ Serwer uruchomi się domyślnie na `http://localhost:4321`
 Musisz utworzyć dane testowe w lokalnej bazie Supabase:
 
 #### a) Uruchom lokalną instancję Supabase (jeśli jeszcze nie działa):
+
 ```bash
 npx supabase start
 ```
 
 #### b) Utwórz projekt testowy w tabeli `travel_projects`:
+
 ```sql
 INSERT INTO travel_projects (id, name, duration_days, user_id, planned_date)
 VALUES (
@@ -32,9 +36,10 @@ VALUES (
 ```
 
 #### c) Utwórz notatki testowe dla projektu w tabeli `notes`:
+
 ```sql
 INSERT INTO notes (id, project_id, content, priority, place_tags)
-VALUES 
+VALUES
   (
     'note-0001-0000-0000-000000000001',
     'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
@@ -83,8 +88,8 @@ VALUES
 
 Dodaj następujący nagłówek:
 
-| Key | Value |
-|-----|-------|
+| Key            | Value              |
+| -------------- | ------------------ |
 | `Content-Type` | `application/json` |
 
 **UWAGA**: Autoryzacja JWT nie jest wymagana na tym etapie. Endpoint używa `DEFAULT_USER_ID` z konfiguracji.
@@ -94,6 +99,7 @@ Dodaj następujący nagłówek:
 Wybierz zakładkę **Body** → **raw** → **JSON**
 
 #### Przykład 1: Żądanie z preferencjami (pełne)
+
 ```json
 {
   "model": "claude-3.5-sonnet",
@@ -130,6 +136,7 @@ Wybierz zakładkę **Body** → **raw** → **JSON**
 ```
 
 #### Przykład 2: Żądanie bez preferencji (minimalne)
+
 ```json
 {
   "model": "gpt-5",
@@ -192,6 +199,7 @@ Kliknij przycisk **Send**
 ### ❌ Błąd walidacji (400 Bad Request)
 
 **Przykład: Nieprawidłowy UUID projektu**
+
 ```json
 {
   "error": "Validation Error",
@@ -207,6 +215,7 @@ Kliknij przycisk **Send**
 ```
 
 **Przykład: Nieprawidłowy model AI**
+
 ```json
 {
   "error": "Validation Error",
@@ -222,6 +231,7 @@ Kliknij przycisk **Send**
 ```
 
 **Przykład: Brak wymaganych pól**
+
 ```json
 {
   "error": "Validation Error",
@@ -260,30 +270,37 @@ Kliknij przycisk **Send**
 ## Scenariusze testowe
 
 ### Test 1: Prawidłowe żądanie z preferencjami
+
 - **Oczekiwany wynik**: 200 OK z wygenerowanym planem
 - **Sprawdź**: czy plan zawiera aktywności z notatek i kategorii preferencji
 
 ### Test 2: Prawidłowe żądanie bez preferencji
+
 - **Oczekiwany wynik**: 200 OK z wygenerowanym planem
 - **Sprawdź**: czy plan zawiera podstawowe aktywności (hotel, obiad)
 
 ### Test 3: Nieprawidłowy UUID projektu
+
 - **URL**: `http://localhost:4321/api/projects/invalid-uuid/plan`
 - **Oczekiwany wynik**: 400 Bad Request
 
 ### Test 4: Projekt nie istnieje
+
 - **URL**: `http://localhost:4321/api/projects/00000000-0000-0000-0000-000000000000/plan`
 - **Oczekiwany wynik**: 404 Not Found
 
 ### Test 5: Nieprawidłowy model AI
+
 - **Body**: `{ "model": "gpt-10", "notes": [...] }`
 - **Oczekiwany wynik**: 400 Bad Request
 
 ### Test 6: Notatka nie należy do projektu
+
 - **Body**: użyj UUID notatki, która nie istnieje lub należy do innego projektu
 - **Oczekiwany wynik**: 400 Bad Request z komunikatem o nieprawidłowej notatce
 
 ### Test 7: Symulacja błędu AI (losowo 5% przypadków)
+
 - **Oczekiwany wynik**: Może wystąpić 500 Internal Server Error
 - **Sprawdź**: czy wpis w tabeli `ai_logs` ma status `failure`
 
@@ -292,7 +309,7 @@ Kliknij przycisk **Send**
 Po każdym żądaniu sprawdź tabelę `ai_logs`:
 
 ```sql
-SELECT 
+SELECT
   id,
   project_id,
   status,
@@ -306,6 +323,7 @@ LIMIT 5;
 ```
 
 **Sprawdź**:
+
 - Czy wpis został utworzony
 - Czy `status` to `success` lub `failure`
 - Czy `duration_ms` jest ustawione
@@ -321,7 +339,7 @@ LIMIT 5;
 ## Priorytety notatek
 
 - `1` - niski priorytet
-- `2` - średni priorytet  
+- `2` - średni priorytet
 - `3` - wysoki priorytet
 
 Notatki z priorytetem >= 2 będą uwzględniane w generowaniu aktywności.
@@ -329,19 +347,22 @@ Notatki z priorytetem >= 2 będą uwzględniane w generowaniu aktywności.
 ## Troubleshooting
 
 ### Problem: Serwer nie odpowiada
+
 - Sprawdź czy serwer działa: `npm run dev`
 - Sprawdź port: domyślnie `4321`
 
 ### Problem: 404 Not Found (na endpoint)
+
 - Sprawdź czy URL jest poprawny
 - Sprawdź czy struktura katalogów API jest prawidłowa
 
 ### Problem: 500 Internal Server Error
+
 - Sprawdź logi serwera w konsoli
 - Sprawdź czy Supabase działa lokalnie
 - Sprawdź czy dane testowe zostały utworzone
 
 ### Problem: Timeout
+
 - Mock AI service symuluje opóźnienie 200-1000ms
 - Zwiększ timeout w Postmanie (Settings → General → Request timeout)
-

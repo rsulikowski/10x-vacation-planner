@@ -37,7 +37,9 @@ export function NoteDeleteDialog({ isOpen, note, isLoading, onConfirm, onCancel 
           <AlertDialogTitle>Delete Note?</AlertDialogTitle>
           <AlertDialogDescription>
             Are you sure you want to delete this note? This action cannot be undone.
-            {note && <span className="mt-2 block text-sm italic text-muted-foreground">"{displayContent}"</span>}
+            {note && (
+              <span className="mt-2 block text-sm italic text-muted-foreground">&quot;{displayContent}&quot;</span>
+            )}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

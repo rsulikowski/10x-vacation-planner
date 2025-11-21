@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import type { NoteDto, NotesListResponseDto, UpdateNoteCommand } from "../types";
 import { ApiError } from "../lib/api-utils";
 import type { SupabaseClient } from "../db/supabase.client";

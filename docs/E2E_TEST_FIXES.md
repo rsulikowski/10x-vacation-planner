@@ -35,25 +35,26 @@ Implemented Playwright's **authentication state storage** pattern for efficient 
 **File:** `e2e/auth.setup.ts`
 
 ```typescript
-import { test as setup, expect } from '@playwright/test';
-import { LoginPage } from './pages';
+import { test as setup, expect } from "@playwright/test";
+import { LoginPage } from "./pages";
 
-const authFile = 'playwright/.auth/user.json';
+const authFile = "playwright/.auth/user.json";
 
-setup('authenticate', async ({ page }) => {
+setup("authenticate", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.goto();
   await loginPage.login(
-    process.env.TEST_USER_EMAIL || 'test@example.com',
-    process.env.TEST_USER_PASSWORD || 'testpassword123'
+    process.env.TEST_USER_EMAIL || "test@example.com",
+    process.env.TEST_USER_PASSWORD || "testpassword123"
   );
   await page.waitForURL(/\/projects/, { timeout: 10000 });
-  await expect(page.getByRole('heading', { name: /projects/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /projects/i })).toBeVisible();
   await page.context().storageState({ path: authFile });
 });
 ```
 
-**Purpose:** 
+**Purpose:**
+
 - Runs once before all tests
 - Logs in with test credentials
 - Saves authenticated session to file
@@ -64,6 +65,7 @@ setup('authenticate', async ({ page }) => {
 **File:** `playwright.config.ts`
 
 **Changes:**
+
 - Added `setup` project that runs authentication
 - Configured `chromium` project to use stored auth state
 - Made `chromium` depend on `setup` project
@@ -77,7 +79,7 @@ projects: [
   },
   {
     name: 'chromium',
-    use: { 
+    use: {
       ...devices['Desktop Chrome'],
       // Use prepared auth state
       storageState: 'playwright/.auth/user.json',
@@ -92,6 +94,7 @@ projects: [
 **File:** `e2e/create-project.spec.ts`
 
 **Changes:**
+
 - Removed TODO comment about authentication
 - Added note explaining auth is handled by setup file
 
@@ -99,7 +102,7 @@ projects: [
 test.beforeEach(async ({ page }) => {
   projectsPage = new ProjectsPage(page);
   projectFormModal = new ProjectFormModal(page);
-  
+
   // Authentication is handled by auth.setup.ts
   // The authenticated state is reused across all tests
   await projectsPage.goto();
@@ -111,6 +114,7 @@ test.beforeEach(async ({ page }) => {
 **File:** `.gitignore`
 
 **Added:**
+
 ```
 playwright/.auth/
 ```
@@ -122,6 +126,7 @@ This ensures authentication state is not committed to version control.
 **File:** `e2e/E2E_TESTING_SETUP.md`
 
 Comprehensive guide covering:
+
 - Problem explanation
 - Solution overview
 - Setup instructions
@@ -135,6 +140,7 @@ Comprehensive guide covering:
 You need a valid test user in your Supabase database:
 
 **Option A: Via Supabase Dashboard**
+
 1. Go to Supabase Dashboard → Authentication → Users
 2. Click "Add User"
 3. Email: `test@example.com`
@@ -142,6 +148,7 @@ You need a valid test user in your Supabase database:
 5. Mark email as verified
 
 **Option B: Use existing user**
+
 - Use any existing user credentials
 - Update environment variables accordingly
 
@@ -174,6 +181,7 @@ npm run test:e2e
 ### Step 4: Verify Success
 
 You should see:
+
 ```
 Running 9 tests using 1 worker
   ✓  [setup] › e2e/auth.setup.ts:10:1 › authenticate (2s)
@@ -209,10 +217,12 @@ Running 9 tests using 1 worker
 ### 📊 Performance Impact
 
 **Before (with login in each test):**
+
 - 8 tests × 2-3 seconds for login = ~20 seconds overhead
 - Tests run serially (can't parallelize)
 
 **After (with auth state):**
+
 - 1 login × 2 seconds = 2 seconds total
 - Tests run in parallel
 - **~90% faster test execution**
@@ -224,6 +234,7 @@ Running 9 tests using 1 worker
 **Cause:** Authentication not working
 
 **Solutions:**
+
 1. Verify test user exists in Supabase
 2. Check `.env.test` credentials are correct
 3. Delete `playwright/.auth/` and re-run tests
@@ -233,7 +244,8 @@ Running 9 tests using 1 worker
 
 **Cause:** Setup project not running
 
-**Solution:** 
+**Solution:**
+
 ```bash
 # Force re-run setup
 rm -rf playwright/.auth
@@ -245,6 +257,7 @@ npm run test:e2e
 **Cause:** Environment variables not loaded
 
 **Solution:**
+
 1. Ensure `.env.test` exists
 2. Verify `dotenv` is configured in `playwright.config.ts` ✅
 3. Restart tests
@@ -252,16 +265,19 @@ npm run test:e2e
 ## Files Modified/Created
 
 ### ✅ Created
+
 - `e2e/auth.setup.ts` - Authentication setup
 - `e2e/E2E_TESTING_SETUP.md` - Setup documentation
 - `E2E_TEST_FIXES.md` - This file
 
 ### ✅ Modified
+
 - `playwright.config.ts` - Added setup project and auth state
 - `e2e/create-project.spec.ts` - Updated auth comments
 - `.gitignore` - Added `playwright/.auth/`
 
 ### 📝 Required (by user)
+
 - `.env.test` - Test environment variables (create this!)
 
 ## Quick Start Checklist
@@ -286,6 +302,7 @@ npm run test:e2e
 ### About Test Data Cleanup
 
 The tests create real projects in the database. Consider:
+
 - Using a separate test database
 - Cleaning up test data after tests
 - Using unique project names with timestamps
@@ -293,6 +310,7 @@ The tests create real projects in the database. Consider:
 ### About CI/CD
 
 When running in CI:
+
 - Ensure `.env.test` is configured in CI environment
 - Test user must exist in CI database
 - Consider using database seeding scripts
@@ -300,6 +318,7 @@ When running in CI:
 ### About Multiple Test Users
 
 If you need different user roles:
+
 1. Create multiple setup files (e.g., `auth.admin.setup.ts`)
 2. Create multiple storage states
 3. Use different states for different test suites
@@ -309,9 +328,8 @@ If you need different user roles:
 The tests were failing because they couldn't access the protected `/projects` route without authentication. By implementing Playwright's authentication state storage pattern, we:
 
 1. ✅ Authenticate once before all tests
-2. ✅ Reuse authentication state across tests  
+2. ✅ Reuse authentication state across tests
 3. ✅ Enable fast parallel test execution
 4. ✅ Maintain test simplicity and reliability
 
 **Next action:** Create a test user in Supabase and configure `.env.test` with the credentials, then run `npm run test:e2e`.
-

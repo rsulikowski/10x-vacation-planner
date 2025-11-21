@@ -14,6 +14,7 @@
 This document defines the technical architecture for implementing user authentication in VacationPlanner. The system will provide login and logout functionality using Supabase Auth as the authentication provider. The architecture maintains compatibility with the existing SSR (Server-Side Rendering) model configured in Astro and ensures all existing features continue to work without disruption.
 
 Key architectural decisions:
+
 - **Server-Side Session Management**: Leverage Supabase Auth with server-side session verification
 - **Cookie-Based Authentication**: Use HTTP-only cookies for secure token storage
 - **Middleware-Based Protection**: Implement route protection at the middleware layer
@@ -33,6 +34,7 @@ The authentication system introduces new pages and modifies existing ones to sup
 All authentication pages will be Astro pages (`.astro`) that render forms using React components for interactivity. This follows the existing pattern where Astro handles routing and SSR, while React provides client-side interactivity.
 
 **Page: `/login`** (`src/pages/auth/login.astro`)
+
 - **Purpose**: User login interface
 - **Accessibility**: Public (unauthenticated only - authenticated users redirect to `/projects`)
 - **Components**: LoginForm (React component)
@@ -42,16 +44,18 @@ All authentication pages will be Astro pages (`.astro`) that render forms using 
 #### 1.1.2 Modified Existing Pages
 
 **Page: `/` (`src/pages/index.astro`)**
+
 - **Current State**: Shows Welcome component
 - **New Behavior**:
   - If **unauthenticated**: Show landing page with login button
   - If **authenticated**: Redirect to `/projects`
-- **Components**: 
+- **Components**:
   - LandingPage (new Astro component replacing Welcome)
   - Includes hero section, feature highlights, CTA button to login
 - **Server Logic**: Check authentication status in Astro frontmatter; redirect authenticated users
 
 **Page: `/projects`** (`src/pages/projects/index.astro`)
+
 - **Current State**: Public access, shows ProjectsPage
 - **New Behavior**: Protected route - requires authentication
 - **Components**: ProjectsPage (existing, no changes)
@@ -59,6 +63,7 @@ All authentication pages will be Astro pages (`.astro`) that render forms using 
 - **Layout**: Layout.astro (extended with user menu)
 
 **Page: `/projects/[projectId]/notes`** (`src/pages/projects/[projectId]/notes.astro`)
+
 - **Current State**: Public access
 - **New Behavior**: Protected route - requires authentication
 - **Server Logic**: Middleware will handle redirect to `/login` if unauthenticated
@@ -71,6 +76,7 @@ All authentication pages will be Astro pages (`.astro`) that render forms using 
 New minimal layout for authentication pages (login, register, password reset).
 
 **Features:**
+
 - Centered card-based design
 - No main navigation
 - Theme toggle in top-right corner (reuses ThemeToggle component)
@@ -78,10 +84,11 @@ New minimal layout for authentication pages (login, register, password reset).
 - Background with subtle gradient
 
 **Structure:**
+
 ```astro
 <!doctype html>
 <html lang="en">
-  <head>...</head>
+  <head></head>...
   <body>
     <ThemeToggle />
     <main class="min-h-screen flex items-center justify-center p-4">
@@ -97,6 +104,7 @@ New minimal layout for authentication pages (login, register, password reset).
 Extended to support authenticated state and user menu.
 
 **Changes:**
+
 - Add navigation header with:
   - Logo/App name (left)
   - Navigation links: Projects (for authenticated users)
@@ -105,12 +113,14 @@ Extended to support authenticated state and user menu.
 - Responsive navigation for mobile
 
 **User Menu Component** (`src/components/UserMenu.tsx`) - React
+
 - Displays user email
 - Dropdown menu with single action:
   - "Logout" button → triggers logout API call
 - Uses Shadcn/ui DropdownMenu component
 
 **Navigation Links:**
+
 - "Projects" → `/projects` (visible only when authenticated)
 
 ### 1.3 React Components Architecture
@@ -124,16 +134,19 @@ All forms are interactive React components using controlled inputs with client-s
 **Props:** None (standalone)
 
 **State:**
+
 - `email: string` - controlled input
 - `password: string` - controlled input
 - `isLoading: boolean` - submission state
 - `error: string | null` - error message from API
 
 **Validation:**
+
 - Email: Required, valid email format
 - Password: Required, minimum 6 characters (client-side)
 
 **User Flow:**
+
 1. User enters email and password
 2. Client validates inputs
 3. On submit:
@@ -143,11 +156,13 @@ All forms are interactive React components using controlled inputs with client-s
    - On error (400/401/500): Display error message below form
 
 **Error Messages:**
+
 - 400: "Invalid email or password format"
 - 401: "Invalid credentials. Please try again."
 - 500: "An unexpected error occurred. Please try again later."
 
 **Accessibility:**
+
 - Labels for all inputs
 - Error messages associated with inputs via `aria-describedby`
 - Submit button disabled during loading with `aria-busy`
@@ -158,15 +173,18 @@ All forms are interactive React components using controlled inputs with client-s
 **Location:** `src/components/UserMenu.tsx`
 
 **Props:**
+
 - `userEmail: string` - displayed in dropdown
 
 **Features:**
+
 - Email initial badge (first letter of email)
 - Dropdown menu (Shadcn DropdownMenu)
 - Single menu item:
   - Logout → calls logout API and reloads page
 
 **Logout Flow:**
+
 1. User clicks "Logout"
 2. POST to `/api/auth/logout`
 3. On success: `window.location.href = '/'` (reload to clear state)
@@ -175,10 +193,12 @@ All forms are interactive React components using controlled inputs with client-s
 ### 1.4 Client-Side Routing and Navigation
 
 **Redirects After Authentication Actions:**
+
 - After successful login → `/projects`
 - After logout → `/` (home page)
 
 **Protected Route Behavior:**
+
 - Middleware intercepts protected routes
 - If not authenticated → redirect to `/login?redirect={original_path}`
 - After login → redirect to original requested path (or `/projects` by default)
@@ -188,12 +208,14 @@ All forms are interactive React components using controlled inputs with client-s
 #### 1.5.1 Form Validation Errors
 
 **Display Strategy:** Inline errors below form fields
+
 - Red border on invalid input
 - Error icon + message below field
 - Error message connected via `aria-describedby`
 - First invalid field receives focus
 
 **Validation Timing:**
+
 - On blur: Validate individual field
 - On submit: Validate all fields
 - On change (after first blur): Real-time validation
@@ -201,11 +223,13 @@ All forms are interactive React components using controlled inputs with client-s
 #### 1.5.2 API Errors
 
 **Display Strategy:** Alert/banner above form
+
 - Error icon + error message
 - Dismissible close button
 - Color-coded by severity (red for errors)
 
 **Common Error Scenarios:**
+
 - Network error: "Unable to connect. Please check your internet connection."
 - 500 Server error: "An unexpected error occurred. Please try again later."
 - 401 Unauthorized: "Your session has expired. Please log in again."
@@ -213,7 +237,8 @@ All forms are interactive React components using controlled inputs with client-s
 
 #### 1.5.3 Success Messages
 
-**Display Strategy:** 
+**Display Strategy:**
+
 - Toast notifications (using Sonner) for non-critical actions
 - In-page success messages for critical flows (registration, password reset)
 - Success messages include:
@@ -222,6 +247,7 @@ All forms are interactive React components using controlled inputs with client-s
   - Next action guidance
 
 **Examples:**
+
 - Login success: Auto-redirect to projects (seamless experience)
 - Logout success: Redirect to home page
 
@@ -255,6 +281,7 @@ All authentication endpoints follow REST conventions and are located in `src/pag
 **Purpose:** Authenticate user and create session
 
 **Request Body:**
+
 ```typescript
 {
   email: string;
@@ -263,6 +290,7 @@ All authentication endpoints follow REST conventions and are located in `src/pag
 ```
 
 **Validation Schema:**
+
 ```typescript
 export const loginSchema = z.object({
   email: z.string().email("Invalid email format"),
@@ -271,6 +299,7 @@ export const loginSchema = z.object({
 ```
 
 **Server Logic:**
+
 1. Parse and validate request body
 2. Call Supabase Auth `signInWithPassword()` with credentials
 3. On success, Supabase returns session with access_token and refresh_token
@@ -280,6 +309,7 @@ export const loginSchema = z.object({
 5. Return success response with user info
 
 **Response 200 Success:**
+
 ```typescript
 {
   user: {
@@ -291,6 +321,7 @@ export const loginSchema = z.object({
 ```
 
 **Error Responses:**
+
 - 400: Validation error
 - 401: Invalid credentials
 - 500: Server error
@@ -300,6 +331,7 @@ export const loginSchema = z.object({
 **Service Dependency:** `AuthService.login()` + cookie management
 
 **Cookie Settings:**
+
 - Path: `/`
 - MaxAge: 7 days (refresh token), 1 hour (access token)
 - HttpOnly: true
@@ -315,19 +347,22 @@ export const loginSchema = z.object({
 **Request Body:** None (reads cookies)
 
 **Server Logic:**
+
 1. Extract access token from `sb-access-token` cookie
 2. Call Supabase Auth `signOut()` with token
 3. Clear authentication cookies (set MaxAge to 0)
 4. Return success response
 
 **Response 200 Success:**
+
 ```typescript
 {
-  message: "Logout successful"
+  message: "Logout successful";
 }
 ```
 
 **Error Responses:**
+
 - 500: Server error
 
 **Implementation File:** `src/pages/api/auth/logout.ts`
@@ -345,6 +380,7 @@ All authentication business logic is encapsulated in the `AuthService` class.
 **Location:** `src/services/auth.service.ts`
 
 **Responsibilities:**
+
 - Interact with Supabase Auth API
 - Manage user sessions
 - Handle user login and logout
@@ -356,33 +392,24 @@ export class AuthService {
   /**
    * Authenticate user and return session
    */
-  async login(
-    email: string, 
-    password: string, 
-    db: DbClient
-  ): Promise<LoginResult>
+  async login(email: string, password: string, db: DbClient): Promise<LoginResult>;
 
   /**
    * Sign out user (invalidate session)
    */
-  async logout(
-    accessToken: string, 
-    db: DbClient
-  ): Promise<void>
+  async logout(accessToken: string, db: DbClient): Promise<void>;
 
   /**
    * Verify user session (used by middleware)
    */
-  async verifySession(
-    accessToken: string, 
-    db: DbClient
-  ): Promise<User | null>
+  async verifySession(accessToken: string, db: DbClient): Promise<User | null>;
 }
 
 export const authService = new AuthService();
 ```
 
 **Error Handling:**
+
 - Throws `ApiError` with appropriate status codes
 - Logs errors for debugging
 - Sanitizes error messages before returning to client
@@ -396,6 +423,7 @@ export const authService = new AuthService();
 Supabase manages the `auth.users` table internally. We don't modify this table directly.
 
 **Fields available from Supabase Auth:**
+
 - `id` (UUID) - user ID
 - `email` (string) - user email
 - `created_at` (timestamp) - account creation date
@@ -412,6 +440,7 @@ Supabase manages the `auth.users` table internally. We don't modify this table d
 **RLS Update Required:** Ensure policies reference `auth.uid()` instead of hardcoded user ID
 
 **Updated RLS Policies:**
+
 ```sql
 -- Drop existing policies (if any)
 DROP POLICY IF EXISTS travel_projects_select_policy ON travel_projects;
@@ -445,6 +474,7 @@ CREATE POLICY travel_projects_delete_policy ON travel_projects
 Notes are linked to projects, so RLS policies should verify project ownership.
 
 **Updated RLS Policies:**
+
 ```sql
 -- Drop existing policies
 DROP POLICY IF EXISTS notes_select_policy ON notes;
@@ -456,8 +486,8 @@ DROP POLICY IF EXISTS notes_delete_policy ON notes;
 CREATE POLICY notes_select_policy ON notes
   FOR SELECT USING (
     EXISTS (
-      SELECT 1 FROM travel_projects 
-      WHERE travel_projects.id = notes.project_id 
+      SELECT 1 FROM travel_projects
+      WHERE travel_projects.id = notes.project_id
       AND travel_projects.user_id = auth.uid()
     )
   );
@@ -466,8 +496,8 @@ CREATE POLICY notes_select_policy ON notes
 CREATE POLICY notes_insert_policy ON notes
   FOR INSERT WITH CHECK (
     EXISTS (
-      SELECT 1 FROM travel_projects 
-      WHERE travel_projects.id = notes.project_id 
+      SELECT 1 FROM travel_projects
+      WHERE travel_projects.id = notes.project_id
       AND travel_projects.user_id = auth.uid()
     )
   );
@@ -476,8 +506,8 @@ CREATE POLICY notes_insert_policy ON notes
 CREATE POLICY notes_update_policy ON notes
   FOR UPDATE USING (
     EXISTS (
-      SELECT 1 FROM travel_projects 
-      WHERE travel_projects.id = notes.project_id 
+      SELECT 1 FROM travel_projects
+      WHERE travel_projects.id = notes.project_id
       AND travel_projects.user_id = auth.uid()
     )
   );
@@ -486,8 +516,8 @@ CREATE POLICY notes_update_policy ON notes
 CREATE POLICY notes_delete_policy ON notes
   FOR DELETE USING (
     EXISTS (
-      SELECT 1 FROM travel_projects 
-      WHERE travel_projects.id = notes.project_id 
+      SELECT 1 FROM travel_projects
+      WHERE travel_projects.id = notes.project_id
       AND travel_projects.user_id = auth.uid()
     )
   );
@@ -502,6 +532,7 @@ CREATE POLICY notes_delete_policy ON notes
 AI logs are linked to projects, so RLS policies should verify project ownership.
 
 **Updated RLS Policies:**
+
 ```sql
 -- Drop existing policies
 DROP POLICY IF EXISTS ai_logs_select_policy ON ai_logs;
@@ -511,8 +542,8 @@ DROP POLICY IF EXISTS ai_logs_insert_policy ON ai_logs;
 CREATE POLICY ai_logs_select_policy ON ai_logs
   FOR SELECT USING (
     EXISTS (
-      SELECT 1 FROM travel_projects 
-      WHERE travel_projects.id = ai_logs.project_id 
+      SELECT 1 FROM travel_projects
+      WHERE travel_projects.id = ai_logs.project_id
       AND travel_projects.user_id = auth.uid()
     )
   );
@@ -521,8 +552,8 @@ CREATE POLICY ai_logs_select_policy ON ai_logs
 CREATE POLICY ai_logs_insert_policy ON ai_logs
   FOR INSERT WITH CHECK (
     EXISTS (
-      SELECT 1 FROM travel_projects 
-      WHERE travel_projects.id = ai_logs.project_id 
+      SELECT 1 FROM travel_projects
+      WHERE travel_projects.id = ai_logs.project_id
       AND travel_projects.user_id = auth.uid()
     )
   );
@@ -539,13 +570,16 @@ All input validation uses Zod schemas located in `src/lib/schemas/auth.schema.ts
 **New Schema File:** `src/lib/schemas/auth.schema.ts`
 
 **Schema Definitions:**
+
 - `loginSchema` - validates login input
 
 **Validation Rules:**
+
 - **Email:** Must be valid email format (RFC 5322 compliant)
 - **Password:** Minimum 8 characters (client-side validation)
 
 **Error Response Format** (consistent with existing API):
+
 ```typescript
 {
   error: "Validation Error",
@@ -589,11 +623,13 @@ Exception handling follows the existing pattern using `ApiError` class and `hand
    - Unexpected server errors
 
 **Error Logging:**
+
 - All errors logged with `console.error()`
 - Include error type, message, stack trace
 - For production: Use structured logging with error tracking service (e.g., Sentry)
 
 **Error Sanitization:**
+
 - Never expose internal error details to client
 - Generic error messages for 500 errors
 - Specific error messages for validation/authentication errors only
@@ -607,9 +643,11 @@ Exception handling follows the existing pattern using `ApiError` class and `hand
 **File:** `src/middleware/index.ts`
 
 **Current Implementation:**
+
 - Attaches Supabase client to `context.locals`
 
 **Updated Implementation:**
+
 - Attach Supabase client
 - Extract access token from cookies
 - Verify session with Supabase Auth
@@ -631,21 +669,24 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   // If access token exists, verify session
   if (accessToken) {
-    const { data: { user }, error } = await supabaseClient.auth.getUser(accessToken);
-    
+    const {
+      data: { user },
+      error,
+    } = await supabaseClient.auth.getUser(accessToken);
+
     if (!error && user) {
       context.locals.user = user;
     }
   }
 
   // Define protected routes
-  const protectedRoutes = ['/projects'];
-  const authRoutes = ['/login'];
+  const protectedRoutes = ["/projects"];
+  const authRoutes = ["/login"];
   const pathname = new URL(context.request.url).pathname;
 
   // Check if current route is protected
-  const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));
-  const isAuthRoute = authRoutes.some(route => pathname.startsWith(route));
+  const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route));
+  const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route));
 
   // Redirect unauthenticated users from protected routes
   if (isProtectedRoute && !context.locals.user) {
@@ -654,7 +695,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   // Redirect authenticated users from auth pages to projects
   if (isAuthRoute && context.locals.user) {
-    return context.redirect('/projects');
+    return context.redirect("/projects");
   }
 
   return next();
@@ -705,7 +746,7 @@ export const GET: APIRoute = async (context) => {
   try {
     // Extract user from context (set by middleware)
     const user = context.locals.user;
-    
+
     if (!user) {
       throw new ApiError(401, "Unauthorized");
     }
@@ -822,7 +863,6 @@ SUPABASE_KEY=your-anon-key
 - Refresh token rotation (Supabase handles automatically)
 - Session revocation on logout (server-side)
 - CSRF protection via SameSite cookies
-
 
 ### 3.2 Cookie Management
 
@@ -992,7 +1032,7 @@ export function checkRateLimit(key: string, maxAttempts: number, windowMs: numbe
 ```typescript
 export const POST: APIRoute = async (context) => {
   const ip = context.clientAddress;
-  
+
   if (!checkRateLimit(`login:${ip}`, 10, 60 * 60 * 1000)) {
     throw new ApiError(429, "Too many login attempts. Please try again later.");
   }
@@ -1004,6 +1044,7 @@ export const POST: APIRoute = async (context) => {
 #### 3.3.5 Email Enumeration Prevention
 
 **Strategy:**
+
 - Login errors are generic ("Invalid credentials") to prevent email enumeration
 - Don't reveal whether email exists or password is incorrect
 - Protects user privacy and security
@@ -1011,6 +1052,7 @@ export const POST: APIRoute = async (context) => {
 #### 3.3.6 Session Hijacking Prevention
 
 **Mitigations:**
+
 - HTTP-only cookies (prevent JavaScript access)
 - Secure flag on cookies (HTTPS only)
 - Short-lived access tokens (1 hour)
@@ -1023,6 +1065,7 @@ export const POST: APIRoute = async (context) => {
 #### 3.4.1 Loading States
 
 All forms show loading indicators during API calls:
+
 - Disabled form inputs
 - Loading spinner on submit button
 - Button text changes (e.g., "Logging in..." instead of "Log In")
@@ -1052,6 +1095,7 @@ All forms show loading indicators during API calls:
 #### 3.5.1 Manual Testing Scenarios
 
 **Login Flow:**
+
 1. Login with valid credentials → Success, redirect to projects
 2. Login with invalid email → Error: "Invalid credentials"
 3. Login with invalid password → Error: "Invalid credentials"
@@ -1059,11 +1103,13 @@ All forms show loading indicators during API calls:
 5. Login, then close browser and reopen → Stay logged in (refresh token works)
 
 **Session Management:**
+
 1. Login, then logout → Redirect to home, can't access protected routes
 2. Login, wait 1 hour, refresh page → Session refreshed, stay logged in
 3. Login, wait 7 days → Session expired, redirect to login
 
 **Protected Routes:**
+
 1. Access `/projects` without login → Redirect to `/login`
 2. Access `/login` when logged in → Redirect to `/projects`
 3. Logout from any page → Redirect to home
@@ -1071,11 +1117,13 @@ All forms show loading indicators during API calls:
 #### 3.5.2 Automated Testing (Future)
 
 Recommended test frameworks:
+
 - **Unit Tests:** Vitest for service layer and utilities
 - **Integration Tests:** Testing Library for React components
 - **E2E Tests:** Playwright for full user flows
 
 **Priority Test Cases:**
+
 - Login and logout
 - Protected route access
 - Session persistence
@@ -1096,6 +1144,7 @@ Recommended test frameworks:
    - Enable RLS on all tables
 
 **Note:** User accounts must be created manually via Supabase Dashboard. Create test users for development:
+
 ```sql
 -- Example: Create test user via Supabase Dashboard or SQL
 -- Email: test@example.com
@@ -1103,6 +1152,7 @@ Recommended test frameworks:
 ```
 
 **Migration Execution:**
+
 ```bash
 supabase migration up
 ```
@@ -1110,23 +1160,27 @@ supabase migration up
 ### 4.2 Code Migration Steps
 
 **Phase 1: Infrastructure**
+
 1. Update `src/middleware/index.ts` with authentication logic
 2. Create `src/lib/auth/cookies.ts` utility
 3. Update `src/env.d.ts` with User type in Locals
 4. Create `src/lib/schemas/auth.schema.ts` with validation schemas
 
 **Phase 2: Service Layer**
+
 1. Create `src/services/auth.service.ts`
 2. Update `src/services/project.service.ts` to use `auth.uid()` from context
 3. Update `src/services/note.service.ts` (if exists)
 4. Update `src/services/plan.service.ts` (if exists)
 
 **Phase 3: API Endpoints**
+
 1. Create authentication endpoints in `src/pages/api/auth/` (login, logout)
 2. Update existing API endpoints to use `context.locals.user`
 3. Remove `DEFAULT_USER_ID` usage from all endpoints
 
 **Phase 4: UI Components**
+
 1. Create `src/layouts/AuthLayout.astro`
 2. Update `src/layouts/Layout.astro` with navigation and user menu
 3. Create `src/components/auth/LoginForm.tsx`
@@ -1134,15 +1188,18 @@ supabase migration up
 5. Create `src/components/LandingPage.astro`
 
 **Phase 5: Pages**
+
 1. Create login page: `src/pages/auth/login.astro`
 2. Update `src/pages/index.astro` with landing page
 3. Update existing pages (no changes needed, middleware handles protection)
 
 **Phase 6: User Creation**
+
 1. Create test users manually in Supabase Dashboard for development
 2. Document user creation process for system administrators
 
 **Phase 7: Testing**
+
 1. Manual testing of login and logout flows
 2. Test protected route access
 3. Test session persistence
@@ -1153,6 +1210,7 @@ supabase migration up
 If issues arise during deployment:
 
 1. **Database Rollback:**
+
    ```bash
    supabase migration down
    ```
@@ -1168,6 +1226,7 @@ If issues arise during deployment:
 ### 4.4 Deployment Checklist
 
 **Pre-Deployment:**
+
 - [ ] All migrations tested in development
 - [ ] Login and logout endpoints tested manually
 - [ ] Login form tested in different browsers
@@ -1175,12 +1234,14 @@ If issues arise during deployment:
 - [ ] Environment variables set in production
 
 **Deployment:**
+
 - [ ] Run database migrations
 - [ ] Deploy code to production
 - [ ] Verify deployment health
 - [ ] Test login and logout flows
 
 **Post-Deployment:**
+
 - [ ] Monitor error logs
 - [ ] Monitor Supabase dashboard for auth events
 - [ ] Test login and logout from different devices/browsers
@@ -1196,16 +1257,19 @@ While not part of the MVP, these enhancements can be considered for future itera
 ### 5.1 User Registration
 
 Add self-service user registration:
+
 - Registration form with email and password
 - Immediate account creation and login
 - Email validation
 
 **Benefits:**
+
 - Users can create their own accounts
 - Reduced administrative burden
 - Faster onboarding
 
 **Implementation:**
+
 - Add registration page and form
 - Create registration API endpoint
 - Update landing page with registration link
@@ -1213,17 +1277,20 @@ Add self-service user registration:
 ### 5.2 User Profile Management
 
 Add user profile page:
+
 - View account information
 - Update email address
 - Change password
 - Delete account option
 
 **Benefits:**
+
 - Users can manage their own accounts
 - Self-service password changes
 - Better user control
 
 **Implementation:**
+
 - Create profile page
 - Add change password endpoint
 - Add update email endpoint
@@ -1231,16 +1298,19 @@ Add user profile page:
 ### 5.3 Travel Preferences
 
 Add user travel preferences (US-005):
+
 - Save preferred travel categories
 - Use preferences in AI trip planning
 - Customize recommendations
 
 **Benefits:**
+
 - Personalized trip suggestions
 - Better AI-generated itineraries
 - Improved user experience
 
 **Implementation:**
+
 - Create user_preferences table
 - Add preferences API endpoints
 - Update profile page with preferences section
@@ -1249,16 +1319,19 @@ Add user travel preferences (US-005):
 ### 5.4 Password Recovery
 
 Add "Forgot Password" functionality:
+
 - Email-based password reset with magic links
 - Security questions as alternative
 - SMS-based verification
 
 **Benefits:**
+
 - Users can recover forgotten passwords
 - Reduced support burden
 - Improved user experience
 
 **Implementation:**
+
 - Add forgot password page
 - Implement email verification flow
 - Add reset password endpoint
@@ -1267,16 +1340,19 @@ Add "Forgot Password" functionality:
 ### 5.5 Email Verification
 
 Add email verification for new registrations:
+
 - Verify email before full account activation
 - Resend verification link option
 - Handle expired verification tokens
 
 **Benefits:**
+
 - Reduce spam accounts
 - Ensure valid contact information
 - Improved security
 
 **Implementation:**
+
 - Enable email confirmation in Supabase
 - Add verification callback page
 - Add resend verification endpoint
@@ -1285,16 +1361,19 @@ Add email verification for new registrations:
 ### 5.6 OAuth Providers
 
 Add social login options:
+
 - Google OAuth
 - GitHub OAuth
 - Apple Sign In
 
 **Benefits:**
+
 - Faster registration
 - No password to remember
 - Trusted identity providers
 
 **Implementation:**
+
 - Supabase Auth supports OAuth out of the box
 - Add provider buttons to login/register pages
 - Configure OAuth apps in respective platforms
@@ -1302,60 +1381,71 @@ Add social login options:
 ### 5.7 Multi-Factor Authentication (MFA)
 
 Add optional 2FA for enhanced security:
+
 - TOTP (Time-based One-Time Password)
 - SMS verification
 - Email verification codes
 
 **Benefits:**
+
 - Enhanced account security
 - Protection against credential theft
 
 **Implementation:**
+
 - Supabase supports TOTP MFA
 - Add MFA settings to profile page
 
 ### 5.8 Session Management UI
 
 Allow users to view and manage active sessions:
+
 - List of active sessions (device, location, last active)
 - Revoke individual sessions
 - "Logout all devices" option
 
 **Benefits:**
+
 - User control over security
 - Detect unauthorized access
 
 ### 5.9 Email Change Flow
 
 Allow users to change their email address:
+
 - Request email change
 - Verify new email
 - Verify old email (for security)
 - Update email after both verifications
 
 **Benefits:**
+
 - Users can update outdated email addresses
 - Account recovery if email compromised
 
 ### 5.10 Account Deletion
 
 Allow users to delete their accounts:
+
 - "Delete Account" option in profile
 - Confirmation dialog with password verification
 - Grace period (e.g., 30 days) before permanent deletion
 - Export data option before deletion
 
 **Benefits:**
+
 - GDPR compliance
 - User data ownership
 
 ### 5.11 Remember Me
 
 Add "Remember Me" checkbox on login:
+
 - Extended refresh token expiration (30 days instead of 7)
 - Separate cookie for "remember me" flag
 
 **Benefits:**
+
 - Better UX for frequent users
 - Fewer re-logins
 
@@ -1386,6 +1476,7 @@ export interface LoginResult {
 ### 6.2 File Structure Summary
 
 **New Files:**
+
 ```
 src/
 ├── components/
@@ -1416,6 +1507,7 @@ supabase/
 ```
 
 **Modified Files:**
+
 ```
 src/
 ├── middleware/index.ts (updated)
@@ -1445,20 +1537,19 @@ PUBLIC_APP_URL=http://localhost:3000  # Development
 
 ### 6.4 API Endpoint Summary
 
-| Method | Endpoint | Auth Required | Description |
-|--------|----------|---------------|-------------|
-| POST | `/api/auth/login` | No | Authenticate user |
-| POST | `/api/auth/logout` | Yes | Logout user |
+| Method | Endpoint           | Auth Required | Description       |
+| ------ | ------------------ | ------------- | ----------------- |
+| POST   | `/api/auth/login`  | No            | Authenticate user |
+| POST   | `/api/auth/logout` | Yes           | Logout user       |
 
 ---
 
 ## Document Version History
 
-| Version | Date | Author | Changes |
-|---------|------|--------|---------|
-| 1.0 | 2025-11-03 | Architecture Team | Initial specification |
+| Version | Date       | Author            | Changes               |
+| ------- | ---------- | ----------------- | --------------------- |
+| 1.0     | 2025-11-03 | Architecture Team | Initial specification |
 
 ---
 
 **End of Authentication Architecture Specification**
-

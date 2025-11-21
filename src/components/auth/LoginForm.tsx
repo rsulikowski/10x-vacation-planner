@@ -52,125 +52,125 @@ export function LoginForm() {
   // Validate all fields
   const validateForm = useCallback((): boolean => {
     const newErrors: FormErrors = {};
-    
+
     const emailError = validateField("email", formData.email);
     if (emailError) newErrors.email = emailError;
-    
+
     const passwordError = validateField("password", formData.password);
     if (passwordError) newErrors.password = passwordError;
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }, [formData, validateField]);
 
   // Handle input change
-  const handleChange = useCallback((field: keyof LoginFormData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    
-    // Clear general error when user types
-    if (errors.general) {
-      setErrors((prev) => ({ ...prev, general: undefined }));
-    }
-    
-    // Validate on change if field was previously touched
-    if (touchedFields.has(field)) {
-      const error = validateField(field, value);
-      setErrors((prev) => ({ ...prev, [field]: error }));
-    }
-  }, [errors.general, touchedFields, validateField]);
+  const handleChange = useCallback(
+    (field: keyof LoginFormData, value: string) => {
+      setFormData((prev) => ({ ...prev, [field]: value }));
+
+      // Clear general error when user types
+      if (errors.general) {
+        setErrors((prev) => ({ ...prev, general: undefined }));
+      }
+
+      // Validate on change if field was previously touched
+      if (touchedFields.has(field)) {
+        const error = validateField(field, value);
+        setErrors((prev) => ({ ...prev, [field]: error }));
+      }
+    },
+    [errors.general, touchedFields, validateField]
+  );
 
   // Handle field blur
-  const handleBlur = useCallback((field: keyof LoginFormData) => {
-    setTouchedFields((prev) => new Set(prev).add(field));
-    const error = validateField(field, formData[field]);
-    setErrors((prev) => ({ ...prev, [field]: error }));
-  }, [formData, validateField]);
+  const handleBlur = useCallback(
+    (field: keyof LoginFormData) => {
+      setTouchedFields((prev) => new Set(prev).add(field));
+      const error = validateField(field, formData[field]);
+      setErrors((prev) => ({ ...prev, [field]: error }));
+    },
+    [formData, validateField]
+  );
 
   // Handle form submission
-  const handleSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    
-    // Mark all fields as touched
-    setTouchedFields(new Set(["email", "password"]));
-    
-    // Validate form
-    if (!validateForm()) {
-      // Focus first invalid field
-      const firstError = errors.email ? "email" : errors.password ? "password" : null;
-      if (firstError) {
-        const element = document.getElementById(firstError);
-        element?.focus();
-      }
-      return;
-    }
-    
-    setIsLoading(true);
-    setErrors({});
-    
-    try {
-      // TODO: This will be implemented in the backend phase
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      
-      if (!response.ok) {
-        const data = await response.json();
-        
-        if (response.status === 400) {
-          setErrors({ general: "Invalid email or password format" });
-        } else if (response.status === 401) {
-          setErrors({ general: "Invalid credentials. Please try again." });
-        } else if (response.status === 429) {
-          setErrors({ general: "Too many login attempts. Please try again later." });
-        } else {
-          setErrors({ general: "An unexpected error occurred. Please try again later." });
+  const handleSubmit = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      // Mark all fields as touched
+      setTouchedFields(new Set(["email", "password"]));
+
+      // Validate form
+      if (!validateForm()) {
+        // Focus first invalid field
+        const firstError = errors.email ? "email" : errors.password ? "password" : null;
+        if (firstError) {
+          const element = document.getElementById(firstError);
+          element?.focus();
         }
         return;
       }
-      
-      // Success - redirect to projects
-      toast.success("Login successful!");
-      window.location.href = "/projects";
-    } catch (error) {
-      console.error("Login error:", error);
-      setErrors({ 
-        general: "Unable to connect. Please check your internet connection." 
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }, [formData, validateForm, errors]);
+
+      setIsLoading(true);
+      setErrors({});
+
+      try {
+        // TODO: This will be implemented in the backend phase
+        const response = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (!response.ok) {
+          await response.json();
+
+          if (response.status === 400) {
+            setErrors({ general: "Invalid email or password format" });
+          } else if (response.status === 401) {
+            setErrors({ general: "Invalid credentials. Please try again." });
+          } else if (response.status === 429) {
+            setErrors({ general: "Too many login attempts. Please try again later." });
+          } else {
+            setErrors({ general: "An unexpected error occurred. Please try again later." });
+          }
+          return;
+        }
+
+        // Success - redirect to projects
+        toast.success("Login successful!");
+        window.location.href = "/projects";
+      } catch {
+        setErrors({
+          general: "Unable to connect. Please check your internet connection.",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [formData, validateForm, errors]
+  );
 
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
-        <CardDescription>
-          Enter your credentials to access your vacation plans
-        </CardDescription>
+        <CardDescription>Enter your credentials to access your vacation plans</CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-4">
           {/* General error message */}
           {errors.general && (
-            <div 
-              className="p-3 bg-destructive/10 border border-destructive rounded-md"
-              role="alert"
-              aria-live="polite"
-            >
+            <div className="p-3 bg-destructive/10 border border-destructive rounded-md" role="alert" aria-live="polite">
               <p className="text-sm text-destructive">{errors.general}</p>
             </div>
           )}
-          
+
           {/* Email field */}
           <div className="space-y-2">
-            <Label htmlFor="email">
-              Email
-            </Label>
+            <Label htmlFor="email">Email</Label>
             <Input
               id="email"
               type="email"
@@ -184,21 +184,15 @@ export function LoginForm() {
               className={errors.email ? "border-destructive" : ""}
             />
             {errors.email && (
-              <p 
-                id="email-error" 
-                className="text-sm text-destructive"
-                role="alert"
-              >
+              <p id="email-error" className="text-sm text-destructive" role="alert">
                 {errors.email}
               </p>
             )}
           </div>
-          
+
           {/* Password field */}
           <div className="space-y-2">
-            <Label htmlFor="password">
-              Password
-            </Label>
+            <Label htmlFor="password">Password</Label>
             <Input
               id="password"
               type="password"
@@ -212,23 +206,14 @@ export function LoginForm() {
               className={errors.password ? "border-destructive" : ""}
             />
             {errors.password && (
-              <p 
-                id="password-error" 
-                className="text-sm text-destructive"
-                role="alert"
-              >
+              <p id="password-error" className="text-sm text-destructive" role="alert">
                 {errors.password}
               </p>
             )}
           </div>
         </CardContent>
         <CardFooter>
-          <Button 
-            type="submit" 
-            className="w-full"
-            disabled={isLoading}
-            aria-busy={isLoading}
-          >
+          <Button type="submit" className="w-full" disabled={isLoading} aria-busy={isLoading}>
             {isLoading ? "Logging in..." : "Log In"}
           </Button>
         </CardFooter>
@@ -236,4 +221,3 @@ export function LoginForm() {
     </Card>
   );
 }
-

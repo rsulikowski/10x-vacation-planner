@@ -1,4 +1,4 @@
-import type { Page, Locator } from '@playwright/test';
+import type { Page, Locator } from "@playwright/test";
 
 /**
  * Page Object Model for individual Project List Item
@@ -16,31 +16,31 @@ export class ProjectListItem {
 
   constructor(page: Page, projectIdentifier: string | { name: string } | { id: string }) {
     this.page = page;
-    
+
     // Locate the container based on identifier type
-    if (typeof projectIdentifier === 'string') {
+    if (typeof projectIdentifier === "string") {
       // If string, assume it's a project name
       this.container = page.locator(`[data-testid="project-list-item"][data-project-name="${projectIdentifier}"]`);
-    } else if ('name' in projectIdentifier) {
+    } else if ("name" in projectIdentifier) {
       this.container = page.locator(`[data-testid="project-list-item"][data-project-name="${projectIdentifier.name}"]`);
     } else {
       this.container = page.locator(`[data-testid="project-list-item"][data-project-id="${projectIdentifier.id}"]`);
     }
 
     // Define child locators
-    this.projectName = this.container.getByRole('heading', { level: 3 });
-    this.durationText = this.container.locator('text=/\\d+ days?/');
-    this.plannedDateText = this.container.locator('text=/\\w{3} \\d{1,2}, \\d{4}|No date set/');
-    this.viewNotesButton = this.container.getByRole('link', { name: /view notes/i });
-    this.editButton = this.container.getByRole('button', { name: /edit/i });
-    this.deleteButton = this.container.getByRole('button', { name: /delete/i });
+    this.projectName = this.container.getByRole("heading", { level: 3 });
+    this.durationText = this.container.locator("text=/\\d+ days?/");
+    this.plannedDateText = this.container.locator("text=/\\w{3} \\d{1,2}, \\d{4}|No date set/");
+    this.viewNotesButton = this.container.getByRole("link", { name: /view notes/i });
+    this.editButton = this.container.getByRole("button", { name: /edit/i });
+    this.deleteButton = this.container.getByRole("button", { name: /delete/i });
   }
 
   /**
    * Wait for the project item to be visible
    */
   async waitForVisible() {
-    await this.container.waitFor({ state: 'visible' });
+    await this.container.waitFor({ state: "visible" });
   }
 
   /**
@@ -54,21 +54,21 @@ export class ProjectListItem {
    * Get the project name text
    */
   async getProjectName(): Promise<string> {
-    return await this.projectName.textContent() ?? '';
+    return (await this.projectName.textContent()) ?? "";
   }
 
   /**
    * Get the duration text
    */
   async getDuration(): Promise<string> {
-    return await this.durationText.textContent() ?? '';
+    return (await this.durationText.textContent()) ?? "";
   }
 
   /**
    * Get the planned date text
    */
   async getPlannedDate(): Promise<string> {
-    return await this.plannedDateText.textContent() ?? '';
+    return (await this.plannedDateText.textContent()) ?? "";
   }
 
   /**
@@ -107,4 +107,3 @@ export class ProjectListItem {
     };
   }
 }
-

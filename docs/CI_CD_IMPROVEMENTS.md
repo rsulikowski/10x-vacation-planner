@@ -3,19 +3,23 @@
 ## Zastosowane reguły z `.cursor/rules/github-action.mdc`
 
 ### ✅ 1. Weryfikacja package.json i .nvmrc
+
 - Sprawdzono `package.json` dla kluczowych skryptów (lint, test:run, build)
 - Sprawdzono `.nvmrc` - Node.js version: 22.14.0
 - Zaktualizowano wszystkie joby aby używały poprawnej wersji Node
 
 ### ✅ 2. Weryfikacja branch
+
 - Użyto `git branch -a` aby potwierdzić użycie branch `main` (nie `master`)
 - Workflow uruchamia się na `main` branch
 
 ### ✅ 3. Environment variables na poziomie job
+
 **PRZED:**
+
 ```yaml
 env:
-  NODE_VERSION: '20'  # Global
+  NODE_VERSION: "20" # Global
 
 jobs:
   lint:
@@ -26,12 +30,13 @@ jobs:
 ```
 
 **PO:**
+
 ```yaml
 jobs:
   lint:
     env:
-      NODE_VERSION: '22.14.0'  # Job-level
-      
+      NODE_VERSION: "22.14.0" # Job-level
+
     steps:
       - uses: actions/setup-node@v6
         with:
@@ -39,37 +44,41 @@ jobs:
 ```
 
 ### ✅ 4. Użycie npm ci
+
 Wszystkie workflow używają `npm ci` zamiast `npm install` dla deterministycznej instalacji zależności.
 
 ### ✅ 5. Najnowsze wersje GitHub Actions
 
 Sprawdzono i zaktualizowano do najnowszych wersji:
 
-| Action | Stara wersja | Nowa wersja | Latest release |
-|--------|--------------|-------------|----------------|
-| actions/checkout | v4 | **v5** | v5.0.1 |
-| actions/setup-node | v4 | **v6** | v6.0.0 |
-| actions/upload-artifact | v4 | **v5** | v5.0.0 |
+| Action                  | Stara wersja | Nowa wersja | Latest release |
+| ----------------------- | ------------ | ----------- | -------------- |
+| actions/checkout        | v4           | **v5**      | v5.0.1         |
+| actions/setup-node      | v4           | **v6**      | v6.0.0         |
+| actions/upload-artifact | v4           | **v5**      | v5.0.0         |
 
 ### ✅ 6. Poprawiono błędy składniowe
 
 **PRZED (ci.yml):**
+
 ```yaml
 if [ "${{ needs.lint.result }}" != "success" ] || \
-   [ "${{ needs.test-unit.result }}" != "success" ] || \
-   [ "${{ needs.build.result }}" != "success" ] ||; then  # ❌ Błąd składni
+[ "${{ needs.test-unit.result }}" != "success" ] || \
+[ "${{ needs.build.result }}" != "success" ] ||; then # ❌ Błąd składni
 ```
 
 **PO:**
+
 ```yaml
 if [ "${{ needs.lint.result }}" != "success" ] || \
-   [ "${{ needs.test-unit.result }}" != "success" ] || \
-   [ "${{ needs.build.result }}" != "success" ]; then  # ✅ Poprawne
+[ "${{ needs.test-unit.result }}" != "success" ] || \
+[ "${{ needs.build.result }}" != "success" ]; then # ✅ Poprawne
 ```
 
 ### ✅ 7. Usunięto testy E2E z minimalnego setupu
 
 Zgodnie z wymaganiem "minimalny setup", usunięto czasochłonne testy E2E:
+
 - Zmniejszono czas wykonania z ~5-8 min do ~3-4 min
 - Zachowano coverage i artefakty build
 - E2E można dodać w przyszłości jako opcjonalny job
@@ -77,18 +86,20 @@ Zgodnie z wymaganiem "minimalny setup", usunięto czasochłonne testy E2E:
 ## Struktura finalna
 
 ### ci.yml - Full CI Pipeline
+
 ```yaml
 jobs:
-  lint:          # ~1-2 min, równolegle
-  test-unit:     # ~2-3 min, równolegle (z coverage)
-  build:         # ~2-4 min, równolegle
-  summary:       # ~10 sek, sekwencyjnie
+  lint: # ~1-2 min, równolegle
+  test-unit: # ~2-3 min, równolegle (z coverage)
+  build: # ~2-4 min, równolegle
+  summary: # ~10 sek, sekwencyjnie
 ```
 
 ### quick-check.yml - PR Validation
+
 ```yaml
 jobs:
-  quick-validation:  # ~3-4 min, jeden job
+  quick-validation: # ~3-4 min, jeden job
     - lint
     - test:run
     - build
@@ -132,4 +143,3 @@ yaml-validator .github/workflows/*.yml
 - Pełna dokumentacja: [CI_CD_SETUP.md](CI_CD_SETUP.md)
 - Workflow README: [.github/workflows/README.md](../.github/workflows/README.md)
 - Tech stack: [../.ai/tech-stack.md](../.ai/tech-stack.md)
-

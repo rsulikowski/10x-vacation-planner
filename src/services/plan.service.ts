@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import type { Database } from "../db/database.types";
 import type { GeneratePlanCommand, PlanResponseDto } from "../types";
 import { ApiError } from "../lib/api-utils";
@@ -20,7 +21,12 @@ export class PlanService {
    * @returns Plan podróży z metadanymi projektu
    * @throws ApiError w przypadku błędów
    */
-  async generatePlan(projectId: string, userId: string, command: GeneratePlanCommand, supabase: DbClient): Promise<{ plan: PlanResponseDto; durationDays: number }> {
+  async generatePlan(
+    projectId: string,
+    userId: string,
+    command: GeneratePlanCommand,
+    supabase: DbClient
+  ): Promise<{ plan: PlanResponseDto; durationDays: number }> {
     // Krok 1: Weryfikacja istnienia projektu i własności
     const project = await this.fetchAndVerifyProject(projectId, userId, supabase);
 
@@ -33,7 +39,7 @@ export class PlanService {
     // Krok 4: Wywołanie AI service (logowanie przeniesione do trasy API)
     const aiService = getAIService();
     const plan = await aiService.generatePlan(command);
-    
+
     return {
       plan,
       durationDays: project.duration_days,

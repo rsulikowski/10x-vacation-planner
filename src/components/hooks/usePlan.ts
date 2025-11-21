@@ -95,15 +95,15 @@ export function usePlan(projectId: string): UsePlanReturn {
           throw new Error(errorData.message || "Failed to generate plan");
         }
 
-      const data = await response.json();
+        const data = await response.json();
 
-      // Update plan with new data
-      // Note: Version from response is used, or calculated from existing plans
-      setPlan({
-        schedule: data.schedule,
-        version: data.version || (plan?.version || 0) + 1,
-        createdOn: new Date().toISOString(),
-      });
+        // Update plan with new data
+        // Note: Version from response is used, or calculated from existing plans
+        setPlan({
+          schedule: data.schedule,
+          version: data.version || (plan?.version || 0) + 1,
+          createdOn: new Date().toISOString(),
+        });
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to generate plan");
         throw err; // Re-throw so caller can handle it
@@ -123,4 +123,3 @@ export function usePlan(projectId: string): UsePlanReturn {
     generatePlan,
   };
 }
-

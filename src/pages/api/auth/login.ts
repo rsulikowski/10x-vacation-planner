@@ -7,15 +7,15 @@ export const prerender = false;
 
 /**
  * POST /api/auth/login
- * 
+ *
  * Authenticate user with email and password
- * 
+ *
  * Request Body:
  * {
  *   "email": "user@example.com",
  *   "password": "password123"
  * }
- * 
+ *
  * Success Response (200):
  * {
  *   "user": {
@@ -23,7 +23,7 @@ export const prerender = false;
  *     "email": "user@example.com"
  *   }
  * }
- * 
+ *
  * Error Responses:
  * - 400: Validation error (invalid email format, missing fields)
  * - 401: Invalid credentials
@@ -51,6 +51,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 
     // Handle authentication errors
     if (error) {
+      // Log authentication errors for debugging
+      // eslint-disable-next-line no-console
       console.error("Login error:", error);
 
       // Map Supabase errors to appropriate HTTP status codes
@@ -82,4 +84,3 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     return handleApiError(error);
   }
 };
-

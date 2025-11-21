@@ -56,6 +56,19 @@ jobs:
       - name: Run unit tests with coverage
         run: npm run test:coverage
 
+      - name: Generate coverage summary
+        id: coverage
+        if: always()
+        run: |
+          if [ -f coverage/coverage-summary.json ]; then
+            echo "coverage_exists=true" >> $GITHUB_OUTPUT
+            COVERAGE=$(node -pe "const pct = JSON.parse(require('fs').readFileSync('coverage/coverage-summary.json', 'utf8')).total.lines.pct; typeof pct === 'number' ? pct : 'N/A'")
+            echo "coverage_percentage=$COVERAGE" >> $GITHUB_OUTPUT
+          else
+            echo "coverage_exists=false" >> $GITHUB_OUTPUT
+            echo "coverage_percentage=N/A" >> $GITHUB_OUTPUT
+          fi
+
       - name: Upload coverage reports
         uses: actions/upload-artifact@v5
         if: always()
@@ -63,19 +76,6 @@ jobs:
           name: coverage-report
           path: coverage/
           retention-days: 30
-
-      - name: Generate coverage summary
-        id: coverage
-        if: always()
-        run: |
-          if [ -f coverage/coverage-summary.json ]; then
-            echo "coverage_exists=true" >> $GITHUB_OUTPUT
-            COVERAGE=$(node -pe "JSON.parse(require('fs').readFileSync('coverage/coverage-summary.json', 'utf8')).total.lines.pct")
-            echo "coverage_percentage=$COVERAGE" >> $GITHUB_OUTPUT
-          else
-            echo "coverage_exists=false" >> $GITHUB_OUTPUT
-            echo "coverage_percentage=0" >> $GITHUB_OUTPUT
-          fi
 
   # Job 3: Status comment - only runs when all previous jobs pass
   status-comment:
@@ -89,6 +89,7 @@ jobs:
     steps:
       - name: Download coverage artifact
         uses: actions/download-artifact@v6
+        continue-on-error: true
         with:
           name: coverage-report
           path: coverage/
@@ -97,9 +98,13 @@ jobs:
         id: coverage
         run: |
           if [ -f coverage/coverage-summary.json ]; then
-            COVERAGE=$(node -pe "JSON.parse(require('fs').readFileSync('coverage/coverage-summary.json', 'utf8')).total.lines.pct")
+            echo "Coverage summary file found"
+            cat coverage/coverage-summary.json
+            COVERAGE=$(node -pe "const pct = JSON.parse(require('fs').readFileSync('coverage/coverage-summary.json', 'utf8')).total.lines.pct; typeof pct === 'number' ? pct : 'N/A'")
             echo "coverage_percentage=$COVERAGE" >> $GITHUB_OUTPUT
           else
+            echo "Coverage summary file not found"
+            ls -la coverage/ || echo "Coverage directory not found"
             echo "coverage_percentage=N/A" >> $GITHUB_OUTPUT
           fi
 
@@ -110,7 +115,10 @@ jobs:
         with:
           script: |
             const coverage = process.env.COVERAGE;
-            const coverageEmoji = coverage === 'N/A' ? '❓' : coverage >= 80 ? '✅' : coverage >= 60 ? '⚠️' : '❌';
+            const coverageNum = parseFloat(coverage);
+            const isValidCoverage = !isNaN(coverageNum);
+            const coverageEmoji = !isValidCoverage ? '❓' : coverageNum >= 80 ? '✅' : coverageNum >= 60 ? '⚠️' : '❌';
+            const coverageText = isValidCoverage ? `${coverage}%` : coverage;
 
             const comment = `## ✅ Pull Request Checks Passed
 
@@ -119,7 +127,7 @@ jobs:
             ### Results
             - ✅ **Linting**: Passed
             - ✅ **Unit Tests**: Passed
-            - ${coverageEmoji} **Test Coverage**: ${coverage}%
+            - ${coverageEmoji} **Test Coverage**: ${coverageText}
 
             ### Summary
             Your pull request is ready for review! All automated checks have passed.

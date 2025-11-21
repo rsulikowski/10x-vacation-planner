@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-  
+
   # Możliwość uruchomienia manualnego
   workflow_dispatch:
 
@@ -14,23 +14,23 @@ jobs:
   lint:
     name: Lint Code
     runs-on: ubuntu-latest
-    
+
     env:
-      NODE_VERSION: '22.14.0'
-    
+      NODE_VERSION: "22.14.0"
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-      
+          cache: "npm"
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Run ESLint
         run: npm run lint
 
@@ -38,29 +38,29 @@ jobs:
   test-unit:
     name: Unit Tests
     runs-on: ubuntu-latest
-    
+
     env:
-      NODE_VERSION: '22.14.0'
-    
+      NODE_VERSION: "22.14.0"
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-      
+          cache: "npm"
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Run unit tests
         run: npm run test:run
-      
+
       - name: Generate coverage report
         run: npm run test:coverage
-      
+
       - name: Upload coverage reports
         uses: actions/upload-artifact@v5
         if: always()
@@ -73,27 +73,27 @@ jobs:
   build:
     name: Production Build
     runs-on: ubuntu-latest
-    
+
     env:
-      NODE_VERSION: '22.14.0'
+      NODE_VERSION: "22.14.0"
       NODE_ENV: production
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-      
+          cache: "npm"
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Build application
         run: npm run build
-      
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v5
         with:
@@ -107,14 +107,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: [lint, test-unit, build]
     if: always()
-    
+
     steps:
       - name: Check job statuses
         run: |
           echo "Lint: ${{ needs.lint.result }}"
           echo "Unit Tests: ${{ needs.test-unit.result }}"
           echo "Build: ${{ needs.build.result }}"
-          
+
           if [ "${{ needs.lint.result }}" != "success" ] || \
              [ "${{ needs.test-unit.result }}" != "success" ] || \
              [ "${{ needs.build.result }}" != "success" ]; then

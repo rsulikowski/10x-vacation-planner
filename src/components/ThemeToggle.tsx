@@ -10,9 +10,7 @@ export function ThemeToggle() {
     setMounted(true);
     // Get initial theme from localStorage or system preference
     const storedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
-    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     const initialTheme = storedTheme || systemTheme;
     setTheme(initialTheme);
   }, []);
@@ -36,12 +34,7 @@ export function ThemeToggle() {
   // Avoid hydration mismatch by not rendering until mounted
   if (!mounted) {
     return (
-      <Button
-        variant="outline"
-        size="icon"
-        className="h-9 w-9"
-        aria-label="Toggle theme"
-      >
+      <Button variant="outline" size="icon" className="h-9 w-9" aria-label="Toggle theme">
         <Sun className="h-4 w-4" />
       </Button>
     );
@@ -55,12 +48,7 @@ export function ThemeToggle() {
       className="h-9 w-9"
       aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
     >
-      {theme === "light" ? (
-        <Moon className="h-4 w-4" />
-      ) : (
-        <Sun className="h-4 w-4" />
-      )}
+      {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
     </Button>
   );
 }
-

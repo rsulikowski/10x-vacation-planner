@@ -21,7 +21,7 @@ export function ProjectListItem({ project, onEdit, onDelete }: ProjectListItemPr
     : "No date set";
 
   return (
-    <div 
+    <div
       className="border-border hover:border-primary/50 group relative rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md"
       data-testid="project-list-item"
       data-project-id={project.id}

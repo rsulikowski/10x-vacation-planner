@@ -52,7 +52,14 @@ function ProjectViewContent({ projectId, projectName, durationDays }: ProjectVie
     deleteNote,
   } = useProjectNotes(projectId);
 
-  const { plan, isLoading: isPlanLoading, isGenerating, error: planError, fetchPlan, generatePlan } = usePlan(projectId);
+  const {
+    plan,
+    isLoading: isPlanLoading,
+    isGenerating,
+    error: planError,
+    fetchPlan,
+    generatePlan,
+  } = usePlan(projectId);
 
   const [modalState, setModalState] = useState<NoteModalState>({ type: "closed" });
   const [noteToDelete, setNoteToDelete] = useState<NoteDto | null>(null);
@@ -155,7 +162,7 @@ function ProjectViewContent({ projectId, projectName, durationDays }: ProjectVie
       <div className="mb-8">
         <h1 className="text-3xl font-bold">{projectName}</h1>
         <p className="text-muted-foreground mt-1">
-          {durationDays} day{durationDays !== 1 ? 's' : ''} • Manage notes and generate travel plans
+          {durationDays} day{durationDays !== 1 ? "s" : ""} • Manage notes and generate travel plans
         </p>
       </div>
 
@@ -298,4 +305,3 @@ export function ProjectView({ projectId, projectName, durationDays }: ProjectVie
     </QueryClientProvider>
   );
 }
-

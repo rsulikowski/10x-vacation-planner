@@ -32,6 +32,7 @@ We've implemented Playwright's authentication state storage pattern to handle au
 You need a valid test user in your Supabase database. You have two options:
 
 #### Option A: Create via Supabase Dashboard
+
 1. Go to your Supabase project dashboard
 2. Navigate to Authentication > Users
 3. Click "Add User"
@@ -41,6 +42,7 @@ You need a valid test user in your Supabase database. You have two options:
    - Confirm email (mark as verified)
 
 #### Option B: Create via SQL (if using local Supabase)
+
 ```sql
 -- This is a placeholder - actual implementation depends on your Supabase setup
 -- You may need to create the user through Supabase Auth API
@@ -73,6 +75,7 @@ playwright/.auth/
 ## Running Tests
 
 ### First Time Setup
+
 ```bash
 # Install dependencies (if not already done)
 npm install
@@ -82,6 +85,7 @@ npm run test:e2e
 ```
 
 ### Subsequent Runs
+
 ```bash
 # Run all E2E tests
 npm run test:e2e
@@ -100,6 +104,7 @@ npx playwright test --debug e2e/create-project.spec.ts
 ```
 
 ### Re-run Authentication Setup
+
 If you need to refresh the authentication state (e.g., credentials changed):
 
 ```bash
@@ -111,6 +116,7 @@ npm run test:e2e
 ```
 
 Or on Windows:
+
 ```powershell
 # Delete the stored auth state
 Remove-Item -Recurse -Force playwright\.auth
@@ -124,11 +130,13 @@ npm run test:e2e
 ### Issue: Tests still failing with authentication errors
 
 **Possible causes:**
+
 1. Test user doesn't exist in database
 2. Wrong credentials in `.env.test`
 3. Supabase configuration incorrect
 
 **Solutions:**
+
 1. Verify test user exists in Supabase dashboard
 2. Check `.env.test` has correct credentials
 3. Verify Supabase URL and keys are correct
@@ -137,6 +145,7 @@ npm run test:e2e
 ### Issue: "Cannot find module" errors
 
 **Solution:**
+
 ```bash
 npm install
 ```
@@ -144,16 +153,19 @@ npm install
 ### Issue: Port 3000 already in use
 
 **Solution:**
+
 - Stop any running dev servers
 - Or change the port in `playwright.config.ts`
 
 ### Issue: Tests are slow
 
 **Possible causes:**
+
 - Running tests serially instead of parallel
 - Re-authenticating for each test
 
 **Solutions:**
+
 - Ensure `fullyParallel: true` in `playwright.config.ts` ✅
 - Verify auth state is being reused (check for `playwright/.auth/user.json`) ✅
 
@@ -226,4 +238,3 @@ e2e/
 - [Playwright Authentication Guide](https://playwright.dev/docs/auth)
 - [Playwright Storage State](https://playwright.dev/docs/api/class-browsercontext#browser-context-storage-state)
 - [Supabase Authentication](https://supabase.com/docs/guides/auth)
-

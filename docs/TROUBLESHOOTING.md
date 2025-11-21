@@ -5,6 +5,7 @@
 ### What's Happening
 
 The authentication setup is failing at this line:
+
 ```
 await page.waitForURL(/\/projects/, { timeout: 10000 });
 ```
@@ -16,6 +17,7 @@ This means the login is not completing successfully and redirecting to `/project
 ### Step 1: Check the Screenshot
 
 After the test fails, look at the screenshot:
+
 ```
 test-results/auth-failure.png
 ```
@@ -25,6 +27,7 @@ This will show you exactly what page you're on after the login attempt.
 ### Step 2: Check the Console Output
 
 When you run the tests, look for these console messages:
+
 - `Attempting to login with email: [email]`
 - Error messages from the page
 
@@ -57,10 +60,12 @@ Run through this checklist:
 ### Issue 1: Invalid Credentials
 
 **Symptoms:**
+
 - Error message: "Invalid credentials"
 - Screenshot shows error on login page
 
 **Solution:**
+
 ```bash
 # Verify password in Supabase
 # Go to Supabase Dashboard → Authentication → Users
@@ -71,11 +76,13 @@ Run through this checklist:
 ### Issue 2: Email Not Confirmed
 
 **Symptoms:**
+
 - Error message: "Please confirm your email"
 - Login fails
 
 **Solution:**
 In Supabase Dashboard:
+
 1. Go to Authentication → Users
 2. Find your test user
 3. Click the three dots menu
@@ -84,13 +91,16 @@ In Supabase Dashboard:
 ### Issue 3: Wrong Supabase URL/Key
 
 **Symptoms:**
+
 - No error message
 - Login just doesn't work
 - Console shows network errors
 
 **Solution:**
+
 1. Check your `.env` file (main one) for correct values
 2. Copy the correct values to `.env.test`:
+
 ```env
 PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
@@ -99,14 +109,16 @@ PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ### Issue 4: Environment Variables Not Loading
 
 **Symptoms:**
+
 - Console shows: `Attempting to login with email: test@example.com` (default)
 - But your `.env.test` has different values
 
 **Solution:**
 The `playwright.config.ts` should have this at the top:
+
 ```typescript
-import dotenv from 'dotenv';
-dotenv.config({ path: resolve(process.cwd(), '.env.test') });
+import dotenv from "dotenv";
+dotenv.config({ path: resolve(process.cwd(), ".env.test") });
 ```
 
 ✅ This is already in your config, so this should be working.
@@ -114,6 +126,7 @@ dotenv.config({ path: resolve(process.cwd(), '.env.test') });
 ### Issue 5: User Doesn't Have Access to Projects
 
 **Symptoms:**
+
 - Login succeeds but redirects back to login
 - Or redirects to a different page
 
@@ -125,6 +138,7 @@ Check if there are any RLS (Row Level Security) policies that might be blocking 
 To verify your credentials work, try logging in manually:
 
 1. Start your dev server:
+
    ```bash
    npm run dev
    ```
@@ -182,6 +196,7 @@ npx playwright test e2e/auth.setup.ts --debug
 ### 2. Enable Network Logging
 
 Update `playwright.config.ts`:
+
 ```typescript
 use: {
   baseURL: 'http://localhost:3000',
@@ -222,6 +237,7 @@ npx playwright test e2e/auth.setup.ts --headed
 ```
 
 This will:
+
 - Show the browser window
 - Let you see what's happening
 - Stop at any errors
@@ -248,12 +264,15 @@ const protectedRoutes = []; // Empty array = nothing protected
 ## Next Steps
 
 1. **Run the test with `--headed` flag:**
+
    ```bash
    npx playwright test e2e/auth.setup.ts --headed
    ```
+
    Watch what happens in the browser
 
 2. **Check the screenshot:**
+
    ```
    test-results/auth-failure.png
    ```
@@ -281,4 +300,3 @@ If you've tried everything above and it still doesn't work, let me know:
 4. What's your Supabase setup? (local vs hosted)
 
 This will help identify the exact issue and provide a specific fix.
-

@@ -3,8 +3,10 @@
 ## ✅ Zaimplementowane funkcjonalności
 
 ### 1. Walidacja danych (Zod)
+
 **Plik:** `src/lib/schemas/plan.schema.ts`
-- ✅ Walidacja `GeneratePlanCommand` 
+
+- ✅ Walidacja `GeneratePlanCommand`
 - ✅ Preferencje opcjonalne (`preferences?`)
 - ✅ Whitelist modeli AI: `gpt-4`, `gpt-5`, `claude-3-opus`, `claude-3.5-sonnet`
 - ✅ Walidacja UUID dla `projectId` i notatek
@@ -12,7 +14,9 @@
 - ✅ Ograniczenie liczby notatek (1-100)
 
 ### 2. Mock AI Service
+
 **Plik:** `src/services/ai.service.mock.ts`
+
 - ✅ Symulacja opóźnienia API (200-1000ms)
 - ✅ Generowanie przykładowego planu na podstawie notatek i preferencji
 - ✅ Obsługa opcjonalnych preferencji
@@ -20,7 +24,9 @@
 - ✅ Generowanie promptu dla logowania
 
 ### 3. Serwis generowania planu
+
 **Plik:** `src/services/plan.service.ts`
+
 - ✅ Weryfikacja projektu i własności użytkownika
 - ✅ Pobranie notatek z bazy danych
 - ✅ Walidacja zgodności notatek z projektem
@@ -31,7 +37,9 @@
 - ✅ Obsługa błędów na każdym etapie
 
 ### 4. Endpoint API
+
 **Plik:** `src/pages/api/projects/[projectId]/plan.ts`
+
 - ✅ Metoda POST
 - ✅ Walidacja parametrów URL
 - ✅ Walidacja body żądania
@@ -40,7 +48,9 @@
 - ✅ Zwraca odpowiedzi w formacie JSON
 
 ### 5. Funkcje pomocnicze
+
 **Plik:** `src/lib/api-utils.ts`
+
 - ✅ `ApiError` - klasa błędów z kodem statusu
 - ✅ `createSuccessResponse` - tworzenie odpowiedzi sukcesu
 - ✅ `createErrorResponse` - tworzenie odpowiedzi błędu
@@ -49,10 +59,13 @@
 - ✅ `verifyUser` i `getAuthToken` (gotowe na przyszłość)
 
 ### 6. Typy TypeScript
+
 **Plik:** `src/types.ts`
+
 - ✅ Zaktualizowano `GeneratePlanCommand` - `preferences` opcjonalne
 
 ### 7. Dokumentacja i narzędzia testowe
+
 - ✅ **`.ai/postman-testing-guide.md`** - szczegółowa instrukcja testowania
 - ✅ **`.ai/test-data-setup.sql`** - skrypt SQL z danymi testowymi
 - ✅ **`README.md`** - dokumentacja API
@@ -60,6 +73,7 @@
 ## 📋 Wprowadzone zmiany zgodnie z feedback
 
 ### Zmiany zaakceptowane:
+
 1. ✅ **Preferencje opcjonalne** - `preferences?` w schema i typach
 2. ✅ **Model AI** - zmieniono na `claude-3.5-sonnet`
 3. ✅ **Brak autoryzacji** - używamy `DEFAULT_USER_ID` z `supabase.client.ts`
@@ -70,29 +84,33 @@
 ### Szybki start (6 kroków):
 
 0. **Skonfiguruj .env (WAŻNE - tylko raz!):**
+
    ```bash
    # Pobierz dane dostępowe Supabase
    npx supabase status
-   
+
    # Utwórz plik .env w głównym katalogu:
    SUPABASE_URL=http://127.0.0.1:54321
    SUPABASE_KEY=<skopiuj "Publishable key" z supabase status>
    OPENROUTER_API_KEY=your-openrouter-api-key-here
    ```
-   
+
    **Zobacz:** `.ai/env-setup-guide.md` dla szczegółów
 
 1. **Uruchom serwer dev:**
+
    ```bash
    npm run dev
    ```
 
 2. **Uruchom Supabase lokalnie:**
+
    ```bash
    npx supabase start
    ```
 
 3. **Załaduj dane testowe:**
+
    ```bash
    # Wykonaj SQL z pliku .ai/test-data-setup.sql w Supabase Studio
    # lub użyj psql:
@@ -104,6 +122,7 @@
    - **URL:** `http://localhost:4321/api/projects/a1b2c3d4-e5f6-7890-abcd-ef1234567890/plan`
    - **Header:** `Content-Type: application/json`
    - **Body (raw JSON):**
+
    ```json
    {
      "model": "claude-3.5-sonnet",
@@ -127,7 +146,9 @@
    - W bazie danych pojawił się wpis w `ai_logs`
 
 ### Szczegółowe instrukcje:
+
 Zobacz **`.ai/postman-testing-guide.md`** dla:
+
 - Wszystkich scenariuszy testowych
 - Przykładów żądań i odpowiedzi
 - Troubleshooting
@@ -160,6 +181,7 @@ src/
 ## 🎯 Następne kroki (według planu)
 
 ### ✅ Zrobione (Kroki 1-3):
+
 - [x] Routing & Middleware
 - [x] Walidacja wejścia
 - [x] Service layer
@@ -167,11 +189,13 @@ src/
 - [x] Dokumentacja testowania
 
 ### 📝 Do zrobienia w przyszłości:
+
 - [ ] **Krok 4:** Testy jednostkowe (pominięte na razie)
 - [ ] **Krok 5:** Testy integracyjne (pominięte na razie)
 - [ ] **Krok 6:** Dokumentacja OpenAPI/Swagger spec
 
 ### 🔮 Przyszłe usprawnienia:
+
 - [ ] Prawdziwa integracja z Openrouter.ai (zamiast mocka)
 - [ ] Implementacja autoryzacji JWT
 - [ ] Rate limiting dla żądań AI
@@ -189,10 +213,12 @@ src/
 ### Częste problemy:
 
 **Problem: "supabaseUrl is required"**
+
 - **Przyczyna:** Brak pliku `.env` z konfiguracją Supabase
 - **Rozwiązanie:** Utwórz plik `.env` - zobacz `.ai/env-setup-guide.md`
 
 **Problem: Zmienne środowiskowe nie działają**
+
 - **Rozwiązanie:** Zrestartuj serwer deweloperski po utworzeniu/edycji `.env`
 
 ## ❓ FAQ
@@ -208,7 +234,8 @@ A: W konsoli serwera oraz w tabeli `ai_logs` w bazie danych.
 
 **Q: Jak sprawdzić logi AI w bazie?**  
 A: ```sql
-SELECT * FROM ai_logs ORDER BY created_on DESC LIMIT 10;
+SELECT \* FROM ai_logs ORDER BY created_on DESC LIMIT 10;
+
 ```
 
 ## 📞 Kontakt / Pytania
@@ -218,3 +245,4 @@ W razie problemów lub pytań, sprawdź:
 2. Dokumentację w `.ai/postman-testing-guide.md`
 3. Status Supabase: `npx supabase status`
 
+```

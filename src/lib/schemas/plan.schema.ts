@@ -22,7 +22,14 @@ const preferencesSchema = z
 /**
  * Whitelist dozwolonych modeli AI
  */
-const ALLOWED_AI_MODELS = ["gpt-4", "gpt-4o-mini", "gpt-5", "claude-3-opus", "claude-3.5-sonnet", "openai/gpt-oss-20b"] as const;
+const ALLOWED_AI_MODELS = [
+  "gpt-4",
+  "gpt-4o-mini",
+  "gpt-5",
+  "claude-3-opus",
+  "claude-3.5-sonnet",
+  "openai/gpt-oss-20b",
+] as const;
 
 /**
  * Schemat walidacji dla komendy generowania planu

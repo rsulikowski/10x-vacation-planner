@@ -2,22 +2,8 @@ import { defineMiddleware } from "astro:middleware";
 import { createSupabaseServerInstance } from "../db/supabase.client.ts";
 
 /**
- * Public paths that don't require authentication
- * Includes both server-rendered pages and API endpoints
- */
-const PUBLIC_PATHS = [
-  // Landing page
-  "/",
-  // Auth pages
-  "/auth/login",
-  // Auth API endpoints
-  "/api/auth/login",
-  "/api/auth/logout",
-];
-
-/**
  * Authentication middleware
- * 
+ *
  * Responsibilities:
  * 1. Create Supabase server client for each request
  * 2. Verify user session from cookies
@@ -49,13 +35,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   // Check if current path is public
   const pathname = url.pathname;
-  const isPublicPath = PUBLIC_PATHS.includes(pathname);
 
   // Define protected routes (routes that require authentication)
   const protectedRoutes = ["/projects"];
-  const isProtectedRoute = protectedRoutes.some((route) =>
-    pathname.startsWith(route)
-  );
+  const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route));
 
   // Define auth routes (login, register, etc.)
   const authRoutes = ["/auth/login"];

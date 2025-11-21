@@ -19,6 +19,7 @@ npx supabase status
 ```
 
 Zapisz następujące wartości:
+
 - **API URL** (np. `http://127.0.0.1:54321`)
 - **Publishable key** (np. `sb_publishable_...`)
 
@@ -123,4 +124,3 @@ SUPABASE_KEY=sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH
 # OpenRouter AI
 OPENROUTER_API_KEY=sk-or-v1-...
 ```
-

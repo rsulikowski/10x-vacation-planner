@@ -153,7 +153,6 @@ export function ProjectFormModal({ isOpen, mode, initialData, isLoading, onSubmi
                 placeholder="e.g., Trip to Paris"
                 aria-invalid={!!errors.name}
                 disabled={isLoading}
-                autoFocus
                 data-testid="project-name-input"
               />
               {errors.name && <p className="text-destructive text-sm">{errors.name}</p>}
@@ -196,7 +195,13 @@ export function ProjectFormModal({ isOpen, mode, initialData, isLoading, onSubmi
           </div>
 
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={onClose} disabled={isLoading} data-testid="project-form-cancel-button">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onClose}
+              disabled={isLoading}
+              data-testid="project-form-cancel-button"
+            >
               Cancel
             </Button>
             <Button type="submit" disabled={isLoading} data-testid="project-form-submit-button">

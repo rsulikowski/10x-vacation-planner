@@ -1,4 +1,4 @@
-import type { Page, Locator } from '@playwright/test';
+import type { Page, Locator } from "@playwright/test";
 
 /**
  * Page Object Model for Project Form Modal
@@ -18,29 +18,29 @@ export class ProjectFormModal {
 
   constructor(page: Page) {
     this.page = page;
-    this.modal = page.getByTestId('project-form-modal');
-    this.modalTitle = this.modal.getByRole('heading', { level: 2 });
-    this.nameInput = page.getByTestId('project-name-input');
-    this.durationInput = page.getByTestId('project-duration-input');
-    this.plannedDateInput = page.getByTestId('project-planned-date-input');
-    this.submitButton = page.getByTestId('project-form-submit-button');
-    this.cancelButton = page.getByTestId('project-form-cancel-button');
-    this.nameError = this.modal.locator('text=Name is required');
-    this.durationError = this.modal.locator('text=/Duration .* required|Duration must be/');
+    this.modal = page.getByTestId("project-form-modal");
+    this.modalTitle = this.modal.getByRole("heading", { level: 2 });
+    this.nameInput = page.getByTestId("project-name-input");
+    this.durationInput = page.getByTestId("project-duration-input");
+    this.plannedDateInput = page.getByTestId("project-planned-date-input");
+    this.submitButton = page.getByTestId("project-form-submit-button");
+    this.cancelButton = page.getByTestId("project-form-cancel-button");
+    this.nameError = this.modal.locator("text=Name is required");
+    this.durationError = this.modal.locator("text=/Duration .* required|Duration must be/");
   }
 
   /**
    * Wait for the modal to be visible
    */
   async waitForModal() {
-    await this.modal.waitFor({ state: 'visible' });
+    await this.modal.waitFor({ state: "visible" });
   }
 
   /**
    * Wait for the modal to be hidden
    */
   async waitForModalClose() {
-    await this.modal.waitFor({ state: 'hidden' });
+    await this.modal.waitFor({ state: "hidden" });
   }
 
   /**
@@ -48,7 +48,7 @@ export class ProjectFormModal {
    */
   async isCreateMode(): Promise<boolean> {
     const title = await this.modalTitle.textContent();
-    return title?.includes('Create New Project') ?? false;
+    return title?.includes("Create New Project") ?? false;
   }
 
   /**
@@ -56,7 +56,7 @@ export class ProjectFormModal {
    */
   async isEditMode(): Promise<boolean> {
     const title = await this.modalTitle.textContent();
-    return title?.includes('Edit Project') ?? false;
+    return title?.includes("Edit Project") ?? false;
   }
 
   /**
@@ -78,7 +78,7 @@ export class ProjectFormModal {
    * @param date - Date in YYYY-MM-DD format or Date object
    */
   async fillPlannedDate(date: string | Date) {
-    const dateString = typeof date === 'string' ? date : date.toISOString().split('T')[0];
+    const dateString = typeof date === "string" ? date : date.toISOString().split("T")[0];
     await this.plannedDateInput.fill(dateString);
   }
 
@@ -94,11 +94,7 @@ export class ProjectFormModal {
   /**
    * Fill the entire form
    */
-  async fillForm(data: {
-    name: string;
-    duration: number | string;
-    plannedDate?: string | Date;
-  }) {
+  async fillForm(data: { name: string; duration: number | string; plannedDate?: string | Date }) {
     await this.fillName(data.name);
     await this.fillDuration(data.duration);
     if (data.plannedDate) {
@@ -123,11 +119,7 @@ export class ProjectFormModal {
   /**
    * Create a new project (fill form and submit)
    */
-  async createProject(data: {
-    name: string;
-    duration: number | string;
-    plannedDate?: string | Date;
-  }) {
+  async createProject(data: { name: string; duration: number | string; plannedDate?: string | Date }) {
     await this.waitForModal();
     await this.fillForm(data);
     await this.submit();
@@ -145,7 +137,7 @@ export class ProjectFormModal {
    * Check if the submit button is in loading state
    */
   async isSubmitLoading(): Promise<boolean> {
-    const hasLoader = await this.submitButton.locator('svg.animate-spin').count();
+    const hasLoader = await this.submitButton.locator("svg.animate-spin").count();
     return hasLoader > 0;
   }
 
@@ -184,4 +176,3 @@ export class ProjectFormModal {
     return await this.durationError.isVisible();
   }
 }
-

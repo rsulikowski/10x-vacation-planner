@@ -37,7 +37,7 @@ function EmptyStateView() {
       <FolderOpenIcon className="text-muted-foreground mb-4 size-16" />
       <h3 className="mb-2 text-xl font-semibold">No projects yet</h3>
       <p className="text-muted-foreground mb-6 max-w-sm">
-        Get started by creating your first travel project. Click the "New Project" button above.
+        Get started by creating your first travel project. Click the &quot;New Project&quot; button above.
       </p>
     </div>
   );

@@ -5,6 +5,7 @@ Replace `{{BASE_URL}}`, `{{PROJECT_ID}}`, and `{{NOTE_ID}}` with actual values.
 ## Projects Endpoints
 
 ### 1. Create Project (POST /api/projects)
+
 ```bash
 curl -X POST "{{BASE_URL}}/api/projects" \
   -H "Content-Type: application/json" \
@@ -12,16 +13,19 @@ curl -X POST "{{BASE_URL}}/api/projects" \
 ```
 
 ### 2. List Projects (GET /api/projects)
+
 ```bash
 curl -X GET "{{BASE_URL}}/api/projects?page=1&size=20&sort=created_on&order=desc"
 ```
 
 ### 3. Get Project (GET /api/projects/{projectId})
+
 ```bash
 curl -X GET "{{BASE_URL}}/api/projects/{{PROJECT_ID}}"
 ```
 
 ### 4. Update Project (PATCH /api/projects/{projectId})
+
 ```bash
 curl -X PATCH "{{BASE_URL}}/api/projects/{{PROJECT_ID}}" \
   -H "Content-Type: application/json" \
@@ -29,6 +33,7 @@ curl -X PATCH "{{BASE_URL}}/api/projects/{{PROJECT_ID}}" \
 ```
 
 ### 5. Delete Project (DELETE /api/projects/{projectId})
+
 ```bash
 curl -X DELETE "{{BASE_URL}}/api/projects/{{PROJECT_ID}}"
 ```
@@ -38,6 +43,7 @@ curl -X DELETE "{{BASE_URL}}/api/projects/{{PROJECT_ID}}"
 ## Notes Endpoints
 
 ### 6. Create Note (POST /api/projects/{projectId}/notes)
+
 ```bash
 curl -X POST "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes" \
   -H "Content-Type: application/json" \
@@ -45,6 +51,7 @@ curl -X POST "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes" \
 ```
 
 ### 7. List Notes (GET /api/projects/{projectId}/notes)
+
 ```bash
 # Basic list
 curl -X GET "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes"
@@ -57,11 +64,13 @@ curl -X GET "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes?place_tag=Paris"
 ```
 
 ### 8. Get Note (GET /api/projects/{projectId}/notes/{noteId})
+
 ```bash
 curl -X GET "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes/{{NOTE_ID}}"
 ```
 
 ### 9. Update Note (PATCH /api/projects/{projectId}/notes/{noteId})
+
 ```bash
 curl -X PATCH "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes/{{NOTE_ID}}" \
   -H "Content-Type: application/json" \
@@ -69,6 +78,7 @@ curl -X PATCH "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes/{{NOTE_ID}}" \
 ```
 
 ### 10. Delete Note (DELETE /api/projects/{projectId}/notes/{noteId})
+
 ```bash
 curl -X DELETE "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes/{{NOTE_ID}}"
 ```
@@ -78,6 +88,7 @@ curl -X DELETE "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes/{{NOTE_ID}}"
 ## AI Plan Generation
 
 ### 11. Generate Plan (POST /api/projects/{projectId}/plan)
+
 ```bash
 curl -X POST "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/plan" \
   -H "Content-Type: application/json" \
@@ -137,21 +148,25 @@ curl -s -X GET "{{BASE_URL}}/api/projects/$PROJECT_ID" | jq
 ## Error Test Cases
 
 ### Invalid UUID Format (400)
+
 ```bash
 curl -X GET "{{BASE_URL}}/api/projects/not-a-uuid"
 ```
 
 ### Project Not Found (404)
+
 ```bash
 curl -X GET "{{BASE_URL}}/api/projects/00000000-0000-0000-0000-000000000000"
 ```
 
 ### Invalid Pagination (400)
+
 ```bash
 curl -X GET "{{BASE_URL}}/api/projects?page=0"
 ```
 
 ### Empty Content (400)
+
 ```bash
 curl -X POST "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes" \
   -H "Content-Type: application/json" \
@@ -159,9 +174,9 @@ curl -X POST "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes" \
 ```
 
 ### Invalid Priority (400)
+
 ```bash
 curl -X POST "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes" \
   -H "Content-Type: application/json" \
   -d '{"content": "Test", "priority": 5}'
 ```
-

@@ -6,19 +6,19 @@ export const prerender = false;
 
 /**
  * POST /api/auth/logout
- * 
+ *
  * Sign out user and clear authentication cookies
- * 
+ *
  * Request Body: None (reads cookies automatically)
- * 
+ *
  * Success Response (200):
  * {
  *   "message": "Logout successful"
  * }
- * 
+ *
  * Error Responses:
  * - 500: Server error
- * 
+ *
  * Note: This endpoint succeeds even if user is not logged in (idempotent)
  */
 export const POST: APIRoute = async ({ request, cookies }) => {
@@ -35,6 +35,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     // Log error but don't fail the request
     // Logout should be idempotent - always succeed even if session is invalid
     if (error) {
+      // eslint-disable-next-line no-console
       console.warn("Logout warning (non-critical):", error);
     }
 
@@ -46,4 +47,3 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     return handleApiError(error);
   }
 };
-

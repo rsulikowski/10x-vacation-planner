@@ -5,6 +5,7 @@ This file contains curl commands for testing the POST `/api/projects/{projectId}
 ## Setup
 
 Replace the following placeholders before running the tests:
+
 - `{{BASE_URL}}` - Your API base URL (e.g., `http://localhost:4321` or `https://your-domain.com`)
 - `{{PROJECT_ID}}` - A valid project ID (UUID) that belongs to the DEFAULT_USER_ID
 - `{{INVALID_PROJECT_ID}}` - A valid UUID that doesn't exist or doesn't belong to the user
@@ -26,6 +27,7 @@ curl -X POST "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes" \
 ```
 
 **Expected Response (201):**
+
 ```json
 {
   "id": "uuid",
@@ -51,6 +53,7 @@ curl -X POST "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes" \
 ```
 
 **Expected Response (201):**
+
 ```json
 {
   "id": "uuid",
@@ -77,6 +80,7 @@ curl -X POST "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes" \
 ```
 
 **Expected Response (201):**
+
 ```json
 {
   "id": "uuid",
@@ -102,6 +106,7 @@ curl -X POST "{{BASE_URL}}/api/projects/not-a-valid-uuid/notes" \
 ```
 
 **Expected Response (400):**
+
 ```json
 {
   "error": "Validation Error",
@@ -131,6 +136,7 @@ curl -X POST "{{BASE_URL}}/api/projects/{{INVALID_PROJECT_ID}}/notes" \
 ```
 
 **Expected Response (404):**
+
 ```json
 {
   "error": "API Error",
@@ -149,6 +155,7 @@ curl -X POST "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes" \
 ```
 
 **Expected Response (400):**
+
 ```json
 {
   "error": "API Error",
@@ -170,6 +177,7 @@ curl -X POST "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes" \
 ```
 
 **Expected Response (400):**
+
 ```json
 {
   "error": "Validation Error",
@@ -201,6 +209,7 @@ curl -X POST "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes" \
 ```
 
 **Expected Response (400):**
+
 ```json
 {
   "error": "Validation Error",
@@ -231,6 +240,7 @@ curl -X POST "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes" \
 ```
 
 **Expected Response (400):**
+
 ```json
 {
   "error": "Validation Error",
@@ -263,6 +273,7 @@ curl -X POST "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes" \
 ```
 
 **Expected Response (400):**
+
 ```json
 {
   "error": "Validation Error",
@@ -295,6 +306,7 @@ curl -X POST "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes" \
 ```
 
 **Expected Response (400):**
+
 ```json
 {
   "error": "Validation Error",
@@ -324,6 +336,7 @@ curl -X POST "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes" \
 ```
 
 **Expected Response (400):**
+
 ```json
 {
   "error": "Validation Error",
@@ -355,6 +368,7 @@ curl -X POST "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes" \
 ```
 
 **Expected Response (400):**
+
 ```json
 {
   "error": "Validation Error",
@@ -386,6 +400,7 @@ curl -X POST "{{BASE_URL}}/api/projects/{{PROJECT_ID}}/notes" \
 ```
 
 **Expected Response (201):**
+
 ```json
 {
   "id": "uuid",
@@ -427,6 +442,7 @@ To get a valid `PROJECT_ID` for testing:
 3. Use that ID as your `{{PROJECT_ID}}` variable in Postman
 
 Example:
+
 ```bash
 # Create a project first
 curl -X POST "{{BASE_URL}}/api/projects" \
@@ -449,4 +465,3 @@ curl -X POST "{{BASE_URL}}/api/projects" \
 - Authentication is currently using `DEFAULT_USER_ID` - JWT authentication will be implemented later
 - Priority values: 1 (high), 2 (medium), 3 (low)
 - `place_tags` can be omitted, set to `null`, or be an array of strings (including empty array)
-

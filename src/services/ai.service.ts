@@ -4,7 +4,7 @@
  * Service for generating travel plans using LLM through GROQ API
  */
 
-import type { GeneratePlanCommand, PlanResponseDto, ScheduleItemDto } from "../types";
+import type { GeneratePlanCommand, PlanResponseDto } from "../types";
 import { GROQService } from "../lib/groq.service";
 import type { JSONSchema } from "../lib/groq.types";
 import { ValidationError, ApiError as GroqApiError } from "../lib/errors";
@@ -24,7 +24,8 @@ const PLAN_RESPONSE_SCHEMA: JSONSchema = {
         properties: {
           day: {
             type: "number",
-            description: "Day number (1, 2, 3, etc.). MUST include ALL days from 1 to the total number of days requested.",
+            description:
+              "Day number (1, 2, 3, etc.). MUST include ALL days from 1 to the total number of days requested.",
           },
           activities: {
             type: "array",
@@ -38,7 +39,8 @@ const PLAN_RESPONSE_SCHEMA: JSONSchema = {
         required: ["day", "activities"],
         additionalProperties: false,
       },
-      description: "Complete daily schedule for ALL days of the trip. Must include every single day from day 1 to the last day.",
+      description:
+        "Complete daily schedule for ALL days of the trip. Must include every single day from day 1 to the last day.",
     },
   },
   required: ["schedule"],
@@ -123,6 +125,7 @@ export class AIService {
       }
 
       // Handle unknown errors
+      // eslint-disable-next-line no-console
       console.error("Unexpected error in AI service:", error);
       throw new ApiError(500, "Failed to generate travel plan");
     }
@@ -181,9 +184,9 @@ FORMATTING:
 
     // Add project name/destination
     prompt += `DESTINATION: ${command.project_name}\n`;
-    
+
     // Add trip duration
-    prompt += `TRIP DURATION: ${command.duration_days} day${command.duration_days !== 1 ? 's' : ''}\n\n`;
+    prompt += `TRIP DURATION: ${command.duration_days} day${command.duration_days !== 1 ? "s" : ""}\n\n`;
 
     // Add high priority notes
     if (highPriorityNotes.length > 0) {
@@ -223,7 +226,7 @@ FORMATTING:
 
     // Add final instructions
     prompt += `INSTRUCTIONS:\n`;
-    prompt += `- IMPORTANT: Create a COMPLETE day-by-day itinerary for ALL ${command.duration_days} day${command.duration_days !== 1 ? 's' : ''}\n`;
+    prompt += `- IMPORTANT: Create a COMPLETE day-by-day itinerary for ALL ${command.duration_days} day${command.duration_days !== 1 ? "s" : ""}\n`;
     prompt += `- You MUST include every single day from Day 1 to Day ${command.duration_days}\n`;
     prompt += `- DO NOT skip any days - the response must contain exactly ${command.duration_days} days\n`;
     prompt += `- Each day should have 3-5 activities\n`;
@@ -262,26 +265,29 @@ let aiServiceInstance: AIService | null = null;
 export function getAIService(): AIService {
   if (!aiServiceInstance) {
     // Try GROQ_API_KEY first, fallback to OPENROUTER_API_KEY for backwards compatibility
-    let apiKey = import.meta.env.GROQ_API_KEY || import.meta.env.OPENROUTER_API_KEY;
-    
+    const apiKey = import.meta.env.GROQ_API_KEY || import.meta.env.OPENROUTER_API_KEY;
+
     // Fallback for development/debugging
     if (!apiKey) {
+      // eslint-disable-next-line no-console
       console.error("⚠️ GROQ_API_KEY not found in environment variables");
+      // eslint-disable-next-line no-console
       console.error("Available env vars:", Object.keys(import.meta.env));
       throw new Error(
         "GROQ_API_KEY environment variable is not set. " +
-        "Please add GROQ_API_KEY=your_key_here to your .env file and restart the dev server."
+          "Please add GROQ_API_KEY=your_key_here to your .env file and restart the dev server."
       );
     }
-    
+
     // Log which key is being used (for debugging)
     if (import.meta.env.DEV) {
+      // eslint-disable-next-line no-console
       console.log(
         "Using API key from:",
         import.meta.env.GROQ_API_KEY ? "GROQ_API_KEY" : "OPENROUTER_API_KEY (fallback)"
       );
     }
-    
+
     aiServiceInstance = new AIService(apiKey);
   }
   return aiServiceInstance;

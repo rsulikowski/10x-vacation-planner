@@ -57,34 +57,34 @@ VacationPlanner is structured around isolated authentication routes, a global la
 
 ## 3. User Journey Map
 
-1. User lands on `/auth/login`.  
-2. Registers or logs in.  
-3. Upon success, redirected to `/projects`.  
-4. (Optional) Navigates to `/profile` to set preferences.  
-5. Back at `/projects`, clicks "New Project" → fills and submits form → project appears.  
-6. Clicks project card → lands in Notes tab.  
-7. Adds multiple notes via modal.  
-8. Switches to Plan tab, clicks "Generate Plan" → sees spinner, then schedule or error toast.  
+1. User lands on `/auth/login`.
+2. Registers or logs in.
+3. Upon success, redirected to `/projects`.
+4. (Optional) Navigates to `/profile` to set preferences.
+5. Back at `/projects`, clicks "New Project" → fills and submits form → project appears.
+6. Clicks project card → lands in Notes tab.
+7. Adds multiple notes via modal.
+8. Switches to Plan tab, clicks "Generate Plan" → sees spinner, then schedule or error toast.
 9. Views schedule, navigates back to Projects or Profile.
 
 ## 4. Layout and Navigation Structure
 
-- **Global Layout**: Top nav bar with links to Projects and Profile, user menu for logout.  
-- **Auth Layout**: Full-screen routes for login, register, reset, without global nav.  
-- **Project Detail**: Breadcrumbs (Projects > Project Name), tablist for Notes and Plan.  
+- **Global Layout**: Top nav bar with links to Projects and Profile, user menu for logout.
+- **Auth Layout**: Full-screen routes for login, register, reset, without global nav.
+- **Project Detail**: Breadcrumbs (Projects > Project Name), tablist for Notes and Plan.
 - **Modals**: Create/edit forms open as overlays with focus trap and escape handling.
 
 ## 5. Key Components
 
-- **NavBar**: Accessible navigation links, user menu.  
-- **AuthGuard**: Redirects unauthenticated users to login.  
-- **FormField**: Label, input, error message wrapper for inline validation.  
-- **DatePicker**: Accessible date selection with aria attributes.  
-- **AutocompleteInput**: For place tags and profile categories, aria-combobox.  
-- **InfiniteScrollGrid**: Loads paginated data lazily with aria-live.  
-- **NoteCard**: Displays truncated note, clickable region for modal.  
-- **Modal**: Generic overlay with focus trap.  
-- **SpinnerOverlay**: Full-screen spinner with aria-busy.  
-- **Toast**: Non-blocking notifications, aria-live polite.  
-- **Tabs**: Semantic tablist/tab elements with role attributes.  
+- **NavBar**: Accessible navigation links, user menu.
+- **AuthGuard**: Redirects unauthenticated users to login.
+- **FormField**: Label, input, error message wrapper for inline validation.
+- **DatePicker**: Accessible date selection with aria attributes.
+- **AutocompleteInput**: For place tags and profile categories, aria-combobox.
+- **InfiniteScrollGrid**: Loads paginated data lazily with aria-live.
+- **NoteCard**: Displays truncated note, clickable region for modal.
+- **Modal**: Generic overlay with focus trap.
+- **SpinnerOverlay**: Full-screen spinner with aria-busy.
+- **Toast**: Non-blocking notifications, aria-live polite.
+- **Tabs**: Semantic tablist/tab elements with role attributes.
 - **Button**: Primary/secondary with disabled states and aria-disabled.

@@ -36,7 +36,8 @@ export function DeleteConfirmationDialog({
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
           <AlertDialogDescription>
             This will permanently delete the project{" "}
-            <span className="font-semibold text-foreground">"{project?.name}"</span>. This action cannot be undone.
+            <span className="font-semibold text-foreground">&quot;{project?.name}&quot;</span>. This action cannot be
+            undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

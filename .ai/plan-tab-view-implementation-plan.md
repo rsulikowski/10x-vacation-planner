@@ -1,15 +1,19 @@
 # View Implementation Plan: Plan Tab
 
 ## 1. Overview
+
 This document outlines the implementation plan for the "Plan Tab" view. This view allows users to generate a detailed, day-by-day travel itinerary using an AI service based on the notes they have added to a specific travel project. The view will handle the user interaction for triggering the generation, provide clear feedback during the process, display the resulting schedule, and manage potential errors gracefully.
 
 ## 2. View Routing
+
 The view will be accessible at the following path:
+
 - **Path**: `/projects/:projectId/plan`
 
 This will be an Astro page (`src/pages/projects/[projectId]/plan.astro`) that renders the main React component responsible for the view's interactivity.
 
 ## 3. Component Structure
+
 The view will be composed of a single container component that manages state and several presentational components for the UI.
 
 ```
@@ -24,6 +28,7 @@ The view will be composed of a single container component that manages state and
 ## 4. Component Details
 
 ### `PlanGenerator.tsx`
+
 - **Component description**: This is the main stateful container component for the Plan Tab. It is responsible for fetching project notes and user preferences, managing the UI state (idle, loading, success, error), handling the API call to generate the plan, and rendering the appropriate child components.
 - **Main elements**: It will render child components conditionally based on the current `status`. It will not have much of its own markup, serving primarily as a logic controller.
 - **Handled interactions**:
@@ -36,6 +41,7 @@ The view will be composed of a single container component that manages state and
 - **Props**: `{ projectId: string }`.
 
 ### `GeneratePlanButton` (variant of `ui/button.tsx`)
+
 - **Component description**: A button that the user clicks to start the plan generation. Its label may change (e.g., "Generate Plan", "Re-generate Plan").
 - **Main elements**: An HTML `<button>` element.
 - **Handled interactions**: `onClick`.
@@ -44,6 +50,7 @@ The view will be composed of a single container component that manages state and
 - **Props**: `{ onClick: () => void; isLoading: boolean; isDisabled: boolean; }`.
 
 ### `ScheduleDisplay.tsx`
+
 - **Component description**: A presentational component that renders the AI-generated schedule. It will display a list of days, each with a corresponding list of activities.
 - **Main elements**: Uses `<div>`, `<h2>` for the day number (e.g., "Day 1"), and `<ul>`/`<li>` for the list of activities.
 - **Handled interactions**: None.
@@ -52,6 +59,7 @@ The view will be composed of a single container component that manages state and
 - **Props**: `{ schedule: ScheduleItemDto[] }`.
 
 ### `LoadingOverlay.tsx`
+
 - **Component description**: A modal overlay that covers the view while the AI is generating the plan. It displays a spinner and a message to inform the user that the process is ongoing.
 - **Main elements**: A fixed-position `<div>` with a semi-transparent background, a spinner element, and a text block (e.g., `<p>Generating plan...</p>`).
 - **Handled interactions**: None. It is meant to block interactions.
@@ -60,6 +68,7 @@ The view will be composed of a single container component that manages state and
 - **Props**: `{ isLoading: boolean }`.
 
 ### `ErrorNotification` (using `ui/Toast.tsx`)
+
 - **Component description**: A toast notification that appears when the API call fails. It displays a user-friendly error message and provides a "Try Again" action.
 - **Main elements**: Toast component from `shadcn/ui`.
 - **Handled interactions**: `onClick` on the "Try Again" action button.
@@ -70,9 +79,10 @@ The view will be composed of a single container component that manages state and
 ## 5. Types
 
 ### ViewModel Types
+
 ```typescript
 // To manage the view's state
-export type PlanGenerationStatus = 'idle' | 'loading' | 'success' | 'error';
+export type PlanGenerationStatus = "idle" | "loading" | "success" | "error";
 
 export interface PlanViewState {
   status: PlanGenerationStatus;
@@ -82,7 +92,9 @@ export interface PlanViewState {
 ```
 
 ### DTOs (from `src/types.ts`)
+
 The implementation will use the following existing types for API communication:
+
 - `GeneratePlanCommand`: For the `POST` request body.
 - `PlanResponseDto`: For the successful `POST` response.
 - `ScheduleItemDto`: For items within the `schedule` array.
@@ -90,16 +102,20 @@ The implementation will use the following existing types for API communication:
 - `PreferencesDto`: For fetching user preferences.
 
 ## 6. State Management
+
 State will be managed locally within the `PlanGenerator.tsx` component. A custom hook, `usePlanGenerator`, will be created to encapsulate all business logic, state, and side effects.
 
 ### `usePlanGenerator.ts`
+
 This hook will:
+
 - Use React's `useReducer` to manage the `PlanViewState`.
 - Contain a `useEffect` to fetch initial data required for the plan generation (all project notes and user preferences) when the component mounts.
 - Expose the current state (`status`, `schedule`, `error`).
 - Expose an async function `generatePlan` that builds the `GeneratePlanCommand` and executes the `POST` request. This function will dispatch actions to the reducer to update the state based on the API call's progress and outcome.
 
 ## 7. API Integration
+
 Integration will target the plan generation endpoint.
 
 - **Endpoint**: `POST /api/projects/:projectId/plan`
@@ -126,6 +142,7 @@ Integration will target the plan generation endpoint.
   - `GET /api/user/profile`: To fetch the user's travel preferences. (This endpoint is assumed to exist).
 
 ## 8. User Interactions
+
 - **Initial View Load**: The component fetches project notes and preferences. If a previously generated plan exists, it can be displayed (enhancement). Otherwise, the view is idle.
 - **Click "Generate Plan"**:
   1. The UI enters the `loading` state.
@@ -143,10 +160,12 @@ Integration will target the plan generation endpoint.
   1. The `generatePlan` function is called again, restarting the process.
 
 ## 9. Conditions and Validation
+
 - **Project has no notes**: The "Generate Plan" button will be disabled. A message like "Please add notes to your project to generate a plan" will be displayed.
 - **Request in progress**: The "Generate Plan" button will be disabled to prevent multiple submissions.
 
 ## 10. Error Handling
+
 - **Client-Side Errors**:
   - **No notes**: Handled by disabling the generate button.
   - **Failure to fetch initial data (notes/preferences)**: The view will enter a persistent error state, showing a message like "Could not load project data. Please refresh the page."
@@ -157,13 +176,14 @@ Integration will target the plan generation endpoint.
 - **Request Timeout**: If the request takes longer than 60 seconds, it will be timed out, and a server error will be shown.
 
 ## 11. Implementation Steps
+
 1.  Create the Astro page file at `src/pages/projects/[projectId]/plan.astro`.
 2.  Create the main React component file `src/components/PlanGenerator.tsx`.
 3.  Implement the `usePlanGenerator.ts` custom hook to manage state and API logic.
-    -   Define `PlanViewState` and `PlanGenerationStatus` types.
-    -   Set up a `useReducer` for state management.
-    -   Implement the `useEffect` for fetching initial notes and user preferences.
-    -   Implement the `generatePlan` function to perform the `POST` request and handle responses.
+    - Define `PlanViewState` and `PlanGenerationStatus` types.
+    - Set up a `useReducer` for state management.
+    - Implement the `useEffect` for fetching initial notes and user preferences.
+    - Implement the `generatePlan` function to perform the `POST` request and handle responses.
 4.  In `PlanGenerator.tsx`, use the `usePlanGenerator` hook and render the UI conditionally based on the state.
 5.  Create the `ScheduleDisplay.tsx` component to render the plan.
 6.  Create the `LoadingOverlay.tsx` component.

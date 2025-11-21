@@ -4,15 +4,16 @@ Base URL: `http://localhost:4321/api` (or your deployment URL)
 
 ## Projects API
 
-| Method | Endpoint | Purpose | Auth |
-|--------|----------|---------|------|
-| POST | `/projects` | Create project | DEFAULT_USER_ID |
-| GET | `/projects` | List projects | DEFAULT_USER_ID |
-| GET | `/projects/{id}` | Get project | DEFAULT_USER_ID |
-| PATCH | `/projects/{id}` | Update project | DEFAULT_USER_ID |
+| Method | Endpoint         | Purpose        | Auth            |
+| ------ | ---------------- | -------------- | --------------- |
+| POST   | `/projects`      | Create project | DEFAULT_USER_ID |
+| GET    | `/projects`      | List projects  | DEFAULT_USER_ID |
+| GET    | `/projects/{id}` | Get project    | DEFAULT_USER_ID |
+| PATCH  | `/projects/{id}` | Update project | DEFAULT_USER_ID |
 | DELETE | `/projects/{id}` | Delete project | DEFAULT_USER_ID |
 
 ### Create Project
+
 ```json
 POST /projects
 {
@@ -24,6 +25,7 @@ POST /projects
 ```
 
 ### List Projects
+
 ```
 # All parameters are optional!
 GET /projects
@@ -39,6 +41,7 @@ GET /projects?sort=name&order=asc
 ```
 
 ### Update Project
+
 ```json
 PATCH /projects/{id}
 {
@@ -49,6 +52,7 @@ PATCH /projects/{id}
 ```
 
 ### Delete Project
+
 ```
 DELETE /projects/{id}
 → 204 No Content
@@ -58,15 +62,16 @@ DELETE /projects/{id}
 
 ## Notes API
 
-| Method | Endpoint | Purpose | Auth |
-|--------|----------|---------|------|
-| POST | `/projects/{projectId}/notes` | Create note | DEFAULT_USER_ID |
-| GET | `/projects/{projectId}/notes` | List notes | DEFAULT_USER_ID |
-| GET | `/projects/{projectId}/notes/{noteId}` | Get note | DEFAULT_USER_ID |
-| PATCH | `/projects/{projectId}/notes/{noteId}` | Update note | DEFAULT_USER_ID |
+| Method | Endpoint                               | Purpose     | Auth            |
+| ------ | -------------------------------------- | ----------- | --------------- |
+| POST   | `/projects/{projectId}/notes`          | Create note | DEFAULT_USER_ID |
+| GET    | `/projects/{projectId}/notes`          | List notes  | DEFAULT_USER_ID |
+| GET    | `/projects/{projectId}/notes/{noteId}` | Get note    | DEFAULT_USER_ID |
+| PATCH  | `/projects/{projectId}/notes/{noteId}` | Update note | DEFAULT_USER_ID |
 | DELETE | `/projects/{projectId}/notes/{noteId}` | Delete note | DEFAULT_USER_ID |
 
 ### Create Note
+
 ```json
 POST /projects/{projectId}/notes
 {
@@ -78,6 +83,7 @@ POST /projects/{projectId}/notes
 ```
 
 ### List Notes
+
 ```
 # All parameters are optional!
 GET /projects/{projectId}/notes
@@ -94,6 +100,7 @@ GET /projects/{projectId}/notes?place_tag=Paris
 ```
 
 ### Update Note
+
 ```json
 PATCH /projects/{projectId}/notes/{noteId}
 {
@@ -104,6 +111,7 @@ PATCH /projects/{projectId}/notes/{noteId}
 ```
 
 ### Delete Note
+
 ```
 DELETE /projects/{projectId}/notes/{noteId}
 → 204 No Content
@@ -113,11 +121,12 @@ DELETE /projects/{projectId}/notes/{noteId}
 
 ## AI Plan Generation
 
-| Method | Endpoint | Purpose | Auth |
-|--------|----------|---------|------|
-| POST | `/projects/{projectId}/plan` | Generate AI plan | DEFAULT_USER_ID |
+| Method | Endpoint                     | Purpose          | Auth            |
+| ------ | ---------------------------- | ---------------- | --------------- |
+| POST   | `/projects/{projectId}/plan` | Generate AI plan | DEFAULT_USER_ID |
 
 ### Generate Plan
+
 ```json
 POST /projects/{projectId}/plan
 {
@@ -146,14 +155,14 @@ POST /projects/{projectId}/plan
 
 ## Status Codes
 
-| Code | Meaning | When |
-|------|---------|------|
-| 200 | OK | Successful read/update |
-| 201 | Created | Successful create |
-| 204 | No Content | Successful delete |
-| 400 | Bad Request | Validation error, invalid input |
-| 404 | Not Found | Resource not found |
-| 500 | Server Error | Database/server error |
+| Code | Meaning      | When                            |
+| ---- | ------------ | ------------------------------- |
+| 200  | OK           | Successful read/update          |
+| 201  | Created      | Successful create               |
+| 204  | No Content   | Successful delete               |
+| 400  | Bad Request  | Validation error, invalid input |
+| 404  | Not Found    | Resource not found              |
+| 500  | Server Error | Database/server error           |
 
 ---
 
@@ -162,10 +171,12 @@ POST /projects/{projectId}/plan
 **⚠️ ALL PARAMETERS ARE OPTIONAL** - The API works without any parameters!
 
 ### Pagination (Optional)
+
 - `page` (integer, optional, default: 1) - Page number
 - `size` (integer, optional, default: 20, max: 100) - Items per page
 
 ### Projects Sorting (Optional)
+
 - `sort` (string, optional, default: "created_on") - Field to sort by
   - Options: `created_on`, `name`, `duration_days`, `planned_date`
   - Invalid values are ignored and default to `created_on`
@@ -174,6 +185,7 @@ POST /projects/{projectId}/plan
   - Invalid values are ignored and default to `desc`
 
 ### Notes Filtering (Optional)
+
 - `priority` (integer, optional, 1-3) - Filter by priority
   - Invalid values are ignored (no filtering applied)
 - `place_tag` (string, optional) - Filter by place tag
@@ -183,11 +195,13 @@ POST /projects/{projectId}/plan
 ## Validation Rules
 
 ### Projects
+
 - `name`: non-empty string (required)
 - `duration_days`: integer ≥ 1 (required)
 - `planned_date`: YYYY-MM-DD format (optional)
 
 ### Notes
+
 - `content`: non-empty string (required)
 - `priority`: integer 1-3 (required)
   - 1 = High priority
@@ -196,6 +210,7 @@ POST /projects/{projectId}/plan
 - `place_tags`: array of strings (optional)
 
 ### AI Plan
+
 - `model`: one of ["gpt-4", "gpt-5", "claude-3-opus", "claude-3.5-sonnet"]
 - `notes`: array, 1-100 items
 - `preferences.categories`: array of strings (optional)
@@ -249,17 +264,20 @@ curl -X POST http://localhost:4321/api/projects/abc-123/plan \
 ## Files & Schemas
 
 ### Service Files
+
 - `src/services/project.service.ts` - Project operations
 - `src/services/note.service.ts` - Note operations
 - `src/services/plan.service.ts` - AI plan generation
 - `src/services/ai.service.mock.ts` - Mock AI service
 
 ### Schema Files
+
 - `src/lib/schemas/project.schema.ts` - Project validation
 - `src/lib/schemas/note.schema.ts` - Note validation
 - `src/lib/schemas/plan.schema.ts` - Plan validation
 
 ### Utility Files
+
 - `src/lib/api-utils.ts` - Error handling, responses, auth helpers
 - `src/types.ts` - TypeScript type definitions
 
@@ -268,6 +286,7 @@ curl -X POST http://localhost:4321/api/projects/abc-123/plan \
 ## Testing
 
 See test files:
+
 - `.ai/project-creation-tests.md` (10 test cases)
 - `.ai/note-creation-tests.md` (14 test cases)
 - `.ai/implementation-plans/all-endpoints-tests.md` (All endpoints)
@@ -279,6 +298,7 @@ Import curl commands to Postman for easy testing.
 ## Current Limitations
 
 ⚠️ **Authentication**: Currently using `DEFAULT_USER_ID` constant
+
 - JWT authentication planned for future implementation
 - All endpoints will require Bearer token authentication
 
@@ -286,4 +306,3 @@ Import curl commands to Postman for easy testing.
 ✅ **Validation**: Comprehensive Zod schemas
 ✅ **Error Handling**: Centralized and consistent
 ✅ **Documentation**: Complete JSDoc comments
-

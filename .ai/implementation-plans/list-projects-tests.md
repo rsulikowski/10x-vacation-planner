@@ -9,6 +9,7 @@ curl -X GET "{{BASE_URL}}/api/projects"
 ```
 
 **Expected Response (200):**
+
 ```json
 {
   "data": [
@@ -46,6 +47,7 @@ curl -X GET "{{BASE_URL}}/api/projects?page=0"
 ```
 
 **Expected Response (400):**
+
 ```json
 {
   "error": "Validation Error",
@@ -59,4 +61,3 @@ curl -X GET "{{BASE_URL}}/api/projects?page=0"
 ```bash
 curl -X GET "{{BASE_URL}}/api/projects?size=200"
 ```
-

@@ -1,10 +1,22 @@
 import "@testing-library/jest-dom";
 import { cleanup } from "@testing-library/react";
-import { afterEach, vi } from "vitest";
+import { afterEach, beforeAll, afterAll, vi } from "vitest";
 
 // Cleanup after each test case
 afterEach(() => {
   cleanup();
+  vi.clearAllTimers();
+});
+
+// Setup before all tests
+beforeAll(() => {
+  // Suppress console errors during tests if needed
+  // vi.spyOn(console, 'error').mockImplementation(() => {});
+});
+
+// Cleanup after all tests
+afterAll(() => {
+  vi.restoreAllMocks();
 });
 
 // Mock window.matchMedia
